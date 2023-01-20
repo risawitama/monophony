@@ -76,7 +76,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		win_about.set_translator_credits(_('translator-credits'))
 		win_about.add_credit_section(_('Patrons'), ['yuanca'])
 		win_about.set_issue_url('https://gitlab.com/zehkira/monophony/-/issues')
-		win_about.add_link(_('Donate'), 'https://www.patreon.com/bePatron?u=65739770')
+		win_about.add_link(_('Donate'), 'https://www.patreon.com/zehkira')
 		win_about.set_website('https://gitlab.com/zehkira/monophony')
 		win_about.set_transient_for(self)
 		win_about.show()
