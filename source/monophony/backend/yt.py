@@ -63,13 +63,16 @@ def get_recommendations() -> dict:
 
 
 def search(query: str, filter: str = '') -> list:
-	yt = ytmusicapi.YTMusic()
-	if filter:
-		data = yt.search(query, filter = filter)
-	else:
-		data = yt.search(query)
-	results = []
+	try:
+		yt = ytmusicapi.YTMusic()
+		if filter:
+			data = yt.search(query, filter = filter)
+		else:
+			data = yt.search(query)
+	except:
+		return []
 
+	results = []
 	for result in data:
 		if result['resultType'] not in {'album', 'song', 'video'}:
 			continue
