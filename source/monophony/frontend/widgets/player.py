@@ -1,9 +1,129 @@
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
 	def __init__(self):
 		super().__init__(orientation = Gtk.Orientation.VERTICAL)
+
+		lbl_title = Gtk.Label.new('')
+		lbl_title.set_halign(Gtk.Align.CENTER)
+		lbl_title.set_ellipsize(Pango.EllipsizeMode.END)
+		lbl_title.set_margin_top(10)
+		lbl_title.set_margin_start(5)
+		lbl_title.set_margin_end(5)
+		lbl_title.set_margin_bottom(10)
+
+		scl_progress = Gtk.Scale.new_with_range(
+			Gtk.Orientation.HORIZONTAL, 0, 1, 0.01
+		)
+		scl_progress.set_draw_value(False)
+		scl_progress.set_halign(Gtk.Align.FILL)
+		scl_progress.set_valign(Gtk.Align.END)
+		scl_progress.connect('change-value', self._on_seek_performed)
+
+		btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
+		btn_pause.connect('clicked', self._on_pause_clicked)
+		btn_pause.set_has_frame(False)
+		btn_next = Gtk.Button.new_from_icon_name('media-skip-forward')
+		btn_next.connect('clicked', self._on_next_clicked)
+		btn_next.set_has_frame(False)
+		btn_prev = Gtk.Button.new_from_icon_name('media-skip-backward')
+		btn_prev.connect('clicked', self._on_previous_clicked)
+		btn_prev.set_has_frame(False)
+		tog_loop = Gtk.ToggleButton()
+		tog_loop.set_icon_name('media-playlist-repeat')
+		tog_loop.set_has_frame(False)
+		tog_loop.connect('toggled', self._on_loop_toggled)
+		tog_shuffle = Gtk.ToggleButton()
+		tog_shuffle.set_icon_name('media-playlist-shuffle')
+		tog_shuffle.set_has_frame(False)
+		tog_shuffle.connect('toggled', self._on_shuffle_toggled)
+		btn_playlists = Gtk.MenuButton()
+		btn_playlists.set_has_frame(False)
+		btn_playlists.set_icon_name('list-add')
+
+		btn_unqueue = Gtk.Button.new_with_label(_('Remove from queue'))
+		btn_unqueue.set_has_frame(False)
+		btn_unqueue.connect('clicked', self._on_unqueue_clicked)
+		btn_url = Gtk.Button.new_with_label(_('Copy song URL'))
+		btn_url.set_has_frame(False)
+		btn_url.connect('clicked', self._on_copy_clicked)
+		lbl_volume = Gtk.Label.new(_('Volume'))
+		scl_volume = Gtk.Scale.new_with_range(
+			Gtk.Orientation.HORIZONTAL, 0, 1, 0.1
+		)
+		scl_volume.set_hexpand(True)
+		scl_volume.set_draw_value(False)
+		scl_volume.connect('value-changed', self._on_volume_changed)
+		box_volume = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_volume.set_spacing(5)
+		box_volume.set_halign(Gtk.Align.FILL)
+		box_volume.set_hexpand(True)
+		box_volume.append(lbl_volume)
+		box_volume.append(scl_volume)
+		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio mode'))
+		chk_autoplay.get_last_child().set_wrap(True)
+		chk_autoplay.connect('toggled', self._on_radio_toggled)
+		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_pop.set_spacing(5)
+		box_pop.append(btn_unqueue)
+		box_pop.append(btn_url)
+		box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
+		box_pop.append(box_volume)
+		box_pop.append(chk_autoplay)
+		pop_more = Gtk.Popover.new()
+		pop_more.set_child(box_pop)
+		btn_more = Gtk.MenuButton()
+		btn_more.set_icon_name('view-more')
+		btn_more.set_popover(pop_more)
+		btn_more.set_has_frame(False)
+
+		box_controls = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_controls.set_spacing(2)
+		box_controls.set_valign(Gtk.Align.END)
+		box_controls.set_halign(Gtk.Align.CENTER)
+		box_controls.append(btn_playlists)
+		box_controls.append(tog_shuffle)
+		box_controls.append(btn_prev)
+		box_controls.append(btn_pause)
+		box_controls.append(btn_next)
+		box_controls.append(tog_loop)
+		box_controls.append(btn_more)
+
+		self.set_hexpand(True)
+		self.append(lbl_title)
+		self.append(box_controls)
+		self.append(scl_progress)
+
+	def _on_seek_performed(self, _s, __, target: float):
+		pass
+
+	def _on_pause_clicked(self, _b):
+		pass
+
+	def _on_next_clicked(self, _b):
+		pass
+
+	def _on_previous_clicked(self, _b):
+		pass
+
+	def _on_shuffle_toggled(self, _b):
+		pass
+
+	def _on_loop_toggled(self, _b):
+		pass
+
+	def _on_unqueue_clicked(self, _b):
+		pass
+
+	def _on_volume_changed(self, scl: Gtk.Scale):
+		pass
+
+	def _on_copy_clicked(self, _b):
+		pass
+
+	def _on_radio_toggled(self, chk: Gtk.CheckButton):
+		pass
