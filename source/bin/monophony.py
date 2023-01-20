@@ -6,14 +6,20 @@ from monophony.frontend.app import MonophonyApplication
 
 
 def main():
-	languages = ['en', 'de', 'pl', 'sv', 'it', 'fr', 'ru', 'nl']
+	lang = os.getenv('LANG', 'en_US.UTF-8')
+	chosen_lang = 'en'
+	for l in ['en', 'de', 'pl', 'sv', 'it', 'fr', 'ru', 'nl']:
+		if lang.split('_')[0] == l:
+			chosen_lang = l
+			break
+
 	if os.getenv('container', '') != 'flatpak':
-		gettext.translation('monophony', languages = languages).install()
+		gettext.translation('monophony', languages = [chosen_lang]).install()
 	else:
 		gettext.translation(
 			'monophony',
 			localedir = '/app/share/locale',
-			languages = languages
+			languages = [chosen_lang]
 		).install()
 
 	MonophonyApplication().run()
