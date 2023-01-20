@@ -1,0 +1,159 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: myuzi/app.py:36
+msgid "Error"
+msgstr ""
+
+#: myuzi/app.py:36
+msgid "Playback error"
+msgstr ""
+
+#: myuzi/app.py:92
+msgid "Enter name..."
+msgstr ""
+
+#: myuzi/app.py:198 myuzi/app.py:334
+msgid "Download error"
+msgstr ""
+
+#: myuzi/app.py:198
+msgid "Song download failed"
+msgstr ""
+
+#: myuzi/app.py:262
+msgid "Playlist import failed"
+msgstr ""
+
+#: myuzi/app.py:263
+msgid "No playlist data or playlist URL in clipboard"
+msgstr ""
+
+#: myuzi/app.py:286
+msgid "Playlist rename failed"
+msgstr ""
+
+#: myuzi/app.py:287
+msgid "Playlist already exists"
+msgstr ""
+
+#: myuzi/app.py:301
+msgid "Exported"
+msgstr ""
+
+#: myuzi/app.py:302
+msgid "Playlist data copied to clipboard"
+msgstr ""
+
+#: myuzi/app.py:335
+msgid "Playlist download failed"
+msgstr ""
+
+#: myuzi/app.py:374
+msgid "Unavailable"
+msgstr ""
+
+#: myuzi/app.py:375
+msgid "Can't search in offline mode"
+msgstr ""
+
+#: myuzi/app.py:382
+msgid "Failed"
+msgstr ""
+
+#: myuzi/app.py:383
+msgid "Could not connect to server"
+msgstr ""
+
+#: myuzi/app.py:403
+msgid "Can't switch to online mode"
+msgstr ""
+
+#: myuzi/app.py:404
+msgid "Connection failed"
+msgstr ""
+
+#: myuzi/app.py:427
+msgid "translator-credits"
+msgstr ""
+
+#: myuzi/app.py:428
+msgid "Patrons"
+msgstr ""
+
+#: myuzi/app.py:430
+msgid "Donate"
+msgstr ""
+
+#: myuzi/app.py:685
+msgid "Discover"
+msgstr ""
+
+#: myuzi/app.py:710
+msgid "Playlists"
+msgstr ""
+
+#: myuzi/app.py:755
+msgid "Delete"
+msgstr ""
+
+#: myuzi/app.py:758 myuzi/app.py:856
+msgid "Remove from downloads"
+msgstr ""
+
+#: myuzi/app.py:761
+msgid "Export to clipboard"
+msgstr ""
+
+#: myuzi/app.py:764 myuzi/app.py:851
+msgid "Rename..."
+msgstr ""
+
+#: myuzi/app.py:770 myuzi/app.py:861
+msgid "Download"
+msgstr ""
+
+#: myuzi/app.py:915
+msgid "New playlist..."
+msgstr ""
+
+#: myuzi/app.py:919
+msgid "Add to queue"
+msgstr ""
+
+#: myuzi/app.py:1016
+msgid "Remove from queue"
+msgstr ""
+
+#: myuzi/app.py:1021
+msgid "Copy song URL"
+msgstr ""
+
+#: myuzi/app.py:1026
+msgid "Volume"
+msgstr ""
+
+#: myuzi/app.py:1047
+msgid "Radio mode"
+msgstr ""
+
+#: myuzi/app.py:1163
+msgid "Library"
+msgstr ""
+
+#: myuzi/app.py:1164
+msgid "Search"
+msgstr ""
+
+#: myuzi/app.py:1170
+msgid "Online"
+msgstr ""
+
+#: myuzi/app.py:1175
+msgid "Import from clipboard"
+msgstr ""
+
+#: myuzi/app.py:1180
+msgid "About"
+msgstr ""

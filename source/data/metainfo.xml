@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.gitlab.zehkira.Monophony</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Monophony</name>
+  <developer_name>zehkira</developer_name>
+  <url type="homepage">https://gitlab.com/zehkira/monophony</url>
+  <url type="bugtracker">https://gitlab.com/zehkira/monophony/-/issues</url>
+  <url type="donation">https://www.patreon.com/bePatron?u=65739770</url>
+  <summary>Stream music from the Internet</summary>
+  <description>
+    <p>
+      Listen to your favorite music without advertisements, fees, or high memeory usage.
+    </p>
+  </description>
+  <screenshots>
+
+  </screenshots>
+  <launchable type="desktop-id">com.gitlab.zehkira.Monophony.desktop</launchable>
+  <content_rating type="oars-1.1"></content_rating>
+  <releases>
+
+  </releases>
+</component>

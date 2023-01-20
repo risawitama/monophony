@@ -1,0 +1,245 @@
+# German translation for Myuzi.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2022, 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: myuzi\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"Language-Team: German <gnome-de@gnome.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: myuzi/app.py:36
+msgid "Error"
+msgstr "Fehler"
+
+#: myuzi/app.py:36
+msgid "Playback error"
+msgstr "Fehler bei der Wiedergabe"
+
+#: myuzi/app.py:92
+msgid "Enter name..."
+msgstr "Geben Sie einen Namen ein …"
+
+#: myuzi/app.py:198 myuzi/app.py:334
+msgid "Download error"
+msgstr "Fehler beim Herunterladen"
+
+#: myuzi/app.py:198
+msgid "Song download failed"
+msgstr "Herunterladen des Titels fehlgeschlagen"
+
+#: myuzi/app.py:262
+msgid "Playlist import failed"
+msgstr "Importieren der Wiedergabeliste fehlgeschlagen"
+
+#: myuzi/app.py:263
+msgid "No playlist data or playlist URL in clipboard"
+msgstr ""
+"Keine Wiedergabeliste-Daten oder Wiedergabeliste-Adresse in der "
+"Zwischenablage"
+
+#: myuzi/app.py:286
+msgid "Playlist rename failed"
+msgstr "Umbenennen der Wiedergabeliste fehlgeschlagen"
+
+#: myuzi/app.py:287
+msgid "Playlist already exists"
+msgstr "Wiedergabeliste existiert bereits"
+
+#: myuzi/app.py:301
+msgid "Exported"
+msgstr "Exportiert"
+
+#: myuzi/app.py:302
+msgid "Playlist data copied to clipboard"
+msgstr "Wiedergabeliste-Daten in die Zwischenablage kopiert"
+
+#: myuzi/app.py:335
+msgid "Playlist download failed"
+msgstr "Fehler beim Herunterladen der Wiedergabeliste"
+
+#: myuzi/app.py:374
+msgid "Unavailable"
+msgstr "Nicht verfügbar"
+
+#: myuzi/app.py:375
+msgid "Can't search in offline mode"
+msgstr "Im Offline-Modus kann nicht gesucht werden"
+
+#: myuzi/app.py:382
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+#: myuzi/app.py:383
+msgid "Could not connect to server"
+msgstr "Es konnte keine Verbindung zum Server hergestellt werden"
+
+#: myuzi/app.py:403
+msgid "Can't switch to online mode"
+msgstr "Es kann nicht in den Online-Modus gewechselt werden"
+
+#: myuzi/app.py:404
+msgid "Connection failed"
+msgstr "Verbindung fehlgeschlagen"
+
+#: myuzi/app.py:427
+msgid "translator-credits"
+msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2022, 2023"
+
+#: myuzi/app.py:428
+msgid "Patrons"
+msgstr "Patrons"
+
+#: myuzi/app.py:430
+msgid "Donate"
+msgstr "Spenden"
+
+#: myuzi/app.py:685
+msgid "Discover"
+msgstr "Entdecken"
+
+#: myuzi/app.py:710
+msgid "Playlists"
+msgstr "Wiedergabelisten"
+
+#: myuzi/app.py:755
+msgid "Delete"
+msgstr "Löschen"
+
+#: myuzi/app.py:758 myuzi/app.py:856
+msgid "Remove from downloads"
+msgstr "Aus den heruntergeladenen Dateien entfernen"
+
+#: myuzi/app.py:761
+msgid "Export to clipboard"
+msgstr "In die Zwischenablage exportieren"
+
+#: myuzi/app.py:764 myuzi/app.py:851
+msgid "Rename..."
+msgstr "Umbenennen …"
+
+#: myuzi/app.py:770 myuzi/app.py:861
+msgid "Download"
+msgstr "Herunterladen"
+
+#: myuzi/app.py:915
+msgid "New playlist..."
+msgstr "Neue Wiedergabeliste …"
+
+#: myuzi/app.py:919
+msgid "Add to queue"
+msgstr "Zur Warteschlange hinzufügen"
+
+#: myuzi/app.py:1016
+msgid "Remove from queue"
+msgstr "Aus der Warteschlange entfernen"
+
+#: myuzi/app.py:1021
+msgid "Copy song URL"
+msgstr "Titel-Adresse kopieren"
+
+#: myuzi/app.py:1026
+msgid "Volume"
+msgstr "Lautstärke"
+
+#: myuzi/app.py:1047
+msgid "Radio mode"
+msgstr "Radiomodus"
+
+#: myuzi/app.py:1163
+msgid "Library"
+msgstr "Bibliothek"
+
+#: myuzi/app.py:1164
+msgid "Search"
+msgstr "Suchen"
+
+#: myuzi/app.py:1170
+msgid "Online"
+msgstr "Online"
+
+#: myuzi/app.py:1175
+msgid "Import from clipboard"
+msgstr "Aus der Zwischenablage importieren"
+
+#: myuzi/app.py:1180
+msgid "About"
+msgstr "Info"
+
+#~ msgid "Searching for a song to play..."
+#~ msgstr "Es wird nach einem Titel gesucht, der wiedergegeben werden kann …"
+
+#~ msgid "Downloading song..."
+#~ msgstr "Titel wird heruntergeladen …"
+
+#~ msgid "Downloading playlist..."
+#~ msgstr "Wiedergabeliste wird heruntergeladen …"
+
+#~ msgid "Searching..."
+#~ msgstr "Suche läuft …"
+
+#~ msgid "Remove from local storage"
+#~ msgstr "Aus dem lokalen Speicher entfernen"
+
+#~ msgid "Save to local storage"
+#~ msgstr "Lokal speichern"
+
+#~ msgid "Move up"
+#~ msgstr "Nach oben verschieben"
+
+#~ msgid "Move down"
+#~ msgstr "Nach unten verschieben"
+
+#~ msgid "Autoplay similar songs after queue ends"
+#~ msgstr ""
+#~ "Automatisch ähnliche Titel wiedergeben, wenn die Warteschlange endet"
+
+#~ msgid "Playlist creation failed"
+#~ msgstr "Fehler beim Erstellen der Wiedergabeliste"
+
+#~ msgid "Import"
+#~ msgstr "Importieren"
+
+#~ msgid "Offline"
+#~ msgstr "Offline"
+
+#~ msgid "Play"
+#~ msgstr "Wiedergeben"
+
+#~ msgid "Add to playlist"
+#~ msgstr "Zur Wiedergabeliste hinzufügen"
+
+#~ msgid "Toggle pause"
+#~ msgstr "Wiedergabe/Pause"
+
+#~ msgid "Next song"
+#~ msgstr "Nächster Titel"
+
+#~ msgid "Previous song"
+#~ msgstr "Vorheriger Titel"
+
+#~ msgid "Repeat this song"
+#~ msgstr "Diesen Titel wiederholen"
+
+#~ msgid "Play random songs from queue"
+#~ msgstr "Zufällig ausgewählte Titel aus der Warteschlange wiedergeben"
+
+#~ msgid "Toggle online mode"
+#~ msgstr "Online/Offline"
+
+#~ msgid "Report a bug"
+#~ msgstr "Einen Fehler melden"
+
+#~ msgid "Contributors:"
+#~ msgstr "Beitragende:"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"

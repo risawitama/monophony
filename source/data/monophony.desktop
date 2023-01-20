@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Monophony
+GenericName=Music streamer
+Comment=Music streaming app
+Exec=monophony
+Terminal=false
+Type=Application
+StartupNotify=false
+Icon=com.gitlab.zehkira.Monophony
+Categories=AudioVideo;Audio;Music;
+X-Purism-FormFactor=Workstation;Mobile;

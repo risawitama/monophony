@@ -1,0 +1,272 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: myuzi/app.py:116 myuzi/app.py:131 myuzi/app.py:137
+msgid "Searching for a song to play..."
+msgstr "Szukanie utworu do odtworzenia..."
+
+#: myuzi/app.py:179 myuzi/app.py:194 myuzi/app.py:200 myuzi/app.py:36
+msgid "Playback error"
+msgstr "Błąd odtwarzania"
+
+#: myuzi/app.py:363 myuzi/app.py:399 myuzi/app.py:405
+msgid "Downloading song..."
+msgstr "Pobieranie utworu..."
+
+#: myuzi/app.py:380 myuzi/app.py:546 myuzi/app.py:412 myuzi/app.py:574
+#: myuzi/app.py:418 myuzi/app.py:581 myuzi/app.py:198 myuzi/app.py:334
+msgid "Download error"
+msgstr "Błąd pobierania"
+
+#: myuzi/app.py:381 myuzi/app.py:413 myuzi/app.py:419 myuzi/app.py:198
+msgid "Song download failed"
+msgstr "Pobieranie utworu nieudane"
+
+#: myuzi/app.py:434 myuzi/app.py:465 myuzi/app.py:472
+msgid "Playlist creation failed"
+msgstr "Tworzenie listy odtwarzania nieudane"
+
+#: myuzi/app.py:435 myuzi/app.py:479 myuzi/app.py:466 myuzi/app.py:512
+#: myuzi/app.py:473 myuzi/app.py:519 myuzi/app.py:287
+msgid "Playlist already exists"
+msgstr "Lista odtwarzania już istnieje"
+
+#: myuzi/app.py:457 myuzi/app.py:490 myuzi/app.py:497 myuzi/app.py:262
+msgid "Playlist import failed"
+msgstr "Import listy odtwarzania nieudany"
+
+#: myuzi/app.py:458 myuzi/app.py:491 myuzi/app.py:498
+msgid "No playlist data in clipboard"
+msgstr "Brak danych listy odtwarzania w schowku"
+
+#: myuzi/app.py:478 myuzi/app.py:511 myuzi/app.py:518 myuzi/app.py:286
+msgid "Playlist rename failed"
+msgstr "Zmiana nazwy listy odtwarzania nieudana"
+
+#: myuzi/app.py:498 myuzi/app.py:531 myuzi/app.py:538 myuzi/app.py:301
+msgid "Exported"
+msgstr "Wyeksportowano"
+
+#: myuzi/app.py:499 myuzi/app.py:532 myuzi/app.py:539 myuzi/app.py:302
+msgid "Playlist data copied to clipboard"
+msgstr "Dane listy odtwarzania skopiowane do schowka"
+
+#: myuzi/app.py:521 myuzi/app.py:554 myuzi/app.py:561
+msgid "Downloading playlist..."
+msgstr "Pobieranie listy odtwarzania..."
+
+#: myuzi/app.py:547 myuzi/app.py:575 myuzi/app.py:582 myuzi/app.py:335
+msgid "Playlist download failed"
+msgstr "Pobieranie listy odtwarzania nieudane"
+
+#: myuzi/app.py:594 myuzi/app.py:621 myuzi/app.py:628 myuzi/app.py:374
+msgid "Unavailable"
+msgstr "Niedostępne"
+
+#: myuzi/app.py:595 myuzi/app.py:622 myuzi/app.py:629 myuzi/app.py:375
+msgid "Can't search in offline mode"
+msgstr "Nie można wyszukiwać w trybie offline"
+
+#: myuzi/app.py:607 myuzi/app.py:1113 myuzi/app.py:650 myuzi/app.py:1181
+#: myuzi/app.py:657 myuzi/app.py:1216
+msgid "Offline"
+msgstr "Offline"
+
+#: myuzi/app.py:612 myuzi/app.py:1110 myuzi/app.py:655 myuzi/app.py:1178
+#: myuzi/app.py:662 myuzi/app.py:1213 myuzi/app.py:1170
+msgid "Online"
+msgstr "Online"
+
+#: myuzi/app.py:620 myuzi/app.py:663 myuzi/app.py:670 myuzi/app.py:403
+msgid "Can't switch to online mode"
+msgstr "Nie można przejść do trybu online"
+
+#: myuzi/app.py:621 myuzi/app.py:664 myuzi/app.py:671 myuzi/app.py:404
+msgid "Connection failed"
+msgstr "Połączenie nieudane"
+
+#: myuzi/app.py:675 myuzi/app.py:817 myuzi/app.py:718 myuzi/app.py:860
+#: myuzi/app.py:745 myuzi/app.py:894
+msgid "Play"
+msgstr "Odtwórz"
+
+#: myuzi/app.py:706 myuzi/app.py:749 myuzi/app.py:1002 myuzi/app.py:776
+#: myuzi/app.py:1040 myuzi/app.py:915
+msgid "New playlist..."
+msgstr "Nowa lista odtwarzania..."
+
+#: myuzi/app.py:716 myuzi/app.py:759 myuzi/app.py:1012 myuzi/app.py:793
+#: myuzi/app.py:1050
+msgid "Add to playlist"
+msgstr "Dodaj do listy odtwarzania"
+
+#: myuzi/app.py:765 myuzi/app.py:808 myuzi/app.py:842 myuzi/app.py:755
+msgid "Delete"
+msgstr "Usuń"
+
+#: myuzi/app.py:768 myuzi/app.py:843 myuzi/app.py:811 myuzi/app.py:886
+#: myuzi/app.py:845 myuzi/app.py:924
+msgid "Remove from local storage"
+msgstr "Usuń z dysku"
+
+#: myuzi/app.py:771 myuzi/app.py:814 myuzi/app.py:848 myuzi/app.py:761
+msgid "Export to clipboard"
+msgstr "Eksportuj do schowka"
+
+#: myuzi/app.py:781 myuzi/app.py:848 myuzi/app.py:824 myuzi/app.py:891
+#: myuzi/app.py:858 myuzi/app.py:929
+msgid "Save to local storage"
+msgstr "Zapisz na dysku"
+
+#: myuzi/app.py:833 myuzi/app.py:876 myuzi/app.py:914
+msgid "Move up"
+msgstr "Przesuń w górę"
+
+#: myuzi/app.py:838 myuzi/app.py:881 myuzi/app.py:919
+msgid "Move down"
+msgstr "Przesuń w dół"
+
+#: myuzi/app.py:854 myuzi/app.py:897 myuzi/app.py:935
+msgid "Remove from playlist"
+msgstr "Usuń z listy odtwarzania"
+
+#: myuzi/app.py:904 myuzi/app.py:1017 myuzi/app.py:1060 myuzi/app.py:1026
+msgid "Volume"
+msgstr "Głośność"
+
+#: myuzi/app.py:928 myuzi/app.py:1038 myuzi/app.py:1081
+msgid "Autoplay similar songs after queue ends"
+msgstr "Odtwarzaj podobne utwory po zakończeniu kolejki"
+
+#: myuzi/app.py:947 myuzi/app.py:1192 myuzi/app.py:1227
+msgid "Report a bug"
+msgstr "Raportuj błąd"
+
+#: myuzi/app.py:951 myuzi/app.py:1196 myuzi/app.py:1231 myuzi/app.py:430
+msgid "Donate"
+msgstr "Przekaż darowiznę"
+
+#: myuzi/app.py:992 myuzi/app.py:966 myuzi/app.py:1004
+msgid "Toggle pause"
+msgstr "Przełącz pauzę"
+
+#: myuzi/app.py:996 myuzi/app.py:970 myuzi/app.py:1008
+msgid "Next song"
+msgstr "Następny utwór"
+
+#: myuzi/app.py:1000 myuzi/app.py:974 myuzi/app.py:1012
+msgid "Previous song"
+msgstr "Poprzedni utwór"
+
+#: myuzi/app.py:1005 myuzi/app.py:979 myuzi/app.py:1017
+msgid "Repeat this song"
+msgstr "Powtarzaj ten utwór"
+
+#: myuzi/app.py:1011 myuzi/app.py:985 myuzi/app.py:1023
+msgid "Play random songs from queue"
+msgstr "Odtwarzaj losowe utwory z kolejki"
+
+#: myuzi/app.py:1075 myuzi/app.py:1163 myuzi/app.py:1198 myuzi/app.py:710
+msgid "Playlists"
+msgstr "Listy odtwarzania"
+
+#: myuzi/app.py:1076 myuzi/app.py:1164 myuzi/app.py:1199
+msgid "Search"
+msgstr "Szukaj"
+
+#: myuzi/app.py:1077
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: myuzi/app.py:1106 myuzi/app.py:1174 myuzi/app.py:1209
+msgid "Toggle online mode"
+msgstr "Przełącz tryb online"
+
+#: myuzi/app.py:1116 myuzi/app.py:1185 myuzi/app.py:1220 myuzi/app.py:1175
+msgid "Import from clipboard"
+msgstr "Importuj ze schowka"
+
+#: myuzi/app.py:641 myuzi/app.py:648
+msgid "Searching..."
+msgstr "Szukanie..."
+
+#: myuzi/app.py:1120 myuzi/app.py:1165
+msgid "Patrons:"
+msgstr "Patroni:"
+
+#: myuzi/app.py:1165 myuzi/app.py:1200 myuzi/app.py:1180
+msgid "About"
+msgstr "O aplikacji"
+
+#: myuzi/app.py:1184 myuzi/app.py:1219
+msgid "Import"
+msgstr "Importuj"
+
+#: myuzi/app.py:782 myuzi/app.py:908 myuzi/app.py:919
+msgid "Add to queue"
+msgstr "Dodaj do kolejki"
+
+#: myuzi/app.py:1055 myuzi/app.py:1016
+msgid "Remove from queue"
+msgstr "Usuń z kolejki"
+
+#: myuzi/app.py:1170
+msgid "Contributors:"
+msgstr "Współtwórcy:"
+
+#: myuzi/app.py:36
+msgid "Error"
+msgstr "Błąd"
+
+#: myuzi/app.py:92
+msgid "Enter name..."
+msgstr "Wprowadź nazwę..."
+
+#: myuzi/app.py:263
+msgid "No playlist data or playlist URL in clipboard"
+msgstr "Brak danych lub URL listy odtwarzania w schowku"
+
+#: myuzi/app.py:382
+msgid "Failed"
+msgstr "Nieudane"
+
+#: myuzi/app.py:383
+msgid "Could not connect to server"
+msgstr "Nie udało się połączyć z serwerem"
+
+#: myuzi/app.py:427
+msgid "translator-credits"
+msgstr ""
+
+#: myuzi/app.py:428
+msgid "Patrons"
+msgstr "Patroni"
+
+#: myuzi/app.py:685
+msgid "Discover"
+msgstr "Odkrywaj"
+
+#: myuzi/app.py:758 myuzi/app.py:856
+msgid "Remove from downloads"
+msgstr "Usuń z pobranych"
+
+#: myuzi/app.py:764 myuzi/app.py:851
+msgid "Rename..."
+msgstr "Zmień nazwę..."
+
+#: myuzi/app.py:770 myuzi/app.py:861
+msgid "Download"
+msgstr "Pobierz"
+
+#: myuzi/app.py:1021
+msgid "Copy song URL"
+msgstr "Kopiuj URL utworu"
+
+#: myuzi/app.py:1047
+msgid "Radio mode"
+msgstr "Tryb radia"
+
+#: myuzi/app.py:1163
+msgid "Library"
+msgstr "Biblioteka"
