@@ -14,7 +14,7 @@ def get_value(key: str, default = '') -> str:
 def write_settings(settings: dict):
 	dir_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
-	) + '/myuzi'
+	) + '/monophony'
 	sets_path = dir_path + '/settings.json'
 
 	try:
@@ -28,7 +28,7 @@ def write_settings(settings: dict):
 def read_settings() -> dict:
 	sets_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
-	) + '/myuzi/settings.json'
+	) + '/monophony/settings.json'
 
 	try:
 		with open(sets_path, 'r') as sets_file:

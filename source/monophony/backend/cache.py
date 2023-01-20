@@ -1,14 +1,12 @@
 import glob, os, subprocess
 
-import myuzi.playlists
-
 from gi.repository import GLib
 
 
 def is_song_cached(video_id: str) -> bool:
 	music_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
 	if music_dir:
-		local_path = music_dir + '/myuzi/' + video_id
+		local_path = music_dir + '/monophony/' + video_id
 		return os.path.exists(local_path)
 
 	return False
@@ -17,7 +15,7 @@ def is_song_cached(video_id: str) -> bool:
 def get_song_uri(video_id: str) -> str:
 	music_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
 	if music_dir:
-		local_path = music_dir + '/myuzi/' + video_id
+		local_path = music_dir + '/monophony/' + video_id
 		if os.path.exists(local_path):
 			return 'file://' + local_path
 
@@ -33,7 +31,7 @@ def cache_song(video_id: str):
 	)
 	if not path:
 		return
-	path += '/myuzi/'
+	path += '/monophony/'
 	os.makedirs(path, exist_ok = True)
 
 	out, _ = subprocess.Popen(
@@ -52,7 +50,7 @@ def uncache_song(video_id: str):
 		os.remove(
 			GLib.get_user_special_dir(
 				GLib.UserDirectory.DIRECTORY_MUSIC
-			) + '/myuzi/' + video_id
+			) + '/monophony/' + video_id
 		)
 	except:
 		pass

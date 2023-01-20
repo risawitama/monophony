@@ -28,7 +28,7 @@ def query_api_segments(video_id: str) -> dict:
 def write_local_segments(video_id: str, segments: dict):
 	path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
-	) + '/myuzi/skips'
+	) + '/monophony/skips'
 	os.makedirs(path, exist_ok = True)
 
 	with open(path + '/' + video_id, 'w') as s_file:
@@ -38,7 +38,7 @@ def write_local_segments(video_id: str, segments: dict):
 def read_local_segments(video_id: str) -> dict:
 	path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
-	) + '/myuzi/skips/' + video_id
+	) + '/monophony/skips/' + video_id
 
 	try:
 		with open(path, 'r') as s_file:
@@ -53,4 +53,3 @@ def get_segments(video_id: str) -> dict:
 		segments = query_api_segments(video_id)
 
 	return segments
-

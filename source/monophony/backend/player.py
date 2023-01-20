@@ -1,6 +1,6 @@
 import random, time
 
-import myuzi.cache, myuzi.settings, myuzi.yt
+import monophony.backend.cache, monophony.backend.settings, monophony.backend.yt
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -32,7 +32,7 @@ class Player:
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.set_property(
-			'volume', float(myuzi.settings.get_value('volume', 1))
+			'volume', float(monophony.backend.settings.get_value('volume', 1))
 		)
 		self.playbin.set_property('mute', False)
 
@@ -143,8 +143,8 @@ class Player:
 		self._remake_playbin()
 		self.playbin.set_state(Gst.State.READY)
 
-		uri = myuzi.cache.get_song_uri(id_)
-		uri = myuzi.yt.get_song_uri(id_) if not uri else uri
+		uri = monophony.backend.cache.get_song_uri(id_)
+		uri = monophony.backend.yt.get_song_uri(id_) if not uri else uri
 		self.playbin.set_property('uri', uri)
 
 		if not uri:
@@ -152,8 +152,10 @@ class Player:
 			self.error = True
 			return
 
-		if not myuzi.cache.is_song_cached(id_):
-			self.skip_segments = myuzi.sponsorblock.get_segments(id_)
+		if not monophony.backend.cache.is_song_cached(id_):
+			self.skip_segments = monophony.backend.sponsorblock.get_segments(
+				id_
+			)
 
 		bus = self.playbin.get_bus()
 		bus.add_signal_watch()
@@ -165,7 +167,7 @@ class Player:
 		return
 
 	def play_radio_song(self):
-		if not int(myuzi.settings.get_value('radio')):
+		if not int(monophony.backend.settings.get_value('radio')):
 			return
 
 		id_queue = [s['id'] for s in self.queue]
@@ -175,7 +177,7 @@ class Player:
 
 		song = None
 		for id_ in id_queue:
-			song = myuzi.yt.get_similar_song(id_, ignore = id_queue)
+			song = monophony.backend.yt.get_similar_song(id_, ignore = id_queue)
 			if song:
 				break
 		else: # nobreak

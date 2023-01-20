@@ -130,7 +130,7 @@ def remove_song(id_: str, playlist: str):
 def write_playlists(playlists: dict):
 	dir_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
-	) + '/myuzi'
+	) + '/monophony'
 	lists_path = dir_path  + '/playlists.json'
 
 	all_songs = []
@@ -148,7 +148,7 @@ def write_playlists(playlists: dict):
 def read_playlists() -> dict:
 	lists_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
-	) + '/myuzi/playlists.json'
+	) + '/monophony/playlists.json'
 
 	try:
 		with open(lists_path, 'r') as lists_file:
