@@ -13,7 +13,7 @@ def main():
 		gettext.translation(
 			'monophony',
 			localedir = '/app/share/locale',
-			languages = [languages]
+			languages = languages
 		).install()
 
 	MonophonyApplication().run()
