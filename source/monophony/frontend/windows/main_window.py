@@ -13,11 +13,22 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
-		stack = Gtk.Stack()
-		stack.add_titled(MonophonyLibraryPage(), 'library', _('Library'))
-		stack.add_titled(MonophonySearchPage(), 'search', _('Search'))
-		stack_switcher = Gtk.StackSwitcher()
-		stack_switcher.set_stack(stack)
+		stack = Adw.ViewStack()
+		stack.add_titled_with_icon(
+			MonophonyLibraryPage(),
+			'library',
+			_('Library'),
+			'folder-music-symbolic'
+		)
+		stack.add_titled_with_icon(
+			MonophonySearchPage(),
+			'search',
+			_('Search'),
+			'system-search-symbolic'
+		)
+		view_switcher = Adw.ViewSwitcher()
+		view_switcher.set_policy(Adw.ViewSwitcherPolicy.WIDE)
+		view_switcher.set_stack(stack)
 
 		btn_about = Gtk.Button.new_with_label(_('About'))
 		btn_about.set_has_frame(False)
@@ -31,7 +42,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		btn_menu.set_popover(pop_menu)
 
 		header_bar = Adw.HeaderBar()
-		header_bar.set_title_widget(stack_switcher)
+		header_bar.set_title_widget(view_switcher)
 		header_bar.pack_end(btn_menu)
 
 		footer_bar = Adw.HeaderBar()
