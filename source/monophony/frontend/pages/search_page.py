@@ -16,32 +16,35 @@ class MonophonySearchPage(Gtk.Box):
 		ent_search.set_margin_start(10)
 		ent_search.set_margin_end(10)
 		ent_search.set_margin_bottom(10)
-		ent_search.connect(
-			'activate',
-			lambda e: GLib.Thread.new(None, self._on_search, e)
-		)
+		ent_search.connect('activate', self._on_search)
 
 		clm_search = Adw.Clamp()
 		clm_search.set_child(ent_search)
 
 		self.box_results = Adw.PreferencesPage()
-
-		clm_results = Adw.Clamp()
-		clm_results.set_vexpand(True)
-		clm_results.set_valign(Gtk.Align.FILL)
-		clm_results.set_child(self.box_results)
-
-		scr_results = Gtk.ScrolledWindow()
-		scr_results.set_vexpand(True)
-		scr_results.set_valign(Gtk.Align.FILL)
-		scr_results.set_child(clm_results)
-
-		self.set_vexpand(True)
-		self.set_valign(Gtk.Align.FILL)
 		self.set_margin_top(10)
 		self.append(clm_search)
-		self.append(scr_results)
+		self.append(self.box_results)
 
+		self.pge_empty = Adw.StatusPage()
+		self.pge_empty.set_vexpand(True)
+		self.pge_empty.set_valign(Gtk.Align.FILL)
+		self.pge_empty.set_title(_('No results'))
+		self.pge_empty.set_icon_name('system-search-symbolic')
+		self.append(self.pge_empty)
+		self.pge_empty.hide()
+
+		spn_loading = Gtk.Spinner.new()
+		spn_loading.set_halign(Gtk.Align.CENTER)
+		spn_loading.set_valign(Gtk.Align.CENTER)
+		spn_loading.set_vexpand(True)
+		self.box_loading = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		self.box_loading.set_margin_bottom(10)
+		self.box_loading.append(spn_loading)
+		self.append(self.box_loading)
+		self.box_loading.hide()
+
+		self.set_vexpand(True)
 		self.search_results = []
 		self.results_changed = False
 		self.search_lock = GLib.Mutex()
@@ -49,8 +52,17 @@ class MonophonySearchPage(Gtk.Box):
 		GLib.timeout_add(100, self.update_results)
 
 	def _on_search(self, ent: Gtk.SearchEntry):
+		top = self.box_results.get_first_child().get_first_child().get_first_child().get_first_child()
+		while child := top.get_first_child():
+			self.box_results.remove(child)
+		self.pge_empty.hide()
+		self.box_loading.show()
+		self.box_loading.get_first_child().start()
+		GLib.Thread.new(None, self.do_search, ent.get_text())
+
+	def do_search(self, query: str):
 		self.search_lock.lock()
-		self.search_results = monophony.backend.yt.search(ent.get_text())
+		self.search_results = monophony.backend.yt.search(query)
 		self.results_changed = True
 		self.search_lock.unlock()
 
@@ -60,18 +72,15 @@ class MonophonySearchPage(Gtk.Box):
 
 		if self.results_changed:
 			self.results_changed = False
-			top = self.box_results.get_first_child().get_first_child().get_first_child().get_first_child()
-			while child := top.get_first_child():
-				self.box_results.remove(child)
 
 			if not self.search_results:
-				pge_empty = Adw.StatusPage()
-				pge_empty.set_vexpand(True)
-				pge_empty.set_valign(Gtk.Align.FILL)
-				pge_empty.set_title(_('No results'))
-				pge_empty.set_icon_name('system-search-symbolic')
-				self.box_results.add(pge_empty)
+				self.pge_empty.show()
+				self.box_results.hide()
+				self.box_loading.hide()
 			else:
+				self.pge_empty.hide()
+				self.box_loading.hide()
+				self.box_results.show()
 				box_songs = Adw.PreferencesGroup.new()
 				box_songs.set_title(_('Songs'))
 				box_albums = Adw.PreferencesGroup.new()
@@ -84,7 +93,7 @@ class MonophonySearchPage(Gtk.Box):
 					elif item['type'] == 'video':
 						box_videos.add(MonophonySongRow(item))
 					elif item['type'] == 'album':
-						pass
+						box_albums.add(MonophonyGroupRow(item))
 				for box in {box_songs, box_videos, box_albums}:
 					self.box_results.add(box)
 

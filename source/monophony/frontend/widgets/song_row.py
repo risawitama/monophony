@@ -4,10 +4,10 @@ import monophony.backend.playlists
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, Gtk, Pango
 
 
-class MonophonySongRow(Adw.ExpanderRow):
+class MonophonySongRow(Adw.ActionRow):
 	def __init__(self, song: list, group: str = '', editable: bool = False):
 		super().__init__()
 
@@ -33,8 +33,8 @@ class MonophonySongRow(Adw.ExpanderRow):
 			-1
 		)
 
-		box_actions = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_actions.set_spacing(5)
+		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_pop.set_spacing(5)
 		if editable:
 			box_move = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
 			box_move.set_spacing(5)
@@ -52,13 +52,13 @@ class MonophonySongRow(Adw.ExpanderRow):
 			btn_uncache.set_has_frame(False)
 			btn_cache = Gtk.Button.new_with_label(_('Download to Music folder'))
 			btn_cache.set_has_frame(False)
-			box_actions.append(box_move)
+			box_pop.append(box_move)
 			if monophony.backend.cache.is_song_cached(song['id']):
 				btn_uncache.connect('clicked', self._on_uncache_clicked)
-				box_actions.append(btn_uncache)
+				box_pop.append(btn_uncache)
 			elif Player.online:
 				btn_cache.connect('clicked', self._on_cache_clicked)
-				box_actions.append(btn_cache)
+				box_pop.append(btn_cache)
 			else:
 				btn_song.set_sensitive(False)
 		btn_queue = Gtk.Button.new_with_label(_('Add to queue'))
@@ -67,26 +67,35 @@ class MonophonySongRow(Adw.ExpanderRow):
 		btn_new = Gtk.Button.new_with_label(_('New playlist...'))
 		btn_new.set_has_frame(False)
 		btn_new.connect('clicked', self._on_new_clicked)
-		box_actions.append(btn_queue)
-		box_actions.append(btn_new)
+		box_pop.append(btn_queue)
+		box_pop.append(btn_new)
 		playlists = monophony.backend.playlists.read_playlists()
 		if playlists:
-			box_actions.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
+			box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
 		for name, songs in playlists.items():
 			box_playlist = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
 			box_playlist.set_spacing(5)
 			chk_playlist = Gtk.CheckButton.new()
 			lbl_playlist = Gtk.Label.new(name)
 			lbl_playlist.set_ellipsize(Pango.EllipsizeMode.END)
+			lbl_playlist.set_max_width_chars(20)
 			chk_playlist.set_active(song['id'] in [s['id'] for s in songs])
 			chk_playlist.connect('toggled', self._on_playlist_toggled, name)
 			box_playlist.append(chk_playlist)
 			box_playlist.append(lbl_playlist)
-			box_actions.append(box_playlist)
+			box_pop.append(box_playlist)
 
+		pop_more = Gtk.Popover.new()
+		pop_more.set_child(box_pop)
+		btn_more = Gtk.MenuButton()
+		btn_more.set_icon_name('view-more')
+		btn_more.set_has_frame(False)
+		btn_more.set_popover(pop_more)
+		btn_more.set_vexpand(False)
+		btn_more.set_valign(Gtk.Align.CENTER)
+		self.add_suffix(btn_more)
 		self.set_title(title)
 		self.set_subtitle(length + '  ' + author)
-		self.add_row(box_actions)
 
 	def _on_play_clicked(self, _b):
 		pass

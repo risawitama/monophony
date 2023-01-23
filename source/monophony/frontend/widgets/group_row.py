@@ -1,3 +1,5 @@
+from monophony.frontend.widgets.song_row import MonophonySongRow
+
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -5,12 +7,12 @@ from gi.repository import Adw, Gtk
 
 
 class MonophonyGroupRow(Adw.ExpanderRow):
-	def __init__(self, name: str, editable: bool = False):
-		self.set_title(name)
+	def __init__(self, group: dict, editable: bool = False):
+		super().__init__()
 
+		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_pop.set_spacing(5)
 		if editable:
-			box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-			box_pop.set_spacing(5)
 			btn_delete = Gtk.Button.new_with_label(_('Delete'))
 			btn_delete.set_has_frame(False)
 			btn_delete.connect('clicked', self._on_delete_clicked)
@@ -31,16 +33,20 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			box_pop.append(btn_cache)
 			box_pop.append(btn_uncache)
 			box_pop.append(btn_delete)
-
 			pop_more = Gtk.Popover.new()
 			pop_more.set_child(box_pop)
-
 			btn_more = Gtk.MenuButton()
 			btn_more.set_icon_name('view-more')
 			btn_more.set_has_frame(False)
 			btn_more.set_popover(pop_more)
-			btn_more.set_halign(Gtk.Align.FILL)
-			self.add_suffix(btn_more)
+			btn_more.set_vexpand(False)
+			btn_more.set_valign(Gtk.Align.CENTER)
+			self.add_prefix(btn_more)
+
+		for item in group['contents']:
+			self.add_row(MonophonySongRow(item))
+
+		self.set_title(group['title'])
 
 	def _on_delete_clicked(self, _b):
 		pass
