@@ -8,8 +8,8 @@ from gi.repository import Adw, Gtk
 
 
 class MonophonyLibraryPage(Gtk.ScrolledWindow):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
+	def __init__(self, player: object):
+		super().__init__()
 
 		box_recommendations = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_recommendations.set_valign(Gtk.Align.START)

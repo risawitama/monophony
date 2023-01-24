@@ -1,3 +1,4 @@
+import monophony.backend.player
 from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
 from monophony.frontend.pages.search_page import MonophonySearchPage
@@ -12,16 +13,17 @@ from gi.repository import Adw, Gtk
 class MonophonyMainWindow(Adw.ApplicationWindow):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+		self.player = monophony.backend.player.Player()
 
 		stack = Adw.ViewStack()
 		stack.add_titled_with_icon(
-			MonophonyLibraryPage(),
+			MonophonyLibraryPage(self.player),
 			'library',
 			_('Library'),
 			'folder-music-symbolic'
 		)
 		stack.add_titled_with_icon(
-			MonophonySearchPage(),
+			MonophonySearchPage(self.player),
 			'search',
 			_('Search'),
 			'system-search-symbolic'
@@ -47,7 +49,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 		footer_bar = Adw.HeaderBar()
 		footer_bar.set_decoration_layout('')
-		footer_bar.set_title_widget(MonophonyPlayer())
+		footer_bar.set_title_widget(MonophonyPlayer(self.player))
 		footer_bar.set_valign(Gtk.Align.END)
 
 		box_content = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)

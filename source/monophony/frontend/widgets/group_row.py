@@ -7,7 +7,7 @@ from gi.repository import Adw, Gtk
 
 
 class MonophonyGroupRow(Adw.ExpanderRow):
-	def __init__(self, group: dict, editable: bool = False):
+	def __init__(self, group: dict, player: object, editable: bool = False):
 		super().__init__()
 
 		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
@@ -44,7 +44,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			self.add_prefix(btn_more)
 
 		for item in group['contents']:
-			self.add_row(MonophonySongRow(item))
+			self.add_row(MonophonySongRow(item, player, group))
 
 		self.set_title(group['title'])
 

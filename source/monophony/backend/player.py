@@ -1,6 +1,9 @@
 import random, time
 
-import monophony.backend.cache, monophony.backend.settings, monophony.backend.yt
+import monophony.backend.cache
+import monophony.backend.settings
+import monophony.backend.sponsorblock
+import monophony.backend.yt
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -144,7 +147,9 @@ class Player:
 		self.playbin.set_state(Gst.State.READY)
 
 		uri = monophony.backend.cache.get_song_uri(id_)
-		uri = monophony.backend.yt.get_song_uri(id_) if not uri else uri
+		if not uri:
+			uri = monophony.backend.yt.get_song_uri(id_)
+
 		self.playbin.set_property('uri', uri)
 
 		if not uri:

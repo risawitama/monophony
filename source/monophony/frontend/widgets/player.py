@@ -1,32 +1,43 @@
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk, Pango
+from gi.repository import Adw, GLib, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
-	def __init__(self):
+	def __init__(self, player: object):
 		super().__init__(orientation = Gtk.Orientation.VERTICAL)
 
-		lbl_title = Gtk.Label.new('')
-		lbl_title.set_halign(Gtk.Align.CENTER)
-		lbl_title.set_ellipsize(Pango.EllipsizeMode.END)
-		lbl_title.set_margin_top(10)
-		lbl_title.set_margin_start(5)
-		lbl_title.set_margin_end(5)
-		lbl_title.set_margin_bottom(10)
+		self.player = player
 
-		scl_progress = Gtk.Scale.new_with_range(
+		self.spn_loading = Gtk.Spinner.new()
+		self.spn_loading.set_halign(Gtk.Align.CENTER)
+		self.spn_loading.set_margin_top(10)
+		self.spn_loading.set_margin_start(5)
+		self.spn_loading.set_margin_end(5)
+		self.spn_loading.set_margin_bottom(10)
+		self.spn_loading.start()
+		self.spn_loading.hide()
+
+		self.lbl_title = Gtk.Label.new('')
+		self.lbl_title.set_halign(Gtk.Align.CENTER)
+		self.lbl_title.set_ellipsize(Pango.EllipsizeMode.END)
+		self.lbl_title.set_margin_top(10)
+		self.lbl_title.set_margin_start(5)
+		self.lbl_title.set_margin_end(5)
+		self.lbl_title.set_margin_bottom(10)
+
+		self.scl_progress = Gtk.Scale.new_with_range(
 			Gtk.Orientation.HORIZONTAL, 0, 1, 0.01
 		)
-		scl_progress.set_draw_value(False)
-		scl_progress.set_halign(Gtk.Align.FILL)
-		scl_progress.set_valign(Gtk.Align.END)
-		scl_progress.connect('change-value', self._on_seek_performed)
+		self.scl_progress.set_draw_value(False)
+		self.scl_progress.set_halign(Gtk.Align.FILL)
+		self.scl_progress.set_valign(Gtk.Align.END)
+		self.scl_progress.connect('change-value', self._on_seek_performed)
 
-		btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
-		btn_pause.connect('clicked', self._on_pause_clicked)
-		btn_pause.set_has_frame(False)
+		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
+		self.btn_pause.connect('clicked', self._on_pause_clicked)
+		self.btn_pause.set_has_frame(False)
 		btn_next = Gtk.Button.new_from_icon_name('media-skip-forward')
 		btn_next.connect('clicked', self._on_next_clicked)
 		btn_next.set_has_frame(False)
@@ -88,15 +99,18 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.append(btn_playlists)
 		box_controls.append(tog_shuffle)
 		box_controls.append(btn_prev)
-		box_controls.append(btn_pause)
+		box_controls.append(self.btn_pause)
 		box_controls.append(btn_next)
 		box_controls.append(tog_loop)
 		box_controls.append(btn_more)
 
 		self.set_hexpand(True)
-		self.append(lbl_title)
+		self.append(self.spn_loading)
+		self.append(self.lbl_title)
 		self.append(box_controls)
-		self.append(scl_progress)
+		self.append(self.scl_progress)
+
+		GLib.timeout_add(100, self.update)
 
 	def _on_seek_performed(self, _s, __, target: float):
 		pass
@@ -127,3 +141,27 @@ class MonophonyPlayer(Gtk.Box):
 
 	def _on_radio_toggled(self, chk: Gtk.CheckButton):
 		pass
+
+	def update(self) -> True:
+		if self.player.is_busy():
+			if not self.spn_loading.get_visible():
+				self.spn_loading.show()
+				self.spn_loading.start()
+			self.lbl_title.hide()
+		else:
+			self.spn_loading.hide()
+			self.lbl_title.show()
+			self.scl_progress.set_value(self.player.get_progress())
+
+			if self.player.is_paused():
+				self.btn_pause.set_icon_name('media-playback-start')
+			else:
+				self.btn_pause.set_icon_name('media-playback-pause')
+
+			song = self.player.get_current_song()
+			if song:
+				self.lbl_title.set_label(song['title'])
+			else:
+				self.lbl_title.set_label('')
+
+		return True

@@ -8,13 +8,16 @@ from gi.repository import Adw, GLib, Gtk, Pango
 
 
 class MonophonySongRow(Adw.ActionRow):
-	def __init__(self, song: list, group: str = '', editable: bool = False):
+	def __init__(self, song: dict, player: object, group: dict = None, editable: bool = False):
 		super().__init__()
 
+		self.player = player
 		self.song = song
 		self.group = group
+		self.editable = editable
 
 		btn_play = Gtk.Button.new_from_icon_name('media-playback-start')
+		btn_play.set_tooltip_text(_('Play'))
 		btn_play.set_vexpand(False)
 		btn_play.set_valign(Gtk.Align.CENTER)
 		btn_play.connect('clicked', self._on_play_clicked)
@@ -98,7 +101,21 @@ class MonophonySongRow(Adw.ActionRow):
 		self.set_subtitle(length + '  ' + author)
 
 	def _on_play_clicked(self, _b):
-		pass
+		if self.player.is_busy():
+			return
+
+		if self.editable:
+			queue = monophony.backend.playlists.read_playlists()[
+				self.group['title']
+			]
+		elif self.group:
+			queue = self.group['contents']
+		else:
+			queue = [self.song]
+
+		GLib.Thread.new(
+			None, self.player.play_queue, queue, queue.index(self.song)
+		)
 
 	def _on_queue_clicked(self, _b):
 		pass
