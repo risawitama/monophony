@@ -78,14 +78,13 @@ class MonophonySearchPage(Gtk.Box):
 		if self.results_changed:
 			self.results_changed = False
 
+			self.box_loading.hide()
 			if not self.search_results:
 				self.pge_status.set_title(_('No results'))
 				self.pge_status.show()
 				self.box_results.hide()
-				self.box_loading.hide()
 			else:
 				self.pge_status.hide()
-				self.box_loading.hide()
 				self.box_results.show()
 				box_songs = Adw.PreferencesGroup.new()
 				box_songs.set_title(_('Songs'))

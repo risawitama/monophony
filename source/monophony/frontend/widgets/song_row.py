@@ -88,12 +88,12 @@ class MonophonySongRow(Adw.ActionRow):
 			box_playlist.append(lbl_playlist)
 			box_pop.append(box_playlist)
 
-		pop_more = Gtk.Popover.new()
-		pop_more.set_child(box_pop)
+		self.popover = Gtk.Popover.new()
+		self.popover.set_child(box_pop)
 		btn_more = Gtk.MenuButton()
 		btn_more.set_icon_name('view-more')
 		btn_more.set_has_frame(False)
-		btn_more.set_popover(pop_more)
+		btn_more.set_popover(self.popover)
 		btn_more.set_vexpand(False)
 		btn_more.set_valign(Gtk.Align.CENTER)
 		self.add_suffix(btn_more)
@@ -118,19 +118,31 @@ class MonophonySongRow(Adw.ActionRow):
 		)
 
 	def _on_queue_clicked(self, _b):
-		pass
+		self.popover.popdown()
+		GLib.Thread.new(None, self.player.queue_song, self.song)
 
 	def _on_move_clicked(self, _b, direction: int):
-		pass
+		self.popover.popdown()
+		index = self.group['contents'].index(self.song)
+		monophony.backend.playlists.swap_songs(
+			self.group['name'], index, index + direction
+		)
 
 	def _on_uncache_clicked(self, _b):
-		pass
+		self.popover.popdown()
+		monophony.backend.cache.uncache_song(self.song['id'])
 
 	def _on_cache_clicked(self, _b):
-		pass
+		self.popover.popdown()
+		monophony.backend.cache.cache_song(self.song['id'])
 
 	def _on_new_clicked(self, _b):
-		pass
+		self.popover.popdown()
 
-	def _on_playlist_toggled(self, _t, name: str):
-		pass
+	def _on_playlist_toggled(self, chk: Gtk.CheckButton, name: str):
+		if chk.get_active():
+			monophony.backend.playlists.add_song(self.song, name)
+		else:
+			monophony.backend.playlists.remove_song(self.song['id'], name)
+			if self.editable and name == self.group.title:
+				self.popover.popdown()
