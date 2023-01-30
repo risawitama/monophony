@@ -50,9 +50,9 @@ install:
 
 test:
 	flatpak-builder --force-clean --repo=repo/ build/ data/manifest.yml
-	flatpak build-bundle repo/ monophony.flatpak com.gitlab.zehkira.Monophony.Devel
+	flatpak build-bundle repo/ monophony.flatpak com.gitlab.zehkira.Monophony
 	flatpak install --reinstall --user monophony.flatpak
-	flatpak run --no-session-bus com.gitlab.zehkira.Monophony.Devel
+	flatpak run --no-session-bus com.gitlab.zehkira.Monophony
 
 
 uninstall:
