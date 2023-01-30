@@ -3,6 +3,8 @@ __pycache__/
 *.build/
 build/
 dist/
+repo/
+.flatpak-builder/
 *.egg-info/
-
+*.flatpak
 *~
