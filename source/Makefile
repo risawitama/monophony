@@ -48,6 +48,13 @@ install:
 	$(INSTALL_DATA) LICENSE $(prefix)/share/licenses/monophony/LICENSE
 
 
+test:
+	flatpak-builder --force-clean --repo=repo/ build/ data/manifest.yml
+	flatpak build-bundle repo/ monophony.flatpak com.gitlab.zehkira.Monophony.Devel
+	flatpak install --reinstall --user monophony.flatpak
+	flatpak run --no-session-bus com.gitlab.zehkira.Monophony.Devel
+
+
 uninstall:
 	@# script file
 	$(UNINSTALL) $(prefix)/bin/monophony

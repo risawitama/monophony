@@ -1,0 +1,25 @@
+app-id: com.gitlab.zehkira.Monophony.Devel
+runtime: org.gnome.Platform
+runtime-version: '43'
+sdk: org.gnome.Sdk
+command: monophony
+finish-args:
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --share=network
+  - --filesystem=xdg-music/monophony:create
+  - --device=dri
+modules:
+  - python3-modules.json
+  - name: monophony
+    buildsystem: simple
+    build-commands:
+      - mv source/* .
+      - make prefix=${FLATPAK_DEST} install
+    sources:
+      - type: git
+        path: ../..
+    cleanup-commands:
+      - pip3 uninstall -y nuitka
