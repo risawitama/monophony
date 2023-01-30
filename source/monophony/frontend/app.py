@@ -10,7 +10,7 @@ class MonophonyApplication(Adw.Application):
 	def __init__(self):
 		super().__init__(
 			application_id = APP_ID,
-			flags = Gio.ApplicationFlags.FLAGS_NONE
+			flags = Gio.ApplicationFlags.DEFAULT_FLAGS
 		)
 
 	def do_activate(self):
