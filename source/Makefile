@@ -8,7 +8,7 @@ UNINSTALL = rm -rf
 install:
 	@# app binary
 	mkdir -p $(prefix)/bin/
-	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --disable-cache=all --follow-import-to=monophony -o $(prefix)/bin/monophony
+	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o $(prefix)/bin/monophony
 
 	@# desktop file
 	$(INSTALL_DATA) data/monophony.desktop $(prefix)/share/applications/com.gitlab.zehkira.Monophony.desktop
@@ -51,7 +51,7 @@ install:
 test:
 	flatpak-builder --force-clean --repo=repo/ build/ data/manifest.yml
 	flatpak build-bundle repo/ monophony.flatpak com.gitlab.zehkira.Monophony
-	flatpak install --reinstall --user monophony.flatpak
+	flatpak install --reinstall --user -y monophony.flatpak
 	flatpak run com.gitlab.zehkira.Monophony
 
 
