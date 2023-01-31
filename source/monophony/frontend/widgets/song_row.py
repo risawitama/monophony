@@ -100,10 +100,9 @@ class MonophonySongRow(Adw.ActionRow):
 		self.set_title(title)
 		self.set_subtitle(length + '  ' + author)
 
-	def _on_play_clicked(self, _b):
-		if self.player.is_busy():
-			return
+		GLib.timeout_add(100, self.update)
 
+	def _on_play_clicked(self, _b):
 		if self.editable:
 			queue = monophony.backend.playlists.read_playlists()[
 				self.group['title']
@@ -146,3 +145,11 @@ class MonophonySongRow(Adw.ActionRow):
 			monophony.backend.playlists.remove_song(self.song['id'], name)
 			if self.editable and name == self.group.title:
 				self.popover.popdown()
+
+	def update(self) -> True:
+		if self.player.is_busy():
+			self.set_sensitive(False)
+		else:
+			self.set_sensitive(True)
+
+		return True

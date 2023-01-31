@@ -1,7 +1,9 @@
+import monophony.backend.settings
+
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk, Pango
+from gi.repository import Adw, Gdk, GLib, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -85,11 +87,11 @@ class MonophonyPlayer(Gtk.Box):
 		box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
 		box_pop.append(box_volume)
 		box_pop.append(chk_autoplay)
-		pop_more = Gtk.Popover.new()
-		pop_more.set_child(box_pop)
+		self.pop_misc = Gtk.Popover.new()
+		self.pop_misc.set_child(box_pop)
 		btn_more = Gtk.MenuButton()
 		btn_more.set_icon_name('view-more')
-		btn_more.set_popover(pop_more)
+		btn_more.set_popover(self.pop_misc)
 		btn_more.set_has_frame(False)
 
 		box_controls = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
@@ -116,28 +118,38 @@ class MonophonyPlayer(Gtk.Box):
 		self.player.seek(target)
 
 	def _on_pause_clicked(self, _b):
-		pass
+		self.player.toggle_pause()
 
 	def _on_next_clicked(self, _b):
-		pass
+		GLib.Thread.new(None, self.player.next_song)
 
 	def _on_previous_clicked(self, _b):
-		pass
+		GLib.Thread.new(None, self.player.previous_song)
 
 	def _on_shuffle_toggled(self, btn: Gtk.ToggleButton):
 		self.player.shuffle = btn.get_active()
 
-	def _on_loop_toggled(self, _b):
+	def _on_loop_toggled(self, btn: Gtk.ToggleButton):
 		self.player.loop = btn.get_active()
 
 	def _on_unqueue_clicked(self, _b):
-		GLib.Thread.new(None, self.player.unqueue_song)
+		self.player.unqueue_song()
 
 	def _on_volume_changed(self, scl: Gtk.Scale):
 		self.player.set_volume(scl.get_value())
 
 	def _on_copy_clicked(self, _b):
-		pass
+		self.pop_misc.popdown()
+
+		song = self.player.get_current_song()
+		if not song:
+			return
+
+		self.get_clipboard().set_content(
+			Gdk.ContentProvider.new_for_value(
+				'https://music.youtube.com/watch?v=' + song['id']
+			)
+		)
 
 	def _on_radio_toggled(self, chk: Gtk.CheckButton):
 		monophony.backend.settings.set_value('radio', int(chk.get_active()))
