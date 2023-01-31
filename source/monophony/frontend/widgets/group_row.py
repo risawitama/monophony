@@ -3,7 +3,7 @@ from monophony.frontend.widgets.song_row import MonophonySongRow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyGroupRow(Adw.ExpanderRow):
@@ -46,7 +46,10 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		for item in group['contents']:
 			self.add_row(MonophonySongRow(item, player, group))
 
-		self.set_title(group['title'])
+		self.set_title(GLib.markup_escape_text(
+			group['title'] if 'title' in group else '________',
+			-1
+		))
 
 	def _on_delete_clicked(self, _b):
 		pass
