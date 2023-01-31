@@ -19,7 +19,7 @@ modules:
       - mv source/* .
       - make prefix=${FLATPAK_DEST} install
     sources:
-      - type: git
+      - type: dir
         path: ../..
     cleanup-commands:
       - pip3 uninstall -y nuitka
