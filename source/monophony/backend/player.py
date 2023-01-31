@@ -172,7 +172,7 @@ class Player:
 		return
 
 	def play_radio_song(self):
-		if not int(monophony.backend.settings.get_value('radio')):
+		if not int(monophony.backend.settings.get_value('radio', 0)):
 			return
 
 		id_queue = [s['id'] for s in self.queue]

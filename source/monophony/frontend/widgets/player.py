@@ -112,8 +112,8 @@ class MonophonyPlayer(Gtk.Box):
 
 		GLib.timeout_add(100, self.update)
 
-	def _on_seek_performed(self, _s, __, target: float):
-		pass
+	def _on_seek_performed(self, _s, _t, target: float):
+		self.player.seek(target)
 
 	def _on_pause_clicked(self, _b):
 		pass
@@ -124,23 +124,23 @@ class MonophonyPlayer(Gtk.Box):
 	def _on_previous_clicked(self, _b):
 		pass
 
-	def _on_shuffle_toggled(self, _b):
-		pass
+	def _on_shuffle_toggled(self, btn: Gtk.ToggleButton):
+		self.player.shuffle = btn.get_active()
 
 	def _on_loop_toggled(self, _b):
-		pass
+		self.player.loop = btn.get_active()
 
 	def _on_unqueue_clicked(self, _b):
-		pass
+		GLib.Thread.new(None, self.player.unqueue_song)
 
 	def _on_volume_changed(self, scl: Gtk.Scale):
-		pass
+		self.player.set_volume(scl.get_value())
 
 	def _on_copy_clicked(self, _b):
 		pass
 
 	def _on_radio_toggled(self, chk: Gtk.CheckButton):
-		pass
+		monophony.backend.settings.set_value('radio', int(chk.get_active()))
 
 	def update(self) -> True:
 		if self.player.is_busy():
