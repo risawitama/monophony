@@ -1,5 +1,6 @@
 import monophony.backend.cache
 import monophony.backend.playlists
+from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 
 import gi
 gi.require_version('Adw', '1')
@@ -8,12 +9,14 @@ from gi.repository import Adw, Gdk, GLib, Gtk, Pango
 
 
 class MonophonySongPopover(Gtk.Popover):
-	def __init__(self, btn: Gtk.MenuButton, player: object, song: dict, group: dict = None, editable: bool = False):
+	def __init__(self, btn: Gtk.MenuButton, player: object, song: dict = None, group: dict = None, editable: bool = False):
 		super().__init__()
 
+		song = song if song else player.get_current_song()
 		self.player = player
 		self.song = song
 		self.group = group
+		self.editable = editable
 
 		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_pop.set_spacing(5)
@@ -53,21 +56,32 @@ class MonophonySongPopover(Gtk.Popover):
 		btn_new.connect('clicked', self._on_new_clicked)
 		box_pop.append(btn_new)
 		playlists = monophony.backend.playlists.read_playlists()
-		if playlists:
+		if playlists and song:
 			box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
-		for name, songs in playlists.items():
-			box_playlist = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
-			box_playlist.set_spacing(5)
-			chk_playlist = Gtk.CheckButton.new()
-			lbl_playlist = Gtk.Label.new(name)
-			lbl_playlist.set_ellipsize(Pango.EllipsizeMode.END)
-			lbl_playlist.set_max_width_chars(20)
-			chk_playlist.set_active(song['id'] in [s['id'] for s in songs])
-			chk_playlist.connect('toggled', self._on_playlist_toggled, name)
-			box_playlist.append(chk_playlist)
-			box_playlist.append(lbl_playlist)
-			box_pop.append(box_playlist)
+			scr_playlists = Gtk.ScrolledWindow.new()
+			scr_playlists.set_max_content_width(80)
+			scr_playlists.set_max_content_height(80)
+			scr_playlists.set_propagate_natural_height(True)
+			scr_playlists.set_policy(
+				Gtk.PolicyType.NEVER,
+				Gtk.PolicyType.AUTOMATIC
+			)
+			box_playlists = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+			for name, songs in playlists.items():
+				box_playlist = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+				box_playlist.set_spacing(5)
+				chk_playlist = Gtk.CheckButton.new_with_label(name)
+				chk_playlist.get_last_child().set_max_width_chars(20)
+				chk_playlist.get_last_child().set_ellipsize(
+					Pango.EllipsizeMode.END
+				)
+				chk_playlist.set_active(song['id'] in [s['id'] for s in songs])
+				chk_playlist.connect('toggled', self._on_playlist_toggled, name)
+				box_playlist.append(chk_playlist)
+				box_playlists.append(box_playlist)
 
+			scr_playlists.set_child(box_playlists)
+			box_pop.append(scr_playlists)
 		self.set_child(box_pop)
 		btn.set_popover(self)
 
@@ -93,6 +107,15 @@ class MonophonySongPopover(Gtk.Popover):
 
 	def _on_new_clicked(self, _b):
 		self.popdown()
+		def _create(name: str):
+			if self.song:
+				monophony.backend.playlists.add_playlist(name, [self.song])
+			else:
+				monophony.backend.playlists.add_playlist(name)
+
+		popup = MonophonyRenameWindow(_create)
+		popup.set_transient_for(self.get_ancestor(Gtk.Window))
+		popup.show()
 
 	def _on_playlist_toggled(self, chk: Gtk.CheckButton, name: str):
 		if chk.get_active():

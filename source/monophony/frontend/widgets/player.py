@@ -56,9 +56,7 @@ class MonophonyPlayer(Gtk.Box):
 		tog_shuffle.set_has_frame(False)
 		tog_shuffle.connect('toggled', self._on_shuffle_toggled)
 		btn_playlists = Gtk.MenuButton()
-		btn_playlists.set_create_popup_func(
-			MonophonySongPopover, player, player.get_current_song()
-		)
+		btn_playlists.set_create_popup_func(MonophonySongPopover, player)
 		btn_playlists.set_has_frame(False)
 		btn_playlists.set_icon_name('list-add')
 
