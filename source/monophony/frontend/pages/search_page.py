@@ -45,8 +45,10 @@ class MonophonySearchPage(Gtk.Box):
 
 		self.set_margin_top(10)
 		self.set_vexpand(True)
+		self.query = ''
 		self.search_results = []
 		self.results_changed = False
+		self.results_filtered = False
 		self.search_lock = GLib.Mutex()
 		self.player = player
 
@@ -65,11 +67,21 @@ class MonophonySearchPage(Gtk.Box):
 		self.search_lock.unlock()
 		GLib.Thread.new(None, self.do_search, ent.get_text())
 
-	def do_search(self, query: str):
+	def do_search(self, query: str, filter: str = ''):
 		self.search_lock.lock()
-		self.search_results = monophony.backend.yt.search(query)
+		self.query = query
+		self.search_results = monophony.backend.yt.search(query, filter)
 		self.results_changed = True
+		self.results_filtered = bool(filter)
 		self.search_lock.unlock()
+
+	def show_more(self, category: str):
+		top = self.box_results.get_first_child().get_first_child().get_first_child().get_first_child()
+		while child := top.get_first_child():
+			self.box_results.remove(child)
+		self.pge_status.hide()
+		self.box_loading.show()
+		GLib.Thread.new(None, self.do_search, self.query, category)
 
 	def update_results(self) -> True:
 		if not self.search_lock.trylock():
@@ -87,19 +99,50 @@ class MonophonySearchPage(Gtk.Box):
 				self.pge_status.hide()
 				self.box_results.show()
 				box_songs = Adw.PreferencesGroup.new()
-				box_songs.set_title(_('Songs'))
-				box_albums = Adw.PreferencesGroup.new()
-				box_albums.set_title(_('Albums'))
 				box_videos = Adw.PreferencesGroup.new()
-				box_videos.set_title(_('Videos'))
+				box_albums = Adw.PreferencesGroup.new()
+
+				if not self.results_filtered:
+					box_songs.set_title(_('Songs'))
+					btn_more = Gtk.Button.new_with_label(_('More'))
+					btn_more.connect(
+						'clicked',
+						lambda b, f: self.show_more(f),
+						'songs'
+					)
+					box_songs.set_header_suffix(btn_more)
+					box_albums.set_title(_('Albums'))
+					btn_more = Gtk.Button.new_with_label(_('More'))
+					btn_more.connect(
+						'clicked',
+						lambda b, f: self.show_more(f),
+						'albums'
+					)
+					box_albums.set_header_suffix(btn_more)
+					box_videos.set_title(_('Videos'))
+					btn_more = Gtk.Button.new_with_label(_('More'))
+					btn_more.connect(
+						'clicked',
+						lambda b, f: self.show_more(f),
+						'videos'
+					)
+					box_videos.set_header_suffix(btn_more)
+
+				non_empty = []
 				for item in self.search_results:
 					if item['type'] == 'song':
 						box_songs.add(MonophonySongRow(item, self.player))
+						if box_songs not in non_empty:
+							non_empty.append(box_songs)
 					elif item['type'] == 'video':
 						box_videos.add(MonophonySongRow(item, self.player))
+						if box_videos not in non_empty:
+							non_empty.append(box_videos)
 					elif item['type'] == 'album':
 						box_albums.add(MonophonyGroupRow(item, self.player))
-				for box in {box_songs, box_videos, box_albums}:
+						if box_albums not in non_empty:
+							non_empty.append(box_albums)
+				for box in non_empty:
 					self.box_results.add(box)
 
 		self.search_lock.unlock()
