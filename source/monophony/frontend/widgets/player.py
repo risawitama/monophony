@@ -69,6 +69,9 @@ class MonophonyPlayer(Gtk.Box):
 			Gtk.Orientation.HORIZONTAL, 0, 1, 0.1
 		)
 		scl_volume.set_hexpand(True)
+		scl_volume.set_value(
+			float(monophony.backend.settings.get_value('volume', 1))
+		)
 		scl_volume.set_draw_value(False)
 		scl_volume.connect('value-changed', self._on_volume_changed)
 		box_volume = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
@@ -78,6 +81,9 @@ class MonophonyPlayer(Gtk.Box):
 		box_volume.append(lbl_volume)
 		box_volume.append(scl_volume)
 		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio mode'))
+		chk_autoplay.set_active(
+			int(monophony.backend.settings.get_value('radio', False))
+		)
 		chk_autoplay.get_last_child().set_wrap(True)
 		chk_autoplay.connect('toggled', self._on_radio_toggled)
 		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
@@ -137,6 +143,7 @@ class MonophonyPlayer(Gtk.Box):
 
 	def _on_volume_changed(self, scl: Gtk.Scale):
 		self.player.set_volume(scl.get_value())
+		monophony.backend.settings.set_value('volume', float(scl.get_value()))
 
 	def _on_copy_clicked(self, _b):
 		self.pop_misc.popdown()
