@@ -22,4 +22,4 @@ modules:
       - type: dir
         path: ../..
     cleanup-commands:
-      - pip3 uninstall -y nuitka
+      - pip3 uninstall -y nuitka ordered-set
