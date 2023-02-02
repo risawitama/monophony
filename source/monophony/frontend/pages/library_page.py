@@ -1,30 +1,47 @@
+import monophony.backend.playlists
 from monophony.frontend.widgets.group_row import MonophonyGroupRow
 from monophony.frontend.widgets.song_row import MonophonySongRow
 
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
-class MonophonyLibraryPage(Gtk.ScrolledWindow):
+class MonophonyLibraryPage(Adw.PreferencesPage):
 	def __init__(self, player: object):
 		super().__init__()
 
-		box_recommendations = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_recommendations.set_valign(Gtk.Align.START)
+		self.player = player
+		self.playlist_widgets = []
+		self.box_playlists = Adw.PreferencesGroup()
+		self.box_playlists.set_title(_('Playlists'))
+		self.add(self.box_playlists)
+		GLib.timeout_add(100, self.update)
 
-		box_playlists = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_playlists.set_valign(Gtk.Align.START)
+	def update(self) -> True:
+		new_playlists = monophony.backend.playlists.read_playlists()
+		new_titles = new_playlists.keys()
 
-		box_library = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_library.set_spacing(20)
-		box_library.set_margin_top(10)
-		box_library.set_margin_bottom(10)
-		box_library.append(box_recommendations)
-		box_library.append(box_playlists)
+		kept_widgets = []
+		for widget in self.playlist_widgets:
+			if widget.get_title() not in new_titles:
+				self.remove(widget) # XXX or will they remove themselves??
+			else:
+				kept_widgets.append(widget)
+		self.playlist_widgets = kept_widgets
 
-		clamp = Adw.Clamp()
-		clamp.set_child(box_library)
+		for title in new_titles:
+			for widget in self.playlist_widgets:
+				if widget.get_title() == title:
+					break
+			else: # nobreak
+				new_widget = MonophonyGroupRow(
+					{'title': title, 'contents': new_playlists[title]},
+					self.player,
+					True
+				)
+				self.playlist_widgets.append(new_widget)
+				self.box_playlists.add(new_widget)
 
-		self.group_rows = []
+		return True

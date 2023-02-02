@@ -43,6 +43,8 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			btn_more.set_valign(Gtk.Align.CENTER)
 			self.add_prefix(btn_more)
 
+			GLib.timeout_add(100, self.update)
+
 		for item in group['contents']:
 			self.add_row(MonophonySongRow(item, player, group))
 
@@ -65,3 +67,6 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 
 	def _on_cache_clicked(self, _b):
 		pass
+
+	def update(self) -> True:
+		return True
