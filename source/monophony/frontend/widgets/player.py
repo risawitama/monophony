@@ -164,7 +164,7 @@ class MonophonyPlayer(Gtk.Box):
 			if song:
 				self.lnk_title.set_label(song['title'])
 				self.lnk_title.set_uri(
-					'https://music.youtube.com/watch?v=' + song['title']
+					'https://music.youtube.com/watch?v=' + song['id']
 				)
 			else:
 				self.lnk_title.set_label('')
