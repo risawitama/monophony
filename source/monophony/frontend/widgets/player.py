@@ -22,13 +22,11 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading.start()
 		self.spn_loading.hide()
 
-		self.lbl_title = Gtk.Label.new('')
-		self.lbl_title.set_halign(Gtk.Align.CENTER)
-		self.lbl_title.set_ellipsize(Pango.EllipsizeMode.END)
-		self.lbl_title.set_margin_top(10)
-		self.lbl_title.set_margin_start(5)
-		self.lbl_title.set_margin_end(5)
-		self.lbl_title.set_margin_bottom(10)
+		self.lnk_title = Gtk.LinkButton.new_with_label('', '')
+		self.lnk_title.set_halign(Gtk.Align.CENTER)
+		self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
+		self.lnk_title.set_margin_start(5)
+		self.lnk_title.set_margin_end(5)
 
 		self.scl_progress = Gtk.Scale.new_with_range(
 			Gtk.Orientation.HORIZONTAL, 0, 1, 0.01
@@ -63,9 +61,6 @@ class MonophonyPlayer(Gtk.Box):
 		btn_unqueue = Gtk.Button.new_with_label(_('Remove from queue'))
 		btn_unqueue.set_has_frame(False)
 		btn_unqueue.connect('clicked', self._on_unqueue_clicked)
-		btn_url = Gtk.Button.new_with_label(_('Copy song URL'))
-		btn_url.set_has_frame(False)
-		btn_url.connect('clicked', self._on_copy_clicked)
 		lbl_volume = Gtk.Label.new(_('Volume'))
 		scl_volume = Gtk.Scale.new_with_range(
 			Gtk.Orientation.HORIZONTAL, 0, 1, 0.1
@@ -91,7 +86,6 @@ class MonophonyPlayer(Gtk.Box):
 		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_pop.set_spacing(5)
 		box_pop.append(btn_unqueue)
-		box_pop.append(btn_url)
 		box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
 		box_pop.append(box_volume)
 		box_pop.append(chk_autoplay)
@@ -116,7 +110,7 @@ class MonophonyPlayer(Gtk.Box):
 
 		self.set_hexpand(True)
 		self.append(self.spn_loading)
-		self.append(self.lbl_title)
+		self.append(self.lnk_title)
 		self.append(box_controls)
 		self.append(self.scl_progress)
 
@@ -147,19 +141,6 @@ class MonophonyPlayer(Gtk.Box):
 		self.player.set_volume(scl.get_value())
 		monophony.backend.settings.set_value('volume', float(scl.get_value()))
 
-	def _on_copy_clicked(self, _b):
-		self.pop_misc.popdown()
-
-		song = self.player.get_current_song()
-		if not song:
-			return
-
-		self.get_clipboard().set_content(
-			Gdk.ContentProvider.new_for_value(
-				'https://music.youtube.com/watch?v=' + song['id']
-			)
-		)
-
 	def _on_radio_toggled(self, chk: Gtk.CheckButton):
 		monophony.backend.settings.set_value('radio', int(chk.get_active()))
 
@@ -168,10 +149,10 @@ class MonophonyPlayer(Gtk.Box):
 			if not self.spn_loading.get_visible():
 				self.spn_loading.show()
 				self.spn_loading.start()
-			self.lbl_title.hide()
+			self.lnk_title.hide()
 		else:
 			self.spn_loading.hide()
-			self.lbl_title.show()
+			self.lnk_title.show()
 			self.scl_progress.set_value(self.player.get_progress())
 
 			if self.player.is_paused():
@@ -181,8 +162,12 @@ class MonophonyPlayer(Gtk.Box):
 
 			song = self.player.get_current_song()
 			if song:
-				self.lbl_title.set_label(song['title'])
+				self.lnk_title.set_label(song['title'])
+				self.lnk_title.set_uri(
+					'https://music.youtube.com/watch?v=' + song['title']
+				)
 			else:
-				self.lbl_title.set_label('')
+				self.lnk_title.set_label('')
+				self.lnk_title.set_uri('')
 
 		return True
