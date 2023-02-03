@@ -112,9 +112,11 @@ def rename_song(index: int, playlist: str, new_name: str):
 	write_playlists(new_lists)
 
 
-def swap_songs(i: int, j: int, playlist: str):
+def swap_songs(p_name: str, i: int, j: int):
 	lists = read_playlists()
-	lists[playlist][i], lists[playlist][j] = lists[playlist][j], lists[playlist][i]
+	i = 0 if i >= len(lists[p_name]) else i
+	j = 0 if j >= len(lists[p_name]) else j
+	lists[p_name][i], lists[p_name][j] = lists[p_name][j], lists[p_name][i]
 	write_playlists(lists)
 
 

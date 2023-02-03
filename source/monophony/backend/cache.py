@@ -3,6 +3,17 @@ import glob, os, subprocess
 from gi.repository import GLib
 
 
+def is_song_being_cached(video_id: str) -> bool:
+	music_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
+	if music_dir:
+		for file in os.listdir(music_dir + '/monophony/'):
+			parts = file.split('.')
+			if parts[0] == video_id and parts[-1] == 'part':
+				return True
+
+	return False
+
+
 def is_song_cached(video_id: str) -> bool:
 	music_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
 	if music_dir:

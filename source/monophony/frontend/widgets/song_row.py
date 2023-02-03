@@ -45,6 +45,8 @@ class MonophonySongRow(Adw.ActionRow):
 		btn_more.set_has_frame(False)
 		btn_more.set_vexpand(False)
 		btn_more.set_valign(Gtk.Align.CENTER)
+		self.spinner = Gtk.Spinner.new()
+		self.add_suffix(self.spinner)
 		self.add_suffix(btn_more)
 		self.set_title(title)
 		self.set_subtitle(length + '  ' + author)
@@ -70,5 +72,13 @@ class MonophonySongRow(Adw.ActionRow):
 			self.set_sensitive(False)
 		else:
 			self.set_sensitive(True)
+
+		if self.editable:
+			if monophony.backend.cache.is_song_being_cached(self.song['id']):
+				self.spinner.show()
+				self.spinner.start()
+			else:
+				self.spinner.stop()
+				self.spinner.hide()
 
 		return True

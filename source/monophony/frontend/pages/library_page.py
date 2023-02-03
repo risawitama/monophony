@@ -21,17 +21,8 @@ class MonophonyLibraryPage(Adw.PreferencesPage):
 
 	def update(self) -> True:
 		new_playlists = monophony.backend.playlists.read_playlists()
-		new_titles = new_playlists.keys()
 
-		kept_widgets = []
-		for widget in self.playlist_widgets:
-			if widget.get_title() not in new_titles:
-				self.remove(widget) # XXX or will they remove themselves??
-			else:
-				kept_widgets.append(widget)
-		self.playlist_widgets = kept_widgets
-
-		for title in new_titles:
+		for title in new_playlists.keys():
 			for widget in self.playlist_widgets:
 				if widget.get_title() == title:
 					break

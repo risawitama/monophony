@@ -17,6 +17,7 @@ class MonophonySongPopover(Gtk.Popover):
 		self.song = song
 		self.group = group
 		self.editable = editable
+		self.ancestor = btn.get_ancestor(Adw.ActionRow)
 
 		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_pop.set_spacing(5)
@@ -38,14 +39,14 @@ class MonophonySongPopover(Gtk.Popover):
 			btn_cache = Gtk.Button.new_with_label(_('Download to Music folder'))
 			btn_cache.set_has_frame(False)
 			box_pop.append(box_move)
-			if monophony.backend.cache.is_song_cached(song['id']):
+			if monophony.backend.cache.is_song_being_cached(song['id']):
+				pass
+			elif monophony.backend.cache.is_song_cached(song['id']):
 				btn_uncache.connect('clicked', self._on_uncache_clicked)
 				box_pop.append(btn_uncache)
-			elif Player.online:
+			else:
 				btn_cache.connect('clicked', self._on_cache_clicked)
 				box_pop.append(btn_cache)
-			else:
-				btn_song.set_sensitive(False)
 		if player.get_current_song() != song:
 			btn_queue = Gtk.Button.new_with_label(_('Add to queue'))
 			btn_queue.set_has_frame(False)
@@ -91,10 +92,10 @@ class MonophonySongPopover(Gtk.Popover):
 			GLib.Thread.new(None, self.player.queue_song, self.song)
 
 	def _on_move_clicked(self, _b, direction: int):
-		self.popover.popdown()
+		self.popdown()
 		index = self.group['contents'].index(self.song)
 		monophony.backend.playlists.swap_songs(
-			self.group['name'], index, index + direction
+			self.group['title'], index, index + direction
 		)
 
 	def _on_uncache_clicked(self, _b):
@@ -103,7 +104,9 @@ class MonophonySongPopover(Gtk.Popover):
 
 	def _on_cache_clicked(self, _b):
 		self.popdown()
-		monophony.backend.cache.cache_song(self.song['id'])
+		GLib.Thread.new(
+			None, monophony.backend.cache.cache_song, self.song['id']
+		)
 
 	def _on_new_clicked(self, _b):
 		self.popdown()
