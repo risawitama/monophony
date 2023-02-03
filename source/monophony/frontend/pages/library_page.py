@@ -22,6 +22,12 @@ class MonophonyLibraryPage(Adw.PreferencesPage):
 	def update(self) -> True:
 		new_playlists = monophony.backend.playlists.read_playlists()
 
+		remaining_widgets = []
+		for widget in self.playlist_widgets:
+			if widget.is_ancestor(self):
+				remaining_widgets.append(widget)
+		self.playlist_widgets = remaining_widgets
+
 		for title in new_playlists.keys():
 			for widget in self.playlist_widgets:
 				if widget.get_title() == title:

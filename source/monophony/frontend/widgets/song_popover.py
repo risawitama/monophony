@@ -116,9 +116,7 @@ class MonophonySongPopover(Gtk.Popover):
 			else:
 				monophony.backend.playlists.add_playlist(name)
 
-		popup = MonophonyRenameWindow(_create)
-		popup.set_transient_for(self.get_ancestor(Gtk.Window))
-		popup.show()
+		MonophonyRenameWindow(self.get_ancestor(Gtk.Window), _create).show()
 
 	def _on_playlist_toggled(self, chk: Gtk.CheckButton, name: str):
 		if chk.get_active():

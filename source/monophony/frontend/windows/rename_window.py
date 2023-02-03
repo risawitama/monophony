@@ -5,7 +5,7 @@ from gi.repository import Adw, Gtk
 
 
 class MonophonyRenameWindow(Adw.MessageDialog):
-	def __init__(self, callback: callable, name: str = ''):
+	def __init__(self, parent: Adw.Window, callback: callable, name: str = ''):
 		super().__init__()
 
 		self.callback = callback
@@ -15,14 +15,15 @@ class MonophonyRenameWindow(Adw.MessageDialog):
 		entry.set_placeholder_text(_('Enter name...'))
 
 		self.add_response('cancel', _('Cancel'))
-		self.add_response('apply', _('Apply'))
+		self.add_response('ok', _('Ok'))
+		self.set_transient_for(parent)
 		self.set_modal(True)
 		self.set_resizable(False)
 		self.set_extra_child(entry)
 		self.connect('response', self._on_response)
 
 	def _on_response(self, _w, response: str):
-		if response == 'apply':
+		if response == 'ok':
 			name = self.get_extra_child().get_text()
 			if name:
 				self.callback(name)

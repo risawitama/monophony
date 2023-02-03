@@ -1,4 +1,6 @@
 import monophony.backend.playlists
+from monophony.frontend.windows.message_window import MonophonyMessageWindow
+from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 from monophony.frontend.widgets.song_row import MonophonySongRow
 
 import gi
@@ -21,21 +23,17 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			btn_delete = Gtk.Button.new_with_label(_('Delete'))
 			btn_delete.set_has_frame(False)
 			btn_delete.connect('clicked', self._on_delete_clicked)
-			btn_share = Gtk.Button.new_with_label(_('Export to clipboard'))
-			btn_share.set_has_frame(False)
-			btn_share.connect('clicked', self._on_share_clicked)
 			btn_rename = Gtk.Button.new_with_label(_('Rename...'))
 			btn_rename.set_has_frame(False)
 			btn_rename.connect('clicked', self._on_rename_clicked)
 			box_pop.append(btn_rename)
-			box_pop.append(btn_share)
 			box_pop.append(btn_delete)
-			pop_more = Gtk.Popover.new()
-			pop_more.set_child(box_pop)
+			self.popover = Gtk.Popover.new()
+			self.popover.set_child(box_pop)
 			btn_more = Gtk.MenuButton()
 			btn_more.set_icon_name('view-more')
 			btn_more.set_has_frame(False)
-			btn_more.set_popover(pop_more)
+			btn_more.set_popover(self.popover)
 			btn_more.set_vexpand(False)
 			btn_more.set_valign(Gtk.Align.CENTER)
 			self.add_prefix(btn_more)
@@ -54,15 +52,32 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		))
 
 	def _on_delete_clicked(self, _b):
-		pass
-
-	def _on_share_clicked(self, _b):
-		pass
+		self.popover.popdown()
+		monophony.backend.playlists.remove_playlist(self.group['title'])
+		self.get_ancestor(Adw.PreferencesGroup).remove(self)
 
 	def _on_rename_clicked(self, _b):
-		pass
+		self.popover.popdown()
+		def _rename(name: str):
+			success = monophony.backend.playlists.rename_playlist(
+				self.group['title'], name
+			)
+			if success:
+				self.group['title'] = name
+				self.set_title(name)
+			else:
+				MonophonyMessageWindow(
+					self.get_ancestor(Gtk.Window),
+					_('Could not rename'),
+					_('Playlist already exists')
+				).show()
+
+		MonophonyRenameWindow(
+			self.get_ancestor(Gtk.Window), _rename, self.group['title']
+		).show()
 
 	def update(self) -> True:
+		self.set_enable_expansion(self.song_widgets != [])
 		playlists = monophony.backend.playlists.read_playlists()
 		if self.group['title'] not in playlists:
 			return True

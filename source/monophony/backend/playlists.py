@@ -42,26 +42,20 @@ def import_playlist(name: str, data: str) -> bool:
 	new_lists = read_playlists()
 	playlist = []
 
-	# interpret as b64 enc data, otherwise as url
-	try:
-		playlist = json.loads(
-			base64.urlsafe_b64decode(data.encode()).decode()
-		)
-	except (json.decoder.JSONDecodeError, binascii.Error, UnicodeDecodeError):
-		yt = ytmusicapi.YTMusic()
-		playlist_id = data.split('list=')[1].split('&')[0]
-		songs = yt.get_playlist(playlist_id, limit = None)['tracks']
+	yt = ytmusicapi.YTMusic()
+	playlist_id = data.split('list=')[1].split('&')[0]
+	songs = yt.get_playlist(playlist_id, limit = None)['tracks']
 
-		for song in songs:
-			if not song['videoId']:
-				continue
+	for song in songs:
+		if not song['videoId']:
+			continue
 
-			playlist.append({
-				'title': song['title'],
-				'author': song['artists'][0]['name'],
-				'length': song['duration'] if 'duration' in song else '',
-				'id': song['videoId'],
-			})
+		playlist.append({
+			'title': song['title'],
+			'author': song['artists'][0]['name'],
+			'length': song['duration'] if 'duration' in song else '',
+			'id': song['videoId'],
+		})
 
 	# append (n) to playlist name to keep them unique
 	if name in new_lists:
@@ -74,12 +68,6 @@ def import_playlist(name: str, data: str) -> bool:
 	new_lists[name] = playlist
 	write_playlists(new_lists)
 	return True
-
-
-def export_playlist(name: str) -> str:
-	return base64.urlsafe_b64encode(
-		json.dumps(read_playlists()[name]).encode()
-	).decode()
 
 
 def remove_playlist(name: str):
