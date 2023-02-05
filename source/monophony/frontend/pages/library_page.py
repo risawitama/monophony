@@ -59,4 +59,9 @@ class MonophonyLibraryPage(Adw.PreferencesPage):
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
 
+		if self.playlist_widgets:
+			self.box_playlists.show()
+		else:
+			self.box_playlists.hide()
+
 		return True
