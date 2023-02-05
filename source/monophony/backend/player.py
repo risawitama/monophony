@@ -227,7 +227,8 @@ class Player:
 		if len(self.queue) > 0:
 			self.queue.pop(self.index)
 			self.index = self.index - 1 if self.index else 0
-			GLib.Thread.new(None, self.next_song)
+			self._remake_playbin()
+			GLib.Thread.new(None, self.play_queue, self.queue, self.index)
 
 	def queue_song(self, song: dict):
 		self.lock.lock()
