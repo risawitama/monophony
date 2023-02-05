@@ -14,13 +14,31 @@ class MonophonyLibraryPage(Adw.PreferencesPage):
 
 		self.player = player
 		self.playlist_widgets = []
+
+		self.btn_play = Gtk.Button.new_with_label(_('Play all'))
+		self.btn_play.connect('clicked', self._on_play_all)
 		self.box_playlists = Adw.PreferencesGroup()
 		self.box_playlists.set_title(_('Playlists'))
+		self.box_playlists.set_header_suffix(self.btn_play)
 		self.add(self.box_playlists)
+
 		GLib.timeout_add(100, self.update)
+
+	def _on_play_all(self, _b):
+		playlists = monophony.backend.playlists.read_playlists()
+		all_songs = []
+		for title, content in playlists.items():
+			all_songs.extend(content)
+
+		GLib.Thread.new(None, self.player.play_queue, all_songs, 0)
 
 	def update(self) -> True:
 		new_playlists = monophony.backend.playlists.read_playlists()
+
+		if self.player.is_busy():
+			self.btn_play.set_sensitive(False)
+		else:
+			self.btn_play.set_sensitive(True)
 
 		remaining_widgets = []
 		for widget in self.playlist_widgets:
