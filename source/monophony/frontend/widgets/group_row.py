@@ -47,6 +47,9 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		btn_more.set_valign(Gtk.Align.CENTER)
 		self.add_prefix(btn_more)
 
+		if 'author' in self.group:
+			self.set_subtitle(self.group['author'])
+
 		self.song_widgets = []
 		for item in group['contents']:
 			row = MonophonySongRow(item, player, group, editable)
