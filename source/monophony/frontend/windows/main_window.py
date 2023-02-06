@@ -7,7 +7,7 @@ from monophony.frontend.widgets.player import MonophonyPlayer
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
@@ -15,22 +15,15 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		super().__init__(**kwargs)
 		self.player = monophony.backend.player.Player()
 
-		stack = Adw.ViewStack()
-		stack.add_titled_with_icon(
-			MonophonyLibraryPage(self.player),
-			'library',
-			_('Library'),
-			'folder-music-symbolic'
-		)
-		stack.add_titled_with_icon(
-			MonophonySearchPage(self.player),
-			'search',
-			_('Search'),
-			'system-search-symbolic'
-		)
-		view_switcher = Adw.ViewSwitcher()
-		view_switcher.set_policy(Adw.ViewSwitcherPolicy.WIDE)
-		view_switcher.set_stack(stack)
+		pge_library = MonophonyLibraryPage(self.player)
+		self.pge_search = MonophonySearchPage(self.player)
+		self.stack = Adw.ViewStack()
+		self.stack.add_named(pge_library, 'library')
+		self.stack.add_named(self.pge_search, 'search')
+
+		self.btn_back = Gtk.Button.new_from_icon_name('go-previous-symbolic')
+		self.btn_back.hide()
+		self.btn_back.connect('clicked', self._on_back_clicked)
 
 		btn_about = Gtk.Button.new_with_label(_('About'))
 		btn_about.set_has_frame(False)
@@ -43,8 +36,16 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		btn_menu.set_icon_name('open-menu-symbolic')
 		btn_menu.set_popover(pop_menu)
 
+		self.ent_search = Gtk.SearchEntry()
+		self.ent_search.set_hexpand(True)
+		self.ent_search.set_halign(Gtk.Align.FILL)
+		self.ent_search.connect('activate', self._on_search)
+		clm_search = Adw.Clamp.new()
+		clm_search.set_child(self.ent_search)
+
 		header_bar = Adw.HeaderBar()
-		header_bar.set_title_widget(view_switcher)
+		header_bar.pack_start(self.btn_back)
+		header_bar.set_title_widget(clm_search)
 		header_bar.pack_end(btn_menu)
 
 		footer_bar = Adw.HeaderBar()
@@ -54,10 +55,19 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 		box_content = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_content.append(header_bar)
-		box_content.append(stack)
+		box_content.append(self.stack)
 		box_content.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
 		box_content.append(footer_bar)
 		self.set_content(box_content)
+
+	def _on_search(self, ent: Gtk.Entry):
+		self.btn_back.show()
+		self.stack.set_visible_child_name('search')
+		self.pge_search._on_search(ent)
+
+	def _on_back_clicked(self, _b):
+		self.btn_back.hide()
+		self.stack.set_visible_child_name('library')
 
 	def _on_about_clicked(self, _b, parent: Gtk.Popover):
 		parent.popdown()
@@ -110,3 +120,4 @@ SOFTWARE.'''
 		win_about.set_website('https://gitlab.com/zehkira/monophony')
 		win_about.set_transient_for(self)
 		win_about.show()
+

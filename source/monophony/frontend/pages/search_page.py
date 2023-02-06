@@ -12,16 +12,6 @@ class MonophonySearchPage(Gtk.Box):
 	def __init__(self, player: object):
 		super().__init__(orientation = Gtk.Orientation.VERTICAL)
 
-		ent_search = Gtk.SearchEntry()
-		ent_search.set_margin_start(10)
-		ent_search.set_margin_end(10)
-		ent_search.set_margin_bottom(10)
-		ent_search.connect('activate', self._on_search)
-
-		clm_search = Adw.Clamp()
-		clm_search.set_child(ent_search)
-		self.append(clm_search)
-
 		self.box_results = Adw.PreferencesPage()
 		self.append(self.box_results)
 		self.box_results.hide()
