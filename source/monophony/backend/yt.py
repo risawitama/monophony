@@ -74,7 +74,7 @@ def search(query: str, filter: str = '') -> list:
 
 	results = []
 	for result in data:
-		if result['resultType'] not in {'album', 'song', 'video'}:
+		if result['resultType'] not in {'album', 'song', 'video', 'playlist'}:
 			continue
 
 		item = {'type': result['resultType'], 'title': result['title']}
@@ -82,6 +82,21 @@ def search(query: str, filter: str = '') -> list:
 			try:
 				album = yt.get_album(result['browseId'])
 				item['author'] = result['artists'][0]['name']
+				item['contents'] = [
+					{
+						'id': str(s['videoId']),
+						'title': s['title'],
+						'type': 'song',
+						'author': s['artists'][0]['name'],
+						'length': s['duration']
+					} for s in album['tracks']
+				]
+			except:
+				continue
+		elif result['resultType'] == 'playlist':
+			try:
+				album = yt.get_playlist(result['browseId'])
+				item['author'] = result['author']
 				item['contents'] = [
 					{
 						'id': str(s['videoId']),

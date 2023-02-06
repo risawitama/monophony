@@ -29,17 +29,23 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			btn_rename.connect('clicked', self._on_rename_clicked)
 			box_pop.append(btn_rename)
 			box_pop.append(btn_delete)
-			self.popover = Gtk.Popover.new()
-			self.popover.set_child(box_pop)
-			btn_more = Gtk.MenuButton()
-			btn_more.set_icon_name('view-more')
-			btn_more.set_has_frame(False)
-			btn_more.set_popover(self.popover)
-			btn_more.set_vexpand(False)
-			btn_more.set_valign(Gtk.Align.CENTER)
-			self.add_prefix(btn_more)
 
 			GLib.timeout_add(100, self.update)
+		else:
+			btn_save = Gtk.Button.new_with_label(_('Save to library'))
+			btn_save.set_has_frame(False)
+			btn_save.connect('clicked', self._on_save_clicked)
+			box_pop.append(btn_save)
+
+		self.popover = Gtk.Popover.new()
+		self.popover.set_child(box_pop)
+		btn_more = Gtk.MenuButton()
+		btn_more.set_icon_name('view-more')
+		btn_more.set_has_frame(False)
+		btn_more.set_popover(self.popover)
+		btn_more.set_vexpand(False)
+		btn_more.set_valign(Gtk.Align.CENTER)
+		self.add_prefix(btn_more)
 
 		self.song_widgets = []
 		for item in group['contents']:
@@ -77,6 +83,12 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		MonophonyRenameWindow(
 			self.get_ancestor(Gtk.Window), _rename, self.group['title']
 		).show()
+
+	def _on_save_clicked(self, _b):
+		self.popover.popdown()
+		monophony.backend.playlists.add_playlist(
+			self.group['title'], self.group['contents']
+		)
 
 	def update(self) -> bool:
 		self.set_enable_expansion(self.song_widgets != [])

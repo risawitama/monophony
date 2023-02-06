@@ -101,6 +101,7 @@ class MonophonySearchPage(Gtk.Box):
 				box_songs = Adw.PreferencesGroup.new()
 				box_videos = Adw.PreferencesGroup.new()
 				box_albums = Adw.PreferencesGroup.new()
+				box_playlists = Adw.PreferencesGroup.new()
 
 				if not self.results_filtered:
 					box_songs.set_title(_('Songs'))
@@ -111,6 +112,7 @@ class MonophonySearchPage(Gtk.Box):
 						'songs'
 					)
 					box_songs.set_header_suffix(btn_more)
+
 					box_albums.set_title(_('Albums'))
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
@@ -119,6 +121,16 @@ class MonophonySearchPage(Gtk.Box):
 						'albums'
 					)
 					box_albums.set_header_suffix(btn_more)
+
+					box_playlists.set_title(_('Community playlists'))
+					btn_more = Gtk.Button.new_with_label(_('More'))
+					btn_more.connect(
+						'clicked',
+						lambda b, f: self.show_more(f),
+						'playlists'
+					)
+					box_playlists.set_header_suffix(btn_more)
+
 					box_videos.set_title(_('Videos'))
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
@@ -142,6 +154,10 @@ class MonophonySearchPage(Gtk.Box):
 						box_albums.add(MonophonyGroupRow(item, self.player))
 						if box_albums not in non_empty:
 							non_empty.append(box_albums)
+					elif item['type'] == 'playlist':
+						box_playlists.add(MonophonyGroupRow(item, self.player))
+						if box_playlists not in non_empty:
+							non_empty.append(box_playlists)
 				for box in non_empty:
 					self.box_results.add(box)
 
