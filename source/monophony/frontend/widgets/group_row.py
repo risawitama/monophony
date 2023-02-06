@@ -1,4 +1,5 @@
 import monophony.backend.playlists
+from monophony.frontend.windows.delete_window import MonophonyDeleteWindow
 from monophony.frontend.windows.message_window import MonophonyMessageWindow
 from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 from monophony.frontend.widgets.song_row import MonophonySongRow
@@ -53,8 +54,9 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 
 	def _on_delete_clicked(self, _b):
 		self.popover.popdown()
-		monophony.backend.playlists.remove_playlist(self.group['title'])
-		self.get_ancestor(Adw.PreferencesGroup).remove(self)
+		MonophonyDeleteWindow(
+			self.get_ancestor(Gtk.Window), self.group['title']
+		).show()
 
 	def _on_rename_clicked(self, _b):
 		self.popover.popdown()
@@ -76,11 +78,13 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			self.get_ancestor(Gtk.Window), _rename, self.group['title']
 		).show()
 
-	def update(self) -> True:
+	def update(self) -> bool:
 		self.set_enable_expansion(self.song_widgets != [])
 		playlists = monophony.backend.playlists.read_playlists()
 		if self.group['title'] not in playlists:
-			return True
+			self.popover.popdown()
+			self.get_ancestor(Adw.PreferencesGroup).remove(self)
+			return False
 
 		if self.group['contents'] == playlists[self.group['title']]:
 			return True
