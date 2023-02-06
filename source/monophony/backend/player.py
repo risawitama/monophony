@@ -59,8 +59,9 @@ class Player:
 		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
 		acceptable_states = {Gst.State.PAUSED, Gst.State.PLAYING}
 
-		if len(self.queue) > self.index and state in acceptable_states:
-			return self.queue[self.index]
+		if len(self.queue) > self.index:
+			if state in acceptable_states or self.is_busy():
+				return self.queue[self.index]
 
 		return {}
 

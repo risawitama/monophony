@@ -13,6 +13,8 @@ class MonophonyPlayer(Gtk.Box):
 
 		self.player = player
 
+		box_title = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_title.set_halign(Gtk.Align.CENTER)
 		self.spn_loading = Gtk.Spinner.new()
 		self.spn_loading.set_halign(Gtk.Align.CENTER)
 		self.spn_loading.set_margin_top(10)
@@ -21,12 +23,13 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading.set_margin_bottom(10)
 		self.spn_loading.start()
 		self.spn_loading.hide()
-
+		box_title.append(self.spn_loading)
 		self.lnk_title = Gtk.LinkButton.new_with_label('', '')
 		self.lnk_title.set_halign(Gtk.Align.CENTER)
 		self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
 		self.lnk_title.set_margin_start(5)
 		self.lnk_title.set_margin_end(5)
+		box_title.append(self.lnk_title)
 
 		self.scl_progress = Gtk.Scale.new_with_range(
 			Gtk.Orientation.HORIZONTAL, 0, 1, 0.01
@@ -109,8 +112,7 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.append(btn_more)
 
 		self.set_hexpand(True)
-		self.append(self.spn_loading)
-		self.append(self.lnk_title)
+		self.append(box_title)
 		self.append(box_controls)
 		self.append(self.scl_progress)
 
@@ -149,10 +151,8 @@ class MonophonyPlayer(Gtk.Box):
 			if not self.spn_loading.get_visible():
 				self.spn_loading.show()
 				self.spn_loading.start()
-			self.lnk_title.hide()
 		else:
 			self.spn_loading.hide()
-			self.lnk_title.show()
 			self.scl_progress.set_value(self.player.get_progress())
 
 			if self.player.is_paused():
@@ -160,17 +160,17 @@ class MonophonyPlayer(Gtk.Box):
 			else:
 				self.btn_pause.set_icon_name('media-playback-pause')
 
-			song = self.player.get_current_song()
-			if song:
-				self.lnk_title.set_label(
-					(song['author'] if 'author' in song else '________')
-					+ ' - ' + song['title']
-				)
-				self.lnk_title.set_uri(
-					'https://music.youtube.com/watch?v=' + song['id']
-				)
-			else:
-				self.lnk_title.set_label('')
-				self.lnk_title.set_uri('')
+		song = self.player.get_current_song()
+		if song:
+			self.lnk_title.set_label(
+				(song['author'] if 'author' in song else '________')
+				+ ' - ' + song['title']
+			)
+			self.lnk_title.set_uri(
+				'https://music.youtube.com/watch?v=' + song['id']
+			)
+		else:
+			self.lnk_title.set_label('')
+			self.lnk_title.set_uri('')
 
 		return True
