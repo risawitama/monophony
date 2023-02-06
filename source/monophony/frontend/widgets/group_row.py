@@ -48,7 +48,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		self.add_prefix(btn_more)
 
 		if 'author' in self.group:
-			self.set_subtitle(self.group['author'])
+			self.set_subtitle(GLib.markup_escape_text(self.group['author'], -1))
 
 		self.song_widgets = []
 		for item in group['contents']:
