@@ -68,6 +68,8 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 	def _on_back_clicked(self, _b):
 		self.btn_back.hide()
 		self.stack.set_visible_child_name('library')
+		self.pge_search.clear()
+		self.ent_search.set_text('')
 
 	def _on_about_clicked(self, _b, parent: Gtk.Popover):
 		parent.popdown()

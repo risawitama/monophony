@@ -73,6 +73,10 @@ class MonophonySearchPage(Gtk.Box):
 		self.box_loading.show()
 		GLib.Thread.new(None, self.do_search, self.query, category)
 
+	def clear(self):
+		self.search_results = []
+		self.results_changed = True
+
 	def update_results(self) -> True:
 		if not self.search_lock.trylock():
 			return True
