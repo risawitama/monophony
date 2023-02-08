@@ -117,9 +117,8 @@ SOFTWARE.'''
 			'Uses SponsorBlock data licensed used under CC BY-NC-SA 4.0 from https://sponsor.ajay.app/.'
 		)
 		win_about.set_translator_credits(_('translator-credits'))
-		win_about.add_acknowledgement_section(_('Patrons'), ['yuanca'])
 		win_about.set_issue_url('https://gitlab.com/zehkira/monophony/-/issues')
-		win_about.add_link(_('Donate'), 'https://www.patreon.com/zehkira')
+		win_about.add_link(_('Donate'), 'https://ko-fi.com/zehkira')
 		win_about.set_website('https://gitlab.com/zehkira/monophony')
 		win_about.set_transient_for(self)
 		win_about.show()
