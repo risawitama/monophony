@@ -7,7 +7,7 @@
   <developer_name>zehkira</developer_name>
   <url type="homepage">https://gitlab.com/zehkira/monophony</url>
   <url type="bugtracker">https://gitlab.com/zehkira/monophony/-/issues</url>
-  <url type="donation">https://www.patreon.com/zehkira</url>
+  <url type="donation">https://ko-fi.com/zehkira</url>
   <summary>Stream music from the Internet</summary>
   <description>
     <p>
@@ -27,6 +27,14 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="1.0.2" date="2023-02-08">
+      <description>
+        <ul>
+          <li>Cleaned up the code</li>
+          <li>Changed donation links</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.1" date="2023-02-08">
       <description>
         <ul>
