@@ -14,6 +14,16 @@
       Listen to your favorite music without advertisements, fees, or high memeory usage.
     </p>
   </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://gitlab.com/zehkira/monophony/-/raw/master/assets/screenshot1.png</image>
+      <caption>Library view</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://gitlab.com/zehkira/monophony/-/raw/master/assets/screenshot2.png</image>
+      <caption>Search view</caption>
+    </screenshot>
+  </screenshots>
   <launchable type="desktop-id">com.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
 </component>
