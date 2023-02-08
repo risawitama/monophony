@@ -11,28 +11,28 @@ install:
 	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o $(prefix)/bin/monophony
 
 	@# desktop file
-	$(INSTALL_DATA) data/monophony.desktop $(prefix)/share/applications/com.gitlab.zehkira.Monophony.desktop
+	$(INSTALL_DATA) data/monophony.desktop $(prefix)/share/applications/io.gitlab.zehkira.Monophony.desktop
 
 	@# metainfo
-	$(INSTALL_DATA) data/metainfo.xml $(prefix)/share/metainfo/com.gitlab.zehkira.Monophony.metainfo.xml
+	$(INSTALL_DATA) data/metainfo.xml $(prefix)/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml
 
 	@# icons
-	$(INSTALL_DATA) data/icons/scalable.svg $(prefix)/share/icons/hicolor/scalable/apps/com.gitlab.zehkira.Monophony.svg
-	$(INSTALL_DATA) data/icons/symbolic.svg $(prefix)/share/icons/hicolor/symbolic/apps/com.gitlab.zehkira.Monophony-symbolic.svg
-	$(INSTALL_DATA) data/icons/128.png $(prefix)/share/icons/hicolor/128x128/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/16.png $(prefix)/share/icons/hicolor/16x16/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/192.png $(prefix)/share/icons/hicolor/192x192/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/22.png $(prefix)/share/icons/hicolor/22x22/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/24.png $(prefix)/share/icons/hicolor/24x24/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/256.png $(prefix)/share/icons/hicolor/256x256/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/32.png $(prefix)/share/icons/hicolor/32x32/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/36.png $(prefix)/share/icons/hicolor/36x36/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/384.png $(prefix)/share/icons/hicolor/384x384/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/48.png $(prefix)/share/icons/hicolor/48x48/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/512.png $(prefix)/share/icons/hicolor/512x512/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/64.png $(prefix)/share/icons/hicolor/64x64/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/72.png $(prefix)/share/icons/hicolor/72x72/apps/com.gitlab.zehkira.Monophony.png
-	$(INSTALL_DATA) data/icons/96.png $(prefix)/share/icons/hicolor/96x96/apps/com.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/scalable.svg $(prefix)/share/icons/hicolor/scalable/apps/io.gitlab.zehkira.Monophony.svg
+	$(INSTALL_DATA) data/icons/symbolic.svg $(prefix)/share/icons/hicolor/symbolic/apps/io.gitlab.zehkira.Monophony-symbolic.svg
+	$(INSTALL_DATA) data/icons/128.png $(prefix)/share/icons/hicolor/128x128/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/16.png $(prefix)/share/icons/hicolor/16x16/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/192.png $(prefix)/share/icons/hicolor/192x192/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/22.png $(prefix)/share/icons/hicolor/22x22/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/24.png $(prefix)/share/icons/hicolor/24x24/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/256.png $(prefix)/share/icons/hicolor/256x256/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/32.png $(prefix)/share/icons/hicolor/32x32/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/36.png $(prefix)/share/icons/hicolor/36x36/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/384.png $(prefix)/share/icons/hicolor/384x384/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/48.png $(prefix)/share/icons/hicolor/48x48/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/512.png $(prefix)/share/icons/hicolor/512x512/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/64.png $(prefix)/share/icons/hicolor/64x64/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/72.png $(prefix)/share/icons/hicolor/72x72/apps/io.gitlab.zehkira.Monophony.png
+	$(INSTALL_DATA) data/icons/96.png $(prefix)/share/icons/hicolor/96x96/apps/io.gitlab.zehkira.Monophony.png
 
 	@# translations
 	$(INSTALL_DATA) locales/en/LC_MESSAGES/all.mo $(prefix)/share/locale/en/LC_MESSAGES/monophony.mo
@@ -50,9 +50,9 @@ install:
 
 test:
 	flatpak-builder --force-clean --repo=repo/ build/ data/manifest.yml
-	flatpak build-bundle repo/ monophony.flatpak com.gitlab.zehkira.Monophony
+	flatpak build-bundle repo/ monophony.flatpak io.gitlab.zehkira.Monophony
 	flatpak install --reinstall --user -y monophony.flatpak
-	flatpak run com.gitlab.zehkira.Monophony
+	flatpak run io.gitlab.zehkira.Monophony
 
 
 uninstall:
@@ -60,13 +60,13 @@ uninstall:
 	$(UNINSTALL) $(prefix)/bin/monophony
 
 	@# desktop file
-	$(UNINSTALL) $(prefix)/share/applications/com.gitlab.zehkira.Monophony.desktop
+	$(UNINSTALL) $(prefix)/share/applications/io.gitlab.zehkira.Monophony.desktop
 
 	@# metainfo
-	$(UNINSTALL) $(prefix)/share/metainfo/com.gitlab.zehkira.Monophony.metainfo.xml
+	$(UNINSTALL) $(prefix)/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml
 
 	@# icons
-	$(UNINSTALL) $(prefix)/share/icons/hicolor/*/apps/com.gitlab.zehkira.Monophony*
+	$(UNINSTALL) $(prefix)/share/icons/hicolor/*/apps/io.gitlab.zehkira.Monophony*
 
 	@# translations
 	$(UNINSTALL) $(prefix)/share/locale/*/LC_MESSAGES/monophony.mo

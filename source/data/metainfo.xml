@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-  <id>com.gitlab.zehkira.Monophony</id>
+  <id>io.gitlab.zehkira.Monophony</id>
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
   <name>Monophony</name>
@@ -24,7 +24,7 @@
       <caption>Search view</caption>
     </screenshot>
   </screenshots>
-  <launchable type="desktop-id">com.gitlab.zehkira.Monophony.desktop</launchable>
+  <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
     <release version="1.0.0" date="2023-02-08">

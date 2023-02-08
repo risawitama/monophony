@@ -6,6 +6,6 @@ Exec=monophony
 Terminal=false
 Type=Application
 StartupNotify=false
-Icon=com.gitlab.zehkira.Monophony
+Icon=io.gitlab.zehkira.Monophony
 Categories=AudioVideo;Audio;Music;
 X-Purism-FormFactor=Workstation;Mobile;
