@@ -20,6 +20,7 @@ class MonophonySearchPage(Gtk.Box):
 		self.pge_status.set_vexpand(True)
 		self.pge_status.set_valign(Gtk.Align.FILL)
 		self.pge_status.set_icon_name('system-search-symbolic')
+		self.pge_status.set_title(_('No results'))
 		self.append(self.pge_status)
 
 		spn_loading = Gtk.Spinner.new()
@@ -33,7 +34,6 @@ class MonophonySearchPage(Gtk.Box):
 		self.append(self.box_loading)
 		self.box_loading.hide()
 
-		self.set_margin_top(10)
 		self.set_vexpand(True)
 		self.query = ''
 		self.search_results = []
@@ -42,7 +42,7 @@ class MonophonySearchPage(Gtk.Box):
 		self.search_lock = GLib.Mutex()
 		self.player = player
 
-		GLib.timeout_add(100, self.update_results)
+		GLib.timeout_add(1000, self.update_results)
 
 	def _on_search(self, ent: Gtk.SearchEntry):
 		if not self.search_lock.trylock():

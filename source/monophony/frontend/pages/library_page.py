@@ -8,19 +8,30 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Adw, GLib, Gtk
 
 
-class MonophonyLibraryPage(Adw.PreferencesPage):
+class MonophonyLibraryPage(Gtk.Box):
 	def __init__(self, player: object):
-		super().__init__()
+		super().__init__(orientation = Gtk.Orientation.VERTICAL)
 
 		self.player = player
 		self.playlist_widgets = []
+		self.set_vexpand(True)
+
+		self.box_meta = Adw.PreferencesPage.new()
+		self.append(self.box_meta)
+
+		self.pge_status = Adw.StatusPage()
+		self.pge_status.set_vexpand(True)
+		self.pge_status.set_valign(Gtk.Align.FILL)
+		self.pge_status.set_icon_name('emblem-music-symbolic')
+		self.pge_status.set_title(_('No playlists found'))
+		self.append(self.pge_status)
 
 		self.btn_play = Gtk.Button.new_with_label(_('Play all'))
 		self.btn_play.connect('clicked', self._on_play_all)
 		self.box_playlists = Adw.PreferencesGroup()
 		self.box_playlists.set_title(_('Playlists'))
 		self.box_playlists.set_header_suffix(self.btn_play)
-		self.add(self.box_playlists)
+		self.box_meta.add(self.box_playlists)
 
 		GLib.timeout_add(100, self.update)
 
@@ -42,7 +53,7 @@ class MonophonyLibraryPage(Adw.PreferencesPage):
 
 		remaining_widgets = []
 		for widget in self.playlist_widgets:
-			if widget.is_ancestor(self):
+			if widget.is_ancestor(self.box_meta):
 				remaining_widgets.append(widget)
 		self.playlist_widgets = remaining_widgets
 
@@ -60,8 +71,10 @@ class MonophonyLibraryPage(Adw.PreferencesPage):
 				self.box_playlists.add(new_widget)
 
 		if self.playlist_widgets:
-			self.box_playlists.show()
+			self.box_meta.show()
+			self.pge_status.hide()
 		else:
-			self.box_playlists.hide()
+			self.box_meta.hide()
+			self.pge_status.show()
 
 		return True

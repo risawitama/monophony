@@ -18,8 +18,6 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading = Gtk.Spinner.new()
 		self.spn_loading.set_halign(Gtk.Align.CENTER)
 		self.spn_loading.set_margin_top(10)
-		self.spn_loading.set_margin_start(5)
-		self.spn_loading.set_margin_end(5)
 		self.spn_loading.set_margin_bottom(10)
 		self.spn_loading.start()
 		self.spn_loading.hide()

@@ -13,6 +13,7 @@ from gi.repository import Adw, GLib, Gtk
 class MonophonyMainWindow(Adw.ApplicationWindow):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+		self.set_default_size(600, 500)
 		self.player = monophony.backend.player.Player()
 
 		pge_library = MonophonyLibraryPage(self.player)
