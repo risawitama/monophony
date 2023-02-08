@@ -1,4 +1,4 @@
-import base64, binascii, json, os
+import json, os
 
 import ytmusicapi
 

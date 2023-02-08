@@ -1,4 +1,4 @@
-import random, time
+import random
 
 import monophony.backend.cache
 import monophony.backend.settings

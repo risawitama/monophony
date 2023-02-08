@@ -1,6 +1,5 @@
 import monophony.backend.playlists
 from monophony.frontend.widgets.group_row import MonophonyGroupRow
-from monophony.frontend.widgets.song_row import MonophonySongRow
 
 import gi
 gi.require_version('Adw', '1')

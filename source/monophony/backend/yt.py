@@ -1,7 +1,6 @@
-import os, subprocess
+import subprocess
 
 import requests, ytmusicapi
-from gi.repository import GLib
 
 
 def is_available() -> bool:
