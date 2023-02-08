@@ -2,158 +2,129 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-#: myuzi/app.py:36
-msgid "Error"
+#: ../monophony/frontend/pages/search_page.py:23
+#: ../monophony/frontend/pages/search_page.py:89
+msgid "No results"
 msgstr ""
 
-#: myuzi/app.py:36
-msgid "Playback error"
+#: ../monophony/frontend/pages/search_page.py:101
+msgid "Songs"
 msgstr ""
 
-#: myuzi/app.py:92
-msgid "Enter name..."
+#: ../monophony/frontend/pages/search_page.py:102
+#: ../monophony/frontend/pages/search_page.py:111
+#: ../monophony/frontend/pages/search_page.py:120
+#: ../monophony/frontend/pages/search_page.py:129
+msgid "More"
 msgstr ""
 
-#: myuzi/app.py:198 myuzi/app.py:334
-msgid "Download error"
+#: ../monophony/frontend/pages/search_page.py:110
+msgid "Albums"
 msgstr ""
 
-#: myuzi/app.py:198
-msgid "Song download failed"
+#: ../monophony/frontend/pages/search_page.py:119
+msgid "Community playlists"
 msgstr ""
 
-#: myuzi/app.py:262
-msgid "Playlist import failed"
+#: ../monophony/frontend/pages/search_page.py:128
+msgid "Videos"
 msgstr ""
 
-#: myuzi/app.py:263
-msgid "No playlist data or playlist URL in clipboard"
+#: ../monophony/frontend/pages/library_page.py:26
+msgid "No playlists found"
 msgstr ""
 
-#: myuzi/app.py:286
-msgid "Playlist rename failed"
+#: ../monophony/frontend/pages/library_page.py:29
+msgid "Play all"
 msgstr ""
 
-#: myuzi/app.py:287
-msgid "Playlist already exists"
-msgstr ""
-
-#: myuzi/app.py:301
-msgid "Exported"
-msgstr ""
-
-#: myuzi/app.py:302
-msgid "Playlist data copied to clipboard"
-msgstr ""
-
-#: myuzi/app.py:335
-msgid "Playlist download failed"
-msgstr ""
-
-#: myuzi/app.py:374
-msgid "Unavailable"
-msgstr ""
-
-#: myuzi/app.py:375
-msgid "Can't search in offline mode"
-msgstr ""
-
-#: myuzi/app.py:382
-msgid "Failed"
-msgstr ""
-
-#: myuzi/app.py:383
-msgid "Could not connect to server"
-msgstr ""
-
-#: myuzi/app.py:403
-msgid "Can't switch to online mode"
-msgstr ""
-
-#: myuzi/app.py:404
-msgid "Connection failed"
-msgstr ""
-
-#: myuzi/app.py:427
-msgid "translator-credits"
-msgstr ""
-
-#: myuzi/app.py:428
-msgid "Patrons"
-msgstr ""
-
-#: myuzi/app.py:430
-msgid "Donate"
-msgstr ""
-
-#: myuzi/app.py:685
-msgid "Discover"
-msgstr ""
-
-#: myuzi/app.py:710
+#: ../monophony/frontend/pages/library_page.py:32
 msgid "Playlists"
 msgstr ""
 
-#: myuzi/app.py:755
+#: ../monophony/frontend/windows/delete_window.py:15
+msgid "Delete playlist?"
+msgstr ""
+
+#: ../monophony/frontend/windows/delete_window.py:16
+#: ../monophony/frontend/windows/rename_window.py:18
+msgid "Cancel"
+msgstr ""
+
+#: ../monophony/frontend/windows/delete_window.py:17
+#: ../monophony/frontend/widgets/group_row.py:24
 msgid "Delete"
 msgstr ""
 
-#: myuzi/app.py:758 myuzi/app.py:856
-msgid "Remove from downloads"
+#: ../monophony/frontend/windows/main_window.py:29
+msgid "About"
 msgstr ""
 
-#: myuzi/app.py:761
-msgid "Export to clipboard"
+#: ../monophony/frontend/windows/main_window.py:119
+msgid "translator-credits"
 msgstr ""
 
-#: myuzi/app.py:764 myuzi/app.py:851
-msgid "Rename..."
+#: ../monophony/frontend/windows/main_window.py:120
+msgid "Patrons"
 msgstr ""
 
-#: myuzi/app.py:770 myuzi/app.py:861
-msgid "Download"
+#: ../monophony/frontend/windows/main_window.py:122
+msgid "Donate"
 msgstr ""
 
-#: myuzi/app.py:915
-msgid "New playlist..."
+#: ../monophony/frontend/windows/rename_window.py:15
+msgid "Enter name..."
 msgstr ""
 
-#: myuzi/app.py:919
-msgid "Add to queue"
+#: ../monophony/frontend/windows/rename_window.py:19
+#: ../monophony/frontend/windows/message_window.py:13
+msgid "Ok"
 msgstr ""
 
-#: myuzi/app.py:1016
+#: ../monophony/frontend/widgets/player.py:62
 msgid "Remove from queue"
 msgstr ""
 
-#: myuzi/app.py:1021
-msgid "Copy song URL"
-msgstr ""
-
-#: myuzi/app.py:1026
+#: ../monophony/frontend/widgets/player.py:65
 msgid "Volume"
 msgstr ""
 
-#: myuzi/app.py:1047
+#: ../monophony/frontend/widgets/player.py:81
 msgid "Radio mode"
 msgstr ""
 
-#: myuzi/app.py:1163
-msgid "Library"
+#: ../monophony/frontend/widgets/song_row.py:21
+msgid "Play"
 msgstr ""
 
-#: myuzi/app.py:1164
-msgid "Search"
+#: ../monophony/frontend/widgets/song_popover.py:37
+msgid "Remove from downloads"
 msgstr ""
 
-#: myuzi/app.py:1170
-msgid "Online"
+#: ../monophony/frontend/widgets/song_popover.py:39
+msgid "Download to Music folder"
 msgstr ""
 
-#: myuzi/app.py:1175
-msgid "Import from clipboard"
+#: ../monophony/frontend/widgets/song_popover.py:51
+msgid "Add to queue"
 msgstr ""
 
-#: myuzi/app.py:1180
-msgid "About"
+#: ../monophony/frontend/widgets/song_popover.py:55
+msgid "New playlist..."
+msgstr ""
+
+#: ../monophony/frontend/widgets/group_row.py:27
+msgid "Rename..."
+msgstr ""
+
+#: ../monophony/frontend/widgets/group_row.py:35
+msgid "Save to library"
+msgstr ""
+
+#: ../monophony/frontend/widgets/group_row.py:82
+msgid "Could not rename"
+msgstr ""
+
+#: ../monophony/frontend/widgets/group_row.py:83
+msgid "Playlist already exists"
 msgstr ""
