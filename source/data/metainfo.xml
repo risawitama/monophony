@@ -26,4 +26,13 @@
   </screenshots>
   <launchable type="desktop-id">com.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
+  <releases>
+    <release version="1.0.0" date="2023-02-08">
+      <description>
+        <ul>
+          <li>First release</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
 </component>
