@@ -8,7 +8,7 @@ from monophony.frontend.app import MonophonyApplication
 def main():
 	lang = os.getenv('LANG', 'en_US.UTF-8')
 	chosen_lang = 'en'
-	for l in ['en', 'de', 'pl', 'sv', 'it', 'fr', 'ru', 'nl']:
+	for l in ['en']:
 		if lang.split('_')[0] == l:
 			chosen_lang = l
 			break
