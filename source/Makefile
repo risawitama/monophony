@@ -36,13 +36,6 @@ install:
 
 	@# translations
 	$(INSTALL_DATA) locales/en/LC_MESSAGES/all.mo $(prefix)/share/locale/en/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/de/LC_MESSAGES/all.mo $(prefix)/share/locale/de/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/pl/LC_MESSAGES/all.mo $(prefix)/share/locale/pl/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/sv/LC_MESSAGES/all.mo $(prefix)/share/locale/sv/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/it/LC_MESSAGES/all.mo $(prefix)/share/locale/it/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/fr/LC_MESSAGES/all.mo $(prefix)/share/locale/fr/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/ru/LC_MESSAGES/all.mo $(prefix)/share/locale/ru/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/nl/LC_MESSAGES/all.mo $(prefix)/share/locale/nl/LC_MESSAGES/monophony.mo
 
 	@# license
 	$(INSTALL_DATA) LICENSE $(prefix)/share/licenses/monophony/LICENSE
