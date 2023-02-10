@@ -2,13 +2,14 @@
 
 import gettext, os
 
+from monophony import LANGUAGES
 from monophony.frontend.app import MonophonyApplication
 
 
 def main():
 	lang = os.getenv('LANG', 'en_US.UTF-8')
 	chosen_lang = 'en'
-	for l in ['en']:
+	for l in LANGUAGES:
 		if lang.split('_')[0] == l:
 			chosen_lang = l
 			break
