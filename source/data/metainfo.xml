@@ -8,10 +8,18 @@
   <url type="homepage">https://gitlab.com/zehkira/monophony</url>
   <url type="bugtracker">https://gitlab.com/zehkira/monophony/-/issues</url>
   <url type="donation">https://ko-fi.com/zehkira</url>
-  <summary>Stream music from the Internet</summary>
+  <summary>Stream music from YouTube</summary>
   <description>
     <p>
-      Listen to your favorite music without advertisements, fees, or high memeory usage.
+      Listen to your favorite music without using a browser.
+    </p>
+    <p>
+      Features:
+      <ul>
+        <li>Local playlists</li>
+        <li>No advertisements</li>
+        <li>Simple and lightweight</li>
+      </ul>
     </p>
   </description>
   <screenshots>

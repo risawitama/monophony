@@ -1,4 +1,4 @@
-Monophony is a free and open source music streaming app for Linux. It has no ads and does not require an account.
+Monophony is a free and open source Linux app for streaming music from YouTube. It has no ads and does not require an account.
 
 Copyright © 2022-2023 zehkira, [MIT License](https://gitlab.com/zehkira/monophony/-/blob/master/source/LICENSE).
 
