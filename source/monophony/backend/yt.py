@@ -22,8 +22,11 @@ def get_song_uri(video_id: str) -> str:
 
 
 def get_similar_song(video_id: str, ignore: list = None) -> dict | None:
-	yt = ytmusicapi.YTMusic()
-	data = yt.get_watch_playlist(video_id, radio = True)['tracks']
+	try:
+		yt = ytmusicapi.YTMusic()
+		data = yt.get_watch_playlist(video_id, radio = True)['tracks']
+	except:
+		return None
 
 	for track in data:
 		if track['videoId'] != video_id:

@@ -12,25 +12,14 @@ from gi.repository import GLib, Gst
 
 class Player:
 	def __init__(self):
-		self.playbin: Gst.Element = None
-		self.lock = GLib.Mutex()
-		self.index: int = 0
-		self.skip_segments: dict = {}
-		self.queue: list = []
-		self.loop: bool = False
-		self.shuffle: bool = False
-		self.error: bool = False
-
 		Gst.init([])
-		self._remake_playbin()
-
-	### --- UTILITY METHODS --- ###
-
-	def _remake_playbin(self):
-		if self.playbin:
-			self.playbin.set_state(Gst.State.NULL)
-			del self.playbin
-
+		self.lock = GLib.Mutex()
+		self.index = 0
+		self.skip_segments = {}
+		self.queue = []
+		self.loop = False
+		self.shuffle = False
+		self.error = False
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.set_property(
@@ -38,6 +27,7 @@ class Player:
 		)
 		self.playbin.set_property('mute', False)
 
+	### --- UTILITY METHODS --- ###
 	def terminate(self):
 		self.lock.lock()
 		self.playbin.set_state(Gst.State.NULL)
@@ -102,7 +92,6 @@ class Player:
 	def _on_bus_error(self, _, err, s_id: str, s_title: str):
 		self.lock.lock()
 		self.error = True
-		self._remake_playbin()
 		self.lock.unlock()
 
 	def _on_song_end(self, *_):
@@ -113,8 +102,7 @@ class Player:
 
 	### --- PLAYBACK CONTROLS --- ###
 
-	def play_song(self, id_: str, title: str):
-		self._remake_playbin()
+	def play_song(self, id_: str, title: str) -> bool:
 		self.playbin.set_state(Gst.State.READY)
 
 		uri = monophony.backend.cache.get_song_uri(id_)
@@ -124,8 +112,7 @@ class Player:
 		self.playbin.set_property('uri', uri)
 
 		if not uri:
-			self.error = True
-			return
+			return False
 
 		if not monophony.backend.cache.is_song_cached(id_):
 			self.skip_segments = monophony.backend.sponsorblock.get_segments(
@@ -138,7 +125,7 @@ class Player:
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)
-		return
+		return True
 
 	def play_radio_song(self):
 		if not int(monophony.backend.settings.get_value('radio', 0)):
@@ -152,9 +139,6 @@ class Player:
 			song = monophony.backend.yt.get_similar_song(id_, ignore = id_queue)
 			if song:
 				break
-		else: # nobreak
-			if self.queue:
-				song = random.choice(self.queue)
 
 		if song:
 			self.queue.append(song)
@@ -172,29 +156,32 @@ class Player:
 	def next_song(self):
 		if not self.lock.trylock():
 			return
-		self._remake_playbin()
 
-		queue_length = len(self.queue)
-		song = None
-		if self.loop:
-			song = self.queue[self.index]
-		elif self.shuffle and queue_length > 1:
-			random_index = self.index
-			while random_index == self.index:
-				random_index = random.randrange(0, queue_length)
+		while True:
+			queue_length = len(self.queue)
+			song = None
+			if self.loop:
+				song = self.queue[self.index]
+			elif self.shuffle and queue_length > 1:
+				random_index = self.index
+				while random_index == self.index:
+					random_index = random.randrange(0, queue_length)
 
-			self.index = random_index
-			song = self.queue[self.index]
-		elif queue_length - 1 > self.index :
-			self.index += 1
-			song = self.queue[self.index]
+				self.index = random_index
+				song = self.queue[self.index]
+			elif queue_length - 1 > self.index :
+				self.index += 1
+				song = self.queue[self.index]
 
-		if song:
-			self.play_song(song['id'], song['title'])
-			self.lock.unlock()
-			return
+			if song:
+				if self.play_song(song['id'], song['title']):
+					break
+				else:
+					continue
 
-		self.play_radio_song()
+			self.play_radio_song()
+			break
+
 		self.lock.unlock()
 
 	def previous_song(self):
@@ -228,7 +215,6 @@ class Player:
 		if len(self.queue) > 0:
 			self.queue.pop(self.index)
 			self.index = self.index - 1 if self.index else 0
-			self._remake_playbin()
 			GLib.Thread.new(None, self.play_queue, self.queue, self.index)
 
 	def queue_song(self, song: dict):
