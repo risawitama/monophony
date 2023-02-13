@@ -6,7 +6,7 @@
   xmlns="http://usefulinc.com/ns/doap#"
 >
   <name xml:lang="en">Monophony</name>
-  <shortdesc xml:lang="en">Stream music from the Internet</shortdesc>
+  <shortdesc xml:lang="en">Stream music from YouTube</shortdesc>
   <homepage rdf:resource="https://gitlab.com/zehkira/monophony" />
   <bug-database rdf:resource="https://gitlab.com/zehkira/monophony/-/issues" />
   <programming-language>Python</programming-language>
