@@ -118,6 +118,9 @@ SOFTWARE.'''
 			Gtk.License.CUSTOM,
 			'Uses SponsorBlock data licensed used under CC BY-NC-SA 4.0 from https://sponsor.ajay.app/.'
 		)
+		win_about.add_legal_section(
+			'mpris_server', '', Gtk.License.AGPL_3_0, None
+		)
 		win_about.set_translator_credits(_('translator-credits'))
 		win_about.set_issue_url('https://gitlab.com/zehkira/monophony/-/issues')
 		win_about.add_link(_('Donate'), 'https://ko-fi.com/zehkira')
