@@ -1,4 +1,5 @@
 import monophony.backend.player
+import monophony.backend.mpris
 from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
 from monophony.frontend.pages.search_page import MonophonySearchPage
@@ -7,7 +8,7 @@ from monophony.frontend.widgets.player import MonophonyPlayer
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
@@ -15,6 +16,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		super().__init__(**kwargs)
 		self.set_default_size(600, 500)
 		self.player = monophony.backend.player.Player()
+		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
 		pge_library = MonophonyLibraryPage(self.player)
 		self.pge_search = MonophonySearchPage(self.player)

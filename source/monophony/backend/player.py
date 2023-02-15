@@ -20,6 +20,7 @@ class Player:
 		self.loop = False
 		self.shuffle = False
 		self.error = False
+		self.mpris = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.set_property(
@@ -125,6 +126,7 @@ class Player:
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)
+		self.mpris.on_playback()
 		return True
 
 	def play_radio_song(self):
@@ -152,6 +154,8 @@ class Player:
 			self.playbin.set_state(Gst.State.PAUSED)
 		else:
 			self.playbin.set_state(Gst.State.PLAYING)
+
+		self.mpris.on_playpause()
 
 	def next_song(self):
 		if not self.lock.trylock():
