@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"Language-Team: German <gnome-de@gnome.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: ../monophony/frontend/pages/search_page.py:23
+#: ../monophony/frontend/pages/search_page.py:89
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: ../monophony/frontend/pages/search_page.py:101
+msgid "Songs"
+msgstr "Titel"
+
+#: ../monophony/frontend/pages/search_page.py:102
+#: ../monophony/frontend/pages/search_page.py:111
+#: ../monophony/frontend/pages/search_page.py:120
+#: ../monophony/frontend/pages/search_page.py:129
+msgid "More"
+msgstr "Mehr"
+
+#: ../monophony/frontend/pages/search_page.py:110
+msgid "Albums"
+msgstr "Alben"
+
+#: ../monophony/frontend/pages/search_page.py:119
+msgid "Community playlists"
+msgstr "Community-Wiedergabelisten"
+
+#: ../monophony/frontend/pages/search_page.py:128
+msgid "Videos"
+msgstr "Videos"
+
+#: ../monophony/frontend/pages/library_page.py:26
+msgid "No playlists found"
+msgstr "Keine Wiedergabelisten gefunden"
+
+#: ../monophony/frontend/pages/library_page.py:29
+msgid "Play all"
+msgstr "Alle wiedergeben"
+
+#: ../monophony/frontend/pages/library_page.py:32
+msgid "Playlists"
+msgstr "Wiedergabelisten"
+
+#: ../monophony/frontend/windows/delete_window.py:15
+msgid "Delete playlist?"
+msgstr "Wiedergabeliste löschen?"
+
+#: ../monophony/frontend/windows/delete_window.py:16
+#: ../monophony/frontend/windows/rename_window.py:18
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: ../monophony/frontend/windows/delete_window.py:17
+#: ../monophony/frontend/widgets/group_row.py:24
+msgid "Delete"
+msgstr "Löschen"
+
+#: ../monophony/frontend/windows/main_window.py:29
+msgid "About"
+msgstr "Info"
+
+#: ../monophony/frontend/windows/main_window.py:119
+msgid "translator-credits"
+msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2023"
+
+#: ../monophony/frontend/windows/main_window.py:120
+msgid "Patrons"
+msgstr "Patrons"
+
+#: ../monophony/frontend/windows/main_window.py:122
+msgid "Donate"
+msgstr "Spenden"
+
+#: ../monophony/frontend/windows/rename_window.py:15
+msgid "Enter name..."
+msgstr "Einen Namen eingeben …"
+
+#: ../monophony/frontend/windows/rename_window.py:19
+#: ../monophony/frontend/windows/message_window.py:13
+msgid "Ok"
+msgstr "OK"
+
+#: ../monophony/frontend/widgets/player.py:62
+msgid "Remove from queue"
+msgstr "Aus der Warteschlange entfernen"
+
+#: ../monophony/frontend/widgets/player.py:65
+msgid "Volume"
+msgstr "Lautstärke"
+
+#: ../monophony/frontend/widgets/player.py:81
+msgid "Radio mode"
+msgstr "Radiomodus"
+
+#: ../monophony/frontend/widgets/song_row.py:21
+msgid "Play"
+msgstr "Wiedergeben"
+
+#: ../monophony/frontend/widgets/song_popover.py:37
+msgid "Remove from downloads"
+msgstr "Aus den heruntergeladenen Dateien entfernen"
+
+#: ../monophony/frontend/widgets/song_popover.py:39
+msgid "Download to Music folder"
+msgstr "In den »Musik«-Ordner herunterladen"
+
+#: ../monophony/frontend/widgets/song_popover.py:51
+msgid "Add to queue"
+msgstr "Zur Warteschlange hinzufügen"
+
+#: ../monophony/frontend/widgets/song_popover.py:55
+msgid "New playlist..."
+msgstr "Neue Wiedergabeliste …"
+
+#: ../monophony/frontend/widgets/group_row.py:27
+msgid "Rename..."
+msgstr "Umbenennen …"
+
+#: ../monophony/frontend/widgets/group_row.py:35
+msgid "Save to library"
+msgstr "In Bibliothek speichern"
+
+#: ../monophony/frontend/widgets/group_row.py:82
+msgid "Could not rename"
+msgstr "Umbenennen nicht möglich"
+
+#: ../monophony/frontend/widgets/group_row.py:83
+msgid "Playlist already exists"
+msgstr "Wiedergabeliste existiert bereits"
