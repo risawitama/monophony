@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: ../monophony/frontend/pages/search_page.py:23
+#: ../monophony/frontend/pages/search_page.py:89
+msgid "No results"
+msgstr "Нет результатов"
+
+#: ../monophony/frontend/pages/search_page.py:101
+msgid "Songs"
+msgstr "Песни"
+
+#: ../monophony/frontend/pages/search_page.py:102
+#: ../monophony/frontend/pages/search_page.py:111
+#: ../monophony/frontend/pages/search_page.py:120
+#: ../monophony/frontend/pages/search_page.py:129
+msgid "More"
+msgstr "Больше"
+
+#: ../monophony/frontend/pages/search_page.py:110
+msgid "Albums"
+msgstr "Альбомы"
+
+#: ../monophony/frontend/pages/search_page.py:119
+msgid "Community playlists"
+msgstr "Плейлисты сообщества"
+
+#: ../monophony/frontend/pages/search_page.py:128
+msgid "Videos"
+msgstr "Видео"
+
+#: ../monophony/frontend/pages/library_page.py:26
+msgid "No playlists found"
+msgstr "Плейлисты не найдены"
+
+#: ../monophony/frontend/pages/library_page.py:29
+msgid "Play all"
+msgstr "Воспроизвести все"
+
+#: ../monophony/frontend/pages/library_page.py:32
+msgid "Playlists"
+msgstr "Плейлисты"
+
+#: ../monophony/frontend/windows/delete_window.py:15
+msgid "Delete playlist?"
+msgstr "Удалить плейлист?"
+
+#: ../monophony/frontend/windows/delete_window.py:16
+#: ../monophony/frontend/windows/rename_window.py:18
+msgid "Cancel"
+msgstr "Отмена"
+
+#: ../monophony/frontend/windows/delete_window.py:17
+#: ../monophony/frontend/widgets/group_row.py:24
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../monophony/frontend/windows/main_window.py:29
+msgid "About"
+msgstr "О Программе"
+
+#: ../monophony/frontend/windows/main_window.py:119
+msgid "translator-credits"
+msgstr "Alex Kryuchkov https://github.com/alexkdeveloper"
+
+#: ../monophony/frontend/windows/main_window.py:120
+msgid "Patrons"
+msgstr "Покровители"
+
+#: ../monophony/frontend/windows/main_window.py:122
+msgid "Donate"
+msgstr "Пожертвовать"
+
+#: ../monophony/frontend/windows/rename_window.py:15
+msgid "Enter name..."
+msgstr "Введите название..."
+
+#: ../monophony/frontend/windows/rename_window.py:19
+#: ../monophony/frontend/windows/message_window.py:13
+msgid "Ok"
+msgstr "Ok"
+
+#: ../monophony/frontend/widgets/player.py:62
+msgid "Remove from queue"
+msgstr "Удалить из очереди"
+
+#: ../monophony/frontend/widgets/player.py:65
+msgid "Volume"
+msgstr "Громкость"
+
+#: ../monophony/frontend/widgets/player.py:81
+msgid "Radio mode"
+msgstr "Режим радио"
+
+#: ../monophony/frontend/widgets/song_row.py:21
+msgid "Play"
+msgstr "Воспроизвести"
+
+#: ../monophony/frontend/widgets/song_popover.py:37
+msgid "Remove from downloads"
+msgstr "Удалить из загрузок"
+
+#: ../monophony/frontend/widgets/song_popover.py:39
+msgid "Download to Music folder"
+msgstr "Загрузить в папку \"Музыка\""
+
+#: ../monophony/frontend/widgets/song_popover.py:51
+msgid "Add to queue"
+msgstr "Добавить в очередь"
+
+#: ../monophony/frontend/widgets/song_popover.py:55
+msgid "New playlist..."
+msgstr "Новый плейлист..."
+
+#: ../monophony/frontend/widgets/group_row.py:27
+msgid "Rename..."
+msgstr "Переименовать..."
+
+#: ../monophony/frontend/widgets/group_row.py:35
+msgid "Save to library"
+msgstr "Сохранить в библиотеке"
+
+#: ../monophony/frontend/widgets/group_row.py:82
+msgid "Could not rename"
+msgstr "Не удалось переименовать"
+
+#: ../monophony/frontend/widgets/group_row.py:83
+msgid "Playlist already exists"
+msgstr "Список воспроизведения уже существует"
