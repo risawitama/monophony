@@ -59,7 +59,7 @@ class MonophonyLibraryPage(Gtk.Box):
 
 		for title in new_playlists.keys():
 			for widget in self.playlist_widgets:
-				if widget.get_title() == title:
+				if widget.get_title() == GLib.markup_escape_text(title, -1):
 					break
 			else: # nobreak
 				new_widget = MonophonyGroupRow(
