@@ -5,10 +5,10 @@ from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk, Pango
+from gi.repository import Adw, Gio, GLib, Gtk, Pango
 
 
-class MonophonySongPopover(Gtk.Popover):
+class MonophonySongPopover(Gio.Menu):
 	def __init__(self, btn: Gtk.MenuButton, player: object, song: dict = None, group: dict = None, editable: bool = False):
 		super().__init__()
 
@@ -19,72 +19,73 @@ class MonophonySongPopover(Gtk.Popover):
 		self.editable = editable
 		self.ancestor = btn.get_ancestor(Adw.ActionRow)
 
-		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_pop.set_spacing(5)
+		actions = Gio.Menu()
+		self.append_section(None, actions)
 		if editable:
-			box_move = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
-			box_move.set_spacing(5)
-			btn_up = Gtk.Button.new_from_icon_name('go-up')
-			btn_up.set_has_frame(False)
-			btn_up.set_hexpand(True)
-			btn_up.connect('clicked', self._on_move_clicked, -1)
-			box_move.append(btn_up)
-			btn_down = Gtk.Button.new_from_icon_name('go-down')
-			btn_down.set_has_frame(False)
-			btn_down.set_hexpand(True)
-			btn_down.connect('clicked', self._on_move_clicked, 1)
-			box_move.append(btn_down)
-			btn_uncache = Gtk.Button.new_with_label(_('Remove from downloads'))
-			btn_uncache.set_has_frame(False)
-			btn_cache = Gtk.Button.new_with_label(_('Download to Music folder'))
-			btn_cache.set_has_frame(False)
-			box_pop.append(box_move)
+			act = Gio.SimpleAction.new('app.moveup', None)
+			act.connect(
+				'activate', self._on_move_clicked, -1
+			)
+			act.set_enabled(True)
+			self.ancestor.get_ancestor(Gtk.Window).get_application().add_action(act)
+			item = Gio.MenuItem.new(_('Move up'), 'app.moveup')
+			item.set_action_and_target_value('app.moveup', None)
+			actions.append_item(item)
+			Gio.SimpleAction.new('move-down', None).connect(
+				'activate', self._on_move_clicked, 1
+			)
+			actions.append(_('Move down'), 'move-down')
 			if monophony.backend.cache.is_song_being_cached(song['id']):
 				pass
 			elif monophony.backend.cache.is_song_cached(song['id']):
-				btn_uncache.connect('clicked', self._on_uncache_clicked)
-				box_pop.append(btn_uncache)
-			else:
-				btn_cache.connect('clicked', self._on_cache_clicked)
-				box_pop.append(btn_cache)
-		if player.get_current_song() != song:
-			btn_queue = Gtk.Button.new_with_label(_('Add to queue'))
-			btn_queue.set_has_frame(False)
-			btn_queue.connect('clicked', self._on_queue_clicked)
-			box_pop.append(btn_queue)
-		btn_new = Gtk.Button.new_with_label(_('New playlist...'))
-		btn_new.set_has_frame(False)
-		btn_new.connect('clicked', self._on_new_clicked)
-		box_pop.append(btn_new)
-		playlists = monophony.backend.playlists.read_playlists()
-		if playlists and song:
-			box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
-			scr_playlists = Gtk.ScrolledWindow.new()
-			scr_playlists.set_max_content_width(80)
-			scr_playlists.set_max_content_height(80)
-			scr_playlists.set_propagate_natural_height(True)
-			scr_playlists.set_policy(
-				Gtk.PolicyType.NEVER,
-				Gtk.PolicyType.AUTOMATIC
-			)
-			box_playlists = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-			for name, songs in playlists.items():
-				box_playlist = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
-				box_playlist.set_spacing(5)
-				chk_playlist = Gtk.CheckButton.new_with_label(name)
-				chk_playlist.get_last_child().set_max_width_chars(20)
-				chk_playlist.get_last_child().set_ellipsize(
-					Pango.EllipsizeMode.END
+				Gio.SimpleAction.new('uncache', None).connect(
+					'activate', self._on_uncache_clicked
 				)
-				chk_playlist.set_active(song['id'] in [s['id'] for s in songs])
-				chk_playlist.connect('toggled', self._on_playlist_toggled, name)
-				box_playlist.append(chk_playlist)
-				box_playlists.append(box_playlist)
+				actions.append(_('Remove from downloads'), 'uncache')
+			else:
+				Gio.SimpleAction.new('cache', None).connect(
+					'activate', self._on_cache_clicked
+				)
+				actions.append(_('Download to Music folder'), 'cache')
+		if player.get_current_song() != song:
+			Gio.SimpleAction.new('queue', None).connect(
+				'activate', self._on_queue_clicked
+			)
+			actions.append(_('Add to queue'), 'queue')
 
-			scr_playlists.set_child(box_playlists)
-			box_pop.append(scr_playlists)
-		self.set_child(box_pop)
-		btn.set_popover(self)
+		Gio.SimpleAction.new('new-playlist', None).connect(
+			'activate', self._on_new_clicked
+		)
+		actions.append(_('New playlist...'), 'new-playlist')
+		# ~ playlists = monophony.backend.playlists.read_playlists()
+		# ~ if playlists and song:
+			# ~ box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
+			# ~ scr_playlists = Gtk.ScrolledWindow.new()
+			# ~ scr_playlists.set_max_content_width(80)
+			# ~ scr_playlists.set_max_content_height(80)
+			# ~ scr_playlists.set_propagate_natural_height(True)
+			# ~ scr_playlists.set_policy(
+				# ~ Gtk.PolicyType.NEVER,
+				# ~ Gtk.PolicyType.AUTOMATIC
+			# ~ )
+			# ~ box_playlists = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+			# ~ for name, songs in playlists.items():
+				# ~ box_playlist = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+				# ~ box_playlist.set_spacing(5)
+				# ~ chk_playlist = Gtk.CheckButton.new_with_label(name)
+				# ~ chk_playlist.get_last_child().set_max_width_chars(20)
+				# ~ chk_playlist.get_last_child().set_ellipsize(
+					# ~ Pango.EllipsizeMode.END
+				# ~ )
+				# ~ chk_playlist.set_active(song['id'] in [s['id'] for s in songs])
+				# ~ chk_playlist.connect('toggled', self._on_playlist_toggled, name)
+				# ~ box_playlist.append(chk_playlist)
+				# ~ box_playlists.append(box_playlist)
+
+			# ~ scr_playlists.set_child(box_playlists)
+			# ~ box_pop.append(scr_playlists)
+
+		btn.set_menu_model(self)
 
 	def _on_queue_clicked(self, _b):
 		self.popdown()
