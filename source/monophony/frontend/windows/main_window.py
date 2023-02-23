@@ -1,14 +1,18 @@
+import monophony.backend.cache
 import monophony.backend.player
+import monophony.backend.playlists
 import monophony.backend.mpris
 from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
 from monophony.frontend.pages.search_page import MonophonySearchPage
 from monophony.frontend.widgets.player import MonophonyPlayer
+from monophony.frontend.windows.delete_window import MonophonyDeleteWindow
+from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
@@ -28,16 +32,15 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.btn_back.hide()
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
-		btn_about = Gtk.Button.new_with_label(_('About'))
-		btn_about.set_has_frame(False)
-		box_menu = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_menu.append(btn_about)
-		pop_menu = Gtk.Popover.new()
-		pop_menu.set_child(box_menu)
-		btn_about.connect('clicked', self._on_about_clicked, pop_menu)
+		mnu_main = Gio.Menu()
+		mnu_main.append(_('About'), 'about-app')
+		self.install_action(
+			'about-app', None, (lambda w, a, t: w._on_about_clicked())
+		)
 		btn_menu = Gtk.MenuButton()
+		btn_menu.set_primary(True)
 		btn_menu.set_icon_name('open-menu-symbolic')
-		btn_menu.set_popover(pop_menu)
+		btn_menu.set_menu_model(mnu_main)
 
 		self.ent_search = Gtk.SearchEntry()
 		self.ent_search.set_hexpand(True)
@@ -74,9 +77,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.pge_search.clear()
 		self.ent_search.set_text('')
 
-	def _on_about_clicked(self, _b, parent: Gtk.Popover):
-		parent.popdown()
-
+	def _on_about_clicked(self):
 		win_about = Adw.AboutWindow.new()
 		win_about.set_application_icon(APP_ID)
 		win_about.set_application_name('Monophony')
@@ -128,3 +129,52 @@ SOFTWARE.'''
 		win_about.set_transient_for(self)
 		win_about.show()
 
+	def _on_queue_song(self, song: dict):
+		if song:
+			GLib.Thread.new(None, self.player.queue_song, song)
+
+	def _on_move_song(self, song: dict, group: dict, direction: int):
+		index = group['contents'].index(song)
+		monophony.backend.playlists.swap_songs(
+			group['title'], index, index + direction
+		)
+
+	def _on_uncache_song(self, song: dict):
+		monophony.backend.cache.uncache_song(song['id'])
+
+	def _on_cache_song(self, song: dict):
+		GLib.Thread.new(
+			None, monophony.backend.cache.cache_song, song['id']
+		)
+
+	def _on_new_playlist(self, song: dict):
+		def _create(name: str):
+			if song:
+				monophony.backend.playlists.add_playlist(name, [song])
+			else:
+				monophony.backend.playlists.add_playlist(name)
+
+		MonophonyRenameWindow(self, _create).show()
+
+	def _on_delete_playlist(self, widget: object):
+		MonophonyDeleteWindow(self, widget.group['title']).show()
+
+	def _on_rename_playlist(self, widget: object):
+		def _rename(new_name: str):
+			success = monophony.backend.playlists.rename_playlist(
+				widget.group['title'], new_name
+			)
+			if success:
+				widget.group['title'] = new_name
+				widget.set_title(new_name)
+			else:
+				MonophonyMessageWindow(
+					self,
+					_('Could not rename'),
+					_('Playlist already exists')
+				).show()
+
+		MonophonyRenameWindow(self, _rename, widget.group['title']).show()
+
+	def _on_save_playlist(self, name: str, contents: list):
+		monophony.backend.playlists.add_playlist(name, contents)

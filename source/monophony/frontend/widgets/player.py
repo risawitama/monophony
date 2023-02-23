@@ -3,7 +3,7 @@ from monophony.frontend.widgets.song_popover import MonophonySongPopover
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import GLib, Gtk, Pango
+from gi.repository import Gio, GLib, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -58,9 +58,13 @@ class MonophonyPlayer(Gtk.Box):
 		btn_playlists.set_has_frame(False)
 		btn_playlists.set_icon_name('list-add')
 
-		btn_unqueue = Gtk.Button.new_with_label(_('Remove from queue'))
-		btn_unqueue.set_has_frame(False)
-		btn_unqueue.connect('clicked', self._on_unqueue_clicked)
+		mnu_more = Gio.Menu()
+		mnu_more.append(_('Remove from queue'), 'unqueue-song')
+		self.install_action(
+			'unqueue-song',
+			None,
+			lambda p, a, t: p._on_unqueue_clicked()
+		)
 		lbl_volume = Gtk.Label.new(_('Volume'))
 		scl_volume = Gtk.Scale.new_with_range(
 			Gtk.Orientation.HORIZONTAL, 0, 1, 0.1
@@ -73,27 +77,36 @@ class MonophonyPlayer(Gtk.Box):
 		scl_volume.connect('value-changed', self._on_volume_changed)
 		box_volume = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
 		box_volume.set_spacing(5)
+		box_volume.set_margin_start(5)
+		box_volume.set_margin_start(5)
 		box_volume.set_halign(Gtk.Align.FILL)
 		box_volume.set_hexpand(True)
 		box_volume.append(lbl_volume)
 		box_volume.append(scl_volume)
+		itm_volume = Gio.MenuItem()
+		itm_volume.set_attribute_value(
+			'custom',  GLib.Variant.new_string('volume')
+		)
+		mnu_more.append_item(itm_volume)
+		mnu_more
 		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio mode'))
 		chk_autoplay.set_active(
 			int(monophony.backend.settings.get_value('radio', False))
 		)
 		chk_autoplay.get_last_child().set_wrap(True)
 		chk_autoplay.connect('toggled', self._on_radio_toggled)
-		box_pop = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_pop.set_spacing(5)
-		box_pop.append(btn_unqueue)
-		box_pop.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
-		box_pop.append(box_volume)
-		box_pop.append(chk_autoplay)
-		self.pop_misc = Gtk.Popover.new()
-		self.pop_misc.set_child(box_pop)
+		itm_autoplay = Gio.MenuItem()
+		itm_autoplay.set_attribute_value(
+			'custom',  GLib.Variant.new_string('autoplay')
+		)
+		mnu_more.append_item(itm_autoplay)
+		pop_menu = Gtk.PopoverMenu()
+		pop_menu.set_menu_model(mnu_more)
+		pop_menu.add_child(box_volume, 'volume')
+		pop_menu.add_child(chk_autoplay, 'autoplay')
 		btn_more = Gtk.MenuButton()
 		btn_more.set_icon_name('view-more')
-		btn_more.set_popover(self.pop_misc)
+		btn_more.set_popover(pop_menu)
 		btn_more.set_has_frame(False)
 
 		box_controls = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
@@ -133,7 +146,7 @@ class MonophonyPlayer(Gtk.Box):
 	def _on_loop_toggled(self, btn: Gtk.ToggleButton):
 		self.player.loop = btn.get_active()
 
-	def _on_unqueue_clicked(self, _b):
+	def _on_unqueue_clicked(self):
 		self.player.unqueue_song()
 
 	def _on_volume_changed(self, scl: Gtk.Scale):
