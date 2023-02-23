@@ -35,6 +35,7 @@ def get_similar_song(video_id: str, ignore: list = None) -> dict | None:
 				'author': track['artists'][0]['name'],
 				'length': track['length'],
 				'id': track['videoId'],
+				'thumbnail': track['thumbnail'][0]['url']
 			}
 
 	return None
@@ -90,7 +91,8 @@ def search(query: str, filter: str = '') -> list:
 						'title': s['title'],
 						'type': 'song',
 						'author': s['artists'][0]['name'],
-						'length': s['duration']
+						'length': s['duration'],
+						'thumbnail': s['thumbnails'][0]['url']
 					} for s in album['tracks']
 				]
 			except:
@@ -105,7 +107,8 @@ def search(query: str, filter: str = '') -> list:
 						'title': s['title'],
 						'type': 'song',
 						'author': s['artists'][0]['name'],
-						'length': s['duration']
+						'length': s['duration'],
+						'thumbnail': s['thumbnails'][0]['url']
 					} for s in album['tracks']
 				]
 			except:
@@ -114,6 +117,7 @@ def search(query: str, filter: str = '') -> list:
 			item['id'] = str(result['videoId'])
 			item['author'] = result['artists'][0]['name']
 			item['length'] = result['duration']
+			item['thumbnail'] = result['thumbnails'][0]['url']
 
 		results.append(item)
 

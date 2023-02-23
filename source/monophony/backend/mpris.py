@@ -1,10 +1,7 @@
-from monophony import APP_ID
-
 from gi.repository import GLib
-from mpris_server.adapters import Metadata, PlayState, MprisAdapter
+from mpris_server.adapters import PlayState, MprisAdapter
 from mpris_server.server import Server
 from mpris_server.events import EventAdapter
-from mpris_server import Metadata
 
 
 class Adapter(MprisAdapter):
@@ -112,6 +109,7 @@ class Adapter(MprisAdapter):
 		if song:
 			return {
 				'mpris:trackid': '/track/1',
+				'mpris:artUrl': song['thumbnail'] if 'thumbnail' in song else '',
 				'xesam:title': song['title'] if 'title' in song else '',
 				'xesam:artist': [song['author']] if 'author' in song else []
 			}
