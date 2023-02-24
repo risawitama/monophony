@@ -1,4 +1,4 @@
-import subprocess
+import random, subprocess
 
 import requests, ytmusicapi
 
@@ -21,24 +21,32 @@ def get_song_uri(video_id: str) -> str:
 	return out.decode().split('\n')[0]
 
 
-def get_similar_song(video_id: str, ignore: list = None) -> dict | None:
+def get_similar_song(video_id: str, ignore: list = None) -> dict:
+	ignore = ignore if ignore else []
 	try:
 		yt = ytmusicapi.YTMusic()
 		data = yt.get_watch_playlist(video_id, radio = True)['tracks']
 	except:
-		return None
+		return {}
 
-	for track in data:
-		if track['videoId'] != video_id:
-			return {
-				'title': track['title'],
-				'author': track['artists'][0]['name'],
-				'length': track['length'],
-				'id': track['videoId'],
-				'thumbnail': track['thumbnail'][0]['url']
-			}
+	acceptable_tracks = []
+	for item in data:
+		track = {
+			'title': item['title'],
+			'author': item['artists'][0]['name'],
+			'length': item['length'],
+			'id': item['videoId'],
+			'thumbnail': item['thumbnail'][0]['url']
+		}
+		for id_ in ignore:
+			if id_ == track['id']:
+				break
+		else: # nobreak
+			acceptable_tracks.append(track)
 
-	return None
+	if acceptable_tracks:
+		return random.choice(acceptable_tracks)
+	return {}
 
 
 def get_recommendations() -> dict:
