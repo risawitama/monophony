@@ -1,7 +1,8 @@
 import monophony.backend.cache
+import monophony.backend.mpris
 import monophony.backend.player
 import monophony.backend.playlists
-import monophony.backend.mpris
+import monophony.backend.settings
 from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
 from monophony.frontend.pages.search_page import MonophonySearchPage
@@ -18,7 +19,10 @@ from gi.repository import Adw, Gio, GLib, Gtk
 class MonophonyMainWindow(Adw.ApplicationWindow):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
-		self.set_default_size(600, 500)
+		self.set_default_size(
+			int(monophony.backend.settings.get_value('window-width', 600)),
+			int(monophony.backend.settings.get_value('window-height', 500))
+		)
 		self.player = monophony.backend.player.Player()
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
@@ -65,6 +69,13 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		box_content.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
 		box_content.append(footer_bar)
 		self.set_content(box_content)
+
+		self.connect('close-request', MonophonyMainWindow._on_quit)
+
+	def _on_quit(self):
+		size = self.get_default_size()
+		monophony.backend.settings.set_value('window-width', size.width)
+		monophony.backend.settings.set_value('window-height', size.height)
 
 	def _on_search(self, ent: Gtk.Entry):
 		self.btn_back.show()
