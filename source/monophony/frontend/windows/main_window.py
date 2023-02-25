@@ -70,6 +70,10 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		box_content.append(footer_bar)
 		self.set_content(box_content)
 
+		self.install_action(
+			'quit-app', None, (lambda w, a, t: w.close())
+		)
+		self.get_application().set_accels_for_action('quit-app', ['<Control>w'])
 		self.connect('close-request', MonophonyMainWindow._on_quit)
 
 	def _on_quit(self):
