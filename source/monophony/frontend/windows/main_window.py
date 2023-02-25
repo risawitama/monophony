@@ -133,6 +133,9 @@ SOFTWARE.'''
 		win_about.add_legal_section(
 			'mpris_server', '', Gtk.License.AGPL_3_0, None
 		)
+		win_about.add_legal_section(
+			'requests', '', Gtk.License.APACHE_2_0, None
+		)
 		win_about.set_translator_credits(_('translator-credits'))
 		win_about.set_issue_url('https://gitlab.com/zehkira/monophony/-/issues')
 		win_about.add_link(_('Donate'), 'https://ko-fi.com/zehkira')
