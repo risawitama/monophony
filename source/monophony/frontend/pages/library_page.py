@@ -29,7 +29,7 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.btn_play.connect('clicked', self._on_play_all)
 		self.box_playlists = Adw.PreferencesGroup()
 		self.box_playlists.set_vexpand(True)
-		self.box_playlists.set_title(_('Playlists'))
+		self.box_playlists.set_title(_('Your playlists'))
 		self.box_playlists.set_header_suffix(self.btn_play)
 		self.box_meta.add(self.box_playlists)
 
