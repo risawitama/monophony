@@ -36,15 +36,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.btn_back.hide()
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
-		mnu_main = Gio.Menu()
-		mnu_main.append(_('About'), 'about-app')
-		self.install_action(
-			'about-app', None, (lambda w, a, t: w._on_about_clicked())
-		)
-		btn_menu = Gtk.MenuButton()
-		btn_menu.set_primary(True)
-		btn_menu.set_icon_name('open-menu-symbolic')
-		btn_menu.set_menu_model(mnu_main)
+		btn_about = Gtk.Button.new_from_icon_name('help-about-symbolic')
+		btn_about.set_has_frame(False)
+		btn_about.connect('clicked', self._on_about_clicked)
 
 		self.ent_search = Gtk.SearchEntry()
 		self.ent_search.set_hexpand(True)
@@ -56,7 +50,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		header_bar = Adw.HeaderBar()
 		header_bar.pack_start(self.btn_back)
 		header_bar.set_title_widget(clm_search)
-		header_bar.pack_end(btn_menu)
+		header_bar.pack_end(btn_about)
 
 		footer_bar = Adw.HeaderBar()
 		footer_bar.set_decoration_layout('')
@@ -96,7 +90,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.pge_search.clear()
 		self.ent_search.set_text('')
 
-	def _on_about_clicked(self):
+	def _on_about_clicked(self, _b):
 		win_about = Adw.AboutWindow.new()
 		win_about.set_application_icon(APP_ID)
 		win_about.set_application_name('Monophony')
