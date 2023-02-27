@@ -20,7 +20,8 @@ class Player:
 		self.loop = False
 		self.shuffle = False
 		self.error = False
-		self.mpris = None
+		self.mpris_adapter = None
+		self.mpris_server = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.set_property(
@@ -99,11 +100,14 @@ class Player:
 		if self.playbin.get_bus().have_pending():
 			return
 
+		self.mpris_server.quit_loop()
+		self.mpris_adapter.on_playpause()
 		GLib.Thread.new(None, self.next_song)
 
 	### --- PLAYBACK CONTROLS --- ###
 
 	def play_song(self, id_: str, title: str) -> bool:
+		GLib.Thread.new(None, self.mpris_server.loop)
 		self.playbin.set_state(Gst.State.READY)
 
 		uri = monophony.backend.cache.get_song_uri(id_)
@@ -116,9 +120,7 @@ class Player:
 			return False
 
 		if not monophony.backend.cache.is_song_cached(id_):
-			self.skip_segments = monophony.backend.sponsorblock.get_segments(
-				id_
-			)
+			self.skip_segments = monophony.backend.sponsorblock.get_segments(id_)
 
 		bus = self.playbin.get_bus()
 		bus.add_signal_watch()
@@ -126,7 +128,7 @@ class Player:
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)
-		self.mpris.on_playback()
+		self.mpris_adapter.on_playback()
 		return True
 
 	def play_radio_song(self):
@@ -155,7 +157,7 @@ class Player:
 		else:
 			self.playbin.set_state(Gst.State.PLAYING)
 
-		self.mpris.on_playpause()
+		self.mpris_adapter.on_playpause()
 
 	def next_song(self):
 		if not self.lock.trylock():

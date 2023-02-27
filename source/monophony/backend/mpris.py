@@ -114,10 +114,10 @@ class Adapter(MprisAdapter):
 				'xesam:artist': [song['author']] if 'author' in song else []
 			}
 
-		return {'xesam:title': '', 'xesam:artist': ''}
+		return {}
 
 
 def init(player: object):
 	mpris = Server('monophony', adapter = Adapter(player))
-	player.mpris = EventAdapter(root = mpris.root, player = mpris.player)
-	mpris.loop()
+	player.mpris_adapter = EventAdapter(root = mpris.root, player = mpris.player)
+	player.mpris_server = mpris
