@@ -3,7 +3,7 @@ from monophony.frontend.widgets.song_popover import MonophonySongPopover
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gio, GLib, Gtk, Pango
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -12,43 +12,38 @@ class MonophonyPlayer(Gtk.Box):
 
 		self.player = player
 
-		box_title = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
-		box_title.set_halign(Gtk.Align.CENTER)
+		box_title = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_title.set_halign(Gtk.Align.START)
+		box_title.set_valign(Gtk.Align.CENTER)
 		self.spn_loading = Gtk.Spinner.new()
-		self.spn_loading.set_halign(Gtk.Align.CENTER)
-		self.spn_loading.set_margin_top(10)
-		self.spn_loading.set_margin_bottom(10)
+		self.spn_loading.set_halign(Gtk.Align.START)
+		self.spn_loading.set_margin_start(10)
+		self.spn_loading.set_margin_end(10)
 		self.spn_loading.start()
 		self.spn_loading.hide()
 		box_title.append(self.spn_loading)
 		self.lnk_title = Gtk.LinkButton.new_with_label('', '')
-		self.lnk_title.set_halign(Gtk.Align.CENTER)
+		self.lnk_title.set_halign(Gtk.Align.START)
 		self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
-		self.lnk_title.set_margin_start(5)
-		self.lnk_title.set_margin_end(5)
 		box_title.append(self.lnk_title)
 
-		self.scl_progress = Gtk.Scale.new_with_range(
-			Gtk.Orientation.HORIZONTAL, 0, 1, 0.01
-		)
-		self.scl_progress.set_draw_value(False)
-		self.scl_progress.set_halign(Gtk.Align.FILL)
-		self.scl_progress.set_valign(Gtk.Align.END)
-		self.scl_progress.connect('change-value', self._on_seek_performed)
-
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
+		self.btn_pause.set_valign(Gtk.Align.CENTER)
 		self.btn_pause.connect('clicked', self._on_pause_clicked)
 		self.btn_pause.set_tooltip_text(_('Toggle pause'))
 		self.btn_pause.set_has_frame(False)
 		btn_next = Gtk.Button.new_from_icon_name('media-skip-forward')
+		btn_next.set_valign(Gtk.Align.CENTER)
 		btn_next.set_tooltip_text(_('Next song'))
 		btn_next.connect('clicked', self._on_next_clicked)
 		btn_next.set_has_frame(False)
 		btn_prev = Gtk.Button.new_from_icon_name('media-skip-backward')
+		btn_prev.set_valign(Gtk.Align.CENTER)
 		btn_prev.set_tooltip_text(_('Previous song'))
 		btn_prev.connect('clicked', self._on_previous_clicked)
 		btn_prev.set_has_frame(False)
 		btn_playlists = Gtk.MenuButton()
+		btn_playlists.set_valign(Gtk.Align.CENTER)
 		btn_playlists.set_tooltip_text(_('Add to playlist'))
 		btn_playlists.set_create_popup_func(MonophonySongPopover, player)
 		btn_playlists.set_has_frame(False)
@@ -115,6 +110,7 @@ class MonophonyPlayer(Gtk.Box):
 		pop_menu.add_child(chk_loop, 'loop')
 		pop_menu.add_child(chk_shuffle, 'shuffle')
 		btn_more = Gtk.MenuButton()
+		btn_more.set_valign(Gtk.Align.CENTER)
 		btn_more.set_icon_name('view-more')
 		btn_more.set_tooltip_text(_('More actions'))
 		btn_more.set_popover(pop_menu)
@@ -122,18 +118,68 @@ class MonophonyPlayer(Gtk.Box):
 
 		box_controls = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
 		box_controls.set_spacing(2)
-		box_controls.set_valign(Gtk.Align.END)
-		box_controls.set_halign(Gtk.Align.CENTER)
+		box_controls.set_valign(Gtk.Align.CENTER)
+		box_controls.set_halign(Gtk.Align.END)
+		box_controls.set_hexpand(True)
 		box_controls.append(btn_playlists)
 		box_controls.append(btn_prev)
 		box_controls.append(self.btn_pause)
 		box_controls.append(btn_next)
 		box_controls.append(btn_more)
 
+		box_meta = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_meta.set_valign(Gtk.Align.END)
+		box_meta.set_halign(Gtk.Align.FILL)
+		box_meta.set_hexpand(True)
+		box_meta.append(box_title)
+		box_meta.append(box_controls)
+
+		self.scl_progress = Gtk.Scale.new_with_range(
+			Gtk.Orientation.HORIZONTAL, 0, 1, 0.01
+		)
+		self.scl_progress.add_css_class('seekbar')
+		self.scl_progress.set_draw_value(False)
+		self.scl_progress.set_halign(Gtk.Align.FILL)
+		self.scl_progress.set_valign(Gtk.Align.END)
+		self.scl_progress.connect('change-value', self._on_seek_performed)
+
+		footer_bar = Adw.HeaderBar()
+		footer_bar.set_decoration_layout('')
+		footer_bar.set_title_widget(box_meta)
+		footer_bar.set_valign(Gtk.Align.END)
+
 		self.set_hexpand(True)
-		self.append(box_title)
-		self.append(box_controls)
 		self.append(self.scl_progress)
+		self.append(footer_bar)
+
+		css = Gtk.CssProvider.new()
+		css.load_from_data('''
+			.seekbar {
+				padding: 0;
+				min-height: 8px;
+			}
+
+			.seekbar slider {
+				opacity: 0;
+			}
+
+			.seekbar trough, .seekbar highlight {
+				border-radius: 0;
+				border-left: none;
+				border-right: none;
+				min-height: 8px;
+			}
+
+			.seekbar highlight {
+				border-left: none;
+				border-right: none;
+			}
+		'''.encode())
+		Gtk.StyleContext.add_provider_for_display(
+			Gdk.Display.get_default(),
+			css,
+			Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+		)
 
 		GLib.timeout_add(100, self.update)
 
@@ -167,10 +213,12 @@ class MonophonyPlayer(Gtk.Box):
 
 	def update(self) -> True:
 		if self.player.is_busy():
+			self.lnk_title.hide()
 			if not self.spn_loading.get_visible():
 				self.spn_loading.show()
 				self.spn_loading.start()
 		else:
+			self.lnk_title.show()
 			self.spn_loading.hide()
 			self.scl_progress.set_value(self.player.get_progress())
 
@@ -181,10 +229,7 @@ class MonophonyPlayer(Gtk.Box):
 
 		song = self.player.get_current_song()
 		if song:
-			self.lnk_title.set_label(
-				(song['author'] if 'author' in song else '________')
-				+ ' - ' + song['title']
-			)
+			self.lnk_title.set_label(song['title'])
 			self.lnk_title.set_uri(
 				'https://music.youtube.com/watch?v=' + song['id']
 			)

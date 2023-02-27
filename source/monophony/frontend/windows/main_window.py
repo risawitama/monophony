@@ -13,7 +13,7 @@ from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
@@ -53,16 +53,10 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		header_bar.set_title_widget(clm_search)
 		header_bar.pack_end(btn_about)
 
-		footer_bar = Adw.HeaderBar()
-		footer_bar.set_decoration_layout('')
-		footer_bar.set_title_widget(MonophonyPlayer(self.player))
-		footer_bar.set_valign(Gtk.Align.END)
-
 		box_content = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_content.append(header_bar)
 		box_content.append(self.stack)
-		box_content.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
-		box_content.append(footer_bar)
+		box_content.append(MonophonyPlayer(self.player))
 		self.set_content(box_content)
 
 		self.install_action(
