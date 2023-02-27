@@ -73,7 +73,11 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.install_action(
 			'quit-app', None, (lambda w, a, t: w.close())
 		)
-		self.get_application().set_accels_for_action('quit-app', ['<Control>w'])
+		self.install_action(
+			'focus-search', None, (lambda w, a, t: w.ent_search.grab_focus())
+		)
+		self.get_application().set_accels_for_action('quit-app', ['<Control>w', '<Control>q'])
+		self.get_application().set_accels_for_action('focus-search', ['<Control>f'])
 		self.connect('close-request', MonophonyMainWindow._on_quit)
 
 	def _on_quit(self):
