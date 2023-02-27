@@ -16,6 +16,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		self.editable = editable
 
 		btn_more = Gtk.MenuButton()
+		btn_more.set_tooltip_text(_('More actions'))
 		btn_more.set_icon_name('view-more')
 		btn_more.set_has_frame(False)
 		btn_more.set_vexpand(False)

@@ -37,6 +37,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
 		btn_about = Gtk.Button.new_from_icon_name('help-about-symbolic')
+		btn_about.set_tooltip_text(_('About'))
 		btn_about.set_has_frame(False)
 		btn_about.connect('clicked', self._on_about_clicked)
 

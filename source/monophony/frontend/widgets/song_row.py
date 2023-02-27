@@ -38,6 +38,7 @@ class MonophonySongRow(Adw.ActionRow):
 		)
 
 		btn_more = Gtk.MenuButton()
+		btn_more.set_tooltip_text(_('More actions'))
 		btn_more.set_create_popup_func(
 			MonophonySongPopover, player, song, group, editable
 		)
