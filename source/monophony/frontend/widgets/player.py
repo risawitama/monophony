@@ -181,7 +181,7 @@ class MonophonyPlayer(Gtk.Box):
 			Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 		)
 
-		GLib.timeout_add(100, self.update)
+		GLib.timeout_add(250, self.update)
 
 	def _on_seek_performed(self, _s, _t, target: float):
 		self.player.seek(target)
@@ -227,14 +227,14 @@ class MonophonyPlayer(Gtk.Box):
 			else:
 				self.btn_pause.set_icon_name('media-playback-pause')
 
-		song = self.player.get_current_song()
-		if song:
-			self.lnk_title.set_label(song['title'])
-			self.lnk_title.set_uri(
-				'https://music.youtube.com/watch?v=' + song['id']
-			)
-		else:
-			self.lnk_title.set_label('')
-			self.lnk_title.set_uri('')
+			song = self.player.get_current_song()
+			if song:
+				self.lnk_title.set_label(song['title'])
+				self.lnk_title.set_uri(
+					'https://music.youtube.com/watch?v=' + song['id']
+				)
+			else:
+				self.lnk_title.set_label('')
+				self.lnk_title.set_uri('')
 
 		return True

@@ -51,7 +51,7 @@ class Player:
 		acceptable_states = {Gst.State.PAUSED, Gst.State.PLAYING}
 
 		if len(self.queue) > self.index:
-			if state in acceptable_states or self.is_busy():
+			if state in acceptable_states:
 				return self.queue[self.index]
 
 		return {}
