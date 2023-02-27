@@ -13,7 +13,7 @@ from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
