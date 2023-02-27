@@ -21,8 +21,9 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.pge_status = Adw.StatusPage()
 		self.pge_status.set_vexpand(True)
 		self.pge_status.set_valign(Gtk.Align.FILL)
-		self.pge_status.set_icon_name('emblem-music-symbolic')
-		self.pge_status.set_title(_('No playlists found'))
+		self.pge_status.set_icon_name('io.gitlab.zehkira.Monophony')
+		self.pge_status.set_title(_('Your library is empty'))
+		self.pge_status.set_description(_('Find songs to play using the search bar above'))
 		self.append(self.pge_status)
 
 		self.btn_play = Gtk.Button.new_with_label(_('Play all'))
