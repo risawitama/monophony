@@ -22,7 +22,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		btn_more.set_vexpand(False)
 		btn_more.set_valign(Gtk.Align.CENTER)
 		btn_more.set_create_popup_func(self._on_show_actions)
-		self.add_prefix(btn_more)
+		self.add_action(btn_more)
 
 		if 'author' in self.group:
 			self.set_subtitle(GLib.markup_escape_text(self.group['author'], -1))
