@@ -56,13 +56,8 @@ class Player:
 		return {}
 
 	def get_progress(self) -> float:
-		while not self.lock.trylock():
-			pass
-
 		duration = self.playbin.query_duration(Gst.Format.TIME)[1]
 		position = self.playbin.query_position(Gst.Format.TIME)[1]
-
-		self.lock.unlock()
 		return (position / duration) if duration > 0 else 0.0
 
 	### --- EVENT HANDLERS --- ###
@@ -76,14 +71,11 @@ class Player:
 		if self.playbin.get_bus().have_pending():
 			return
 
-		self.mpris_server.quit_loop()
-		self.mpris_adapter.on_playpause()
 		GLib.Thread.new(None, self.next_song)
 
 	### --- PLAYBACK CONTROLS --- ###
 
 	def play_song(self, id_: str, title: str) -> bool:
-		GLib.Thread.new(None, self.mpris_server.loop)
 		self.playbin.set_state(Gst.State.READY)
 
 		uri = monophony.backend.cache.get_song_uri(id_)
@@ -101,6 +93,7 @@ class Player:
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)
+		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
 		return True
 

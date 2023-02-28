@@ -69,11 +69,6 @@ class MonophonySongRow(Adw.ActionRow):
 		)
 
 	def update(self) -> True:
-		if self.player.is_busy():
-			self.set_sensitive(False)
-		else:
-			self.set_sensitive(True)
-
 		if self.editable:
 			if monophony.backend.cache.is_song_being_cached(self.song['id']):
 				self.spinner.show()

@@ -1,5 +1,5 @@
 from gi.repository import GLib
-from mpris_server.adapters import PlayState, MprisAdapter
+from mpris_server.adapters import Track, PlayState, MprisAdapter
 from mpris_server.server import Server
 from mpris_server.events import EventAdapter
 
@@ -93,7 +93,7 @@ class Adapter(MprisAdapter):
 		return True
 
 	def can_play(self) -> bool:
-		return True
+		return bool(self.monophony_player.get_current_song())
 
 	def can_pause(self) -> bool:
 		return bool(self.monophony_player.get_current_song())
@@ -114,10 +114,11 @@ class Adapter(MprisAdapter):
 				'xesam:artist': [song['author']] if 'author' in song else []
 			}
 
-		return {}
+		return {'mpris:trackid': '/org/mpris/MediaPlayer2/TrackList/NoTrack'}
 
 
 def init(player: object):
 	mpris = Server('monophony', adapter = Adapter(player))
 	player.mpris_adapter = EventAdapter(root = mpris.root, player = mpris.player)
 	player.mpris_server = mpris
+	player.mpris_server.loop()

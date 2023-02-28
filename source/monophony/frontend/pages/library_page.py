@@ -47,11 +47,6 @@ class MonophonyLibraryPage(Gtk.Box):
 	def update(self) -> True:
 		new_playlists = monophony.backend.playlists.read_playlists()
 
-		if self.player.is_busy():
-			self.btn_play.set_sensitive(False)
-		else:
-			self.btn_play.set_sensitive(True)
-
 		remaining_widgets = []
 		for widget in self.playlist_widgets:
 			if widget.is_ancestor(self.box_meta):

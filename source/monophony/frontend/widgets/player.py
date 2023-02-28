@@ -179,7 +179,7 @@ class MonophonyPlayer(Gtk.Box):
 		GLib.timeout_add(250, self.update)
 
 	def _on_seek_performed(self, _s, _t, target: float):
-		self.player.seek(target)
+		GLib.Thread.new(None, self.player.seek, target)
 
 	def _on_pause_clicked(self, _b):
 		self.player.toggle_pause()
