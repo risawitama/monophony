@@ -123,12 +123,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.'''
 		)
 		win_about.add_legal_section(
-			'SponsorBlock',
-			'',
-			Gtk.License.CUSTOM,
-			'Uses SponsorBlock data licensed used under CC BY-NC-SA 4.0 from https://sponsor.ajay.app/.'
-		)
-		win_about.add_legal_section(
 			'mpris_server', '', Gtk.License.AGPL_3_0, None
 		)
 		win_about.add_legal_section(

@@ -46,7 +46,7 @@ def cache_song(video_id: str):
 	os.makedirs(path, exist_ok = True)
 
 	out, _ = subprocess.Popen(
-		f'yt-dlp -x --no-cache-dir --audio-quality 0 --sponsorblock-remove music_offtopic --add-metadata -o "{path}/%(id)s.%(ext)s" https://music.youtube.com/watch?v={video_id}',
+		f'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata -o "{path}/%(id)s.%(ext)s" https://music.youtube.com/watch?v={video_id}',
 		shell = True,
 		stdout = subprocess.PIPE
 	).communicate()

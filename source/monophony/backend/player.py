@@ -2,7 +2,6 @@ import random
 
 import monophony.backend.cache
 import monophony.backend.settings
-import monophony.backend.sponsorblock
 import monophony.backend.yt
 
 import gi
@@ -15,7 +14,6 @@ class Player:
 		Gst.init([])
 		self.lock = GLib.Mutex()
 		self.index = 0
-		self.skip_segments = {}
 		self.queue = []
 		self.loop = False
 		self.shuffle = False
@@ -69,28 +67,6 @@ class Player:
 
 	### --- EVENT HANDLERS --- ###
 
-	def _on_auto_skip(self) -> True:
-		# low priority
-		if not self.lock.trylock():
-			return True
-
-		duration = self.playbin.query_duration(Gst.Format.TIME)[1]
-		position = self.playbin.query_position(Gst.Format.TIME)[1]
-
-		if duration > 0:
-			pos_seconds = position / Gst.SECOND
-			for start, end in self.skip_segments.items():
-				if pos_seconds >= start and pos_seconds < end:
-					self.playbin.seek_simple(
-						Gst.Format.TIME,
-						Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE,
-						end * Gst.SECOND
-					)
-					break
-
-		self.lock.unlock()
-		return True
-
 	def _on_bus_error(self, _, err, s_id: str, s_title: str):
 		self.lock.lock()
 		self.error = True
@@ -118,9 +94,6 @@ class Player:
 
 		if not uri:
 			return False
-
-		if not monophony.backend.cache.is_song_cached(id_):
-			self.skip_segments = monophony.backend.sponsorblock.get_segments(id_)
 
 		bus = self.playbin.get_bus()
 		bus.add_signal_watch()
