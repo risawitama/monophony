@@ -46,7 +46,7 @@ install:
 
 test:
 	flatpak-builder --user --install --force-clean --repo=repo/ build/ data/manifest.yml
-	LANG=en_US.UTF-8 flatpak run io.gitlab.zehkira.Monophony
+	flatpak run io.gitlab.zehkira.Monophony
 
 
 uninstall:
