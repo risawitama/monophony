@@ -2,6 +2,7 @@
 
 import gettext, os
 
+import monophony.backend.cache
 from monophony import LANGUAGES
 from monophony.frontend.app import MonophonyApplication
 
@@ -23,6 +24,7 @@ def main():
 			languages = [chosen_lang]
 		).install()
 
+	monophony.backend.cache.clean_up()
 	MonophonyApplication().run()
 
 

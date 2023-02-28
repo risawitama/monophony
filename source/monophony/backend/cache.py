@@ -65,3 +65,14 @@ def uncache_song(video_id: str):
 		)
 	except:
 		pass
+
+
+def clean_up():
+	music = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
+	if not music:
+		return
+
+	path = music + '/monophony/'
+	for file in os.listdir(path):
+		if file.endswith('.part'):
+			os.remove(path + file)
