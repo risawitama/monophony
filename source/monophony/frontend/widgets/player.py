@@ -128,6 +128,10 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.append(btn_more)
 
 		box_meta = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_meta.set_margin_top(10)
+		box_meta.set_margin_bottom(10)
+		box_meta.set_margin_start(5)
+		box_meta.set_margin_end(5)
 		box_meta.set_valign(Gtk.Align.END)
 		box_meta.set_halign(Gtk.Align.FILL)
 		box_meta.set_hexpand(True)
@@ -143,31 +147,22 @@ class MonophonyPlayer(Gtk.Box):
 		self.scl_progress.set_valign(Gtk.Align.END)
 		self.scl_progress.connect('change-value', self._on_seek_performed)
 
-		footer_bar = Adw.HeaderBar()
-		footer_bar.set_decoration_layout('')
-		footer_bar.set_title_widget(box_meta)
-		footer_bar.set_valign(Gtk.Align.END)
-
 		self.set_hexpand(True)
 		self.append(self.scl_progress)
-		self.append(footer_bar)
+		self.append(box_meta)
 
 		css = Gtk.CssProvider.new()
 		css.load_from_data('''
 			.seekbar {
 				padding: 0;
-				min-height: 8px;
-			}
-
-			.seekbar slider {
-				opacity: 0;
+				min-height: 1px;
 			}
 
 			.seekbar trough, .seekbar highlight {
 				border-radius: 0;
 				border-left: none;
 				border-right: none;
-				min-height: 8px;
+				min-height: 1px;
 			}
 
 			.seekbar highlight {
