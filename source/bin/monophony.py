@@ -16,12 +16,15 @@ def main():
 			break
 
 	if os.getenv('container', '') != 'flatpak':
-		gettext.translation('monophony', languages = [chosen_lang]).install()
+		gettext.translation(
+			'monophony', languages = [chosen_lang], fallback = True
+		).install()
 	else:
 		gettext.translation(
 			'monophony',
 			localedir = '/app/share/locale',
-			languages = [chosen_lang]
+			languages = [chosen_lang],
+			fallback = True
 		).install()
 
 	monophony.backend.cache.clean_up()
