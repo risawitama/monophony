@@ -50,7 +50,7 @@ class MonophonyPlayer(Gtk.Box):
 		btn_playlists.set_icon_name('list-add')
 
 		mnu_more = Gio.Menu()
-		mnu_more.append(_('Remove from queue'), 'unqueue-song')
+		mnu_more.append(_('Remove From Queue'), 'unqueue-song')
 		self.install_action(
 			'unqueue-song',
 			None,
@@ -79,7 +79,7 @@ class MonophonyPlayer(Gtk.Box):
 			'custom',  GLib.Variant.new_string('volume')
 		)
 		mnu_more.append_item(itm_volume)
-		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio mode'))
+		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio Mode'))
 		chk_autoplay.set_active(
 			int(monophony.backend.settings.get_value('radio', False))
 		)

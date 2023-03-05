@@ -22,15 +22,15 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.pge_status.set_vexpand(True)
 		self.pge_status.set_valign(Gtk.Align.FILL)
 		self.pge_status.set_icon_name('io.gitlab.zehkira.Monophony')
-		self.pge_status.set_title(_('Your library is empty'))
+		self.pge_status.set_title(_('Your Library is Empty'))
 		self.pge_status.set_description(_('Find songs to play using the search bar above'))
 		self.append(self.pge_status)
 
-		self.btn_play = Gtk.Button.new_with_label(_('Play all'))
+		self.btn_play = Gtk.Button.new_with_label(_('Play All'))
 		self.btn_play.connect('clicked', self._on_play_all)
 		self.box_playlists = Adw.PreferencesGroup()
 		self.box_playlists.set_vexpand(True)
-		self.box_playlists.set_title(_('Your playlists'))
+		self.box_playlists.set_title(_('Your Playlists'))
 		self.box_playlists.set_header_suffix(self.btn_play)
 		self.box_meta.add(self.box_playlists)
 

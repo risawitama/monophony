@@ -20,8 +20,8 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 		window = btn.get_ancestor(Gtk.Window)
 		menu = Gio.Menu()
 		if editable:
-			menu.append(_('Move up'), 'move-song-up')
-			menu.append(_('Move down'), 'move-song-down')
+			menu.append(_('Move Up'), 'move-song-up')
+			menu.append(_('Move Down'), 'move-song-down')
 			window.install_action(
 				'move-song-up',
 				None,
@@ -36,27 +36,27 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 			if monophony.backend.cache.is_song_being_cached(song['id']):
 				pass
 			elif monophony.backend.cache.is_song_cached(song['id']):
-				menu.append(_('Remove from downloads'), 'uncache-song')
+				menu.append(_('Remove From Downloads'), 'uncache-song')
 				window.install_action(
 					'uncache-song',
 					None,
 					lambda w, a, t: w._on_uncache_song(self.song)
 				)
 			else:
-				menu.append(_('Download to Music folder'), 'cache-song')
+				menu.append(_('Download to Music Folder'), 'cache-song')
 				window.install_action(
 					'cache-song',
 					None,
 					lambda w, a, t: w._on_cache_song(self.song)
 				)
 		if player.get_current_song() != song:
-			menu.append(_('Add to queue'), 'queue-song')
+			menu.append(_('Add to Queue'), 'queue-song')
 			window.install_action(
 				'queue-song',
 				None,
 				lambda w, a, t: w._on_queue_song(self.song)
 			)
-		menu.append(_('New playlist...'), 'new-playlist')
+		menu.append(_('New Playlist...'), 'new-playlist')
 		window.install_action(
 			'new-playlist',
 			None,

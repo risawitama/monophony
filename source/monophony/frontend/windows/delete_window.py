@@ -12,7 +12,7 @@ class MonophonyDeleteWindow(Adw.MessageDialog):
 
 		self.playlist = playlist
 
-		self.set_heading(_('Delete playlist?'))
+		self.set_heading(_('Delete Playlist?'))
 		self.add_response('cancel', _('Cancel'))
 		self.add_response('delete', _('Delete'))
 		self.set_response_appearance(

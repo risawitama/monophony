@@ -45,7 +45,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		btn_about.connect('clicked', self._on_about_clicked)
 
 		self.ent_search = Gtk.SearchEntry()
-		self.ent_search.set_property('placeholder-text', _('Search for content...'))
+		self.ent_search.set_property('placeholder-text', _('Search for Content...'))
 		self.ent_search.set_hexpand(True)
 		self.ent_search.set_halign(Gtk.Align.FILL)
 		self.ent_search.connect('activate', self._on_search)
@@ -181,7 +181,7 @@ SOFTWARE.'''
 			else:
 				MonophonyMessageWindow(
 					self,
-					_('Could not rename'),
+					_('Could not Rename'),
 					_('Playlist already exists')
 				).show()
 

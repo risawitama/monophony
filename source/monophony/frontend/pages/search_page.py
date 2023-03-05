@@ -20,7 +20,7 @@ class MonophonySearchPage(Gtk.Box):
 		self.pge_status.set_vexpand(True)
 		self.pge_status.set_valign(Gtk.Align.FILL)
 		self.pge_status.set_icon_name('system-search-symbolic')
-		self.pge_status.set_title(_('No results'))
+		self.pge_status.set_title(_('No Results'))
 		self.append(self.pge_status)
 
 		spn_loading = Gtk.Spinner.new()
@@ -86,7 +86,7 @@ class MonophonySearchPage(Gtk.Box):
 
 			self.box_loading.hide()
 			if not self.search_results:
-				self.pge_status.set_title(_('No results'))
+				self.pge_status.set_title(_('No Results'))
 				self.pge_status.show()
 				self.box_results.hide()
 			else:
@@ -116,7 +116,7 @@ class MonophonySearchPage(Gtk.Box):
 					)
 					box_albums.set_header_suffix(btn_more)
 
-					box_playlists.set_title(_('Community playlists'))
+					box_playlists.set_title(_('Community Playlists'))
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
