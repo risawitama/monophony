@@ -15,15 +15,6 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		self.group = group
 		self.editable = editable
 
-		btn_more = Gtk.MenuButton()
-		btn_more.set_tooltip_text(_('More actions'))
-		btn_more.set_icon_name('view-more')
-		btn_more.set_has_frame(False)
-		btn_more.set_vexpand(False)
-		btn_more.set_valign(Gtk.Align.CENTER)
-		btn_more.set_create_popup_func(self._on_show_actions)
-		self.add_action(btn_more)
-
 		if 'author' in self.group:
 			self.set_subtitle(GLib.markup_escape_text(self.group['author'], -1))
 
@@ -39,32 +30,45 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		))
 
 		if self.editable:
+			btn_more = Gtk.MenuButton()
+			btn_more.set_tooltip_text(_('More actions'))
+			btn_more.set_icon_name('view-more')
+			btn_more.set_has_frame(False)
+			btn_more.set_vexpand(False)
+			btn_more.set_valign(Gtk.Align.CENTER)
+			btn_more.set_create_popup_func(self._on_show_actions)
+			self.add_action(btn_more)
+
 			GLib.timeout_add(100, self.update)
+		else:
+			btn_save = Gtk.Button.new_from_icon_name('list-add-symbolic')
+			btn_save.set_tooltip_text(_('Add to library'))
+			btn_save.set_vexpand(False)
+			btn_save.set_valign(Gtk.Align.CENTER)
+			btn_save.set_has_frame(False)
+			btn_save.connect(
+				'clicked',
+				lambda b, t, c: b.get_ancestor(Gtk.Window)._on_save_playlist(t, c),
+				self.group['title'],
+				self.group['contents']
+			)
+			self.add_action(btn_save)
 
 	def _on_show_actions(self, btn: Gtk.MenuButton):
 		window = self.get_ancestor(Gtk.Window)
 		mnu_actions = Gio.Menu()
-		if self.editable:
-			mnu_actions.append(_('Delete'), 'delete-playlist')
-			window.install_action(
-				'delete-playlist',
-				None,
-				lambda w, a, t: w._on_delete_playlist(self)
-			)
-			mnu_actions.append(_('Rename...'), 'rename-playlist')
-			window.install_action(
-				'rename-playlist',
-				None,
-				lambda w, a, t: w._on_rename_playlist(self)
-			)
-		else:
-			mnu_actions.append(_('Save to library'), 'save-playlist')
-			window.install_action(
-				'save-playlist',
-				None,
-				lambda w, a, t: w._on_save_playlist(self.group['title'], self.group['contents'])
-			)
-
+		mnu_actions.append(_('Delete'), 'delete-playlist')
+		window.install_action(
+			'delete-playlist',
+			None,
+			lambda w, a, t: w._on_delete_playlist(self)
+		)
+		mnu_actions.append(_('Rename...'), 'rename-playlist')
+		window.install_action(
+			'rename-playlist',
+			None,
+			lambda w, a, t: w._on_rename_playlist(self)
+		)
 		btn.set_menu_model(mnu_actions)
 
 	def update(self) -> bool:

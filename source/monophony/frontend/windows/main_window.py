@@ -32,6 +32,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.stack.add_named(pge_library, 'library')
 		self.stack.add_named(self.pge_search, 'search')
 
+		self.toaster = Adw.ToastOverlay.new()
+		self.toaster.set_child(self.stack)
+
 		self.btn_back = Gtk.Button.new_from_icon_name('go-previous-symbolic')
 		self.btn_back.hide()
 		self.btn_back.connect('clicked', self._on_back_clicked)
@@ -56,7 +59,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 		box_content = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_content.append(header_bar)
-		box_content.append(self.stack)
+		box_content.append(self.toaster)
 		box_content.append(MonophonyPlayer(self.player))
 		self.set_content(box_content)
 
@@ -153,14 +156,16 @@ SOFTWARE.'''
 			None, monophony.backend.cache.cache_song, song['id']
 		)
 
-	def _on_new_playlist(self, song: dict):
+	def _on_new_playlist(self, song: dict = None):
 		def _create(name: str):
 			if song:
 				monophony.backend.playlists.add_playlist(name, [song])
 			else:
 				monophony.backend.playlists.add_playlist(name)
 
-		MonophonyRenameWindow(self, _create).show()
+		popup = MonophonyRenameWindow(self, _create)
+		popup.set_heading(_('New Playlist'))
+		popup.show()
 
 	def _on_delete_playlist(self, widget: object):
 		MonophonyDeleteWindow(self, widget.group['title']).show()
@@ -180,7 +185,10 @@ SOFTWARE.'''
 					_('Playlist already exists')
 				).show()
 
-		MonophonyRenameWindow(self, _rename, widget.group['title']).show()
+		popup = MonophonyRenameWindow(self, _rename, widget.group['title'])
+		popup.set_heading(_('Rename Playlist'))
+		popup.show()
 
 	def _on_save_playlist(self, name: str, contents: list):
 		monophony.backend.playlists.add_playlist(name, contents)
+		self.toaster.add_toast(Adw.Toast.new(_('Saved')))

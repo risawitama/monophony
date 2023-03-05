@@ -97,8 +97,10 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 
 			scr_playlists.set_child(box_playlists)
 			self.add_child(scr_playlists, 'playlists')
-
-		btn.set_popover(self)
+			btn.set_popover(self)
+		else:
+			btn.popdown()
+			window._on_new_playlist()
 
 	def _on_playlist_toggled(self, chk: Gtk.CheckButton, name: str):
 		if chk.get_active():
