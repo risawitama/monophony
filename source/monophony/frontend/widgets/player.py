@@ -150,6 +150,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.set_hexpand(True)
 		self.append(self.scl_progress)
 		self.append(box_meta)
+		self.add_css_class('playerbar')
 
 		css = Gtk.CssProvider.new()
 		css.load_from_data('''
@@ -168,6 +169,10 @@ class MonophonyPlayer(Gtk.Box):
 			.seekbar highlight {
 				border-left: none;
 				border-right: none;
+			}
+
+			.playerbar {
+				background-color: @headerbar_bg_color;
 			}
 		'''.encode())
 		Gtk.StyleContext.add_provider_for_display(
