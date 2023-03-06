@@ -36,6 +36,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.toaster.set_child(self.stack)
 
 		self.btn_back = Gtk.Button.new_from_icon_name('go-previous-symbolic')
+		self.btn_back.set_tooltip_text(_('Go back'))
 		self.btn_back.hide()
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
@@ -84,10 +85,14 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.pge_search._on_search(ent)
 
 	def _on_back_clicked(self, _b):
-		self.btn_back.hide()
-		self.stack.set_visible_child_name('library')
-		self.pge_search.clear()
-		self.ent_search.set_text('')
+		if len(self.pge_search.results_pages) == 1:
+			self.btn_back.hide()
+			self.stack.set_visible_child_name('library')
+			self.pge_search.results_changed = True
+			self.pge_search.results_pages = []
+			self.ent_search.set_text('')
+		else:
+			self.pge_search.go_back()
 
 	def _on_about_clicked(self, _b):
 		win_about = Adw.AboutWindow.new()

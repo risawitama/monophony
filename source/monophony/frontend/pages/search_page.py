@@ -13,6 +13,7 @@ class MonophonySearchPage(Gtk.Box):
 		super().__init__(orientation = Gtk.Orientation.VERTICAL)
 
 		self.box_results = Adw.PreferencesPage()
+		self.box_results.set_vexpand(True)
 		self.append(self.box_results)
 		self.box_results.hide()
 
@@ -36,9 +37,8 @@ class MonophonySearchPage(Gtk.Box):
 
 		self.set_vexpand(True)
 		self.query = ''
-		self.search_results = []
+		self.results_pages = []
 		self.results_changed = False
-		self.results_filtered = False
 		self.search_lock = GLib.Mutex()
 		self.player = player
 
@@ -57,24 +57,28 @@ class MonophonySearchPage(Gtk.Box):
 		self.search_lock.unlock()
 		GLib.Thread.new(None, self.do_search, ent.get_text())
 
-	def do_search(self, query: str, filter: str = ''):
+	def do_search(self, query: str, filter_: str = ''):
 		self.search_lock.lock()
 		self.query = query
-		self.search_results = monophony.backend.yt.search(query, filter)
+		results = monophony.backend.yt.search(query, filter_)
+		if filter_:
+			self.results_pages.append(results)
+		else:
+			self.results_pages = [results]
 		self.results_changed = True
-		self.results_filtered = bool(filter)
 		self.search_lock.unlock()
 
 	def show_more(self, category: str):
-		top = self.box_results.get_first_child().get_first_child().get_first_child().get_first_child()
-		while child := top.get_first_child():
-			self.box_results.remove(child)
+		self.box_results.hide()
 		self.pge_status.hide()
 		self.box_loading.show()
 		GLib.Thread.new(None, self.do_search, self.query, category)
 
-	def clear(self):
-		self.search_results = []
+	def go_back(self):
+		self.results_pages = self.results_pages[:-1]
+		self.box_results.hide()
+		self.pge_status.hide()
+		self.box_loading.show()
 		self.results_changed = True
 
 	def update_results(self) -> True:
@@ -83,9 +87,12 @@ class MonophonySearchPage(Gtk.Box):
 
 		if self.results_changed:
 			self.results_changed = False
+			top = self.box_results.get_first_child().get_first_child().get_first_child().get_first_child()
+			while child := top.get_first_child():
+				self.box_results.remove(child)
 
 			self.box_loading.hide()
-			if not self.search_results:
+			if not self.results_pages or not self.results_pages[-1]:
 				self.pge_status.set_title(_('No Results'))
 				self.pge_status.show()
 				self.box_results.hide()
@@ -97,7 +104,7 @@ class MonophonySearchPage(Gtk.Box):
 				box_albums = Adw.PreferencesGroup.new()
 				box_playlists = Adw.PreferencesGroup.new()
 
-				if not self.results_filtered:
+				if len(self.results_pages) == 1:
 					box_songs.set_title(_('Songs'))
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
@@ -135,7 +142,7 @@ class MonophonySearchPage(Gtk.Box):
 					box_videos.set_header_suffix(btn_more)
 
 				non_empty = []
-				for item in self.search_results:
+				for item in self.results_pages[-1]:
 					if item['type'] == 'song':
 						box_songs.add(MonophonySongRow(item, self.player))
 						if box_songs not in non_empty:
