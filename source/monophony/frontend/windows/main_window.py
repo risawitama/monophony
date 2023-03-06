@@ -23,6 +23,8 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			int(monophony.backend.settings.get_value('window-width', 600)),
 			int(monophony.backend.settings.get_value('window-height', 500))
 		)
+		self.set_title('Monophony')
+		self.set_icon_name(APP_ID)
 		self.player = monophony.backend.player.Player()
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
