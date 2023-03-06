@@ -10,184 +10,187 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../monophony/frontend/pages/search_page.py:23
-#: ../monophony/frontend/pages/search_page.py:89
-#: monophony/frontend/pages/search_page.py:23
-#: monophony/frontend/pages/search_page.py:89
-msgid "No results"
+#: monophony/frontend/pages/search_page.py:24
+#: monophony/frontend/pages/search_page.py:96
+msgid "No Results"
 msgstr "Sonuç yok"
 
-#: ../monophony/frontend/pages/search_page.py:101
-#: monophony/frontend/pages/search_page.py:101
+#: monophony/frontend/pages/search_page.py:108
 msgid "Songs"
 msgstr "Müzikler"
 
-#: ../monophony/frontend/pages/search_page.py:102
-#: ../monophony/frontend/pages/search_page.py:111
-#: ../monophony/frontend/pages/search_page.py:120
-#: ../monophony/frontend/pages/search_page.py:129
-#: monophony/frontend/pages/search_page.py:102
-#: monophony/frontend/pages/search_page.py:111
-#: monophony/frontend/pages/search_page.py:120
-#: monophony/frontend/pages/search_page.py:129
+#: monophony/frontend/pages/search_page.py:109
+#: monophony/frontend/pages/search_page.py:118
+#: monophony/frontend/pages/search_page.py:127
+#: monophony/frontend/pages/search_page.py:136
 msgid "More"
 msgstr "Daha fazla"
 
-#: ../monophony/frontend/pages/search_page.py:110
-#: monophony/frontend/pages/search_page.py:110
+#: monophony/frontend/pages/search_page.py:117
 msgid "Albums"
 msgstr "Albümler"
 
-#: ../monophony/frontend/pages/search_page.py:119
-#: monophony/frontend/pages/search_page.py:119
-msgid "Community playlists"
+#: monophony/frontend/pages/search_page.py:126
+msgid "Community Playlists"
 msgstr "Oynatma listeleri"
 
-#: ../monophony/frontend/pages/search_page.py:128
-#: monophony/frontend/pages/search_page.py:128
+#: monophony/frontend/pages/search_page.py:135
 msgid "Videos"
 msgstr "Videolar"
 
-#: ../monophony/frontend/pages/library_page.py:26
 #: monophony/frontend/pages/library_page.py:25
-msgid "No playlists found"
-msgstr "Oynatma listesi bulunamadı"
+msgid "Your Library is Empty"
+msgstr "Kütüphaneniz boş"
 
-#: ../monophony/frontend/pages/library_page.py:29
-#: monophony/frontend/pages/library_page.py:28
-msgid "Play all"
+#: monophony/frontend/pages/library_page.py:26
+msgid "Find songs to play using the search bar above"
+msgstr "Yukarıdaki arama çubuğunu kullanarak müzik arayın"
+
+#: monophony/frontend/pages/library_page.py:29
+msgid "Play All"
 msgstr "Hepsini oynat"
 
-#: ../monophony/frontend/pages/library_page.py:32
-msgid "Playlists"
-msgstr "Oynatma listeleri"
+#: monophony/frontend/pages/library_page.py:33
+msgid "Your Playlists"
+msgstr "Oynatma listeleriniz"
 
-#: ../monophony/frontend/windows/delete_window.py:15
 #: monophony/frontend/windows/delete_window.py:15
-msgid "Delete playlist?"
+msgid "Delete Playlist?"
 msgstr "Oynatma listesini silmek istiyor musunuz?"
 
-#: ../monophony/frontend/windows/delete_window.py:16
-#: ../monophony/frontend/windows/rename_window.py:18
 #: monophony/frontend/windows/delete_window.py:16
 #: monophony/frontend/windows/rename_window.py:18
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../monophony/frontend/windows/delete_window.py:17
-#: ../monophony/frontend/widgets/group_row.py:24
 #: monophony/frontend/windows/delete_window.py:17
-#: monophony/frontend/widgets/group_row.py:47
+#: monophony/frontend/widgets/group_row.py:60
 msgid "Delete"
 msgstr "Sil"
 
-#: ../monophony/frontend/windows/main_window.py:29
-#: monophony/frontend/windows/main_window.py:40
+#: monophony/frontend/windows/main_window.py:41
+msgid "Go back"
+msgstr "Geri dön"
+
+#: monophony/frontend/windows/main_window.py:46
 msgid "About"
 msgstr "Hakkında"
 
-#: ../monophony/frontend/windows/main_window.py:119
-#: monophony/frontend/windows/main_window.py:143
+#: monophony/frontend/windows/main_window.py:51
+msgid "Search for Content..."
+msgstr "İçerik ara..."
+
+#: monophony/frontend/windows/main_window.py:141
 msgid "translator-credits"
-msgstr "nxjosephofficial"
+msgstr "nxjoseph"
 
-#: ../monophony/frontend/windows/main_window.py:120
-msgid "Patrons"
-msgstr "Patrons"
-
-#: ../monophony/frontend/windows/main_window.py:122
-#: monophony/frontend/windows/main_window.py:145
+#: monophony/frontend/windows/main_window.py:143
 msgid "Donate"
 msgstr "Bağış yap"
 
-#: ../monophony/frontend/windows/rename_window.py:15
-#: monophony/frontend/windows/rename_window.py:15
-msgid "Enter name..."
-msgstr "Bir isim girin..."
+#: monophony/frontend/windows/main_window.py:174
+msgid "New Playlist"
+msgstr "Yeni oynatma listesi"
 
-#: ../monophony/frontend/windows/rename_window.py:19
-#: ../monophony/frontend/windows/message_window.py:13
-#: monophony/frontend/windows/rename_window.py:19
-#: monophony/frontend/windows/message_window.py:13
-msgid "Ok"
-msgstr "Ok"
-
-#: ../monophony/frontend/widgets/player.py:62
-#: monophony/frontend/widgets/player.py:54
-msgid "Remove from queue"
-msgstr "Sıradan kaldır"
-
-#: ../monophony/frontend/widgets/player.py:65
-#: monophony/frontend/widgets/player.py:60
-msgid "Volume"
-msgstr "Ses"
-
-#: ../monophony/frontend/widgets/player.py:81
-#: monophony/frontend/widgets/player.py:83
-msgid "Radio mode"
-msgstr "Radyo modu"
-
-#: ../monophony/frontend/widgets/song_row.py:21
-#: monophony/frontend/widgets/song_row.py:21
-msgid "Play"
-msgstr "Oynat"
-
-#: ../monophony/frontend/widgets/song_popover.py:37
-#: monophony/frontend/widgets/song_popover.py:39
-msgid "Remove from downloads"
-msgstr "İndirilenlerden kaldır"
-
-#: ../monophony/frontend/widgets/song_popover.py:39
-#: monophony/frontend/widgets/song_popover.py:46
-msgid "Download to Music folder"
-msgstr "Müzik klasörüne indir"
-
-#: ../monophony/frontend/widgets/song_popover.py:51
-#: monophony/frontend/widgets/song_popover.py:53
-msgid "Add to queue"
-msgstr "Sıraya ekle"
-
-#: ../monophony/frontend/widgets/song_popover.py:55
-#: monophony/frontend/widgets/song_popover.py:59
-msgid "New playlist..."
-msgstr "Yeni oynatma listesi..."
-
-#: ../monophony/frontend/widgets/group_row.py:27
-#: monophony/frontend/widgets/group_row.py:53
-msgid "Rename..."
-msgstr "Yeniden adlandır..."
-
-#: ../monophony/frontend/widgets/group_row.py:35
-#: monophony/frontend/widgets/group_row.py:60
-msgid "Save to library"
-msgstr "Kütüphaneye kaydet"
-
-#: ../monophony/frontend/widgets/group_row.py:82
 #: monophony/frontend/windows/main_window.py:191
-msgid "Could not rename"
-msgstr "Yeniden adlandırılamadı"
+msgid "Could not Rename"
+msgstr "Adlandırılamadı"
 
-#: ../monophony/frontend/widgets/group_row.py:83
 #: monophony/frontend/windows/main_window.py:192
 msgid "Playlist already exists"
 msgstr "Oynatma listesi zaten mevcut"
 
-#: monophony/frontend/pages/library_page.py:32
-msgid "Your playlists"
-msgstr "Oynatma listelerin"
+#: monophony/frontend/windows/main_window.py:196
+msgid "Rename Playlist"
+msgstr "Oynatma listesini adlandır"
 
-#: monophony/frontend/widgets/player.py:93
+#: monophony/frontend/windows/main_window.py:201
+msgid "Saved"
+msgstr "Kaydedildi"
+
+#: monophony/frontend/windows/rename_window.py:15
+msgid "Enter Name..."
+msgstr "İsim girin..."
+
+#: monophony/frontend/windows/rename_window.py:19
+#: monophony/frontend/windows/message_window.py:13
+msgid "Ok"
+msgstr "Onayla"
+
+#: monophony/frontend/widgets/player.py:33
+msgid "Toggle pause"
+msgstr "Durdur"
+
+#: monophony/frontend/widgets/player.py:37
+msgid "Next song"
+msgstr "Sonraki şarkı"
+
+#: monophony/frontend/widgets/player.py:42
+msgid "Previous song"
+msgstr "Önceki şarkı"
+
+#: monophony/frontend/widgets/player.py:47
+msgid "Add to playlist"
+msgstr "Oynatma listesine ekle"
+
+#: monophony/frontend/widgets/player.py:53
+msgid "Remove From Queue"
+msgstr "Sıradan kaldır"
+
+#: monophony/frontend/widgets/player.py:59
+msgid "Volume"
+msgstr "Ses"
+
+#: monophony/frontend/widgets/player.py:82
+msgid "Radio Mode"
+msgstr "Radyo modu"
+
+#: monophony/frontend/widgets/player.py:92
 msgid "Loop"
 msgstr "Tekrarla"
 
-#: monophony/frontend/widgets/player.py:100
+#: monophony/frontend/widgets/player.py:99
 msgid "Shuffle"
 msgstr "Karıştır"
 
+#: monophony/frontend/widgets/player.py:115
+#: monophony/frontend/widgets/song_row.py:41
+#: monophony/frontend/widgets/group_row.py:34
+msgid "More actions"
+msgstr "Daha fazla"
+
+#: monophony/frontend/widgets/song_row.py:21
+msgid "Play"
+msgstr "Oynat"
+
 #: monophony/frontend/widgets/song_popover.py:23
-msgid "Move up"
+msgid "Move Up"
 msgstr "Yukarı taşı"
 
 #: monophony/frontend/widgets/song_popover.py:24
-msgid "Move down"
+msgid "Move Down"
 msgstr "Aşağı taşı"
+
+#: monophony/frontend/widgets/song_popover.py:39
+msgid "Remove From Downloads"
+msgstr "İndirilenlerden kaldır"
+
+#: monophony/frontend/widgets/song_popover.py:46
+msgid "Download to Music Folder"
+msgstr "Müzik dizinine indir"
+
+#: monophony/frontend/widgets/song_popover.py:53
+msgid "Add to Queue"
+msgstr "Sıraya ekle"
+
+#: monophony/frontend/widgets/song_popover.py:59
+msgid "New Playlist..."
+msgstr "Yeni oynatma listesi..."
+
+#: monophony/frontend/widgets/group_row.py:45
+msgid "Add to library"
+msgstr "Kütüphaneye ekle"
+
+#: monophony/frontend/widgets/group_row.py:66
+msgid "Rename..."
+msgstr "Adlandır..."
