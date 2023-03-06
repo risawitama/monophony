@@ -50,6 +50,10 @@ test:
 	flatpak run io.gitlab.zehkira.Monophony
 
 
+translation:
+	find monophony -iname "*.py" | xargs xgettext --omit-header -j -o locales/all.pot
+
+
 uninstall:
 	@# script file
 	$(UNINSTALL) $(prefix)/bin/monophony
