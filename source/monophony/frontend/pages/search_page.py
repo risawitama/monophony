@@ -52,6 +52,7 @@ class MonophonySearchPage(Gtk.Box):
 		while child := top.get_first_child():
 			self.box_results.remove(child)
 		self.pge_status.hide()
+		self.box_results.hide()
 		self.box_loading.show()
 
 		self.search_lock.unlock()
