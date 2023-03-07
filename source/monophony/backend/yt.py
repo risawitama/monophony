@@ -100,11 +100,11 @@ def search(query: str, filter: str = '') -> list:
 						'type': 'song',
 						'author': s['artists'][0]['name'],
 						'length': s['duration'],
-						'thumbnail': s['thumbnails'][0]['url']
+						'thumbnail': album['thumbnails'][0]['url']
 					} for s in album['tracks']
 				]
-			except:
-				continue
+			except Exception as err:
+				print('Failed to parse album result:', err)
 		elif result['resultType'] == 'playlist':
 			try:
 				album = yt.get_playlist(result['browseId'])
@@ -119,7 +119,8 @@ def search(query: str, filter: str = '') -> list:
 						'thumbnail': s['thumbnails'][0]['url']
 					} for s in album['tracks']
 				]
-			except:
+			except Exception as err:
+				print('Failed to parse playlist result:', err)
 				continue
 		else:
 			item['id'] = str(result['videoId'])
