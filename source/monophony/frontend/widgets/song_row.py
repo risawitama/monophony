@@ -25,15 +25,15 @@ class MonophonySongRow(Adw.ActionRow):
 		self.add_prefix(btn_play)
 
 		title = GLib.markup_escape_text(
-			song['title'] if 'title' in song else '________',
+			song['title'] if 'title' in song and song['title'] else '________',
 			-1
 		)
 		length = GLib.markup_escape_text(
-			song['length'] if 'length' in song else '_:__',
+			song['length'] if 'length' in song and song['length'] else '_:__',
 			-1
 		)
 		author = GLib.markup_escape_text(
-			song['author'] if 'author' in song else '________'
+			song['author'] if 'author' in song and song['author'] else '________'
 			-1
 		)
 

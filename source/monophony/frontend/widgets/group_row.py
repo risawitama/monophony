@@ -25,7 +25,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			self.song_widgets.append(row)
 
 		self.set_title(GLib.markup_escape_text(
-			group['title'] if 'title' in group else '________',
+			group['title'] if 'title' in group and group['title'] else '________',
 			-1
 		))
 
