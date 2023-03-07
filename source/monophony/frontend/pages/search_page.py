@@ -162,6 +162,7 @@ class MonophonySearchPage(Gtk.Box):
 							non_empty.append(box_playlists)
 				for box in non_empty:
 					self.box_results.add(box)
+				self.box_results.get_first_child().get_vadjustment().set_value(0)
 
 		self.search_lock.unlock()
 		return True
