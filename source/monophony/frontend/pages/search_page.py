@@ -1,6 +1,7 @@
 import monophony.backend.yt
 from monophony.frontend.widgets.group_row import MonophonyGroupRow
 from monophony.frontend.widgets.song_row import MonophonySongRow
+from monophony.frontend.widgets.artist_row import MonophonyArtistRow
 
 import gi
 gi.require_version('Adw', '1')
@@ -34,6 +35,7 @@ class MonophonySearchPage(Gtk.Box):
 		self.query = ''
 		self.results_pages = []
 		self.results = []
+		self.results_filterable = False
 		self.results_changed = False
 		self.search_lock = GLib.Mutex()
 		self.player = player
@@ -62,10 +64,12 @@ class MonophonySearchPage(Gtk.Box):
 		self.append(box_results)
 		box_results.hide()
 		if not filter_:
+			self.results_filterable = True
 			for page in self.results_pages:
 				self.remove(page)
 			self.results_pages = [box_results]
 		else:
+			self.results_filterable = False
 			self.results_pages.append(box_results)
 
 		self.results_changed = True
@@ -77,11 +81,31 @@ class MonophonySearchPage(Gtk.Box):
 		self.box_loading.show()
 		GLib.Thread.new(None, self.do_search, self.query, category)
 
+	def do_get_artist(self, artist_id: str):
+		self.search_lock.lock()
+		self.results = monophony.backend.yt.get_artist(artist_id)
+		self.results_filterable = False
+
+		box_results = Adw.PreferencesPage()
+		box_results.set_vexpand(True)
+		self.append(box_results)
+		box_results.hide()
+		self.results_pages.append(box_results)
+		self.results_changed = True
+		self.search_lock.unlock()
+
+	def show_artist(self, artist_id: str):
+		self.results_pages[-1].hide()
+		self.pge_status.hide()
+		self.box_loading.show()
+		GLib.Thread.new(None, self.do_get_artist, artist_id)
+
 	def go_back(self):
 		self.search_lock.lock()
 		self.remove(self.results_pages[-1])
 		self.results_pages = self.results_pages[:-1]
 		self.box_loading.hide()
+		self.pge_status.hide()
 		if self.results_pages:
 			self.results_pages[-1].show()
 		self.results = []
@@ -105,9 +129,13 @@ class MonophonySearchPage(Gtk.Box):
 				box_videos = Adw.PreferencesGroup.new()
 				box_albums = Adw.PreferencesGroup.new()
 				box_playlists = Adw.PreferencesGroup.new()
+				box_artists = Adw.PreferencesGroup.new()
+				box_songs.set_title(_('Songs'))
+				box_albums.set_title(_('Albums'))
+				box_videos.set_title(_('Videos'))
+				box_artists.set_title(_('Artists'))
 
-				if len(self.results_pages) == 1:
-					box_songs.set_title(_('Songs'))
+				if self.results_filterable:
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
@@ -116,7 +144,6 @@ class MonophonySearchPage(Gtk.Box):
 					)
 					box_songs.set_header_suffix(btn_more)
 
-					box_albums.set_title(_('Albums'))
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
@@ -134,7 +161,6 @@ class MonophonySearchPage(Gtk.Box):
 					)
 					box_playlists.set_header_suffix(btn_more)
 
-					box_videos.set_title(_('Videos'))
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
@@ -142,6 +168,14 @@ class MonophonySearchPage(Gtk.Box):
 						'videos'
 					)
 					box_videos.set_header_suffix(btn_more)
+
+					btn_more = Gtk.Button.new_with_label(_('More'))
+					btn_more.connect(
+						'clicked',
+						lambda b, f: self.show_more(f),
+						'artists'
+					)
+					box_artists.set_header_suffix(btn_more)
 
 				non_empty = []
 				for item in self.results:
@@ -161,6 +195,10 @@ class MonophonySearchPage(Gtk.Box):
 						box_playlists.add(MonophonyGroupRow(item, self.player))
 						if box_playlists not in non_empty:
 							non_empty.append(box_playlists)
+					elif item['type'] == 'artist':
+						box_artists.add(MonophonyArtistRow(item, self))
+						if box_artists not in non_empty:
+							non_empty.append(box_artists)
 				for box in non_empty:
 					self.results_pages[-1].add(box)
 				self.results_pages[-1].get_first_child().get_vadjustment().set_value(0)

@@ -25,17 +25,17 @@ class MonophonySongRow(Adw.ActionRow):
 		self.add_prefix(btn_play)
 
 		title = GLib.markup_escape_text(
-			song['title'] if 'title' in song and song['title'] else '________',
-			-1
+			song['title'] if 'title' in song and song['title'] else '________', -1
 		)
 		length = GLib.markup_escape_text(
-			song['length'] if 'length' in song and song['length'] else '_:__',
-			-1
-		)
+			song['length'], -1
+		) if 'length' in song and song['length'] else ''
 		author = GLib.markup_escape_text(
-			song['author'] if 'author' in song and song['author'] else '________'
-			-1
-		)
+			song['author'], -1
+		) if 'author' in song and song['author'] else ''
+		subtitle = author
+		if length:
+			subtitle = length + ' ' + subtitle
 
 		btn_more = Gtk.MenuButton()
 		btn_more.set_tooltip_text(_('More actions'))
@@ -50,7 +50,7 @@ class MonophonySongRow(Adw.ActionRow):
 		self.add_suffix(self.spinner)
 		self.add_suffix(btn_more)
 		self.set_title(title)
-		self.set_subtitle(length + '  ' + author)
+		self.set_subtitle(subtitle)
 
 		GLib.timeout_add(100, self.update)
 

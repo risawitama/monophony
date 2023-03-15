@@ -3,6 +3,75 @@ import random, subprocess
 import requests, ytmusicapi
 
 
+def _parse_results(data: list) -> list:
+	try:
+		yt = ytmusicapi.YTMusic()
+	except:
+		return []
+
+	results = []
+	expected_types = {'album', 'song', 'video', 'playlist', 'artist'}
+	for result in data:
+		if 'resultType' not in result or result['resultType'] not in expected_types:
+			continue
+
+		item = {'type': result['resultType']}
+		if result['resultType'] == 'artist':
+			try:
+				item['author'] = result['artist']
+				item['id'] = result['browseId']
+			except Exception as err:
+				print('Failed to parse artist result:', err)
+				continue
+		if result['resultType'] == 'album':
+			try:
+				album = yt.get_album(result['browseId'])
+				item['author'] = result['artists'][0]['name']
+				item['title'] = result['title']
+				item['contents'] = [
+					{
+						'id': str(s['videoId']),
+						'title': s['title'],
+						'type': 'song',
+						'author': s['artists'][0]['name'],
+						'length': s['duration'],
+						'thumbnail': album['thumbnails'][0]['url']
+					} for s in album['tracks']
+				]
+			except Exception as err:
+				print('Failed to parse album result:', err)
+				continue
+		elif result['resultType'] == 'playlist':
+			try:
+				album = yt.get_playlist(result['browseId'])
+				item['author'] = result['author']
+				item['title'] = result['title']
+				item['contents'] = [
+					{
+						'id': str(s['videoId']),
+						'title': s['title'],
+						'type': 'song',
+						'author': s['artists'][0]['name'],
+						'length': s['duration'],
+						'thumbnail': s['thumbnails'][0]['url']
+					} for s in album['tracks']
+				]
+			except Exception as err:
+				print('Failed to parse playlist result:', err)
+				continue
+		elif result['resultType'] in {'song', 'video'}:
+			item['id'] = str(result['videoId'])
+			item['title'] = result['title']
+			item['author'] = result['artists'][0]['name']
+			if 'duration' in result:
+				item['length'] = result['duration']
+			item['thumbnail'] = result['thumbnails'][0]['url']
+
+		results.append(item)
+
+	return results
+
+
 def is_available() -> bool:
 	try:
 		requests.head('https://music.youtube.com')
@@ -73,61 +142,39 @@ def get_recommendations() -> dict:
 	return results
 
 
-def search(query: str, filter: str = '') -> list:
+def get_artist(browse_id: str) -> list:
+	yt = ytmusicapi.YTMusic()
+	artist = yt.get_artist(browse_id)
+	data = []
+	for group in {'songs', 'albums', 'singles', 'videos'}:
+		if group in artist:
+			if group in {'songs', 'videos'}:
+				content = yt.get_playlist(artist[group]['browseId'])['tracks']
+			else:
+				content = []
+				for album in artist[group]['results']:
+					content.append({
+						'title': album['title'],
+						'browseId': album['browseId'],
+						'artists': [{'name': artist['name']}]
+					})
+
+			for item in content:
+				item['resultType'] = group[:-1]
+
+			data.extend(content)
+
+	return _parse_results(data)
+
+
+def search(query: str, filter_: str = '') -> list:
 	try:
 		yt = ytmusicapi.YTMusic()
-		if filter:
-			data = yt.search(query, filter = filter)
+		if filter_:
+			data = yt.search(query, filter = filter_)
 		else:
 			data = yt.search(query)
 	except:
 		return []
 
-	results = []
-	for result in data:
-		if result['resultType'] not in {'album', 'song', 'video', 'playlist'}:
-			continue
-
-		item = {'type': result['resultType'], 'title': result['title']}
-		if result['resultType'] == 'album':
-			try:
-				album = yt.get_album(result['browseId'])
-				item['author'] = result['artists'][0]['name']
-				item['contents'] = [
-					{
-						'id': str(s['videoId']),
-						'title': s['title'],
-						'type': 'song',
-						'author': s['artists'][0]['name'],
-						'length': s['duration'],
-						'thumbnail': album['thumbnails'][0]['url']
-					} for s in album['tracks']
-				]
-			except Exception as err:
-				print('Failed to parse album result:', err)
-		elif result['resultType'] == 'playlist':
-			try:
-				album = yt.get_playlist(result['browseId'])
-				item['author'] = result['author']
-				item['contents'] = [
-					{
-						'id': str(s['videoId']),
-						'title': s['title'],
-						'type': 'song',
-						'author': s['artists'][0]['name'],
-						'length': s['duration'],
-						'thumbnail': s['thumbnails'][0]['url']
-					} for s in album['tracks']
-				]
-			except Exception as err:
-				print('Failed to parse playlist result:', err)
-				continue
-		else:
-			item['id'] = str(result['videoId'])
-			item['author'] = result['artists'][0]['name']
-			item['length'] = result['duration']
-			item['thumbnail'] = result['thumbnails'][0]['url']
-
-		results.append(item)
-
-	return results
+	return _parse_results(data)
