@@ -87,14 +87,11 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.pge_search._on_search(ent)
 
 	def _on_back_clicked(self, _b):
-		if len(self.pge_search.results_pages) == 1:
+		self.pge_search.go_back()
+		if not self.pge_search.results_pages:
 			self.btn_back.hide()
 			self.stack.set_visible_child_name('library')
-			self.pge_search.results_changed = True
-			self.pge_search.results_pages = []
 			self.ent_search.set_text('')
-		else:
-			self.pge_search.go_back()
 
 	def _on_about_clicked(self, _b):
 		win_about = Adw.AboutWindow.new()
