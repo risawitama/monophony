@@ -11,7 +11,7 @@ class MonophonyArtistRow(Adw.ActionRow):
 		self.artist = artist
 
 		btn_view = Gtk.Button.new_from_icon_name('go-next-symbolic')
-		btn_view.set_tooltip_text(_('View artist'))
+		btn_view.set_tooltip_text(_('View Artist'))
 		btn_view.set_vexpand(False)
 		btn_view.set_valign(Gtk.Align.CENTER)
 		btn_view.connect(
