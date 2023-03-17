@@ -1,5 +1,5 @@
 from gi.repository import GLib
-from mpris_server.adapters import Track, PlayState, MprisAdapter
+from mpris_server.adapters import PlayState, MprisAdapter
 from mpris_server.server import Server
 from mpris_server.events import EventAdapter
 

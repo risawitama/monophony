@@ -9,6 +9,7 @@ from monophony.frontend.pages.search_page import MonophonySearchPage
 from monophony.frontend.widgets.player import MonophonyPlayer
 from monophony.frontend.windows.delete_window import MonophonyDeleteWindow
 from monophony.frontend.windows.rename_window import MonophonyRenameWindow
+from monophony.frontend.windows.message_window import MonophonyMessageWindow
 
 import gi
 gi.require_version('Adw', '1')

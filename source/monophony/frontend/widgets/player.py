@@ -3,7 +3,7 @@ from monophony.frontend.widgets.song_popover import MonophonySongPopover
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
