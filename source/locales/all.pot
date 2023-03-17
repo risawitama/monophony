@@ -3,10 +3,13 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: monophony/frontend/pages/search_page.py:24
 #: monophony/frontend/pages/search_page.py:96
+#: monophony/frontend/pages/search_page.py:20
+#: monophony/frontend/pages/search_page.py:123
 msgid "No Results"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:108
+#: monophony/frontend/pages/search_page.py:133
 msgid "Songs"
 msgstr ""
 
@@ -14,14 +17,21 @@ msgstr ""
 #: monophony/frontend/pages/search_page.py:118
 #: monophony/frontend/pages/search_page.py:127
 #: monophony/frontend/pages/search_page.py:136
+#: monophony/frontend/pages/search_page.py:139
+#: monophony/frontend/pages/search_page.py:147
+#: monophony/frontend/pages/search_page.py:156
+#: monophony/frontend/pages/search_page.py:164
+#: monophony/frontend/pages/search_page.py:172
 msgid "More"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:117
+#: monophony/frontend/pages/search_page.py:134
 msgid "Albums"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:126
+#: monophony/frontend/pages/search_page.py:155
 msgid "Community Playlists"
 msgstr ""
 
@@ -72,26 +82,32 @@ msgid "Search for Content..."
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:141
+#: monophony/frontend/windows/main_window.py:138
 msgid "translator-credits"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:143
+#: monophony/frontend/windows/main_window.py:140
 msgid "Donate"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:174
+#: monophony/frontend/windows/main_window.py:171
 msgid "New Playlist"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:191
+#: monophony/frontend/windows/main_window.py:188
 msgid "Could not Rename"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:192
+#: monophony/frontend/windows/main_window.py:189
 msgid "Playlist already exists"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:196
+#: monophony/frontend/windows/main_window.py:193
 msgid "Rename Playlist"
 msgstr ""
 
@@ -184,4 +200,16 @@ msgstr ""
 
 #: monophony/frontend/widgets/group_row.py:66
 msgid "Rename..."
+msgstr ""
+
+#: monophony/frontend/pages/search_page.py:136
+msgid "Artists"
+msgstr ""
+
+#: monophony/frontend/windows/main_window.py:198
+msgid "Added"
+msgstr ""
+
+#: monophony/frontend/widgets/artist_row.py:14
+msgid "View Artist"
 msgstr ""
