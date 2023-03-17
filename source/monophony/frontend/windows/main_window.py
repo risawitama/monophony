@@ -195,4 +195,4 @@ SOFTWARE.'''
 
 	def _on_save_playlist(self, name: str, contents: list):
 		monophony.backend.playlists.add_playlist(name, contents)
-		self.toaster.add_toast(Adw.Toast.new(_('Saved')))
+		self.toaster.add_toast(Adw.Toast.new(_('Added')))
