@@ -15,10 +15,13 @@ msgstr ""
 
 #: monophony/frontend/pages/search_page.py:24
 #: monophony/frontend/pages/search_page.py:96
+#: monophony/frontend/pages/search_page.py:20
+#: monophony/frontend/pages/search_page.py:123
 msgid "No Results"
 msgstr "Нет Результатов"
 
 #: monophony/frontend/pages/search_page.py:108
+#: monophony/frontend/pages/search_page.py:133
 msgid "Songs"
 msgstr "Песни"
 
@@ -26,14 +29,21 @@ msgstr "Песни"
 #: monophony/frontend/pages/search_page.py:118
 #: monophony/frontend/pages/search_page.py:127
 #: monophony/frontend/pages/search_page.py:136
+#: monophony/frontend/pages/search_page.py:139
+#: monophony/frontend/pages/search_page.py:147
+#: monophony/frontend/pages/search_page.py:156
+#: monophony/frontend/pages/search_page.py:164
+#: monophony/frontend/pages/search_page.py:172
 msgid "More"
 msgstr "Больше"
 
 #: monophony/frontend/pages/search_page.py:117
+#: monophony/frontend/pages/search_page.py:134
 msgid "Albums"
 msgstr "Альбомы"
 
 #: monophony/frontend/pages/search_page.py:126
+#: monophony/frontend/pages/search_page.py:155
 msgid "Community Playlists"
 msgstr "Плейлисты Сообщества"
 
@@ -84,26 +94,32 @@ msgid "Search for Content..."
 msgstr "Поиск Контента..."
 
 #: monophony/frontend/windows/main_window.py:141
+#: monophony/frontend/windows/main_window.py:138
 msgid "translator-credits"
 msgstr "Alex Kryuchkov https://github.com/alexkdeveloper"
 
 #: monophony/frontend/windows/main_window.py:143
+#: monophony/frontend/windows/main_window.py:140
 msgid "Donate"
 msgstr "Пожертвовать"
 
 #: monophony/frontend/windows/main_window.py:174
+#: monophony/frontend/windows/main_window.py:171
 msgid "New Playlist"
 msgstr "Новый Плейлист"
 
 #: monophony/frontend/windows/main_window.py:191
+#: monophony/frontend/windows/main_window.py:188
 msgid "Could not Rename"
 msgstr "Не Удалось Переименовать"
 
 #: monophony/frontend/windows/main_window.py:192
+#: monophony/frontend/windows/main_window.py:189
 msgid "Playlist already exists"
 msgstr "Список воспроизведения уже существует"
 
 #: monophony/frontend/windows/main_window.py:196
+#: monophony/frontend/windows/main_window.py:193
 msgid "Rename Playlist"
 msgstr "Переименовать Плейлист"
 
@@ -201,6 +217,18 @@ msgstr "Добавить в библиотеку"
 #: monophony/frontend/widgets/group_row.py:66
 msgid "Rename..."
 msgstr "Переименовать..."
+
+#: monophony/frontend/pages/search_page.py:136
+msgid "Artists"
+msgstr "Исполнители"
+
+#: monophony/frontend/windows/main_window.py:198
+msgid "Added"
+msgstr "Добавлен"
+
+#: monophony/frontend/widgets/artist_row.py:14
+msgid "View Artist"
+msgstr "Посмотреть Исполнителя"
 
 #~ msgid "No playlists found"
 #~ msgstr "Плейлисты не найдены"
