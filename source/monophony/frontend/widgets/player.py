@@ -12,20 +12,41 @@ class MonophonyPlayer(Gtk.Box):
 
 		self.player = player
 
-		box_title = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_title.set_halign(Gtk.Align.START)
-		box_title.set_valign(Gtk.Align.CENTER)
+		box_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_info.set_margin_start(16)
+		box_info.set_halign(Gtk.Align.START)
+		box_info.set_valign(Gtk.Align.CENTER)
+
+		self.box_sng_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+
 		self.spn_loading = Gtk.Spinner.new()
 		self.spn_loading.set_halign(Gtk.Align.START)
 		self.spn_loading.set_margin_start(10)
 		self.spn_loading.set_margin_end(10)
 		self.spn_loading.start()
 		self.spn_loading.hide()
-		box_title.append(self.spn_loading)
+
+		box_info.append(self.spn_loading)
+
 		self.lnk_title = Gtk.LinkButton.new_with_label('', '')
+		self.lnk_title.set_margin_bottom(2)
+		self.lnk_title.set_margin_top(4)
+		
 		self.lnk_title.set_halign(Gtk.Align.START)
 		self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
-		box_title.append(self.lnk_title)
+		self.lnk_title.add_css_class('title-link')
+
+		self.lbl_author = Gtk.Label(label = '')
+		self.lbl_author.set_margin_top(2)
+		self.lbl_author.set_halign(Gtk.Align.START)
+		self.lbl_author.add_css_class('caption')
+		self.lbl_author.add_css_class('dim-label')
+		self.lbl_author.set_ellipsize(Pango.EllipsizeMode.END)
+
+		self.box_sng_info.append(self.lnk_title)
+		self.box_sng_info.append(self.lbl_author)
+
+		box_info.append(self.box_sng_info)
 
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
 		self.btn_pause.set_valign(Gtk.Align.CENTER)
@@ -135,7 +156,7 @@ class MonophonyPlayer(Gtk.Box):
 		box_meta.set_valign(Gtk.Align.END)
 		box_meta.set_halign(Gtk.Align.FILL)
 		box_meta.set_hexpand(True)
-		box_meta.append(box_title)
+		box_meta.append(box_info)
 		box_meta.append(box_controls)
 
 		self.scl_progress = Gtk.Scale.new_with_range(
@@ -169,6 +190,15 @@ class MonophonyPlayer(Gtk.Box):
 			.seekbar highlight {
 				border-left: none;
 				border-right: none;
+			}
+
+			.title-link {
+				padding-top: 0px; 
+				padding-bottom: 0px;
+				padding-left: 0px;
+				padding-right: 0px;
+				margin-bottom: -8px;
+				margin-top: -8px;
 			}
 
 			.playerbar {
@@ -213,12 +243,12 @@ class MonophonyPlayer(Gtk.Box):
 
 	def update(self) -> True:
 		if self.player.is_busy():
-			self.lnk_title.hide()
+			self.box_sng_info.hide()
 			if not self.spn_loading.get_visible():
 				self.spn_loading.show()
 				self.spn_loading.start()
 		else:
-			self.lnk_title.show()
+			self.box_sng_info.show()
 			self.spn_loading.hide()
 			self.scl_progress.set_value(self.player.get_progress())
 
@@ -233,8 +263,10 @@ class MonophonyPlayer(Gtk.Box):
 				self.lnk_title.set_uri(
 					'https://music.youtube.com/watch?v=' + song['id']
 				)
+				self.lbl_author.set_label(song['author'])
 			else:
 				self.lnk_title.set_label('')
 				self.lnk_title.set_uri('')
+				self.lbl_author.set_label('')
 
 		return True
