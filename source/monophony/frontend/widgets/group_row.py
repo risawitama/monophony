@@ -29,6 +29,13 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			-1
 		))
 
+		btn_play = Gtk.Button.new_from_icon_name('media-playback-start')
+		btn_play.set_tooltip_text(_('Play'))
+		btn_play.set_vexpand(False)
+		btn_play.set_valign(Gtk.Align.CENTER)
+		btn_play.connect('clicked', self._on_play_clicked)
+		self.add_prefix(btn_play)
+
 		if self.editable:
 			btn_more = Gtk.MenuButton()
 			btn_more.set_tooltip_text(_('More actions'))
@@ -53,6 +60,18 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 				self.group['contents']
 			)
 			self.add_action(btn_save)
+
+	def _on_play_clicked(self, _b):
+		if self.editable:
+			queue = monophony.backend.playlists.read_playlists()[
+				self.group['title']
+			]
+		elif self.group:
+			queue = self.group['contents']
+		else:
+			return
+
+		GLib.Thread.new(None, self.player.play_queue, queue, 0)
 
 	def _on_show_actions(self, btn: Gtk.MenuButton):
 		window = self.get_ancestor(Gtk.Window)
