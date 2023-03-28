@@ -12,13 +12,6 @@ class MonophonyPlayer(Gtk.Box):
 
 		self.player = player
 
-		box_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		box_info.set_margin_start(16)
-		box_info.set_halign(Gtk.Align.START)
-		box_info.set_valign(Gtk.Align.CENTER)
-
-		self.box_sng_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-
 		self.spn_loading = Gtk.Spinner.new()
 		self.spn_loading.set_halign(Gtk.Align.START)
 		self.spn_loading.set_margin_start(10)
@@ -26,12 +19,18 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading.start()
 		self.spn_loading.hide()
 
+		box_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_info.set_margin_start(16)
+		box_info.set_spacing(5)
+		box_info.set_margin_end(5)
+		box_info.set_halign(Gtk.Align.START)
+		box_info.set_valign(Gtk.Align.CENTER)
 		box_info.append(self.spn_loading)
 
 		self.lnk_title = Gtk.LinkButton.new_with_label('', '')
 		self.lnk_title.set_margin_bottom(2)
 		self.lnk_title.set_margin_top(4)
-		
+
 		self.lnk_title.set_halign(Gtk.Align.START)
 		self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
 		self.lnk_title.add_css_class('title-link')
@@ -43,9 +42,9 @@ class MonophonyPlayer(Gtk.Box):
 		self.lbl_author.add_css_class('dim-label')
 		self.lbl_author.set_ellipsize(Pango.EllipsizeMode.END)
 
+		self.box_sng_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		self.box_sng_info.append(self.lnk_title)
 		self.box_sng_info.append(self.lbl_author)
-
 		box_info.append(self.box_sng_info)
 
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
@@ -193,7 +192,7 @@ class MonophonyPlayer(Gtk.Box):
 			}
 
 			.title-link {
-				padding-top: 0px; 
+				padding-top: 0px;
 				padding-bottom: 0px;
 				padding-left: 0px;
 				padding-right: 0px;
