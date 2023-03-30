@@ -5,6 +5,7 @@ build/
 dist/
 repo/
 .flatpak-builder/
+.*_cache/
 *.egg-info/
 *.flatpak
 *~
