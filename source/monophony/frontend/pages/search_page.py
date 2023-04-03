@@ -125,11 +125,13 @@ class MonophonySearchPage(Gtk.Box):
 			else:
 				self.pge_status.hide()
 				self.results_pages[-1].show()
+				box_top = Adw.PreferencesGroup.new()
 				box_songs = Adw.PreferencesGroup.new()
 				box_videos = Adw.PreferencesGroup.new()
 				box_albums = Adw.PreferencesGroup.new()
 				box_playlists = Adw.PreferencesGroup.new()
 				box_artists = Adw.PreferencesGroup.new()
+				box_top.set_title(_('Top Result'))
 				box_songs.set_title(_('Songs'))
 				box_albums.set_title(_('Albums'))
 				box_videos.set_title(_('Videos'))
@@ -180,22 +182,42 @@ class MonophonySearchPage(Gtk.Box):
 				non_empty = []
 				for item in self.results:
 					if item['type'] == 'song':
+						if item['top']:
+							box_top.add(MonophonySongRow(item, self.player))
+							non_empty.append(box_top)
+							continue
 						box_songs.add(MonophonySongRow(item, self.player))
 						if box_songs not in non_empty:
 							non_empty.append(box_songs)
 					elif item['type'] == 'video':
+						if item['top']:
+							box_top.add(MonophonySongRow(item, self.player))
+							non_empty.append(box_top)
+							continue
 						box_videos.add(MonophonySongRow(item, self.player))
 						if box_videos not in non_empty:
 							non_empty.append(box_videos)
 					elif item['type'] == 'album':
+						if item['top']:
+							box_top.add(MonophonyGroupRow(item, self.player))
+							non_empty.append(box_top)
+							continue
 						box_albums.add(MonophonyGroupRow(item, self.player))
 						if box_albums not in non_empty:
 							non_empty.append(box_albums)
 					elif item['type'] == 'playlist':
+						if item['top']:
+							box_top.add(MonophonyGroupRow(item, self.player))
+							non_empty.append(box_top)
+							continue
 						box_playlists.add(MonophonyGroupRow(item, self.player))
 						if box_playlists not in non_empty:
 							non_empty.append(box_playlists)
 					elif item['type'] == 'artist':
+						if item['top']:
+							box_top.add(MonophonyArtistRow(item, self))
+							non_empty.append(box_top)
+							continue
 						box_artists.add(MonophonyArtistRow(item, self))
 						if box_artists not in non_empty:
 							non_empty.append(box_artists)

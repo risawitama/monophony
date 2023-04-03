@@ -15,15 +15,22 @@ def _parse_results(data: list) -> list:
 		if 'resultType' not in result or result['resultType'] not in expected_types:
 			continue
 
-		item = {'type': result['resultType']}
+		item = {
+			'type': result['resultType'],
+			'top': (result['category'] == 'Top result') if 'category' in result else False
+		}
 		if result['resultType'] == 'artist':
 			try:
-				item['author'] = result['artist']
-				item['id'] = result['browseId']
+				if result['category'] == 'Top result':
+					item['author'] = result['artists'][0]['name']
+					item['id'] = result['artists'][0]['id']
+				else:
+					item['author'] = result['artist']
+					item['id'] = result['browseId']
 			except Exception as err:
 				print('Failed to parse artist result:', err)
 				continue
-		if result['resultType'] == 'album':
+		elif result['resultType'] == 'album':
 			try:
 				album = yt.get_album(result['browseId'])
 				item['author'] = result['artists'][0]['name']
@@ -60,12 +67,20 @@ def _parse_results(data: list) -> list:
 				print('Failed to parse playlist result:', err)
 				continue
 		elif result['resultType'] in {'song', 'video'}:
-			item['id'] = str(result['videoId'])
-			item['title'] = result['title']
-			item['author'] = result['artists'][0]['name']
-			if 'duration' in result:
-				item['length'] = result['duration']
-			item['thumbnail'] = result['thumbnails'][0]['url']
+			try:
+				item['id'] = str(result['videoId'])
+				item['title'] = result['title']
+				item['author'] = result['artists'][0]['name']
+				if 'duration' in result:
+					item['length'] = result['duration']
+				item['thumbnail'] = result['thumbnails'][0]['url']
+
+				# ytm sometimes returns videos as song results when filtered
+				if 'category' in result and result['category'] == 'Songs':
+					item['type'] = 'song'
+			except Exception as err:
+				print('Failed to parse song/video result:', err)
+				continue
 
 		results.append(item)
 
