@@ -15,6 +15,7 @@ class Player:
 		self.lock = GLib.Mutex()
 		self.index = 0
 		self.queue = []
+		self.recent_songs = []
 		self.loop = False
 		self.shuffle = False
 		self.error = False
@@ -76,6 +77,9 @@ class Player:
 	### --- PLAYBACK CONTROLS --- ###
 
 	def play_song(self, id_: str, title: str) -> bool:
+		if len(self.recent_songs) > 1000:
+			self.recent_songs = []
+		self.recent_songs.append(id_)
 		self.playbin.set_state(Gst.State.READY)
 
 		uri = monophony.backend.cache.get_song_uri(id_)
@@ -135,12 +139,16 @@ class Player:
 			if self.loop:
 				song = self.queue[self.index]
 			elif self.shuffle and queue_length > 1:
-				random_index = self.index
-				while random_index == self.index:
-					random_index = random.randrange(0, queue_length)
+				for s in self.queue:
+					if s['id'] not in self.recent_songs:
+						break
+				else: # nobreak
+					self.recent_songs = []
 
-				self.index = random_index
-				song = self.queue[self.index]
+				song = random.choice([
+					s for s in self.queue if s['id'] not in self.recent_songs
+				])
+				self.index = self.queue.index(song)
 			elif queue_length - 1 > self.index :
 				self.index += 1
 				song = self.queue[self.index]
@@ -148,8 +156,7 @@ class Player:
 			if song:
 				if self.play_song(song['id'], song['title']):
 					break
-				else:
-					continue
+				continue
 
 			self.play_radio_song()
 			break
@@ -177,6 +184,7 @@ class Player:
 			self.lock.unlock()
 			return
 
+		self.recent_songs = []
 		self.queue = queue
 		self.index = index
 		song = queue[index]
