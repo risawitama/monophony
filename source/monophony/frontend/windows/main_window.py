@@ -29,18 +29,26 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.player = monophony.backend.player.Player()
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
+		self.stack = Adw.Leaflet()
+		self.stack.set_can_navigate_forward(False)
+		self.stack.set_can_navigate_back(False)
+		self.stack.set_can_unfold(False)
 		pge_library = MonophonyLibraryPage(self.player)
+		lfp_library = self.stack.append(pge_library)
+		lfp_library.set_navigatable(True)
+		lfp_library.set_name('library')
 		self.pge_search = MonophonySearchPage(self.player)
-		self.stack = Adw.ViewStack()
-		self.stack.add_named(pge_library, 'library')
-		self.stack.add_named(self.pge_search, 'search')
+		lfp_search = self.stack.append(self.pge_search)
+		lfp_search.set_navigatable(True)
+		lfp_search.set_name('search')
+		self.stack.set_visible_child(pge_library)
 
 		self.toaster = Adw.ToastOverlay.new()
 		self.toaster.set_child(self.stack)
 
 		self.btn_back = Gtk.Button.new_from_icon_name('go-previous-symbolic')
 		self.btn_back.set_tooltip_text(_('Go back'))
-		self.btn_back.hide()
+		self.btn_back.set_visible(False)
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
 		btn_about = Gtk.Button.new_from_icon_name('help-about-symbolic')
@@ -83,15 +91,15 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		monophony.backend.settings.set_value('window-height', size.height)
 
 	def _on_search(self, ent: Gtk.Entry):
-		self.btn_back.show()
 		self.stack.set_visible_child_name('search')
+		self.btn_back.set_visible(True)
 		self.pge_search._on_search(ent)
 
 	def _on_back_clicked(self, _b):
 		self.pge_search.go_back()
 		if not self.pge_search.results_pages:
-			self.btn_back.hide()
 			self.stack.set_visible_child_name('library')
+			self.btn_back.set_visible(False)
 			self.ent_search.set_text('')
 
 	def _on_about_clicked(self, _b):
