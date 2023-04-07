@@ -1,0 +1,3 @@
+[tool.ruff]
+builtins = ['_']
+ignore = ['E401', 'E741', 'E722', 'E402']
