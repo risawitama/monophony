@@ -18,6 +18,7 @@ modules:
     buildsystem: simple
     build-commands:
       - mv source/* .
+      - make build
       - make prefix=${FLATPAK_DEST} install
     sources:
       - type: dir

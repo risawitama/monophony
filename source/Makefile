@@ -5,10 +5,13 @@ INSTALL_DATA = ${INSTALL} -m 644
 UNINSTALL = rm -rf
 
 
+build:
+	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin
+
+
 install:
 	@# app binary
-	mkdir -p $(prefix)/bin/
-	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o $(prefix)/bin/monophony
+	$(INSTALL) monophony.bin $(prefix)/bin/monophony
 
 	@# desktop file
 	$(INSTALL_DATA) data/monophony.desktop $(prefix)/share/applications/io.gitlab.zehkira.Monophony.desktop
@@ -45,11 +48,13 @@ install:
 	$(INSTALL_DATA) LICENSE $(prefix)/share/licenses/monophony/LICENSE
 
 
-test:
+# for testing purposes. builds and installs a flatpak. packages should use
+# "make build" and "make install" instead
+flatpak:
 	flatpak-builder --user --install --force-clean --repo=repo/ build/ data/manifest.yml
-	flatpak run io.gitlab.zehkira.Monophony
 
 
+# updates the trasnslation template
 translation:
 	find monophony -iname "*.py" | xargs xgettext --omit-header -j -o locales/all.pot
 
