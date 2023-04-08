@@ -1,0 +1,37 @@
+{
+    "app-id": "io.gitlab.zehkira.Monophony",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "43",
+    "sdk": "org.gnome.Sdk",
+    "command": "monophony",
+    "finish-args": [
+        "--socket=pulseaudio",
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--share=ipc",
+        "--share=network",
+        "--filesystem=xdg-music/monophony:create",
+        "--device=dri",
+        "--own-name=org.mpris.MediaPlayer2.monophony"
+    ],
+    "modules": [
+        "python3-modules.json",
+        {
+            "name": "monophony",
+            "buildsystem": "simple",
+            "build-commands": [
+                "cd source && make build",
+                "cd source && make prefix=${FLATPAK_DEST} install"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "../.."
+                }
+            ],
+            "post-install": [
+                "pip3 uninstall -y nuitka ordered-set"
+            ]
+        }
+    ]
+}

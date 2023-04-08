@@ -51,7 +51,7 @@ install:
 # for testing purposes. builds and installs a flatpak. packages should use
 # "make build" and "make install" instead
 flatpak:
-	flatpak-builder --user --install --force-clean --repo=repo/ build/ data/manifest.yml
+	flatpak-builder --user --install --force-clean --repo=repo/ build/ data/manifest.json
 
 
 # updates the trasnslation template
