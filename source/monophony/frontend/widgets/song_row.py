@@ -47,6 +47,7 @@ class MonophonySongRow(Adw.ActionRow):
 		btn_more.set_vexpand(False)
 		btn_more.set_valign(Gtk.Align.CENTER)
 		self.spinner = Gtk.Spinner.new()
+		self.spinner.bind_property('visible', self.spinner, 'spinning', 0)
 		self.add_suffix(self.spinner)
 		self.add_suffix(btn_more)
 		self.set_title(title)
@@ -70,11 +71,6 @@ class MonophonySongRow(Adw.ActionRow):
 
 	def update(self) -> True:
 		if self.editable:
-			if monophony.backend.cache.is_song_being_cached(self.song['id']):
-				self.spinner.show()
-				self.spinner.start()
-			else:
-				self.spinner.stop()
-				self.spinner.hide()
+			self.spinner.set_visible(monophony.backend.cache.is_song_being_cached(self.song['id']))
 
 		return True

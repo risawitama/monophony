@@ -4,7 +4,7 @@ from monophony.frontend.widgets.group_row import MonophonyGroupRow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, GObject, Gtk
 
 
 class MonophonyLibraryPage(Gtk.Box):
@@ -24,6 +24,7 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.pge_status.set_icon_name('io.gitlab.zehkira.Monophony')
 		self.pge_status.set_title(_('Your Library is Empty'))
 		self.pge_status.set_description(_('Find songs to play using the search bar above'))
+		self.pge_status.bind_property('visible', self.box_meta, 'visible', GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.INVERT_BOOLEAN)
 		self.append(self.pge_status)
 
 		self.btn_play = Gtk.Button.new_with_label(_('Play All'))
@@ -66,11 +67,6 @@ class MonophonyLibraryPage(Gtk.Box):
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
 
-		if self.playlist_widgets:
-			self.box_meta.show()
-			self.pge_status.hide()
-		else:
-			self.box_meta.hide()
-			self.pge_status.show()
+		self.box_meta.set_visible(len(self.playlist_widgets) > 0)
 
 		return True

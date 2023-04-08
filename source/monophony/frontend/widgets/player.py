@@ -3,7 +3,7 @@ from monophony.frontend.widgets.song_popover import MonophonySongPopover
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gdk, Gio, GLib, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -16,7 +16,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading.set_halign(Gtk.Align.START)
 		self.spn_loading.set_margin_start(10)
 		self.spn_loading.set_margin_end(10)
-		self.spn_loading.start()
+		self.spn_loading.bind_property('visible', self.spn_loading, 'spinning', 0)
 		self.spn_loading.hide()
 
 		box_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
@@ -45,6 +45,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.box_sng_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		self.box_sng_info.append(self.lnk_title)
 		self.box_sng_info.append(self.lbl_author)
+		self.box_sng_info.bind_property('visible', self.spn_loading, 'visible', GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.INVERT_BOOLEAN)
 		box_info.append(self.box_sng_info)
 
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
@@ -243,12 +244,8 @@ class MonophonyPlayer(Gtk.Box):
 	def update(self) -> True:
 		if self.player.is_busy():
 			self.box_sng_info.hide()
-			if not self.spn_loading.get_visible():
-				self.spn_loading.show()
-				self.spn_loading.start()
 		else:
 			self.box_sng_info.show()
-			self.spn_loading.hide()
 			self.scl_progress.set_value(self.player.get_progress())
 
 			if self.player.is_paused():

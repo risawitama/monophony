@@ -6,7 +6,7 @@ from monophony.frontend.widgets.artist_row import MonophonyArtistRow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, GObject, Gtk
 
 
 class MonophonySearchPage(Gtk.Box):
@@ -24,10 +24,10 @@ class MonophonySearchPage(Gtk.Box):
 		spn_loading.set_halign(Gtk.Align.CENTER)
 		spn_loading.set_valign(Gtk.Align.CENTER)
 		spn_loading.set_vexpand(True)
-		spn_loading.set_spinning(True)
 		self.box_loading = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
 		self.box_loading.append(spn_loading)
+		self.box_loading.bind_property('visible', spn_loading, 'spinning', GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL)
 		self.append(self.box_loading)
 		self.box_loading.hide()
 
