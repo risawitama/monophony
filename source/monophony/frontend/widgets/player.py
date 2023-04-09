@@ -45,7 +45,14 @@ class MonophonyPlayer(Gtk.Box):
 		self.box_sng_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		self.box_sng_info.append(self.lnk_title)
 		self.box_sng_info.append(self.lbl_author)
-		self.box_sng_info.bind_property('visible', self.spn_loading, 'visible', GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.INVERT_BOOLEAN)
+		self.box_sng_info.bind_property(
+			'visible',
+			self.spn_loading,
+			'visible',
+			GObject.BindingFlags.SYNC_CREATE
+			| GObject.BindingFlags.BIDIRECTIONAL
+			| GObject.BindingFlags.INVERT_BOOLEAN
+		)
 		box_info.append(self.box_sng_info)
 
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
