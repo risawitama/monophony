@@ -17,7 +17,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading.set_margin_start(10)
 		self.spn_loading.set_margin_end(10)
 		self.spn_loading.bind_property('visible', self.spn_loading, 'spinning', 0)
-		self.spn_loading.hide()
+		self.spn_loading.set_visible(False)
 
 		box_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_info.set_margin_start(16)
@@ -204,7 +204,7 @@ class MonophonyPlayer(Gtk.Box):
 			.playerbar {
 				background-color: @headerbar_bg_color;
 			}
-		'''.encode())
+		''', -1)
 		Gtk.StyleContext.add_provider_for_display(
 			Gdk.Display.get_default(),
 			css,
@@ -242,10 +242,8 @@ class MonophonyPlayer(Gtk.Box):
 		monophony.backend.settings.set_value('radio', int(chk.get_active()))
 
 	def update(self) -> True:
-		if self.player.is_busy():
-			self.box_sng_info.hide()
-		else:
-			self.box_sng_info.show()
+		self.box_sng_info.set_visible(not self.player.is_busy())
+		if not self.player.is_busy():
 			self.scl_progress.set_value(self.player.get_progress())
 
 			if self.player.is_paused():

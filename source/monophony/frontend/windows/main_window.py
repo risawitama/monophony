@@ -149,7 +149,7 @@ SOFTWARE.'''
 		win_about.add_link(_('Donate'), 'https://ko-fi.com/zehkira')
 		win_about.set_website('https://gitlab.com/zehkira/monophony')
 		win_about.set_transient_for(self)
-		win_about.show()
+		win_about.present()
 
 	def _on_queue_song(self, song: dict):
 		if song:
@@ -178,10 +178,10 @@ SOFTWARE.'''
 
 		popup = MonophonyRenameWindow(self, _create)
 		popup.set_heading(_('New Playlist'))
-		popup.show()
+		popup.present()
 
 	def _on_delete_playlist(self, widget: object):
-		MonophonyDeleteWindow(self, widget.group['title']).show()
+		MonophonyDeleteWindow(self, widget.group['title']).present()
 
 	def _on_rename_playlist(self, widget: object):
 		def _rename(new_name: str):
@@ -196,11 +196,11 @@ SOFTWARE.'''
 					self,
 					_('Could not Rename'),
 					_('Playlist already exists')
-				).show()
+				).present()
 
 		popup = MonophonyRenameWindow(self, _rename, widget.group['title'])
 		popup.set_heading(_('Rename Playlist'))
-		popup.show()
+		popup.present()
 
 	def _on_save_playlist(self, name: str, contents: list):
 		monophony.backend.playlists.add_playlist(name, contents)

@@ -29,7 +29,7 @@ class MonophonySearchPage(Gtk.Box):
 		self.box_loading.append(spn_loading)
 		self.box_loading.bind_property('visible', spn_loading, 'spinning', GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL)
 		self.append(self.box_loading)
-		self.box_loading.hide()
+		self.box_loading.set_visible(False)
 
 		self.set_vexpand(True)
 		self.query = ''
@@ -46,10 +46,10 @@ class MonophonySearchPage(Gtk.Box):
 		if not self.search_lock.trylock():
 			return
 
-		self.pge_status.hide()
+		self.pge_status.set_visible(False)
 		if self.results_pages:
-			self.results_pages[-1].hide()
-		self.box_loading.show()
+			self.results_pages[-1].set_visible(False)
+		self.box_loading.set_visible(True)
 
 		self.search_lock.unlock()
 		GLib.Thread.new(None, self.do_search, ent.get_text())
@@ -62,7 +62,7 @@ class MonophonySearchPage(Gtk.Box):
 		box_results = Adw.PreferencesPage()
 		box_results.set_vexpand(True)
 		self.append(box_results)
-		box_results.hide()
+		box_results.set_visible(False)
 		if not filter_:
 			self.results_filterable = True
 			for page in self.results_pages:
@@ -76,9 +76,9 @@ class MonophonySearchPage(Gtk.Box):
 		self.search_lock.unlock()
 
 	def show_more(self, category: str):
-		self.results_pages[-1].hide()
-		self.pge_status.hide()
-		self.box_loading.show()
+		self.results_pages[-1].set_visible(False)
+		self.pge_status.set_visible(False)
+		self.box_loading.set_visible(True)
 		GLib.Thread.new(None, self.do_search, self.query, category)
 
 	def do_get_artist(self, artist_id: str):
@@ -89,25 +89,25 @@ class MonophonySearchPage(Gtk.Box):
 		box_results = Adw.PreferencesPage()
 		box_results.set_vexpand(True)
 		self.append(box_results)
-		box_results.hide()
+		box_results.set_visible(False)
 		self.results_pages.append(box_results)
 		self.results_changed = True
 		self.search_lock.unlock()
 
 	def show_artist(self, artist_id: str):
-		self.results_pages[-1].hide()
-		self.pge_status.hide()
-		self.box_loading.show()
+		self.results_pages[-1].set_visible(False)
+		self.pge_status.set_visible(False)
+		self.box_loading.set_visible(True)
 		GLib.Thread.new(None, self.do_get_artist, artist_id)
 
 	def go_back(self):
 		self.search_lock.lock()
 		self.remove(self.results_pages[-1])
 		self.results_pages = self.results_pages[:-1]
-		self.box_loading.hide()
-		self.pge_status.hide()
+		self.box_loading.set_visible(False)
+		self.pge_status.set_visible(False)
 		if self.results_pages:
-			self.results_pages[-1].show()
+			self.results_pages[-1].set_visible(True)
 		self.results = []
 		self.results_changed = False
 		self.search_lock.unlock()
@@ -118,13 +118,12 @@ class MonophonySearchPage(Gtk.Box):
 
 		if self.results_changed:
 			self.results_changed = False
-			self.box_loading.hide()
+			self.box_loading.set_visible(False)
+			self.pge_status.set_visible(len(self.results) == 0)
 			if not self.results:
 				self.pge_status.set_title(_('No Results'))
-				self.pge_status.show()
 			else:
-				self.pge_status.hide()
-				self.results_pages[-1].show()
+				self.results_pages[-1].set_visible(True)
 				box_top = Adw.PreferencesGroup.new()
 				box_songs = Adw.PreferencesGroup.new()
 				box_videos = Adw.PreferencesGroup.new()
