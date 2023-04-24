@@ -4,7 +4,7 @@ You are expected to follow the [GNOME Code of Conduct](https://wiki.gnome.org/Fo
 
 Copyright © 2022-2023 zehkira, [MIT License](https://gitlab.com/zehkira/monophony/-/blob/master/source/LICENSE).
 
-| [Install](https://flathub.org/apps/details/io.gitlab.zehkira.Monophony) | [Donate](https://ko-fi.com/zehkira) |
+| [Install](https://gitlab.com/zehkira/monophony/-/blob/master/INSTALL.md) | [Donate](https://ko-fi.com/zehkira) |
 |-|-|
 
 <img src='https://gitlab.com/zehkira/monophony/-/raw/master/assets/screenshot1.png' alt='screenshot'>
