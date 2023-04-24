@@ -73,6 +73,9 @@ def clean_up():
 		return
 
 	path = music + '/monophony/'
+	if not os.path.exists(path):
+		return
+
 	for file in os.listdir(path):
 		if file.endswith('.part'):
 			os.remove(path + file)
