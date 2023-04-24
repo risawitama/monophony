@@ -15,15 +15,7 @@ import ytmusicapi
 
 def add_playlist(name: str, songs: dict = None):
 	new_lists = read_playlists()
-
-	# append (n) to playlist name to keep them unique
-	if name in new_lists:
-		i = 1
-		while f'{name} ({str(i)})' in new_lists:
-			i += 1
-
-		name = f'{name} ({str(i)})'
-
+	name = get_unique_name(name)
 	new_lists[name] = songs if songs else []
 	write_playlists(new_lists)
 
@@ -57,14 +49,7 @@ def import_playlist(name: str, data: str) -> bool:
 			'id': song['videoId'],
 		})
 
-	# append (n) to playlist name to keep them unique
-	if name in new_lists:
-		i = 1
-		while f'{name} ({str(i)})' in new_lists:
-			i += 1
-
-		name = f'{name} ({str(i)})'
-
+	name = get_unique_name(name)
 	new_lists[name] = playlist
 	write_playlists(new_lists)
 	return True
@@ -115,6 +100,20 @@ def remove_song(id_: str, playlist: str):
 
 
 ### --- UTILITY FUNCTIONS --- ###
+
+
+def get_unique_name(base: str) -> str:
+	lists = read_playlists()
+	name = base
+
+	if name in lists:
+		i = 1
+		while f'{name} ({str(i)})' in lists:
+			i += 1
+
+		name = f'{name} ({str(i)})'
+
+	return name
 
 
 def write_playlists(playlists: dict):
