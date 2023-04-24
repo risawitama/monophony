@@ -1,0 +1,268 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: monophony/frontend/pages/search_page.py:24
+#: monophony/frontend/pages/search_page.py:96
+#: monophony/frontend/pages/search_page.py:20
+#: monophony/frontend/pages/search_page.py:123
+#: monophony/frontend/pages/search_page.py:129
+msgid "No Results"
+msgstr "Žádné výsledky"
+
+#: monophony/frontend/pages/search_page.py:108
+#: monophony/frontend/pages/search_page.py:133
+#: monophony/frontend/pages/search_page.py:139
+msgid "Songs"
+msgstr "Skladby"
+
+#: monophony/frontend/pages/search_page.py:109
+#: monophony/frontend/pages/search_page.py:118
+#: monophony/frontend/pages/search_page.py:127
+#: monophony/frontend/pages/search_page.py:136
+#: monophony/frontend/pages/search_page.py:139
+#: monophony/frontend/pages/search_page.py:147
+#: monophony/frontend/pages/search_page.py:156
+#: monophony/frontend/pages/search_page.py:164
+#: monophony/frontend/pages/search_page.py:172
+#: monophony/frontend/pages/search_page.py:145
+#: monophony/frontend/pages/search_page.py:153
+#: monophony/frontend/pages/search_page.py:162
+#: monophony/frontend/pages/search_page.py:170
+#: monophony/frontend/pages/search_page.py:178
+msgid "More"
+msgstr "Více"
+
+#: monophony/frontend/pages/search_page.py:117
+#: monophony/frontend/pages/search_page.py:134
+#: monophony/frontend/pages/search_page.py:140
+msgid "Albums"
+msgstr "Alba"
+
+#: monophony/frontend/pages/search_page.py:126
+#: monophony/frontend/pages/search_page.py:155
+#: monophony/frontend/pages/search_page.py:161
+msgid "Community Playlists"
+msgstr "Komunitní playlisty"
+
+#: monophony/frontend/pages/search_page.py:135
+#: monophony/frontend/pages/search_page.py:141
+msgid "Videos"
+msgstr "Videa"
+
+#: monophony/frontend/pages/library_page.py:25
+msgid "Your Library is Empty"
+msgstr "Vaše knihovna je prázdná"
+
+#: monophony/frontend/pages/library_page.py:26
+msgid "Find songs to play using the search bar above"
+msgstr "Najděte skladby k přehrání pomocí vyhledávací lišty výše"
+
+#: monophony/frontend/pages/library_page.py:29
+#: monophony/frontend/pages/library_page.py:37
+msgid "Play All"
+msgstr "Přehrát vše"
+
+#: monophony/frontend/pages/library_page.py:33
+#: monophony/frontend/pages/library_page.py:41
+msgid "Your Playlists"
+msgstr "Vaše playlisty"
+
+#: monophony/frontend/windows/delete_window.py:15
+msgid "Delete Playlist?"
+msgstr "Odstranit playlist?"
+
+#: monophony/frontend/windows/delete_window.py:16
+#: monophony/frontend/windows/rename_window.py:18
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: monophony/frontend/windows/delete_window.py:17
+#: monophony/frontend/widgets/group_row.py:60
+#: monophony/frontend/widgets/group_row.py:79
+msgid "Delete"
+msgstr "Odstranit"
+
+#: monophony/frontend/windows/main_window.py:41
+#: monophony/frontend/windows/main_window.py:50
+msgid "Go back"
+msgstr "Zpět"
+
+#: monophony/frontend/windows/main_window.py:46
+#: monophony/frontend/windows/main_window.py:55
+msgid "About"
+msgstr "O aplikaci"
+
+#: monophony/frontend/windows/main_window.py:51
+#: monophony/frontend/windows/main_window.py:60
+msgid "Search for Content..."
+msgstr "Hledat obsah..."
+
+#: monophony/frontend/windows/main_window.py:141
+#: monophony/frontend/windows/main_window.py:138
+#: monophony/frontend/windows/main_window.py:147
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#: monophony/frontend/windows/main_window.py:143
+#: monophony/frontend/windows/main_window.py:140
+#: monophony/frontend/windows/main_window.py:149
+msgid "Donate"
+msgstr "Přispět"
+
+#: monophony/frontend/windows/main_window.py:174
+#: monophony/frontend/windows/main_window.py:171
+#: monophony/frontend/windows/main_window.py:180
+msgid "New Playlist"
+msgstr "Nový playlist"
+
+#: monophony/frontend/windows/main_window.py:191
+#: monophony/frontend/windows/main_window.py:188
+#: monophony/frontend/windows/main_window.py:197
+msgid "Could not Rename"
+msgstr "Nepodařilo se přejmenovat"
+
+#: monophony/frontend/windows/main_window.py:192
+#: monophony/frontend/windows/main_window.py:189
+#: monophony/frontend/windows/main_window.py:198
+msgid "Playlist already exists"
+msgstr "Playlist již existuje"
+
+#: monophony/frontend/windows/main_window.py:196
+#: monophony/frontend/windows/main_window.py:193
+#: monophony/frontend/windows/main_window.py:202
+msgid "Rename Playlist"
+msgstr "Přejmenovat playlist"
+
+#: monophony/frontend/windows/main_window.py:201
+msgid "Saved"
+msgstr "Uloženo"
+
+#: monophony/frontend/windows/rename_window.py:15
+msgid "Enter Name..."
+msgstr "Zadejte název..."
+
+#: monophony/frontend/windows/rename_window.py:19
+#: monophony/frontend/windows/message_window.py:13
+msgid "Ok"
+msgstr "Budiž"
+
+#: monophony/frontend/widgets/player.py:33
+#: monophony/frontend/widgets/player.py:61
+msgid "Toggle pause"
+msgstr "Přepnout pozastavení"
+
+#: monophony/frontend/widgets/player.py:37
+#: monophony/frontend/widgets/player.py:65
+msgid "Next song"
+msgstr "Další skladba"
+
+#: monophony/frontend/widgets/player.py:42
+#: monophony/frontend/widgets/player.py:70
+msgid "Previous song"
+msgstr "Předchozí skladba"
+
+#: monophony/frontend/widgets/player.py:47
+#: monophony/frontend/widgets/player.py:75
+msgid "Add to playlist"
+msgstr "Přidat do playlistu"
+
+#: monophony/frontend/widgets/player.py:53
+#: monophony/frontend/widgets/player.py:81
+msgid "Remove From Queue"
+msgstr "Odebrat z fronty"
+
+#: monophony/frontend/widgets/player.py:59
+#: monophony/frontend/widgets/player.py:87
+msgid "Volume"
+msgstr "Hlasitost"
+
+#: monophony/frontend/widgets/player.py:82
+#: monophony/frontend/widgets/player.py:110
+msgid "Radio Mode"
+msgstr "Režim rádia"
+
+#: monophony/frontend/widgets/player.py:92
+#: monophony/frontend/widgets/player.py:120
+msgid "Loop"
+msgstr "Smyčka"
+
+#: monophony/frontend/widgets/player.py:99
+#: monophony/frontend/widgets/player.py:127
+msgid "Shuffle"
+msgstr "Náhodně"
+
+#: monophony/frontend/widgets/player.py:115
+#: monophony/frontend/widgets/song_row.py:41
+#: monophony/frontend/widgets/group_row.py:34
+#: monophony/frontend/widgets/player.py:143
+#: monophony/frontend/widgets/group_row.py:41
+msgid "More actions"
+msgstr "Další akce"
+
+#: monophony/frontend/widgets/song_row.py:21
+#: monophony/frontend/widgets/group_row.py:33
+msgid "Play"
+msgstr "Přehrát"
+
+#: monophony/frontend/widgets/song_popover.py:23
+msgid "Move Up"
+msgstr "Posunout výše"
+
+#: monophony/frontend/widgets/song_popover.py:24
+msgid "Move Down"
+msgstr "Posunout níže"
+
+#: monophony/frontend/widgets/song_popover.py:39
+msgid "Remove From Downloads"
+msgstr "Odebrat ze stažených"
+
+#: monophony/frontend/widgets/song_popover.py:46
+msgid "Download to Music Folder"
+msgstr "Stáhnout do hudební složky"
+
+#: monophony/frontend/widgets/song_popover.py:53
+msgid "Add to Queue"
+msgstr "Přidat do fronty"
+
+#: monophony/frontend/widgets/song_popover.py:59
+msgid "New Playlist..."
+msgstr "Nový playlist..."
+
+#: monophony/frontend/widgets/group_row.py:45
+#: monophony/frontend/widgets/group_row.py:52
+msgid "Add to library"
+msgstr "Přidat do knihovny"
+
+#: monophony/frontend/widgets/group_row.py:66
+#: monophony/frontend/widgets/group_row.py:85
+msgid "Rename..."
+msgstr "Přejmenovat..."
+
+#: monophony/frontend/pages/search_page.py:136
+#: monophony/frontend/pages/search_page.py:142
+msgid "Artists"
+msgstr "Umělci"
+
+#: monophony/frontend/windows/main_window.py:198
+#: monophony/frontend/windows/main_window.py:207
+msgid "Added"
+msgstr "Přidáno"
+
+#: monophony/frontend/widgets/artist_row.py:14
+msgid "View Artist"
+msgstr "Zobrazit umělce"
+
+#: monophony/frontend/pages/search_page.py:138
+msgid "Top Result"
+msgstr "Nejlepší výsledek"
