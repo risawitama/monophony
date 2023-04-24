@@ -2,7 +2,7 @@
 
 Include the following information in bug reports:
 - Operating system and version (Ubuntu 22.04)
-- Desktop environment or window manager (GNOME)
+- Desktop environment or window manager (GNOME 43)
 - Installation method (Flatpak from Flathub)
 
 ## Translation instructions
