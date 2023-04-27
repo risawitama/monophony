@@ -43,6 +43,7 @@ install:
 	$(INSTALL_DATA) locales/ru/LC_MESSAGES/all.mo $(prefix)/share/locale/ru/LC_MESSAGES/monophony.mo
 	$(INSTALL_DATA) locales/nl/LC_MESSAGES/all.mo $(prefix)/share/locale/nl/LC_MESSAGES/monophony.mo
 	$(INSTALL_DATA) locales/tr/LC_MESSAGES/all.mo $(prefix)/share/locale/tr/LC_MESSAGES/monophony.mo
+	$(INSTALL_DATA) locales/cs/LC_MESSAGES/all.mo $(prefix)/share/locale/cs/LC_MESSAGES/monophony.mo
 
 	@# license
 	$(INSTALL_DATA) LICENSE $(prefix)/share/licenses/monophony/LICENSE
