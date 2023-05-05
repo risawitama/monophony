@@ -6,12 +6,14 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 #: monophony/frontend/pages/search_page.py:20
 #: monophony/frontend/pages/search_page.py:123
 #: monophony/frontend/pages/search_page.py:129
+#: monophony/frontend/pages/search_page.py:130
 msgid "No Results"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:108
 #: monophony/frontend/pages/search_page.py:133
 #: monophony/frontend/pages/search_page.py:139
+#: monophony/frontend/pages/search_page.py:140
 msgid "Songs"
 msgstr ""
 
@@ -29,23 +31,31 @@ msgstr ""
 #: monophony/frontend/pages/search_page.py:162
 #: monophony/frontend/pages/search_page.py:170
 #: monophony/frontend/pages/search_page.py:178
+#: monophony/frontend/pages/search_page.py:146
+#: monophony/frontend/pages/search_page.py:154
+#: monophony/frontend/pages/search_page.py:163
+#: monophony/frontend/pages/search_page.py:171
+#: monophony/frontend/pages/search_page.py:179
 msgid "More"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:117
 #: monophony/frontend/pages/search_page.py:134
 #: monophony/frontend/pages/search_page.py:140
+#: monophony/frontend/pages/search_page.py:141
 msgid "Albums"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:126
 #: monophony/frontend/pages/search_page.py:155
 #: monophony/frontend/pages/search_page.py:161
+#: monophony/frontend/pages/search_page.py:162
 msgid "Community Playlists"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:135
 #: monophony/frontend/pages/search_page.py:141
+#: monophony/frontend/pages/search_page.py:142
 msgid "Videos"
 msgstr ""
 
@@ -100,36 +110,42 @@ msgstr ""
 #: monophony/frontend/windows/main_window.py:141
 #: monophony/frontend/windows/main_window.py:138
 #: monophony/frontend/windows/main_window.py:147
+#: monophony/frontend/windows/main_window.py:152
 msgid "translator-credits"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:143
 #: monophony/frontend/windows/main_window.py:140
 #: monophony/frontend/windows/main_window.py:149
+#: monophony/frontend/windows/main_window.py:154
 msgid "Donate"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:174
 #: monophony/frontend/windows/main_window.py:171
 #: monophony/frontend/windows/main_window.py:180
+#: monophony/frontend/windows/main_window.py:185
 msgid "New Playlist"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:191
 #: monophony/frontend/windows/main_window.py:188
 #: monophony/frontend/windows/main_window.py:197
+#: monophony/frontend/windows/main_window.py:202
 msgid "Could not Rename"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:192
 #: monophony/frontend/windows/main_window.py:189
 #: monophony/frontend/windows/main_window.py:198
+#: monophony/frontend/windows/main_window.py:203
 msgid "Playlist already exists"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:196
 #: monophony/frontend/windows/main_window.py:193
 #: monophony/frontend/windows/main_window.py:202
+#: monophony/frontend/windows/main_window.py:207
 msgid "Rename Playlist"
 msgstr ""
 
@@ -148,46 +164,55 @@ msgstr ""
 
 #: monophony/frontend/widgets/player.py:33
 #: monophony/frontend/widgets/player.py:61
+#: monophony/frontend/widgets/player.py:62
 msgid "Toggle pause"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:37
 #: monophony/frontend/widgets/player.py:65
+#: monophony/frontend/widgets/player.py:66
 msgid "Next song"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:42
 #: monophony/frontend/widgets/player.py:70
+#: monophony/frontend/widgets/player.py:71
 msgid "Previous song"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:47
 #: monophony/frontend/widgets/player.py:75
+#: monophony/frontend/widgets/player.py:76
 msgid "Add to playlist"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:53
 #: monophony/frontend/widgets/player.py:81
+#: monophony/frontend/widgets/player.py:82
 msgid "Remove From Queue"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:59
 #: monophony/frontend/widgets/player.py:87
+#: monophony/frontend/widgets/player.py:94
 msgid "Volume"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:82
 #: monophony/frontend/widgets/player.py:110
+#: monophony/frontend/widgets/player.py:117
 msgid "Radio Mode"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:92
 #: monophony/frontend/widgets/player.py:120
+#: monophony/frontend/widgets/player.py:127
 msgid "Loop"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:99
 #: monophony/frontend/widgets/player.py:127
+#: monophony/frontend/widgets/player.py:134
 msgid "Shuffle"
 msgstr ""
 
@@ -196,6 +221,7 @@ msgstr ""
 #: monophony/frontend/widgets/group_row.py:34
 #: monophony/frontend/widgets/player.py:143
 #: monophony/frontend/widgets/group_row.py:41
+#: monophony/frontend/widgets/player.py:150
 msgid "More actions"
 msgstr ""
 
@@ -240,11 +266,13 @@ msgstr ""
 
 #: monophony/frontend/pages/search_page.py:136
 #: monophony/frontend/pages/search_page.py:142
+#: monophony/frontend/pages/search_page.py:143
 msgid "Artists"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:198
 #: monophony/frontend/windows/main_window.py:207
+#: monophony/frontend/windows/main_window.py:212
 msgid "Added"
 msgstr ""
 
@@ -253,5 +281,10 @@ msgid "View Artist"
 msgstr ""
 
 #: monophony/frontend/pages/search_page.py:138
+#: monophony/frontend/pages/search_page.py:139
 msgid "Top Result"
+msgstr ""
+
+#: monophony/frontend/widgets/player.py:88
+msgid "Show Artist"
 msgstr ""
