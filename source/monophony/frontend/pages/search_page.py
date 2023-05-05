@@ -88,7 +88,14 @@ class MonophonySearchPage(Gtk.Box):
 
 	def do_get_artist(self, artist_id: str):
 		self.search_lock.lock()
-		self.results = monophony.backend.yt.get_artist(artist_id)
+		results = monophony.backend.yt.get_artist(artist_id)
+		if not results:
+			self.pge_status.set_visible(True)
+			self.box_loading.set_visible(False)
+			self.search_lock.unlock()
+			return
+
+		self.results = results
 		self.results_filterable = False
 
 		box_results = Adw.PreferencesPage()
@@ -108,8 +115,9 @@ class MonophonySearchPage(Gtk.Box):
 
 	def go_back(self):
 		self.search_lock.lock()
-		self.remove(self.results_pages[-1])
-		self.results_pages = self.results_pages[:-1]
+		if self.results_pages:
+			self.remove(self.results_pages[-1])
+			self.results_pages = self.results_pages[:-1]
 		self.box_loading.set_visible(False)
 		self.pge_status.set_visible(False)
 		if self.results_pages:

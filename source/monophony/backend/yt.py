@@ -178,7 +178,12 @@ def get_song(id_: str) -> dict:
 
 def get_artist(browse_id: str) -> list:
 	yt = ytmusicapi.YTMusic()
-	artist = yt.get_artist(browse_id)
+	try:
+		artist = yt.get_artist(browse_id)
+	except:
+		print('Could not get artist')
+		return []
+
 	data = []
 	for group in {'songs', 'albums', 'singles', 'videos'}:
 		if group in artist:
