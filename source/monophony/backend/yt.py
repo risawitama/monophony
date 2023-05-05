@@ -1,4 +1,4 @@
-import random, subprocess
+import traceback, random, subprocess
 
 import requests, ytmusicapi
 
@@ -27,8 +27,9 @@ def _parse_results(data: list) -> list:
 				else:
 					item['author'] = result['artist']
 					item['id'] = result['browseId']
-			except Exception as err:
-				print('Failed to parse artist result:', err)
+			except:
+				print('Failed to parse artist result')
+				traceback.print_exc()
 				continue
 		elif result['resultType'] == 'album':
 			try:
@@ -46,8 +47,9 @@ def _parse_results(data: list) -> list:
 						'thumbnail': album['thumbnails'][0]['url']
 					} for s in album['tracks']
 				]
-			except Exception as err:
-				print('Failed to parse album result:', err)
+			except Exception:
+				print('Failed to parse album result')
+				traceback.print_exc()
 				continue
 		elif result['resultType'] == 'playlist':
 			try:
@@ -65,8 +67,9 @@ def _parse_results(data: list) -> list:
 						'thumbnail': s['thumbnails'][0]['url']
 					} for s in album['tracks']
 				]
-			except Exception as err:
-				print('Failed to parse playlist result:', err)
+			except:
+				print('Failed to parse playlist result')
+				traceback.print_exc()
 				continue
 		elif result['resultType'] in {'song', 'video'}:
 			try:
@@ -81,8 +84,9 @@ def _parse_results(data: list) -> list:
 				# ytm sometimes returns videos as song results when filtered
 				if 'category' in result and result['category'] == 'Songs':
 					item['type'] = 'song'
-			except Exception as err:
-				print('Failed to parse song/video result:', err)
+			except:
+				print('Failed to parse song/video result')
+				traceback.print_exc()
 				continue
 
 		results.append(item)
