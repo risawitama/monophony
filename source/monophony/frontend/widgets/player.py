@@ -191,14 +191,14 @@ class MonophonyPlayer(Gtk.Box):
 		css.load_from_data('''
 			.seekbar {
 				padding: 0;
-				min-height: 1px;
+				min-height: 10px;
 			}
 
 			.seekbar trough, .seekbar highlight {
 				border-radius: 0;
 				border-left: none;
 				border-right: none;
-				min-height: 1px;
+				min-height: 10px;
 			}
 
 			.seekbar highlight {
