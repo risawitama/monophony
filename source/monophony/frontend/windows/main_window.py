@@ -95,6 +95,11 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.btn_back.set_visible(True)
 		self.pge_search._on_search(ent)
 
+	def _on_show_artist(self, artist_id: str):
+		self.stack.set_visible_child_name('search')
+		self.btn_back.set_visible(True)
+		self.pge_search.show_artist(artist_id)
+
 	def _on_back_clicked(self, _b):
 		self.pge_search.go_back()
 		if not self.pge_search.results_pages:

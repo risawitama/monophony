@@ -41,6 +41,7 @@ def _parse_results(data: list) -> list:
 						'title': s['title'],
 						'type': 'song',
 						'author': s['artists'][0]['name'],
+						'author_id': s['artists'][0]['id'],
 						'length': s['duration'],
 						'thumbnail': album['thumbnails'][0]['url']
 					} for s in album['tracks']
@@ -59,6 +60,7 @@ def _parse_results(data: list) -> list:
 						'title': s['title'],
 						'type': 'song',
 						'author': s['artists'][0]['name'],
+						'author_id': s['artists'][0]['id'],
 						'length': s['duration'],
 						'thumbnail': s['thumbnails'][0]['url']
 					} for s in album['tracks']
@@ -71,6 +73,7 @@ def _parse_results(data: list) -> list:
 				item['id'] = str(result['videoId'])
 				item['title'] = result['title']
 				item['author'] = result['artists'][0]['name']
+				item['author_id'] = result['artists'][0]['id']
 				if 'duration' in result:
 					item['length'] = result['duration']
 				item['thumbnail'] = result['thumbnails'][0]['url']
@@ -118,6 +121,7 @@ def get_similar_song(video_id: str, ignore: list = None) -> dict:
 		track = {
 			'title': item['title'],
 			'author': item['artists'][0]['name'],
+			'author_id': item['artists'][0]['id'],
 			'length': item['length'],
 			'id': item['videoId'],
 			'thumbnail': item['thumbnail'][0]['url']
@@ -148,6 +152,7 @@ def get_recommendations() -> dict:
 				songs.append({
 					'title': item['title'],
 					'author': item['artists'][0]['name'],
+					'author_id': item['artists'][0]['id'],
 					'id': item['videoId'],
 				})
 
@@ -155,6 +160,16 @@ def get_recommendations() -> dict:
 			results[group['title']] = songs
 
 	return results
+
+
+def get_song(id_: str) -> dict:
+	yt = ytmusicapi.YTMusic()
+	result = yt.get_song(id_)['videoDetails']
+	return {
+		'id': result['videoId'],
+		'author': result['author'],
+		'author_id': result['channelId'],
+	}
 
 
 def get_artist(browse_id: str) -> list:

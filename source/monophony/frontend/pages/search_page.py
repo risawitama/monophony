@@ -100,7 +100,8 @@ class MonophonySearchPage(Gtk.Box):
 		self.search_lock.unlock()
 
 	def show_artist(self, artist_id: str):
-		self.results_pages[-1].set_visible(False)
+		if self.results_pages:
+			self.results_pages[-1].set_visible(False)
 		self.pge_status.set_visible(False)
 		self.box_loading.set_visible(True)
 		GLib.Thread.new(None, self.do_get_artist, artist_id)

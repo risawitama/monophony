@@ -1,4 +1,5 @@
 import monophony.backend.settings
+import monophony.backend.yt
 from monophony.frontend.widgets.song_popover import MonophonySongPopover
 
 import gi
@@ -83,6 +84,12 @@ class MonophonyPlayer(Gtk.Box):
 			'unqueue-song',
 			None,
 			lambda p, a, t: p._on_unqueue_clicked()
+		)
+		mnu_more.append(_('Show Artist'), 'show-artist')
+		self.install_action(
+			'show-artist',
+			None,
+			lambda p, a, t: p._on_show_artist_clicked()
 		)
 		lbl_volume = Gtk.Label.new(_('Volume'))
 		scl_volume = Gtk.Scale.new_with_range(
@@ -240,6 +247,15 @@ class MonophonyPlayer(Gtk.Box):
 
 	def _on_unqueue_clicked(self):
 		self.player.unqueue_song()
+
+	def _on_show_artist_clicked(self):
+		song = self.player.get_current_song()
+		if song:
+			if 'author_id' in song:
+				id_ = song['author_id']
+			else:
+				id_ = monophony.backend.yt.get_song(song['id'])['author_id']
+			self.get_ancestor(Gtk.Window)._on_show_artist(id_)
 
 	def _on_volume_changed(self, scl: Gtk.Scale):
 		self.player.set_volume(scl.get_value())
