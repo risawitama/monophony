@@ -23,9 +23,7 @@ class Player:
 		self.mpris_server = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
-		self.playbin.set_property(
-			'volume', float(monophony.backend.settings.get_value('volume', 1))
-		)
+		self.playbin.set_property('volume', 1)
 		self.playbin.set_property('mute', False)
 
 	### --- UTILITY METHODS --- ###
@@ -211,9 +209,6 @@ class Player:
 
 		self.queue.append(song)
 		self.lock.unlock()
-
-	def set_volume(self, volume: float):
-		self.playbin.set_property('volume', volume)
 
 	def seek(self, target: float):
 		duration = self.playbin.query_duration(Gst.Format.TIME)[1]

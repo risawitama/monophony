@@ -78,42 +78,20 @@ class MonophonyPlayer(Gtk.Box):
 		btn_playlists.set_has_frame(False)
 		btn_playlists.set_icon_name('list-add')
 
-		mnu_more = Gio.Menu()
-		mnu_more.append(_('Remove From Queue'), 'unqueue-song')
+		sec_actions = Gio.Menu()
+		sec_actions.append(_('Remove From Queue'), 'unqueue-song')
 		self.install_action(
 			'unqueue-song',
 			None,
 			lambda p, a, t: p._on_unqueue_clicked()
 		)
-		mnu_more.append(_('Show Artist'), 'show-artist')
+		sec_actions.append(_('Show Artist'), 'show-artist')
 		self.install_action(
 			'show-artist',
 			None,
 			lambda p, a, t: p._on_show_artist_clicked()
 		)
-		lbl_volume = Gtk.Label.new(_('Volume'))
-		scl_volume = Gtk.Scale.new_with_range(
-			Gtk.Orientation.HORIZONTAL, 0, 1, 0.1
-		)
-		scl_volume.set_hexpand(True)
-		scl_volume.set_value(
-			float(monophony.backend.settings.get_value('volume', 1))
-		)
-		scl_volume.set_draw_value(False)
-		scl_volume.connect('value-changed', self._on_volume_changed)
-		box_volume = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
-		box_volume.set_spacing(5)
-		box_volume.set_margin_start(5)
-		box_volume.set_margin_start(5)
-		box_volume.set_halign(Gtk.Align.FILL)
-		box_volume.set_hexpand(True)
-		box_volume.append(lbl_volume)
-		box_volume.append(scl_volume)
-		itm_volume = Gio.MenuItem()
-		itm_volume.set_attribute_value(
-			'custom',  GLib.Variant.new_string('volume')
-		)
-		mnu_more.append_item(itm_volume)
+		sec_settings = Gio.Menu()
 		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio Mode'))
 		chk_autoplay.set_active(
 			int(monophony.backend.settings.get_value('radio', False))
@@ -123,24 +101,26 @@ class MonophonyPlayer(Gtk.Box):
 		itm_autoplay.set_attribute_value(
 			'custom',  GLib.Variant.new_string('autoplay')
 		)
-		mnu_more.append_item(itm_autoplay)
+		sec_settings.append_item(itm_autoplay)
 		chk_loop = Gtk.CheckButton.new_with_label(_('Loop'))
 		chk_loop.connect('toggled', self._on_loop_toggled)
 		itm_loop = Gio.MenuItem()
 		itm_loop.set_attribute_value(
 			'custom',  GLib.Variant.new_string('loop')
 		)
-		mnu_more.append_item(itm_loop)
+		sec_settings.append_item(itm_loop)
 		chk_shuffle = Gtk.CheckButton.new_with_label(_('Shuffle'))
 		chk_shuffle.connect('toggled', self._on_shuffle_toggled)
 		itm_shuffle = Gio.MenuItem()
 		itm_shuffle.set_attribute_value(
 			'custom',  GLib.Variant.new_string('shuffle')
 		)
-		mnu_more.append_item(itm_shuffle)
+		sec_settings.append_item(itm_shuffle)
+		mnu_more = Gio.Menu()
+		mnu_more.append_section(None, sec_actions)
+		mnu_more.append_section(None, sec_settings)
 		pop_menu = Gtk.PopoverMenu()
 		pop_menu.set_menu_model(mnu_more)
-		pop_menu.add_child(box_volume, 'volume')
 		pop_menu.add_child(chk_autoplay, 'autoplay')
 		pop_menu.add_child(chk_loop, 'loop')
 		pop_menu.add_child(chk_shuffle, 'shuffle')
@@ -256,10 +236,6 @@ class MonophonyPlayer(Gtk.Box):
 			else:
 				id_ = monophony.backend.yt.get_song(song['id'])['author_id']
 			self.get_ancestor(Gtk.Window)._on_show_artist(id_)
-
-	def _on_volume_changed(self, scl: Gtk.Scale):
-		self.player.set_volume(scl.get_value())
-		monophony.backend.settings.set_value('volume', float(scl.get_value()))
 
 	def _on_radio_toggled(self, chk: Gtk.CheckButton):
 		monophony.backend.settings.set_value('radio', int(chk.get_active()))
