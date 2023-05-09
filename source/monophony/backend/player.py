@@ -97,14 +97,13 @@ class Player:
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)
+		if not self.mpris_server._publication_token:
+			self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
 		return True
 
 	def play_radio_song(self):
-		if not int(monophony.backend.settings.get_value('radio', 0)):
-			return
-
 		id_queue = [s['id'] for s in self.queue]
 		random.shuffle(id_queue)
 
@@ -158,7 +157,15 @@ class Player:
 					break
 				continue
 
-			self.play_radio_song()
+			if int(monophony.backend.settings.get_value('radio', 0)):
+				self.play_radio_song()
+			else:
+				self.playbin.set_state(Gst.State.NULL)
+				self.playbin.set_property('uri', '')
+				self.queue = []
+				self.index = 0
+				self.mpris_server.unpublish()
+
 			break
 
 		self.lock.unlock()
