@@ -7,12 +7,14 @@ from monophony.frontend.app import MonophonyApplication
 
 
 def main():
-	if os.getenv('container', '') != 'flatpak':
-		gettext.bindtextdomain('monophony')
-		gettext.translation('monophony').install()
-	else:
-		gettext.bindtextdomain('monophony', '/app/share/locale')
-		gettext.translation('monophony', '/app/share/locale').install()
+	path = None
+	if os.getenv('container', '') == 'flatpak':
+		path = '/app/share/locale'
+
+	try:
+		gettext.translation('monophony', path).install()
+	except FileNotFoundError:
+		gettext.translation('monophony', path, languages = ['en']).install()
 
 	monophony.backend.cache.clean_up()
 	MonophonyApplication().run()

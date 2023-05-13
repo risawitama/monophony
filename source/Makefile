@@ -38,12 +38,7 @@ install:
 	$(INSTALL_DATA) data/icons/96.png $(prefix)/share/icons/hicolor/96x96/apps/io.gitlab.zehkira.Monophony.png
 
 	@# translations
-	$(INSTALL_DATA) locales/en/LC_MESSAGES/all.mo $(prefix)/share/locale/en/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/de/LC_MESSAGES/all.mo $(prefix)/share/locale/de/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/ru/LC_MESSAGES/all.mo $(prefix)/share/locale/ru/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/nl/LC_MESSAGES/all.mo $(prefix)/share/locale/nl/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/tr/LC_MESSAGES/all.mo $(prefix)/share/locale/tr/LC_MESSAGES/monophony.mo
-	$(INSTALL_DATA) locales/cs/LC_MESSAGES/all.mo $(prefix)/share/locale/cs/LC_MESSAGES/monophony.mo
+	cd locales; for d in */; do $(INSTALL_DATA) $${d}LC_MESSAGES/all.mo $(prefix)/share/locale/$${d}LC_MESSAGES/monophony.mo; done
 
 	@# license
 	$(INSTALL_DATA) LICENSE $(prefix)/share/licenses/monophony/LICENSE
