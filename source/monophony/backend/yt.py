@@ -186,9 +186,12 @@ def get_artist(browse_id: str) -> list:
 
 	data = []
 	for group in {'songs', 'albums', 'singles', 'videos'}:
+		content = []
 		if group in artist:
 			if group in {'songs', 'videos'}:
-				content = yt.get_playlist(artist[group]['browseId'])['tracks']
+				browse_id = artist[group]['browseId']
+				if browse_id:
+					content = yt.get_playlist(browse_id)['tracks']
 			else:
 				content = []
 				for album in artist[group]['results']:

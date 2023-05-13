@@ -12,11 +12,13 @@ class MonophonyRenameWindow(Adw.MessageDialog):
 
 		entry = Gtk.Entry.new()
 		entry.set_text(name)
-		entry.set_placeholder_text(_('Enter Name...'))
+		entry.set_placeholder_text(_('Enter new Name...'))
 		entry.connect('activate', lambda e: self.response('ok'))
 
 		self.add_response('cancel', _('Cancel'))
-		self.add_response('ok', _('Ok'))
+		self.add_response('ok', _('Rename'))
+		self.set_response_appearance('ok', Adw.ResponseAppearance.SUGGESTED)
+		self.set_heading(_('Rename Playlist'))
 		self.set_transient_for(parent)
 		self.set_modal(True)
 		self.set_resizable(False)

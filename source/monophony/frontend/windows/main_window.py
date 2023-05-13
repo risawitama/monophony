@@ -10,6 +10,7 @@ from monophony.frontend.widgets.player import MonophonyPlayer
 from monophony.frontend.windows.delete_window import MonophonyDeleteWindow
 from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 from monophony.frontend.windows.message_window import MonophonyMessageWindow
+from monophony.frontend.windows.add_window import MonophonyAddWindow
 
 import gi
 gi.require_version('Adw', '1')
@@ -72,7 +73,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		box_content = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_content.append(header_bar)
 		box_content.append(self.toaster)
-		box_content.append(MonophonyPlayer(self.player))
+		box_content.append(MonophonyPlayer(self, self.player))
 		self.set_content(box_content)
 
 		self.install_action(
@@ -156,9 +157,13 @@ SOFTWARE.'''
 		win_about.set_transient_for(self)
 		win_about.present()
 
-	def _on_queue_song(self, song: dict):
-		if song:
-			GLib.Thread.new(None, self.player.queue_song, song)
+	def _on_add_clicked(self, song: dict):
+		popup = MonophonyAddWindow(song, self.player)
+		popup.set_transient_for(self)
+		popup.present()
+
+	def _on_remove_song(self, song: str, playlist: str):
+		monophony.backend.playlists.remove_song(song, playlist)
 
 	def _on_move_song(self, song: dict, group: dict, direction: int):
 		index = group['contents'].index(song)
@@ -173,17 +178,6 @@ SOFTWARE.'''
 		GLib.Thread.new(
 			None, monophony.backend.cache.cache_song, song['id']
 		)
-
-	def _on_new_playlist(self, song: dict = None):
-		def _create(name: str):
-			if song:
-				monophony.backend.playlists.add_playlist(name, [song])
-			else:
-				monophony.backend.playlists.add_playlist(name)
-
-		popup = MonophonyRenameWindow(self, _create)
-		popup.set_heading(_('New Playlist'))
-		popup.present()
 
 	def _on_delete_playlist(self, widget: object):
 		MonophonyDeleteWindow(self, widget.group['title']).present()
@@ -204,7 +198,6 @@ SOFTWARE.'''
 				).present()
 
 		popup = MonophonyRenameWindow(self, _rename, widget.group['title'])
-		popup.set_heading(_('Rename Playlist'))
 		popup.present()
 
 	def _on_save_playlist(self, name: str, contents: list):

@@ -1,6 +1,5 @@
 import monophony.backend.settings
 import monophony.backend.yt
-from monophony.frontend.widgets.song_popover import MonophonySongPopover
 
 import gi
 gi.require_version('Gtk', '4.0')
@@ -8,9 +7,10 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
-	def __init__(self, player: object):
+	def __init__(self, window: Gtk.Window, player: object):
 		super().__init__(orientation = Gtk.Orientation.VERTICAL)
 
+		self.window = window
 		self.player = player
 
 		self.spn_loading = Gtk.Spinner.new()
@@ -71,73 +71,12 @@ class MonophonyPlayer(Gtk.Box):
 		btn_prev.set_tooltip_text(_('Previous song'))
 		btn_prev.connect('clicked', self._on_previous_clicked)
 		btn_prev.set_has_frame(False)
-		btn_playlists = Gtk.MenuButton()
-		btn_playlists.set_valign(Gtk.Align.CENTER)
-		btn_playlists.set_tooltip_text(_('Add to playlist'))
-		btn_playlists.set_create_popup_func(MonophonySongPopover, player)
-		btn_playlists.set_has_frame(False)
-		btn_playlists.set_icon_name('list-add')
 
-		sec_actions = Gio.Menu()
-		sec_actions.append(_('Remove From Queue'), 'unqueue-song')
-		self.install_action(
-			'unqueue-song',
-			None,
-			lambda p, a, t: p._on_unqueue_clicked()
-		)
-		sec_actions.append(_('Show Artist'), 'show-artist')
-		self.install_action(
-			'show-artist',
-			None,
-			lambda p, a, t: p._on_show_artist_clicked()
-		)
-		sec_settings = Gio.Menu()
-		chk_normal = Gtk.CheckButton.new_with_label(_('Normal Playback'))
-		chk_normal.set_active(True)
-		itm_normal = Gio.MenuItem()
-		itm_normal.set_attribute_value('custom',  GLib.Variant.new_string('normal'))
-		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio Mode'))
-		chk_autoplay.set_group(chk_normal)
-		chk_autoplay.set_active(
-			int(monophony.backend.settings.get_value('radio', False))
-		)
-		chk_autoplay.connect('toggled', self._on_radio_toggled)
-		itm_autoplay = Gio.MenuItem()
-		itm_autoplay.set_attribute_value(
-			'custom',  GLib.Variant.new_string('autoplay')
-		)
-		chk_loop = Gtk.CheckButton.new_with_label(_('Repeat Song'))
-		chk_loop.set_group(chk_normal)
-		chk_loop.connect('toggled', self._on_loop_toggled)
-		itm_loop = Gio.MenuItem()
-		itm_loop.set_attribute_value(
-			'custom',  GLib.Variant.new_string('loop')
-		)
-		chk_shuffle = Gtk.CheckButton.new_with_label(_('Shuffle'))
-		chk_shuffle.set_group(chk_normal)
-		chk_shuffle.connect('toggled', self._on_shuffle_toggled)
-		itm_shuffle = Gio.MenuItem()
-		itm_shuffle.set_attribute_value(
-			'custom',  GLib.Variant.new_string('shuffle')
-		)
-		sec_settings.append_item(itm_normal)
-		sec_settings.append_item(itm_loop)
-		sec_settings.append_item(itm_shuffle)
-		sec_settings.append_item(itm_autoplay)
-		mnu_more = Gio.Menu()
-		mnu_more.append_section(None, sec_actions)
-		mnu_more.append_section(None, sec_settings)
-		pop_menu = Gtk.PopoverMenu()
-		pop_menu.set_menu_model(mnu_more)
-		pop_menu.add_child(chk_normal, 'normal')
-		pop_menu.add_child(chk_loop, 'loop')
-		pop_menu.add_child(chk_shuffle, 'shuffle')
-		pop_menu.add_child(chk_autoplay, 'autoplay')
 		btn_more = Gtk.MenuButton()
 		btn_more.set_valign(Gtk.Align.CENTER)
 		btn_more.set_icon_name('view-more')
 		btn_more.set_tooltip_text(_('More actions'))
-		btn_more.set_popover(pop_menu)
+		btn_more.set_create_popup_func(self.build_menu_popup)
 		btn_more.set_has_frame(False)
 
 		box_controls = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
@@ -145,7 +84,6 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.set_valign(Gtk.Align.CENTER)
 		box_controls.set_halign(Gtk.Align.END)
 		box_controls.set_hexpand(True)
-		box_controls.append(btn_playlists)
 		box_controls.append(btn_prev)
 		box_controls.append(self.btn_pause)
 		box_controls.append(btn_next)
@@ -216,6 +154,72 @@ class MonophonyPlayer(Gtk.Box):
 
 		GLib.timeout_add(250, self.update)
 
+	def build_menu_popup(self, btn: Gtk.MenuButton):
+		current_song = self.player.get_current_song()
+		mnu_more = Gio.Menu()
+		if current_song:
+			sec_actions = Gio.Menu()
+			sec_actions.append(_('Add to...'), 'add-song-to')
+			self.window.install_action(
+				'add-song-to',
+				None,
+				lambda w, a, t: w._on_add_clicked(current_song)
+			)
+			sec_actions.append(_('Remove From Queue'), 'unqueue-song')
+			self.install_action(
+				'unqueue-song',
+				None,
+				lambda p, a, t: p._on_unqueue_clicked()
+			)
+			sec_actions.append(_('Show Artist'), 'show-artist')
+			self.install_action(
+				'show-artist',
+				None,
+				lambda p, a, t: p._on_show_artist_clicked()
+			)
+			mnu_more.append_section(None, sec_actions)
+		sec_settings = Gio.Menu()
+		chk_normal = Gtk.CheckButton.new_with_label(_('Normal Playback'))
+		chk_normal.set_active(True)
+		itm_normal = Gio.MenuItem()
+		itm_normal.set_attribute_value('custom',  GLib.Variant.new_string('normal'))
+		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio Mode'))
+		chk_autoplay.set_group(chk_normal)
+		chk_autoplay.set_active(
+			int(monophony.backend.settings.get_value('radio', False))
+		)
+		chk_autoplay.connect('toggled', self._on_radio_toggled)
+		itm_autoplay = Gio.MenuItem()
+		itm_autoplay.set_attribute_value(
+			'custom',  GLib.Variant.new_string('autoplay')
+		)
+		chk_loop = Gtk.CheckButton.new_with_label(_('Repeat Song'))
+		chk_loop.set_group(chk_normal)
+		chk_loop.connect('toggled', self._on_loop_toggled)
+		itm_loop = Gio.MenuItem()
+		itm_loop.set_attribute_value(
+			'custom',  GLib.Variant.new_string('loop')
+		)
+		chk_shuffle = Gtk.CheckButton.new_with_label(_('Shuffle'))
+		chk_shuffle.set_group(chk_normal)
+		chk_shuffle.connect('toggled', self._on_shuffle_toggled)
+		itm_shuffle = Gio.MenuItem()
+		itm_shuffle.set_attribute_value(
+			'custom',  GLib.Variant.new_string('shuffle')
+		)
+		sec_settings.append_item(itm_normal)
+		sec_settings.append_item(itm_loop)
+		sec_settings.append_item(itm_shuffle)
+		sec_settings.append_item(itm_autoplay)
+		mnu_more.append_section(None, sec_settings)
+		pop_menu = Gtk.PopoverMenu()
+		pop_menu.set_menu_model(mnu_more)
+		pop_menu.add_child(chk_normal, 'normal')
+		pop_menu.add_child(chk_loop, 'loop')
+		pop_menu.add_child(chk_shuffle, 'shuffle')
+		pop_menu.add_child(chk_autoplay, 'autoplay')
+		btn.set_popover(pop_menu)
+
 	def _on_seek_performed(self, _s, _t, target: float):
 		GLib.Thread.new(None, self.player.seek, target)
 
@@ -244,7 +248,7 @@ class MonophonyPlayer(Gtk.Box):
 				id_ = song['author_id']
 			else:
 				id_ = monophony.backend.yt.get_song(song['id'])['author_id']
-			self.get_ancestor(Gtk.Window)._on_show_artist(id_)
+			self.window._on_show_artist(id_)
 
 	def _on_radio_toggled(self, chk: Gtk.CheckButton):
 		monophony.backend.settings.set_value('radio', int(chk.get_active()))

@@ -9,7 +9,7 @@ from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonySongRow(Adw.ActionRow):
-	def __init__(self, song: dict, player: object, group: dict = None, editable: bool = False):
+	def __init__(self, song: dict, player: object, group: dict = None, editable = False):
 		super().__init__()
 
 		self.player = player
@@ -37,19 +37,30 @@ class MonophonySongRow(Adw.ActionRow):
 		if length:
 			subtitle = length + ' ' + subtitle
 
-		btn_more = Gtk.MenuButton()
-		btn_more.set_tooltip_text(_('More actions'))
-		btn_more.set_create_popup_func(
-			MonophonySongPopover, player, song, group, editable
-		)
-		btn_more.set_icon_name('view-more')
-		btn_more.set_has_frame(False)
-		btn_more.set_vexpand(False)
-		btn_more.set_valign(Gtk.Align.CENTER)
 		self.spinner = Gtk.Spinner.new()
 		self.spinner.bind_property('visible', self.spinner, 'spinning', 0)
 		self.add_suffix(self.spinner)
-		self.add_suffix(btn_more)
+
+		if self.editable:
+			btn_more = Gtk.MenuButton()
+			btn_more.set_tooltip_text(_('More actions'))
+			btn_more.set_create_popup_func(MonophonySongPopover, player, song, group)
+			btn_more.set_icon_name('view-more')
+			btn_more.set_has_frame(False)
+			btn_more.set_vexpand(False)
+			btn_more.set_valign(Gtk.Align.CENTER)
+			self.add_suffix(btn_more)
+		else:
+			btn_add_to = Gtk.Button.new_from_icon_name('list-add')
+			btn_add_to.set_tooltip_text(_('Add to...'))
+			btn_add_to.connect(
+				'clicked', lambda b: b.get_ancestor(Gtk.Window)._on_add_clicked(self.song)
+			)
+			btn_add_to.set_has_frame(False)
+			btn_add_to.set_vexpand(False)
+			btn_add_to.set_valign(Gtk.Align.CENTER)
+			self.add_suffix(btn_add_to)
+
 		self.set_title(title)
 		self.set_subtitle(subtitle)
 
