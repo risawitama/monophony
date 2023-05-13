@@ -3,29 +3,16 @@
 import gettext, os
 
 import monophony.backend.cache
-from monophony import LANGUAGES
 from monophony.frontend.app import MonophonyApplication
 
 
 def main():
-	lang = os.getenv('LANG', 'en_US.UTF-8')
-	chosen_lang = 'en'
-	for l in LANGUAGES:
-		if lang.split('_')[0] == l:
-			chosen_lang = l
-			break
-
 	if os.getenv('container', '') != 'flatpak':
-		gettext.translation(
-			'monophony', languages = [chosen_lang], fallback = True
-		).install()
+		gettext.bindtextdomain('monophony')
+		gettext.translation('monophony').install()
 	else:
-		gettext.translation(
-			'monophony',
-			localedir = '/app/share/locale',
-			languages = [chosen_lang],
-			fallback = True
-		).install()
+		gettext.bindtextdomain('monophony', '/app/share/locale')
+		gettext.translation('monophony', '/app/share/locale').install()
 
 	monophony.backend.cache.clean_up()
 	MonophonyApplication().run()
