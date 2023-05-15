@@ -82,6 +82,12 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			None,
 			lambda w, a, t: w._on_delete_playlist(self)
 		)
+		mnu_actions.append(_('Duplicate'), 'duplicate-playlist')
+		window.install_action(
+			'duplicate-playlist',
+			None,
+			lambda w, a, t: w._on_duplicate_playlist(self)
+		)
 		mnu_actions.append(_('Rename...'), 'rename-playlist')
 		window.install_action(
 			'rename-playlist',

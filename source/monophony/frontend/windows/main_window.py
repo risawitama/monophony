@@ -182,6 +182,11 @@ SOFTWARE.'''
 	def _on_delete_playlist(self, widget: object):
 		MonophonyDeleteWindow(self, widget.group['title']).present()
 
+	def _on_duplicate_playlist(self, widget: object):
+		monophony.backend.playlists.add_playlist(
+			widget.group['title'], widget.group['contents']
+		)
+
 	def _on_rename_playlist(self, widget: object):
 		def _rename(new_name: str):
 			success = monophony.backend.playlists.rename_playlist(
