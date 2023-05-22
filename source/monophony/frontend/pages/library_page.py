@@ -1,5 +1,7 @@
+import monophony.backend.history
 import monophony.backend.playlists
 from monophony.frontend.widgets.group_row import MonophonyGroupRow
+from monophony.frontend.widgets.song_row import MonophonySongRow
 
 import gi
 gi.require_version('Adw', '1')
@@ -13,9 +15,12 @@ class MonophonyLibraryPage(Gtk.Box):
 
 		self.player = player
 		self.playlist_widgets = []
+		self.recents_widgets = []
 		self.set_vexpand(True)
 
 		self.box_meta = Adw.PreferencesPage.new()
+		self.box_meta.set_vexpand(True)
+		self.box_meta.set_valign(Gtk.Align.FILL)
 		self.append(self.box_meta)
 
 		self.pge_status = Adw.StatusPage()
@@ -37,10 +42,14 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.btn_play = Gtk.Button.new_with_label(_('Play All'))
 		self.btn_play.connect('clicked', self._on_play_all)
 		self.box_playlists = Adw.PreferencesGroup()
-		self.box_playlists.set_vexpand(True)
 		self.box_playlists.set_title(_('Your Playlists'))
 		self.box_playlists.set_header_suffix(self.btn_play)
 		self.box_meta.add(self.box_playlists)
+
+		self.box_recents = Adw.PreferencesGroup()
+		self.box_recents.set_visible(False)
+		self.box_recents.set_title(_('Recently Played'))
+		self.box_meta.add(self.box_recents)
 
 		GLib.timeout_add(100, self.update)
 
@@ -74,6 +83,30 @@ class MonophonyLibraryPage(Gtk.Box):
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
 
-		self.box_meta.set_visible(len(self.playlist_widgets) > 0)
+		self.box_playlists.set_visible(len(self.playlist_widgets) > 0)
 
+		new_recents = monophony.backend.history.read_songs()
+		new_recents.reverse()
+		for song in new_recents:
+			for widget in self.recents_widgets:
+				if widget.song['id'] == song['id']:
+					break
+			else: # nobreak
+				self.box_recents.set_visible(True)
+				self.pge_status.set_visible(False)
+
+				for widget in self.recents_widgets:
+					self.box_recents.remove(widget)
+
+				self.recents_widgets = []
+				for song in new_recents:
+					widget = MonophonySongRow(song, self.player)
+					self.box_recents.add(widget)
+					self.recents_widgets.append(widget)
+
+				break
+
+		self.box_meta.set_visible(
+			self.box_playlists.get_visible() or self.box_recents.get_visible()
+		)
 		return True

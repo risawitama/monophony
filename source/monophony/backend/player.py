@@ -1,6 +1,7 @@
 import random
 
 import monophony.backend.cache
+import monophony.backend.history
 import monophony.backend.settings
 import monophony.backend.yt
 
@@ -74,15 +75,16 @@ class Player:
 
 	### --- PLAYBACK CONTROLS --- ###
 
-	def play_song(self, id_: str, title: str) -> bool:
+	def play_song(self, song: dict) -> bool:
 		if len(self.recent_songs) > 1000:
 			self.recent_songs = []
-		self.recent_songs.append(id_)
+		self.recent_songs.append(song['id'])
+		monophony.backend.history.add_song(song)
 		self.playbin.set_state(Gst.State.READY)
 
-		uri = monophony.backend.cache.get_song_uri(id_)
+		uri = monophony.backend.cache.get_song_uri(song['id'])
 		if not uri:
-			uri = monophony.backend.yt.get_song_uri(id_)
+			uri = monophony.backend.yt.get_song_uri(song['id'])
 
 		self.playbin.set_property('uri', uri)
 
@@ -91,7 +93,7 @@ class Player:
 
 		bus = self.playbin.get_bus()
 		bus.add_signal_watch()
-		bus.connect('message::error', self._on_bus_error, id_, title)
+		bus.connect('message::error', self._on_bus_error, song['id'], song['title'])
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)
@@ -114,7 +116,7 @@ class Player:
 		if song:
 			self.queue.append(song)
 			self.index += 1
-			self.play_song(song['id'], song['title'])
+			self.play_song(song)
 
 	def toggle_pause(self):
 		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
@@ -151,7 +153,7 @@ class Player:
 				song = self.queue[self.index]
 
 			if song:
-				if self.play_song(song['id'], song['title']):
+				if self.play_song(song):
 					break
 				continue
 
@@ -179,7 +181,7 @@ class Player:
 
 		if len(self.queue) > 0:
 			song = self.queue[self.index]
-			self.play_song(song['id'], song['title'])
+			self.play_song(song)
 
 		self.lock.unlock()
 
@@ -193,7 +195,7 @@ class Player:
 		self.queue = queue
 		self.index = index
 		song = queue[index]
-		self.play_song(song['id'], song['title'])
+		self.play_song(song)
 		self.lock.unlock()
 
 	def unqueue_song(self):
@@ -205,7 +207,7 @@ class Player:
 	def queue_song(self, song: dict):
 		self.lock.lock()
 		if not self.queue:
-			self.play_song(song['id'], song['title'])
+			self.play_song(song)
 
 		self.queue.append(song)
 		self.lock.unlock()
