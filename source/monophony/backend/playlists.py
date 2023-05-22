@@ -17,6 +17,7 @@ def add_playlist(name: str, songs: dict = None):
 	new_lists = read_playlists()
 	name = get_unique_name(name)
 	new_lists[name] = songs if songs else []
+	new_lists[name] = list(dict.fromkeys(new_lists[name])) # remove duplicates
 	write_playlists(new_lists)
 
 
@@ -42,12 +43,14 @@ def import_playlist(name: str, data: str) -> bool:
 		if not song['videoId']:
 			continue
 
-		playlist.append({
+		parsed_song = {
 			'title': song['title'],
 			'author': song['artists'][0]['name'],
 			'length': song['duration'] if 'duration' in song else '',
 			'id': song['videoId'],
-		})
+		}
+		if parsed_song not in playlist:
+			playlist.append(parsed_song)
 
 	name = get_unique_name(name)
 	new_lists[name] = playlist
@@ -75,7 +78,8 @@ def is_song_in_any_playlist(id_: str) -> bool:
 
 def add_song(song: dict, playlist: str):
 	new_lists = read_playlists()
-	new_lists[playlist].append(song)
+	if song not in new_lists[playlist]:
+		new_lists[playlist].append(song)
 	write_playlists(new_lists)
 
 
@@ -90,6 +94,16 @@ def swap_songs(p_name: str, i: int, j: int):
 	i = 0 if i >= len(lists[p_name]) else i
 	j = 0 if j >= len(lists[p_name]) else j
 	lists[p_name][i], lists[p_name][j] = lists[p_name][j], lists[p_name][i]
+	write_playlists(lists)
+
+
+def move_song(p_name: str, from_i: int, to_i: int):
+	lists = read_playlists()
+
+	to_song = lists[p_name][to_i]
+	from_song = lists[p_name].pop(from_i)
+	lists[p_name].insert(lists[p_name].index(to_song), from_song)
+
 	write_playlists(lists)
 
 
