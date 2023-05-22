@@ -105,7 +105,8 @@ class MonophonyAddWindow(Adw.Window):
 
 		if self.add_to_queue:
 			self.player.queue_song(self.song)
-			self.destroy()
+
+		self.destroy()
 
 	def _on_create(self, ent: Gtk.Entry):
 		text = ent.get_text()
