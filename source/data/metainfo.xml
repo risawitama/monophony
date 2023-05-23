@@ -31,6 +31,23 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="1.7.0" date="2023-05-23">
+      <description>
+        <ul>
+          <li>Added playback history</li>
+          <li>Added queue clearing after playback ends</li>
+          <li>Added playlist duplication</li>
+          <li>Added Brazilian Portuguese translation</li>
+          <li>Added Czech translation</li>
+          <li>Added French translation</li>
+          <li>Changed license to AGPLv3</li>
+          <li>Reworked song management to use drag and drop</li>
+          <li>Reworked interface for adding songs</li>
+          <li>Reworked player interface</li>
+          <li>Fixed cache cleanup when no Monophony directory exists</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.6.0" date="2023-04-10">
       <description>
         <ul>
