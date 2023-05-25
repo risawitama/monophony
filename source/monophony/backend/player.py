@@ -10,6 +10,13 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GLib, Gst
 
 
+class PlaybackMode:
+	NORMAL = 0
+	LOOP = 1
+	SHUFFLE = 2
+	RADIO = 3
+
+
 class Player:
 	def __init__(self):
 		Gst.init([])
@@ -17,8 +24,7 @@ class Player:
 		self.index = 0
 		self.queue = []
 		self.recent_songs = []
-		self.loop = False
-		self.shuffle = False
+		self.mode = PlaybackMode.NORMAL
 		self.error = False
 		self.mpris_adapter = None
 		self.mpris_server = None
@@ -76,6 +82,7 @@ class Player:
 	### --- PLAYBACK CONTROLS --- ###
 
 	def play_song(self, song: dict) -> bool:
+		print('Playing', song['id'], 'in playback mode', self.mode)
 		if len(self.recent_songs) > 1000:
 			self.recent_songs = []
 		self.recent_songs.append(song['id'])
@@ -128,16 +135,16 @@ class Player:
 
 		self.mpris_adapter.on_playpause()
 
-	def next_song(self):
+	def next_song(self, ignore_loop: bool = False):
 		if not self.lock.trylock():
 			return
 
 		while True:
 			queue_length = len(self.queue)
 			song = None
-			if self.loop:
+			if self.mode == PlaybackMode.LOOP and not ignore_loop:
 				song = self.queue[self.index]
-			elif self.shuffle and queue_length > 1:
+			elif self.mode == PlaybackMode.SHUFFLE and queue_length > 1:
 				for s in self.queue:
 					if s['id'] not in self.recent_songs:
 						break
@@ -157,7 +164,7 @@ class Player:
 					break
 				continue
 
-			if int(monophony.backend.settings.get_value('radio', 0)):
+			if self.mode == PlaybackMode.RADIO:
 				self.play_radio_song()
 			else:
 				self.playbin.set_state(Gst.State.NULL)

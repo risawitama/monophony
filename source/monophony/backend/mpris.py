@@ -1,3 +1,5 @@
+from monophony.backend.player import PlaybackMode
+
 from gi.repository import GLib
 from mpris_server.adapters import PlayState, MprisAdapter
 from mpris_server.server import Server
@@ -25,7 +27,7 @@ class Adapter(MprisAdapter):
 		return self.monophony_player.get_progress()
 
 	def next(self):
-		GLib.Thread.new(None, self.monophony_player.next_song)
+		GLib.Thread.new(None, self.monophony_player.next_song, True)
 
 	def previous(self):
 		GLib.Thread.new(None, self.monophony_player.previous_song)
@@ -54,7 +56,7 @@ class Adapter(MprisAdapter):
 		return
 
 	def is_repeating(self) -> bool:
-		return self.monophony_player.loop
+		return self.monophony_player.mode == PlaybackMode.LOOP
 
 	def is_playlist(self) -> bool:
 		return True
@@ -72,7 +74,7 @@ class Adapter(MprisAdapter):
 		pass
 
 	def get_shuffle(self) -> bool:
-		return self.monophony_player.shuffle
+		return self.monophony_player.mode == PlaybackMode.SHUFFLE
 
 	def set_shuffle(self, val: bool):
 		pass
