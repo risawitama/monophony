@@ -10,6 +10,14 @@ def main():
 	path = None
 	if os.getenv('container', '') == 'flatpak':
 		path = '/app/share/locale'
+		print('Container: Flatpak')
+	else:
+		snap_path = os.getenv('SNAP')
+		if snap_path:
+			path = snap_path
+			print('Container: Snap')
+		else:
+			print('Container: None')
 
 	try:
 		gettext.translation('monophony', path).install()
