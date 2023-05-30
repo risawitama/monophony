@@ -31,6 +31,15 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="1.8.0" date="2023-05-30">
+      <description>
+        <ul>
+          <li>Fixed crash when adding playlist or album to library</li>
+          <li>Made song history behavior more intuitive</li>
+          <li>Made playlist creation interface more intuitive</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.7.1" date="2023-05-25">
       <description>
         <ul>
