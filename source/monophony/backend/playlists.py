@@ -16,8 +16,13 @@ import ytmusicapi
 def add_playlist(name: str, songs: dict = None):
 	new_lists = read_playlists()
 	name = get_unique_name(name)
-	new_lists[name] = songs if songs else []
-	new_lists[name] = list(dict.fromkeys(new_lists[name])) # remove duplicates
+
+	songs = songs if songs else []
+	new_lists[name] = []
+	for song in songs:
+		if song not in new_lists[name]:
+			new_lists[name].append(song)
+
 	write_playlists(new_lists)
 
 
