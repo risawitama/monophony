@@ -44,7 +44,9 @@ class MonophonyAddWindow(Adw.Window):
 		ent_name.connect('activate', self._on_create)
 		ent_name.set_hexpand(True)
 		ent_name.set_halign(Gtk.Align.FILL)
-		ent_name.set_placeholder_text(_('Create Playlist...'))
+		ent_name.set_placeholder_text(_('New Playlist Name...'))
+		btn_create = Gtk.Button.new_with_label(_('Create'))
+		btn_create.connect('clicked', lambda b: self._on_create(ent_name))
 		box_footer = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
 		box_footer.set_spacing(5)
 		box_footer.set_margin_bottom(5)
@@ -52,6 +54,7 @@ class MonophonyAddWindow(Adw.Window):
 		box_footer.set_margin_end(5)
 		box_footer.set_margin_start(5)
 		box_footer.append(ent_name)
+		box_footer.append(btn_create)
 
 		box_main = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_main.append(headerbar)
