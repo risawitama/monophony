@@ -16,6 +16,7 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.player = player
 		self.playlist_widgets = []
 		self.recents_widgets = []
+		self.old_recents = []
 		self.set_vexpand(True)
 
 		self.box_meta = Adw.PreferencesPage.new()
@@ -87,24 +88,19 @@ class MonophonyLibraryPage(Gtk.Box):
 
 		new_recents = monophony.backend.history.read_songs()
 		new_recents.reverse()
-		for song in new_recents:
+		if new_recents != self.old_recents:
+			self.box_recents.set_visible(True)
+			self.pge_status.set_visible(False)
+
 			for widget in self.recents_widgets:
-				if widget.song['id'] == song['id']:
-					break
-			else: # nobreak
-				self.box_recents.set_visible(True)
-				self.pge_status.set_visible(False)
+				self.box_recents.remove(widget)
 
-				for widget in self.recents_widgets:
-					self.box_recents.remove(widget)
-
-				self.recents_widgets = []
-				for song in new_recents:
-					widget = MonophonySongRow(song, self.player)
-					self.box_recents.add(widget)
-					self.recents_widgets.append(widget)
-
-				break
+			self.recents_widgets = []
+			self.old_recents = new_recents
+			for song in new_recents:
+				widget = MonophonySongRow(song, self.player)
+				self.box_recents.add(widget)
+				self.recents_widgets.append(widget)
 
 		self.box_meta.set_visible(
 			self.box_playlists.get_visible() or self.box_recents.get_visible()

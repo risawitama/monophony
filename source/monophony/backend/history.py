@@ -10,6 +10,10 @@ def add_song(song: dict):
 		new_songs.append(song)
 		if len(new_songs) > 10:
 			new_songs = new_songs[1:]
+	else:
+		new_songs.remove(song)
+		new_songs.append(song)
+
 	write_songs(new_songs)
 
 
