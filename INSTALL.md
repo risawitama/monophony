@@ -2,9 +2,9 @@
 
 These packages are maintained by project members.
 
-| Repository | Package | Maintainer |
-| - | - | - |
-| Flathub | [io.gitlab.zehkira.Monophony](https://flathub.org/apps/details/io.gitlab.zehkira.Monophony) | @zehkira |
+| Repository | Package |
+| - | - |
+| Flathub | [io.gitlab.zehkira.Monophony](https://flathub.org/apps/details/io.gitlab.zehkira.Monophony) |
 
 ## Community packages
 
@@ -13,6 +13,7 @@ These packages are maintained by third parties. Install at your own risk.
 | Repository | Package |
 | - | - |
 | Arch User Repository | [monophony](https://aur.archlinux.org/packages/monophony)
+| Snap | [monophony](https://snapcraft.io/monophony)
 
 ## Building from source
 
