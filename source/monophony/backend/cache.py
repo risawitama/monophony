@@ -23,7 +23,6 @@ def is_song_being_cached(video_id: str) -> bool:
 			return has_temp
 		elif not has_part and has_temp:
 			try:
-				print('Finishing donwload of', video_id)
 				os.remove(f'{music_dir}/monophony/{video_id}.monophony')
 			except (OSError, FileNotFoundError):
 				pass
