@@ -21,8 +21,9 @@ def is_song_being_cached(video_id: str) -> bool:
 
 		if not has_result:
 			return has_temp
-		elif not has_part:
+		elif not has_part and has_temp:
 			try:
+				print('Finishing donwload of', video_id)
 				os.remove(f'{music_dir}/monophony/{video_id}.temp')
 			except (OSError, FileNotFoundError):
 				pass
@@ -58,14 +59,14 @@ def cache_song(video_id: str):
 	)
 	if not path:
 		return
-	path += '/monophony/'
+	path += '/monophony'
 	os.makedirs(path, exist_ok = True)
 	open(f'{path}/{video_id}.temp', 'w').close()
+	print('Starting donwload of', video_id)
 
-	out, _ = subprocess.Popen(
+	subprocess.Popen(
 		f'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata -o "{path}/%(id)s.%(ext)s" https://music.youtube.com/watch?v={video_id}',
-		shell = True,
-		stdout = subprocess.PIPE
+		shell = True
 	).communicate()
 
 	# rename id.* files to id
