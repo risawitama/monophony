@@ -78,6 +78,8 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 			btn_more.set_vexpand(False)
 			btn_more.set_valign(Gtk.Align.CENTER)
 			self.add_suffix(btn_more)
+
+			GLib.timeout_add(1000, self.update)
 		else:
 			btn_add_to = Gtk.Button.new_from_icon_name('list-add')
 			btn_add_to.set_tooltip_text(_('Add to...'))
@@ -92,8 +94,6 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 
 		self.set_title(title)
 		self.set_subtitle(subtitle)
-
-		GLib.timeout_add(100, self.update)
 
 	def _on_play_clicked(self, _b):
 		if self.editable:
