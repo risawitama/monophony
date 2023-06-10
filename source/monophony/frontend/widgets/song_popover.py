@@ -3,7 +3,7 @@ import monophony.backend.playlists
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gio, GLib, Gtk
+from gi.repository import Gio, Gtk
 
 
 class MonophonySongPopover(Gtk.PopoverMenu):

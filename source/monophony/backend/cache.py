@@ -80,7 +80,7 @@ def uncache_song(video_id: str):
 				GLib.UserDirectory.DIRECTORY_MUSIC
 			) + '/monophony/' + video_id
 		)
-	except:
+	except (OSError, FileNotFoundError):
 		pass
 
 
