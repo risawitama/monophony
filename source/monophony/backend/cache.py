@@ -12,7 +12,7 @@ def is_song_being_cached(video_id: str) -> bool:
 		for file in os.listdir(music_dir + '/monophony/'):
 			parts = file.split('.')
 			if parts[0] == video_id:
-				if parts[-1] == 'temp':
+				if parts[-1] == 'monophony':
 					has_temp = True
 				elif parts[-1] == 'part':
 					has_part = True
@@ -24,7 +24,7 @@ def is_song_being_cached(video_id: str) -> bool:
 		elif not has_part and has_temp:
 			try:
 				print('Finishing donwload of', video_id)
-				os.remove(f'{music_dir}/monophony/{video_id}.temp')
+				os.remove(f'{music_dir}/monophony/{video_id}.monophony')
 			except (OSError, FileNotFoundError):
 				pass
 
@@ -61,7 +61,7 @@ def cache_song(video_id: str):
 		return
 	path += '/monophony'
 	os.makedirs(path, exist_ok = True)
-	open(f'{path}/{video_id}.temp', 'w').close()
+	open(f'{path}/{video_id}.monophony', 'w').close()
 	print('Starting donwload of', video_id)
 
 	subprocess.Popen(
