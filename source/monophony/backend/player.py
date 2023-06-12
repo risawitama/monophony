@@ -206,10 +206,16 @@ class Player:
 		self.lock.unlock()
 
 	def unqueue_song(self):
-		if len(self.queue) > 0:
-			self.queue.pop(self.index)
-			self.index = self.index - 1 if self.index else 0
-			GLib.Thread.new(None, self.play_queue, self.queue, self.index)
+		if not self.queue:
+			return
+
+		self.queue.pop(self.index)
+		self.index = self.index - 1 if self.index else 0
+		if not self.queue:
+			self.next_song(True)
+			return
+
+		GLib.Thread.new(None, self.play_queue, self.queue, self.index)
 
 	def queue_song(self, song: dict):
 		self.lock.lock()
