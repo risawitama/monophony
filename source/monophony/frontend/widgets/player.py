@@ -287,9 +287,15 @@ class MonophonyPlayer(Gtk.Box):
 					'https://music.youtube.com/watch?v=' + song['id']
 				)
 				self.lbl_author.set_label(song['author'])
+				# Show player only if we are listening to something
+				self.window.player_revealer.set_reveal_child(True)
 			else:
 				self.lnk_title.set_label('')
 				self.lnk_title.set_uri('')
 				self.lbl_author.set_label('')
+				self.window.player_revealer.set_reveal_child(False)
+		else:
+		    # But if we are busy show it regardless
+		    self.window.player_revealer.set_reveal_child(True)
 
 		return True
