@@ -72,7 +72,7 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 			self.add_controller(self.drp_target)
 			btn_more = Gtk.MenuButton()
 			btn_more.set_tooltip_text(_('More actions'))
-			btn_more.set_create_popup_func(MonophonySongPopover, player, song, group)
+			btn_more.set_create_popup_func(MonophonySongPopover, song, group)
 			btn_more.set_icon_name('view-more-symbolic')
 			btn_more.set_has_frame(False)
 			btn_more.set_vexpand(False)
@@ -114,7 +114,7 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.drg_handle.set_icon(Gtk.WidgetPaintable.new(self), 0, 0)
 		return Gdk.ContentProvider.new_for_value(self)
 
-	def _on_dnd_drop(self, _t, song_row: Adw.ActionRow, x: float, y: float) -> bool:
+	def _on_dnd_drop(self, _t, song_row: Adw.ActionRow, _x: float, _y: float) -> bool:
 		monophony.backend.playlists.move_song(
 			self.group['title'],
 			self.group['contents'].index(song_row.song),

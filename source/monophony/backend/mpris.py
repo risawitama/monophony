@@ -52,7 +52,7 @@ class Adapter(MprisAdapter):
 			return PlayState.PAUSED
 		return PlayState.PLAYING
 
-	def seek(self, time):
+	def seek(self, _time):
 		return
 
 	def is_repeating(self) -> bool:
@@ -61,25 +61,25 @@ class Adapter(MprisAdapter):
 	def is_playlist(self) -> bool:
 		return True
 
-	def set_repeating(self, val: bool):
+	def set_repeating(self, _val: bool):
 		pass
 
-	def set_loop_status(self, val: str):
+	def set_loop_status(self, _val: str):
 		pass
 
 	def get_rate(self) -> float:
 		return 1.0
 
-	def set_rate(self, val: float):
+	def set_rate(self, _val: float):
 		pass
 
 	def get_shuffle(self) -> bool:
 		return self.monophony_player.mode == PlaybackMode.SHUFFLE
 
-	def set_shuffle(self, val: bool):
+	def set_shuffle(self, _val: bool):
 		pass
 
-	def get_art_url(self, track):
+	def get_art_url(self, _track):
 		return ''
 
 	def get_stream_title(self):

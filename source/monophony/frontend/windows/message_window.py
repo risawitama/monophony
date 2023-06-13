@@ -15,5 +15,5 @@ class MonophonyMessageWindow(Adw.MessageDialog):
 		self.set_modal(True)
 		self.connect('response', self._on_response)
 
-	def _on_response(self, _w, response: str):
+	def _on_response(self, _w, _response: str):
 		self.destroy()

@@ -68,7 +68,7 @@ class Player:
 
 	### --- EVENT HANDLERS --- ###
 
-	def _on_bus_error(self, _, err, s_id: str, s_title: str):
+	def _on_bus_error(self, _, _err):
 		self.lock.lock()
 		self.error = True
 		self.lock.unlock()
@@ -100,7 +100,7 @@ class Player:
 
 		bus = self.playbin.get_bus()
 		bus.add_signal_watch()
-		bus.connect('message::error', self._on_bus_error, song['id'], song['title'])
+		bus.connect('message::error', self._on_bus_error)
 		bus.connect('message::eos', self._on_song_end)
 
 		self.playbin.set_state(Gst.State.PLAYING)

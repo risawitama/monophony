@@ -7,7 +7,7 @@ from gi.repository import Gio, Gtk
 
 
 class MonophonySongPopover(Gtk.PopoverMenu):
-	def __init__(self, btn: Gtk.MenuButton, player, song: dict, group: dict = None):
+	def __init__(self, btn: Gtk.MenuButton, song: dict, group: dict = None):
 		super().__init__()
 
 		window = btn.get_ancestor(Gtk.Window)
