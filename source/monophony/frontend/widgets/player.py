@@ -57,17 +57,17 @@ class MonophonyPlayer(Gtk.Box):
 		)
 		box_info.append(self.box_sng_info)
 
-		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start')
+		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
 		self.btn_pause.set_valign(Gtk.Align.CENTER)
 		self.btn_pause.connect('clicked', self._on_pause_clicked)
 		self.btn_pause.set_tooltip_text(_('Toggle pause'))
 		self.btn_pause.set_has_frame(False)
-		btn_next = Gtk.Button.new_from_icon_name('media-skip-forward')
+		btn_next = Gtk.Button.new_from_icon_name('media-skip-forward-symbolic')
 		btn_next.set_valign(Gtk.Align.CENTER)
 		btn_next.set_tooltip_text(_('Next song'))
 		btn_next.connect('clicked', self._on_next_clicked)
 		btn_next.set_has_frame(False)
-		btn_prev = Gtk.Button.new_from_icon_name('media-skip-backward')
+		btn_prev = Gtk.Button.new_from_icon_name('media-skip-backward-symbolic')
 		btn_prev.set_valign(Gtk.Align.CENTER)
 		btn_prev.set_tooltip_text(_('Previous song'))
 		btn_prev.connect('clicked', self._on_previous_clicked)
@@ -75,7 +75,7 @@ class MonophonyPlayer(Gtk.Box):
 
 		btn_more = Gtk.MenuButton()
 		btn_more.set_valign(Gtk.Align.CENTER)
-		btn_more.set_icon_name('view-more')
+		btn_more.set_icon_name('view-more-symbolic')
 		btn_more.set_tooltip_text(_('More actions'))
 		btn_more.set_create_popup_func(self.build_menu_popup)
 		btn_more.set_has_frame(False)
@@ -276,9 +276,9 @@ class MonophonyPlayer(Gtk.Box):
 			self.scl_progress.set_value(self.player.get_progress())
 
 			if self.player.is_paused():
-				self.btn_pause.set_icon_name('media-playback-start')
+				self.btn_pause.set_icon_name('media-playback-start-symbolic')
 			else:
-				self.btn_pause.set_icon_name('media-playback-pause')
+				self.btn_pause.set_icon_name('media-playback-pause-symbolic')
 
 			song = self.player.get_current_song()
 			if song:
@@ -287,7 +287,6 @@ class MonophonyPlayer(Gtk.Box):
 					'https://music.youtube.com/watch?v=' + song['id']
 				)
 				self.lbl_author.set_label(song['author'])
-				# Show player only if we are listening to something
 				self.window.player_revealer.set_reveal_child(True)
 			else:
 				self.lnk_title.set_label('')
@@ -295,7 +294,6 @@ class MonophonyPlayer(Gtk.Box):
 				self.lbl_author.set_label('')
 				self.window.player_revealer.set_reveal_child(False)
 		else:
-		    # But if we are busy show it regardless
-		    self.window.player_revealer.set_reveal_child(True)
+			self.window.player_revealer.set_reveal_child(True)
 
 		return True

@@ -17,7 +17,7 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.group = group
 		self.editable = editable
 
-		btn_play = Gtk.Button.new_from_icon_name('media-playback-start')
+		btn_play = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
 		btn_play.set_tooltip_text(_('Play'))
 		btn_play.set_vexpand(False)
 		btn_play.set_valign(Gtk.Align.CENTER)
@@ -73,7 +73,7 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 			btn_more = Gtk.MenuButton()
 			btn_more.set_tooltip_text(_('More actions'))
 			btn_more.set_create_popup_func(MonophonySongPopover, player, song, group)
-			btn_more.set_icon_name('view-more')
+			btn_more.set_icon_name('view-more-symbolic')
 			btn_more.set_has_frame(False)
 			btn_more.set_vexpand(False)
 			btn_more.set_valign(Gtk.Align.CENTER)
@@ -81,7 +81,7 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 
 			GLib.timeout_add(1000, self.update)
 		else:
-			btn_add_to = Gtk.Button.new_from_icon_name('list-add')
+			btn_add_to = Gtk.Button.new_from_icon_name('list-add-symbolic')
 			btn_add_to.set_tooltip_text(_('Add to...'))
 			btn_add_to.connect(
 				'clicked',

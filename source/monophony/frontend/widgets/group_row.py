@@ -29,7 +29,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			-1
 		))
 
-		btn_play = Gtk.Button.new_from_icon_name('media-playback-start')
+		btn_play = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
 		btn_play.set_tooltip_text(_('Play'))
 		btn_play.set_vexpand(False)
 		btn_play.set_valign(Gtk.Align.CENTER)
@@ -39,7 +39,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		if self.editable:
 			btn_more = Gtk.MenuButton()
 			btn_more.set_tooltip_text(_('More actions'))
-			btn_more.set_icon_name('view-more')
+			btn_more.set_icon_name('view-more-symbolic')
 			btn_more.set_has_frame(False)
 			btn_more.set_vexpand(False)
 			btn_more.set_valign(Gtk.Align.CENTER)
