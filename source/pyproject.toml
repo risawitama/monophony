@@ -1,3 +1,8 @@
 [tool.ruff]
 builtins = ['_']
 ignore = ['E401', 'E741', 'E722', 'E402']
+select = ['ARG002', 'Q000']
+#tab_size = 4
+
+[tool.ruff.flake8-quotes]
+inline-quotes = 'single'
