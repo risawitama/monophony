@@ -82,6 +82,12 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			None,
 			lambda w, a, t: w._on_delete_playlist(self)
 		)
+		mnu_actions.append(_('Download to Music Folder'), 'cache-playlist')
+		window.install_action(
+			'cache-playlist',
+			None,
+			lambda w, a, t: w._on_cache_playlist(self.group['contents'])
+		)
 		mnu_actions.append(_('Duplicate'), 'duplicate-playlist')
 		window.install_action(
 			'duplicate-playlist',

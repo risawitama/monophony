@@ -21,11 +21,6 @@ def is_song_being_cached(video_id: str) -> bool:
 
 		if not has_result:
 			return has_temp
-		elif not has_part and has_temp:
-			try:
-				os.remove(f'{music_dir}/monophony/{video_id}.monophony')
-			except (OSError, FileNotFoundError):
-				pass
 
 	return False
 
@@ -49,10 +44,7 @@ def get_song_uri(video_id: str) -> str:
 	return ''
 
 
-def cache_song(video_id: str):
-	if is_song_cached(video_id):
-		return
-
+def cache_songs(ids: list):
 	path = GLib.get_user_special_dir(
 		GLib.UserDirectory.DIRECTORY_MUSIC
 	)
@@ -60,13 +52,26 @@ def cache_song(video_id: str):
 		return
 	path += '/monophony'
 	os.makedirs(path, exist_ok = True)
-	open(f'{path}/{video_id}.monophony', 'w').close()
-	print('Starting donwload of', video_id)
+
+	needed_ids = []
+	for video_id in ids:
+		if not is_song_cached(video_id):
+			needed_ids.append(video_id)
+			open(f'{path}/{video_id}.monophony', 'w').close()
 
 	subprocess.Popen(
-		f'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata -o "{path}/%(id)s.%(ext)s" https://music.youtube.com/watch?v={video_id}',
-		shell = True
+		f'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata ' +
+		f'-o "{path}/%(id)s.%(ext)s" https://music.youtube.com/watch?v=' +
+		(' https://music.youtube.com/watch?v='.join(needed_ids)),
+		shell = True,
+		stdout = subprocess.PIPE
 	).communicate()
+
+	for video_id in needed_ids:
+		try:
+			os.remove(f'{path}/{video_id}.monophony')
+		except (OSError, FileNotFoundError):
+			pass
 
 	# rename id.* files to id
 	for file in glob.glob(path + '/*.*'):

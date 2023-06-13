@@ -155,7 +155,12 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 	def _on_cache_song(self, song: dict):
 		GLib.Thread.new(
-			None, monophony.backend.cache.cache_song, song['id']
+			None, monophony.backend.cache.cache_songs, [song['id']]
+		)
+
+	def _on_cache_playlist(self, songs: list):
+		GLib.Thread.new(
+			None, monophony.backend.cache.cache_songs, [s['id'] for s in songs]
 		)
 
 	def _on_delete_playlist(self, widget: object):
