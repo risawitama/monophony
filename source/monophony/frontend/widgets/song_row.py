@@ -17,12 +17,9 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.group = group
 		self.editable = editable
 
-		btn_play = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
-		btn_play.set_tooltip_text(_('Play'))
-		btn_play.set_vexpand(False)
-		btn_play.set_valign(Gtk.Align.CENTER)
-		btn_play.connect('clicked', self._on_play_clicked)
-		self.add_prefix(btn_play)
+		self.set_tooltip_text(_('Play'))
+		self.set_property('activatable', True)
+		self.connect('activated', self._on_play_clicked)
 
 		title = GLib.markup_escape_text(
 			song['title'] if 'title' in song and song['title'] else '________', -1
