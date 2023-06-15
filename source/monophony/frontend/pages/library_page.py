@@ -86,6 +86,10 @@ class MonophonyLibraryPage(Gtk.Box):
 
 		self.box_playlists.set_visible(len(self.playlist_widgets) > 0)
 
+		# player could be adding to recents at this moment
+		if self.player.is_busy():
+			return True
+
 		new_recents = monophony.backend.history.read_songs()
 		new_recents.reverse()
 		if new_recents != self.old_recents:

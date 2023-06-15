@@ -3,7 +3,7 @@ import monophony.backend.playlists
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk, Pango
+from gi.repository import Adw, GLib, Gtk, Pango
 
 
 class MonophonyAddWindow(Adw.Window):
@@ -107,7 +107,7 @@ class MonophonyAddWindow(Adw.Window):
 			monophony.backend.playlists.add_song(self.song, playlist)
 
 		if self.add_to_queue:
-			self.player.queue_song(self.song)
+			GLib.Thread.new(None, self.player.queue_song, self.song)
 
 		self.destroy()
 
