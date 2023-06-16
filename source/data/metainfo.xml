@@ -31,6 +31,16 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="1.9.0" date="2023-06-16">
+      <description>
+        <ul>
+          <li>Added option to download entire playlists</li>
+          <li>Various interface changes</li>
+          <li>Fixed brief freeze when adding song to empty queue</li>
+          <li>Fixed playback not ending when removing last song from queue</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.8.0" date="2023-05-30">
       <description>
         <ul>
