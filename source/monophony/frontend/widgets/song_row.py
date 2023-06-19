@@ -38,6 +38,15 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.spinner.bind_property('visible', self.spinner, 'spinning', 0)
 		self.add_suffix(self.spinner)
 
+		btn_more = Gtk.MenuButton()
+		btn_more.set_tooltip_text(_('More actions'))
+		btn_more.set_icon_name('view-more-symbolic')
+		btn_more.set_has_frame(False)
+		btn_more.set_vexpand(False)
+		btn_more.set_valign(Gtk.Align.CENTER)
+		self.add_suffix(btn_more)
+		GLib.timeout_add(1000, self.update)
+
 		if self.editable and self.group:
 			img_handle = Gtk.Image.new_from_icon_name('list-drag-handle-symbolic')
 			img_handle.add_css_class('drag-handle')
@@ -67,27 +76,10 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 			self.drp_target.connect('drop', self._on_dnd_drop)
 			self.drp_target.connect('enter', self._on_dnd_enter)
 			self.add_controller(self.drp_target)
-			btn_more = Gtk.MenuButton()
-			btn_more.set_tooltip_text(_('More actions'))
 			btn_more.set_create_popup_func(MonophonySongPopover, song, group)
-			btn_more.set_icon_name('view-more-symbolic')
-			btn_more.set_has_frame(False)
-			btn_more.set_vexpand(False)
-			btn_more.set_valign(Gtk.Align.CENTER)
-			self.add_suffix(btn_more)
 
-			GLib.timeout_add(1000, self.update)
 		else:
-			btn_add_to = Gtk.Button.new_from_icon_name('list-add-symbolic')
-			btn_add_to.set_tooltip_text(_('Add to...'))
-			btn_add_to.connect(
-				'clicked',
-				lambda b: b.get_ancestor(Gtk.Window)._on_add_clicked(self.song)
-			)
-			btn_add_to.set_has_frame(False)
-			btn_add_to.set_vexpand(False)
-			btn_add_to.set_valign(Gtk.Align.CENTER)
-			self.add_suffix(btn_add_to)
+			btn_more.set_create_popup_func(MonophonySongPopover, song, None)
 
 		self.set_title(title)
 		self.set_subtitle(subtitle)
@@ -139,9 +131,8 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.remove_css_class('dnd-item')
 
 	def update(self) -> True:
-		if self.editable:
-			self.spinner.set_visible(
-				monophony.backend.cache.is_song_being_cached(self.song['id'])
-			)
+		self.spinner.set_visible(
+			monophony.backend.cache.is_song_being_cached(self.song['id'])
+		)
 
 		return True

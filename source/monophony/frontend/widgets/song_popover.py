@@ -40,17 +40,25 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 				lambda w, a, t: w._on_cache_song(song)
 			)
 
-		menu.append(_('Remove From Playlist'), 'remove-song')
-		window.install_action(
-			'remove-song',
-			None,
-			lambda w, a, t: w._on_remove_song(song['id'], group['title'])
-		)
+		if group:
+			menu.append(_('Remove From Playlist'), 'remove-song')
+			window.install_action(
+				'remove-song',
+				None,
+				lambda w, a, t: w._on_remove_song(song['id'], group['title'])
+			)
+
 		menu.append(_('Add to...'), 'add-song-to')
 		window.install_action(
 			'add-song-to',
 			None,
 			lambda w, a, t: w._on_add_clicked(song)
+		)
+		menu.append(_('Show Artist'), 'show-artist')
+		window.install_action(
+			'show-artist',
+			None,
+			lambda w, a, t: w._on_show_artist(song['author_id'])
 		)
 		self.set_menu_model(menu)
 		btn.set_popover(self)
