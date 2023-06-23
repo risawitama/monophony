@@ -14,9 +14,12 @@ class MonophonyAddWindow(Adw.Window):
 		self.player = player
 		self.add_to_queue = False
 		self.add_to_playlists = []
+		self.playlists = []
 
 		self.set_title(_('Add to...'))
-		self.set_resizable(False)
+		self.set_default_size(400, 600)
+		self.set_property('width-request', 360)
+		self.set_property('height-request', 360)
 		self.set_modal(True)
 
 		btn_cancel = Gtk.Button.new_with_label(_('Cancel'))
@@ -29,65 +32,84 @@ class MonophonyAddWindow(Adw.Window):
 		headerbar.pack_start(btn_cancel)
 		headerbar.pack_end(btn_add)
 
-		self.box_list = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
-		self.box_list.set_spacing(5)
-		self.box_list.set_margin_bottom(5)
-		self.box_list.set_margin_top(5)
-		self.box_list.set_margin_start(5)
-		self.box_list.set_margin_end(5)
+		grp_queue = Adw.PreferencesGroup()
+		self.chk_queue = Gtk.CheckButton()
+		self.row_queue = Adw.ActionRow()
+		self.row_queue.add_suffix(self.chk_queue)
+		self.row_queue.set_title(_('Queue'))
+		self.row_queue.set_property('activatable-widget', self.chk_queue)
+		self.chk_queue.connect('toggled', self._on_add_to_queue_toggled)
+		grp_queue.add(self.row_queue)
 
-		scr_list = Gtk.ScrolledWindow.new()
-		scr_list.set_min_content_height(200)
-		scr_list.set_child(self.box_list)
+		self.grp_list = Adw.PreferencesGroup()
+		self.grp_list.set_title(_('Your Playlists'))
 
 		ent_name = Gtk.Entry.new()
 		ent_name.connect('activate', self._on_create)
 		ent_name.set_hexpand(True)
 		ent_name.set_halign(Gtk.Align.FILL)
 		ent_name.set_placeholder_text(_('New Playlist Name...'))
+
 		btn_create = Gtk.Button.new_with_label(_('Create'))
 		btn_create.connect('clicked', lambda b: self._on_create(ent_name))
-		box_footer = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
-		box_footer.set_spacing(5)
-		box_footer.set_margin_bottom(5)
-		box_footer.set_margin_top(5)
-		box_footer.set_margin_end(5)
-		box_footer.set_margin_start(5)
-		box_footer.append(ent_name)
-		box_footer.append(btn_create)
+
+		box_create = Gtk.Box()
+		box_create.set_spacing(5)
+		box_create.set_hexpand(True)
+		box_create.append(ent_name)
+		box_create.append(btn_create)
+
+		clamp_create = Adw.Clamp()
+		clamp_create.set_maximum_size(576)
+		clamp_create.set_hexpand(True)
+		clamp_create.set_child(box_create)
+
+		bar_name = Gtk.ActionBar()
+		bar_name.set_center_widget(clamp_create)
+
+		page_list = Adw.PreferencesPage()
+		page_list.set_vexpand(True)
+		page_list.add(grp_queue)
+		page_list.add(self.grp_list)
 
 		box_main = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
 		box_main.append(headerbar)
-		box_main.append(scr_list)
-		box_main.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
-		box_main.append(box_footer)
+		box_main.append(page_list)
+		box_main.append(bar_name)
 
 		self.set_content(box_main)
 		self.update_groups()
 
 	def update_groups(self):
-		while child := self.box_list.get_first_child():
-			self.box_list.remove(child)
+		for child in self.playlists:
+			self.grp_list.remove(child)
 
-		chk_queue = Gtk.CheckButton.new_with_label(_('Queue'))
+		self.playlists.clear()
+
 		for queue_song in self.player.queue:
 			if queue_song['id'] == self.song['id']:
-				chk_queue.set_active(True)
-				chk_queue.set_sensitive(False)
-		chk_queue.connect('toggled', self._on_add_to_queue_toggled)
-		self.box_list.append(chk_queue)
-		self.box_list.append(Gtk.Separator.new(Gtk.Orientation.HORIZONTAL))
+				self.chk_queue.set_active(True)
+				self.chk_queue.set_sensitive(False)
+				self.row_queue.set_sensitive(False)
+			else:
+				self.chk_queue.set_active(False)
+				self.chk_queue.set_sensitive(True)
+				self.row_queue.set_sensitive(True)
+
 		for playlist, contents in monophony.backend.playlists.read_playlists().items():
 			chk_list = Gtk.CheckButton.new()
-			lbl_list = Gtk.Label.new(playlist)
-			lbl_list.set_ellipsize(Pango.EllipsizeMode.END)
-			chk_list.set_child(lbl_list)
-			self.box_list.append(chk_list)
+			row_list = Adw.ActionRow()
+			row_list.add_suffix(chk_list)
+			row_list.set_title(playlist)
+			row_list.set_property('activatable-widget', chk_list)
+			self.grp_list.add(row_list)
+			self.playlists.append(row_list)
 
 			for check_song in contents:
 				if check_song['id'] == self.song['id']:
 					chk_list.set_active(True)
 					chk_list.set_sensitive(False)
+					row_list.set_sensitive(False)
 					break
 
 			chk_list.connect('toggled', self._on_add_to_playlist_toggled)
@@ -96,7 +118,7 @@ class MonophonyAddWindow(Adw.Window):
 		self.add_to_queue = btn.get_active()
 
 	def _on_add_to_playlist_toggled(self, btn: Gtk.CheckButton):
-		toggled_list = btn.get_child().get_label()
+		toggled_list = btn.get_parent().get_parent().get_parent().get_title()
 		if btn.get_active():
 			self.add_to_playlists.append(toggled_list)
 		else:
@@ -114,6 +136,7 @@ class MonophonyAddWindow(Adw.Window):
 	def _on_create(self, ent: Gtk.Entry):
 		text = ent.get_text()
 		ent.set_text('')
+
 		if text.strip():
 			monophony.backend.playlists.add_playlist(text)
 			self.update_groups()
