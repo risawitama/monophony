@@ -6,3 +6,5 @@ extend-select = ['ARG', 'Q']
 
 [tool.ruff.flake8-quotes]
 inline-quotes = 'single'
+docstring-quotes = 'single'
+multiline-quotes = 'single'
