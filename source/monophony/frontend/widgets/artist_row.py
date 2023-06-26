@@ -16,14 +16,16 @@ class MonophonyArtistRow(Adw.ActionRow):
 		btn_view.set_valign(Gtk.Align.CENTER)
 		btn_view.set_has_frame(False)
 		btn_view.connect(
-			'clicked', lambda b, p: p.show_artist(self.artist['id']), page
+			'clicked', lambda _b, p: p.show_artist(self.artist['id']), page
 		)
 		self.add_suffix(btn_view)
 		self.set_tooltip_text(_('View Artist'))
 		self.set_property('activatable', True)
-		self.connect('activated', lambda b, p: p.show_artist(self.artist['id']), page)
+		self.connect(
+			'activated', lambda _b, p: p.show_artist(self.artist['id']), page
+		)
 
 		self.set_title(GLib.markup_escape_text(
-			artist['author'] if 'author' in artist and artist['author'] else '________',
+			artist['author'] if 'author' in artist and artist['author'] else '_',
 			-1
 		))

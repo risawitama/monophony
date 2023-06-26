@@ -7,15 +7,12 @@ def is_song_being_cached(video_id: str) -> bool:
 	music_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_MUSIC)
 	if music_dir:
 		has_temp = False
-		has_part = False
 		has_result = False
 		for file in os.listdir(music_dir + '/monophony/'):
 			parts = file.split('.')
 			if parts[0] == video_id:
 				if parts[-1] == 'monophony':
 					has_temp = True
-				elif parts[-1] == 'part':
-					has_part = True
 				elif parts[-1] == video_id:
 					has_result = True
 
@@ -60,7 +57,7 @@ def cache_songs(ids: list):
 			open(f'{path}/{video_id}.monophony', 'w').close()
 
 	subprocess.Popen(
-		f'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata ' +
+		'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata ' +
 		f'-o "{path}/%(id)s.%(ext)s" https://music.youtube.com/watch?v=' +
 		(' https://music.youtube.com/watch?v='.join(needed_ids)),
 		shell = True,

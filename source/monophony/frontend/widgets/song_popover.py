@@ -15,12 +15,12 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 		window.install_action(
 			'move-song-up',
 			None,
-			lambda w, a, t: w._on_move_song(song, group, -1)
+			lambda w, *_: w._on_move_song(song, group, -1)
 		)
 		window.install_action(
 			'move-song-down',
 			None,
-			lambda w, a, t: w._on_move_song(song, group, 1)
+			lambda w, *_: w._on_move_song(song, group, 1)
 		)
 
 		if monophony.backend.cache.is_song_being_cached(song['id']):
@@ -30,14 +30,14 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 			window.install_action(
 				'uncache-song',
 				None,
-				lambda w, a, t: w._on_uncache_song(song)
+				lambda w, *_: w._on_uncache_song(song)
 			)
 		else:
 			menu.append(_('Download to Music Folder'), 'cache-song')
 			window.install_action(
 				'cache-song',
 				None,
-				lambda w, a, t: w._on_cache_song(song)
+				lambda w, *_: w._on_cache_song(song)
 			)
 
 		if group:
@@ -45,20 +45,20 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 			window.install_action(
 				'remove-song',
 				None,
-				lambda w, a, t: w._on_remove_song(song['id'], group['title'])
+				lambda w, *_: w._on_remove_song(song['id'], group['title'])
 			)
 
 		menu.append(_('Add to...'), 'add-song-to')
 		window.install_action(
 			'add-song-to',
 			None,
-			lambda w, a, t: w._on_add_clicked(song)
+			lambda w, *_: w._on_add_clicked(song)
 		)
 		menu.append(_('Show Artist'), 'show-artist')
 		window.install_action(
 			'show-artist',
 			None,
-			lambda w, a, t: w._on_show_artist(song['author_id'])
+			lambda w, *_: w._on_show_artist(song['author_id'])
 		)
 		self.set_menu_model(menu)
 		btn.set_popover(self)

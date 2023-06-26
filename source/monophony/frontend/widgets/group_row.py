@@ -80,25 +80,25 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		window.install_action(
 			'delete-playlist',
 			None,
-			lambda w, a, t: w._on_delete_playlist(self)
+			lambda w, *_: w._on_delete_playlist(self)
 		)
 		mnu_actions.append(_('Download to Music Folder'), 'cache-playlist')
 		window.install_action(
 			'cache-playlist',
 			None,
-			lambda w, a, t: w._on_cache_playlist(self.group['contents'])
+			lambda w, *_: w._on_cache_playlist(self.group['contents'])
 		)
 		mnu_actions.append(_('Duplicate'), 'duplicate-playlist')
 		window.install_action(
 			'duplicate-playlist',
 			None,
-			lambda w, a, t: w._on_duplicate_playlist(self)
+			lambda w, *_: w._on_duplicate_playlist(self)
 		)
 		mnu_actions.append(_('Rename...'), 'rename-playlist')
 		window.install_action(
 			'rename-playlist',
 			None,
-			lambda w, a, t: w._on_rename_playlist(self)
+			lambda w, *_: w._on_rename_playlist(self)
 		)
 		btn.set_menu_model(mnu_actions)
 

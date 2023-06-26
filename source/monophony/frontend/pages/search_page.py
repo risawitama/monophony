@@ -154,7 +154,7 @@ class MonophonySearchPage(Gtk.Box):
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
-						lambda b, f: self.show_more(f),
+						lambda _b, f: self.show_more(f),
 						'songs'
 					)
 					box_songs.set_header_suffix(btn_more)
@@ -162,7 +162,7 @@ class MonophonySearchPage(Gtk.Box):
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
-						lambda b, f: self.show_more(f),
+						lambda _b, f: self.show_more(f),
 						'albums'
 					)
 					box_albums.set_header_suffix(btn_more)
@@ -171,7 +171,7 @@ class MonophonySearchPage(Gtk.Box):
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
-						lambda b, f: self.show_more(f),
+						lambda _b, f: self.show_more(f),
 						'playlists'
 					)
 					box_playlists.set_header_suffix(btn_more)
@@ -179,7 +179,7 @@ class MonophonySearchPage(Gtk.Box):
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
-						lambda b, f: self.show_more(f),
+						lambda _b, f: self.show_more(f),
 						'videos'
 					)
 					box_videos.set_header_suffix(btn_more)
@@ -187,7 +187,7 @@ class MonophonySearchPage(Gtk.Box):
 					btn_more = Gtk.Button.new_with_label(_('More'))
 					btn_more.connect(
 						'clicked',
-						lambda b, f: self.show_more(f),
+						lambda _b, f: self.show_more(f),
 						'artists'
 					)
 					box_artists.set_header_suffix(btn_more)

@@ -3,7 +3,7 @@ import monophony.backend.playlists
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk, Pango
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyAddWindow(Adw.Window):
@@ -23,7 +23,7 @@ class MonophonyAddWindow(Adw.Window):
 		self.set_modal(True)
 
 		btn_cancel = Gtk.Button.new_with_label(_('Cancel'))
-		btn_cancel.connect('clicked', lambda b: self.destroy())
+		btn_cancel.connect('clicked', lambda _b: self.destroy())
 		btn_add = Gtk.Button.new_with_label(_('Add'))
 		btn_add.add_css_class('suggested-action')
 		btn_add.connect('clicked', self._on_submit)
@@ -51,7 +51,7 @@ class MonophonyAddWindow(Adw.Window):
 		ent_name.set_placeholder_text(_('New Playlist Name...'))
 
 		btn_create = Gtk.Button.new_with_label(_('Create'))
-		btn_create.connect('clicked', lambda b: self._on_create(ent_name))
+		btn_create.connect('clicked', lambda _b: self._on_create(ent_name))
 
 		box_create = Gtk.Box()
 		box_create.set_spacing(5)

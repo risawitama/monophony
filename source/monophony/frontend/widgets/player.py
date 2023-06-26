@@ -184,19 +184,19 @@ class MonophonyPlayer(Gtk.Box):
 			self.window.install_action(
 				'add-song-to',
 				None,
-				lambda w, a, t: w._on_add_clicked(current_song)
+				lambda w, *_: w._on_add_clicked(current_song)
 			)
 			sec_actions.append(_('Remove From Queue'), 'unqueue-song')
 			self.install_action(
 				'unqueue-song',
 				None,
-				lambda p, a, t: p._on_unqueue_clicked()
+				lambda p, *_: p._on_unqueue_clicked()
 			)
 			sec_actions.append(_('Show Artist'), 'show-artist')
 			self.install_action(
 				'show-artist',
 				None,
-				lambda p, a, t: p._on_show_artist_clicked()
+				lambda p, *_: p._on_show_artist_clicked()
 			)
 			mnu_more.append_section(None, sec_actions)
 		sec_settings = Gio.Menu()
@@ -300,9 +300,13 @@ class MonophonyPlayer(Gtk.Box):
 		self.box_sng_info.set_visible(not self.player.is_busy())
 		self.player.update_volume()
 
-		settings_volume = round(float(monophony.backend.settings.get_value('volume', 1)), 4)
-		if settings_volume != round(self.scl_volume.get_value(), 4) and not self.player.get_mute():
-			self.scl_volume.set_value(settings_volume)
+		saved_volume = round(
+			float(monophony.backend.settings.get_value('volume', 1)),
+			4
+		)
+		round_voume = round(self.scl_volume.get_value(), 4)
+		if saved_volume != round_voume and not self.player.get_mute():
+			self.scl_volume.set_value(saved_volume)
 
 		if not self.player.is_busy():
 			self.scl_progress.set_value(self.player.get_progress())

@@ -13,7 +13,7 @@ class MonophonyRenameWindow(Adw.MessageDialog):
 		entry = Gtk.Entry.new()
 		entry.set_text(name)
 		entry.set_placeholder_text(_('Enter new Name...'))
-		entry.connect('activate', lambda e: self.response('ok'))
+		entry.connect('activate', lambda _e: self.response('ok'))
 
 		self.add_response('cancel', _('Cancel'))
 		self.add_response('ok', _('Rename'))
