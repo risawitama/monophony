@@ -10,15 +10,18 @@ def _parse_results(data: list) -> list:
 		return []
 
 	results = []
-	expected_types = {'album', 'song', 'video', 'playlist', 'artist'}
+	expected_types = {'album', 'song', 'video', 'playlist', 'artist', 'single'}
 	for result in data:
 		if 'resultType' not in result or result['resultType'] not in expected_types:
 			continue
 
-		item = {
-			'type': result['resultType'],
-			'top': (result['category'] == 'Top result') if 'category' in result else False
-		}
+		if result['resultType'] == 'single':
+			result['resultType'] = 'album'
+
+		item = {'type': result['resultType'], 'top': False}
+		if 'category' in result:
+			item['top'] = (result['category'] == 'Top result')
+
 		if result['resultType'] == 'artist':
 			try:
 				if result['category'] == 'Top result':
