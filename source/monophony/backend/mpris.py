@@ -82,11 +82,20 @@ class Adapter(MprisAdapter):
 	def get_art_url(self, _track):
 		return ''
 
+	def get_volume(self):
+		return self.monophony_player.get_volume()
+
+	def set_volume(self, val: float):
+		self.monophony_player.set_volume(val, False)
+
 	def get_stream_title(self):
 		return ''
 
 	def is_mute(self) -> bool:
-		return False
+		return self.monophony_player.get_mute()
+
+	def set_mute(self, val: bool):
+		self.monophony_player.set_mute(val)
 
 	def can_go_next(self) -> bool:
 		return True

@@ -7,7 +7,8 @@ import monophony.backend.yt
 
 import gi
 gi.require_version('Gst', '1.0')
-from gi.repository import GLib, Gst
+gi.require_version('GstAudio', '1.0')
+from gi.repository import GLib, Gst, GstAudio
 
 
 class PlaybackMode:
@@ -30,7 +31,9 @@ class Player:
 		self.mpris_server = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
-		self.playbin.set_property('volume', 1)
+		self.playbin.set_property(
+			'volume', float(monophony.backend.settings.get_value('volume', 1))
+		)
 		self.playbin.set_property('mute', False)
 
 	### --- UTILITY METHODS --- ###
@@ -65,6 +68,37 @@ class Player:
 		duration = self.playbin.query_duration(Gst.Format.TIME)[1]
 		position = self.playbin.query_position(Gst.Format.TIME)[1]
 		return (position / duration) if duration > 0 else 0.0
+
+	def set_volume(self, volume_cubic: float, notify_mpris: bool):
+		monophony.backend.settings.set_value('volume', volume_cubic)
+		volume_linear = self.playbin.convert_volume(
+			GstAudio.StreamVolumeFormat.CUBIC,
+			GstAudio.StreamVolumeFormat.LINEAR,
+			volume_cubic
+		)
+		if notify_mpris:
+			self.mpris_adapter.on_volume()
+		self.playbin.set_property('volume', volume_linear)
+
+	def get_volume(self) -> float:
+		return float(monophony.backend.settings.get_value('volume', 1))
+
+	def update_volume(self):
+		volume_linear = self.playbin.get_property('volume')
+		volume_cubic = self.playbin.convert_volume(
+			GstAudio.StreamVolumeFormat.LINEAR,
+			GstAudio.StreamVolumeFormat.CUBIC,
+			volume_linear
+		)
+		if float(monophony.backend.settings.get_value('volume', 1)) != volume_cubic:
+			self.set_volume(volume_cubic, True)
+
+	def set_mute(self, value: bool):
+		monophony.backend.settings.set_value('mute', int(value))
+		self.playbin.set_property('mute', value)
+
+	def get_mute(self) -> bool:
+		return bool(int(monophony.backend.settings.get_value('mute', 0)))
 
 	### --- EVENT HANDLERS --- ###
 
@@ -108,6 +142,8 @@ class Player:
 			self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
+		self.set_volume(self.get_volume(), True)
+		self.set_mute(self.get_mute())
 		return True
 
 	def play_radio_song(self):
