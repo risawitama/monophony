@@ -7,7 +7,6 @@ from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
 from monophony.frontend.pages.search_page import MonophonySearchPage
 from monophony.frontend.widgets.player import MonophonyPlayer
-from monophony.frontend.windows.delete_window import MonophonyDeleteWindow
 from monophony.frontend.windows.rename_window import MonophonyRenameWindow
 from monophony.frontend.windows.message_window import MonophonyMessageWindow
 from monophony.frontend.windows.add_window import MonophonyAddWindow
@@ -28,6 +27,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.set_title('Monophony')
 		self.set_icon_name(APP_ID)
 		self.player = monophony.backend.player.Player()
+		self.removed_playlists = []
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
 		self.stack = Adw.Leaflet()
@@ -86,6 +86,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		)
 		self.install_action(
 			'focus-search', None, (lambda w, *_: w.ent_search.grab_focus())
+		)
+		self.install_action(
+			'playlist-delete-undo', None, (lambda w, *_: w._on_undo_deletion())
 		)
 		self.get_application().set_accels_for_action('quit-app', ['<Control>w', '<Control>q'])
 		self.get_application().set_accels_for_action('focus-search', ['<Control>f'])
@@ -163,7 +166,22 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		)
 
 	def _on_delete_playlist(self, widget: object):
-		MonophonyDeleteWindow(self, widget.group['title']).present()
+		self.removed_playlists.insert(0, widget.group)
+		toast_undo = Adw.Toast.new(
+			_('Deleted "{playlist_name}"').format(playlist_name=widget.group['title'])
+		)
+		toast_undo.set_button_label(_('Undo'))
+		toast_undo.set_action_name('playlist-delete-undo')
+		toast_undo.connect('dismissed', self._on_toast_dismissed)
+		self.toaster.add_toast(toast_undo)
+		monophony.backend.playlists.remove_playlist(widget.group['title'])
+
+	def _on_toast_dismissed(self, _toast: object):
+		self.removed_playlists.pop()
+
+	def _on_undo_deletion(self):
+		playlist = self.removed_playlists[len(self.removed_playlists) - 1]
+		monophony.backend.playlists.add_playlist(playlist['title'], playlist['contents'])
 
 	def _on_duplicate_playlist(self, widget: object):
 		monophony.backend.playlists.add_playlist(
