@@ -31,10 +31,8 @@ class Player:
 		self.mpris_server = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
-		self.playbin.set_property(
-			'volume', float(monophony.backend.settings.get_value('volume', 1))
-		)
-		self.playbin.set_property('mute', False)
+		self.set_mute(False)
+		self.set_volume(self.get_volume(), False)
 
 	### --- UTILITY METHODS --- ###
 	def terminate(self):
