@@ -1,6 +1,6 @@
 import traceback, random, subprocess
 
-import requests, ytmusicapi
+import ytmusicapi
 
 
 def _parse_results(data: list) -> list:
@@ -99,7 +99,7 @@ def _parse_results(data: list) -> list:
 
 def is_available() -> bool:
 	try:
-		requests.head('https://music.youtube.com')
+		ytmusicapi.YTMusic()
 		return True
 	except:
 		return False
