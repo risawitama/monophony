@@ -9,7 +9,7 @@ from gi.repository import Adw, Gdk, GLib, GObject, Gtk
 
 
 class MonophonySongRow(Adw.ActionRow, GObject.Object):
-	def __init__(self, song: dict, player: object, group: dict = None, editable = False):
+	def __init__(self, song: dict, player: object, group: dict=None, editable=False):
 		super().__init__()
 
 		self.player = player
