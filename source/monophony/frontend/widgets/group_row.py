@@ -1,4 +1,5 @@
 import monophony.backend.playlists
+from monophony.frontend.windows.message_window import MonophonyMessageWindow
 from monophony.frontend.widgets.song_row import MonophonySongRow
 
 import gi
@@ -37,14 +38,14 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		self.add_prefix(btn_play)
 
 		if self.editable:
-			btn_more = Gtk.MenuButton()
-			btn_more.set_tooltip_text(_('More actions'))
-			btn_more.set_icon_name('view-more-symbolic')
-			btn_more.set_has_frame(False)
-			btn_more.set_vexpand(False)
-			btn_more.set_valign(Gtk.Align.CENTER)
-			btn_more.set_create_popup_func(self._on_show_actions)
-			self.add_action(btn_more)
+			self.btn_more = Gtk.MenuButton()
+			self.btn_more.set_tooltip_text(_('More actions'))
+			self.btn_more.set_icon_name('view-more-symbolic')
+			self.btn_more.set_has_frame(False)
+			self.btn_more.set_vexpand(False)
+			self.btn_more.set_valign(Gtk.Align.CENTER)
+			self.btn_more.set_create_popup_func(self._on_show_actions)
+			self.add_action(self.btn_more)
 
 			GLib.timeout_add(100, self.update)
 		else:
@@ -94,13 +95,45 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			None,
 			lambda w, *_: w._on_duplicate_playlist(self)
 		)
-		mnu_actions.append(_('Rename...'), 'rename-playlist')
-		window.install_action(
-			'rename-playlist',
-			None,
-			lambda w, *_: w._on_rename_playlist(self)
+		mnu_rename = Gio.Menu()
+		ent_name = Gtk.Entry.new()
+		ent_name.set_text(self.group['title'])
+		ent_name.connect('activate', lambda e: self._on_rename(e.get_text()))
+		btn_rename = Gtk.Button.new_with_label(_('Rename'))
+		btn_rename.add_css_class('suggested-action')
+		btn_rename.connect('clicked', lambda _b: self._on_rename(ent_name.get_text()))
+		box_rename = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+		box_rename.set_spacing(5)
+		box_rename.set_margin_top(10)
+		box_rename.set_margin_bottom(5)
+		box_rename.set_margin_start(5)
+		box_rename.set_margin_end(5)
+		box_rename.append(ent_name)
+		box_rename.append(btn_rename)
+		itm_rename = Gio.MenuItem()
+		itm_rename.set_attribute_value('custom',  GLib.Variant.new_string('rename'))
+		mnu_rename.append_item(itm_rename)
+		mnu_actions.append_submenu(_('Rename...'), mnu_rename)
+
+		pop_menu = Gtk.PopoverMenu()
+		pop_menu.set_menu_model(mnu_actions)
+		pop_menu.add_child(box_rename, 'rename')
+		btn.set_popover(pop_menu)
+
+	def _on_rename(self, name: str):
+		success = monophony.backend.playlists.rename_playlist(
+			self.group['title'], name
 		)
-		btn.set_menu_model(mnu_actions)
+		self.btn_more.popdown()
+		if success:
+			self.group['title'] = name
+			self.set_title(name)
+		else:
+			MonophonyMessageWindow(
+				self.get_ancestor(Gtk.Window),
+				_('Could not Rename'),
+				_('Playlist already exists')
+			).present()
 
 	def update(self) -> bool:
 		self.set_enable_expansion(self.song_widgets != [])
