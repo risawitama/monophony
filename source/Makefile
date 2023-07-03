@@ -6,7 +6,15 @@ UNINSTALL = rm -rf
 
 
 build:
-	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin
+	python3 -m nuitka bin/monophony.py \
+	--show-progress \
+	--remove-output \
+	--clean-cache=all \
+	--follow-import-to=monophony \
+	--follow-import-to=ytmusicapi \
+	--follow-import-to=mpris_server \
+	--follow-import-to=gi \
+	-o monophony.bin
 
 
 install:
