@@ -30,6 +30,16 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="1.10.0" date="2023-07-04">
+      <description>
+        <ul>
+          <li>Added in-app volume control</li>
+          <li>Various interface changes</li>
+          <li>Improved performance</li>
+          <li>Fixed singles not appearing on artist pages</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.9.0" date="2023-06-16">
       <description>
         <ul>
