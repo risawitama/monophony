@@ -163,10 +163,11 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		)
 
 	def _on_delete_playlist(self, widget: object):
-		self.removed_playlists.insert(0, widget.group)
+		self.removed_playlists.append(widget.group)
 		toast_undo = Adw.Toast.new(
 			_('Deleted "{playlist_name}"').format(playlist_name=widget.group['title'])
 		)
+		toast_undo.set_priority(Adw.ToastPriority.HIGH)
 		toast_undo.set_button_label(_('Undo'))
 		toast_undo.set_action_name('playlist-delete-undo')
 		toast_undo.connect('dismissed', self._on_toast_dismissed)
