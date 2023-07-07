@@ -11,7 +11,6 @@ build:
 	--remove-output \
 	--clean-cache=all \
 	--follow-import-to=monophony \
-	--follow-import-to=ytmusicapi \
 	--follow-import-to=mpris_server \
 	--follow-import-to=gi \
 	-o monophony.bin
