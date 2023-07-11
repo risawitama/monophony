@@ -160,6 +160,9 @@ class Player:
 			self.play_song(song)
 
 	def toggle_pause(self):
+		if not self.lock.trylock():
+			return
+
 		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
 
 		if state == Gst.State.PLAYING:
@@ -168,6 +171,7 @@ class Player:
 			self.playbin.set_state(Gst.State.PLAYING)
 
 		self.mpris_adapter.on_playpause()
+		self.lock.unlock()
 
 	def next_song(self, ignore_loop: bool = False):
 		if not self.lock.trylock():
