@@ -22,15 +22,20 @@ class Player:
 	def __init__(self):
 		Gst.init([])
 		self.lock = GLib.Mutex()
+		self.interrupt = False
 		self.index = 0
 		self.queue = []
 		self.recent_songs = []
+		self.last_progress = 0
 		self.mode = PlaybackMode.NORMAL
-		self.error = False
 		self.mpris_adapter = None
 		self.mpris_server = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
+		self.playbin.get_bus().add_signal_watch()
+		self.playbin.get_bus().connect('message::error', self._on_bus_error)
+		self.playbin.get_bus().connect('message::stream-start', self._on_song_start)
+		self.playbin.get_bus().connect('message::eos', self._on_song_end)
 		self.set_mute(False)
 		self.set_volume(self.get_volume(), False)
 
@@ -105,9 +110,29 @@ class Player:
 
 	### --- EVENT HANDLERS --- ###
 
-	def _on_bus_error(self, _, _err):
+	def _on_bus_error(self, _, err):
+		print('Playback error:', err.parse_error().gerror.message)
+		self.last_progress = self.playbin.query_position(Gst.Format.TIME)[1]
+		GLib.Thread.new(
+			None,
+			self.play_song,
+			self.queue[self.index],
+			True,
+			True
+		)
+
+	def _on_song_start(self, _bus, _msg):
 		self.lock.lock()
-		self.error = True
+
+		if self.last_progress >= 0:
+			print('Seeking to', self.last_progress)
+			self.playbin.seek_simple(
+				Gst.Format.TIME,
+				Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT | Gst.SeekFlags.ACCURATE,
+				self.last_progress
+			)
+
+		self.last_progress = 0
 		self.lock.unlock()
 
 	def _on_song_end(self, *_):
@@ -118,8 +143,16 @@ class Player:
 
 	### --- PLAYBACK CONTROLS --- ###
 
-	def play_song(self, song: dict) -> bool:
-		print('Playing', song['id'], 'in playback mode', self.mode)
+	def play_song(self, song: dict, lock: bool=False, resume: bool=False):
+		if lock:
+			self.lock.lock()
+
+		if not resume:
+			print('Playing', song['id'], 'in playback mode', self.mode)
+			self.last_progress = 0
+		else:
+			print('Resuming', song['id'], 'in playback mode', self.mode)
+
 		if len(self.recent_songs) > 1000:
 			self.recent_songs = []
 		self.recent_songs.append(song['id'])
@@ -128,18 +161,16 @@ class Player:
 
 		uri = monophony.backend.cache.get_song_uri(song['id'])
 		if not uri:
-			uri = monophony.backend.yt.get_song_uri(song['id'])
+			while True:
+				uri = monophony.backend.yt.get_song_uri(song['id'])
+				if uri is not None:
+					break
+				if self.interrupt:
+					if lock:
+						self.lock.unlock()
+					return
 
 		self.playbin.set_property('uri', uri)
-
-		if not uri:
-			return False
-
-		bus = self.playbin.get_bus()
-		bus.add_signal_watch()
-		bus.connect('message::error', self._on_bus_error)
-		bus.connect('message::eos', self._on_song_end)
-
 		self.playbin.set_state(Gst.State.PLAYING)
 		if not self.mpris_server._publication_token:
 			self.mpris_server.publish()
@@ -147,7 +178,9 @@ class Player:
 		self.mpris_adapter.on_playback()
 		self.set_volume(self.get_volume(), True)
 		self.set_mute(self.get_mute())
-		return True
+
+		if lock:
+			self.lock.unlock()
 
 	def play_radio_song(self):
 		id_queue = [s['id'] for s in self.queue]
@@ -169,7 +202,6 @@ class Player:
 			return
 
 		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
-
 		if state == Gst.State.PLAYING:
 			self.playbin.set_state(Gst.State.PAUSED)
 		else:
@@ -182,41 +214,35 @@ class Player:
 		if lock and not self.lock.trylock():
 			return
 
-		while True:
-			queue_length = len(self.queue)
-			song = None
-			if self.mode == PlaybackMode.LOOP and not ignore_loop:
-				song = self.queue[self.index]
-			elif self.mode == PlaybackMode.SHUFFLE and queue_length > 1:
-				for s in self.queue:
-					if s['id'] not in self.recent_songs:
-						break
-				else: # nobreak
-					self.recent_songs = []
-
-				song = random.choice([
-					s for s in self.queue if s['id'] not in self.recent_songs
-				])
-				self.index = self.queue.index(song)
-			elif queue_length - 1 > self.index :
-				self.index += 1
-				song = self.queue[self.index]
-
-			if song:
-				if self.play_song(song):
+		queue_length = len(self.queue)
+		song = None
+		if self.mode == PlaybackMode.LOOP and not ignore_loop:
+			song = self.queue[self.index]
+		elif self.mode == PlaybackMode.SHUFFLE and queue_length > 1:
+			for s in self.queue:
+				if s['id'] not in self.recent_songs:
 					break
-				continue
+			else: # nobreak
+				self.recent_songs = []
 
-			if self.mode == PlaybackMode.RADIO:
-				self.play_radio_song()
-			else:
-				self.playbin.set_state(Gst.State.NULL)
-				self.playbin.set_property('uri', '')
-				self.queue = []
-				self.index = 0
-				self.mpris_server.unpublish()
+			song = random.choice([
+				s for s in self.queue if s['id'] not in self.recent_songs
+			])
+			self.index = self.queue.index(song)
+		elif queue_length - 1 > self.index :
+			self.index += 1
+			song = self.queue[self.index]
 
-			break
+		if song:
+			self.play_song(song)
+		elif self.mode == PlaybackMode.RADIO:
+			self.play_radio_song()
+		else:
+			self.playbin.set_state(Gst.State.NULL)
+			self.playbin.set_property('uri', '')
+			self.queue = []
+			self.index = 0
+			self.mpris_server.unpublish()
 
 		if lock:
 			self.lock.unlock()
@@ -236,9 +262,11 @@ class Player:
 
 		self.lock.unlock()
 
-	def play_queue(self, queue: list, index: int, lock: bool=True):
-		if lock:
+	def play_queue(self, queue: list, index: int):
+		if not self.lock.trylock():
+			self.interrupt = True
 			self.lock.lock()
+			self.interrupt = False
 
 		if len(queue) == 0:
 			self.lock.unlock()
@@ -249,9 +277,7 @@ class Player:
 		self.index = index
 		song = queue[index]
 		self.play_song(song)
-
-		if lock:
-			self.lock.unlock()
+		self.lock.unlock()
 
 	def unqueue_song(self):
 		self.lock.lock()

@@ -105,12 +105,16 @@ def is_available() -> bool:
 		return False
 
 
-def get_song_uri(video_id: str) -> str:
-	out, _ = subprocess.Popen(
+def get_song_uri(video_id: str) -> str | None:
+	out, err = subprocess.Popen(
 		f'yt-dlp -g -x https://music.youtube.com/watch?v={video_id}',
-		shell = True,
-		stdout = subprocess.PIPE
+		shell=True,
+		stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE,
 	).communicate()
+	if err:
+		print(err.decode())
+		return None
 
 	return out.decode().split('\n')[0]
 
