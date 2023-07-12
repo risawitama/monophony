@@ -279,7 +279,7 @@ class MonophonyPlayer(Gtk.Box):
 			self.player.mode = monophony.backend.player.PlaybackMode.RADIO
 
 	def _on_unqueue_clicked(self):
-		self.player.unqueue_song()
+		GLib.Thread.new(None, self.player.unqueue_song)
 
 	def _on_show_artist_clicked(self):
 		song = self.player.get_current_song()

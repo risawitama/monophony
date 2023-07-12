@@ -53,14 +53,19 @@ class Player:
 		)[1] != Gst.State.PLAYING
 
 	def get_current_song(self) -> dict:
+		if not self.lock.trylock():
+			return {}
+
 		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
 		acceptable_states = {Gst.State.PAUSED, Gst.State.PLAYING}
+		result = {}
 
 		if len(self.queue) > self.index:
 			if state in acceptable_states:
-				return self.queue[self.index]
+				result = self.queue[self.index]
 
-		return {}
+		self.lock.unlock()
+		return result
 
 	def get_progress(self) -> float:
 		duration = self.playbin.query_duration(Gst.Format.TIME)[1]
@@ -173,8 +178,8 @@ class Player:
 		self.mpris_adapter.on_playpause()
 		self.lock.unlock()
 
-	def next_song(self, ignore_loop: bool = False):
-		if not self.lock.trylock():
+	def next_song(self, ignore_loop: bool=False, lock: bool=True):
+		if lock and not self.lock.trylock():
 			return
 
 		while True:
@@ -213,7 +218,8 @@ class Player:
 
 			break
 
-		self.lock.unlock()
+		if lock:
+			self.lock.unlock()
 
 	def previous_song(self):
 		if not self.lock.trylock():
@@ -230,8 +236,10 @@ class Player:
 
 		self.lock.unlock()
 
-	def play_queue(self, queue: list, index: int):
-		self.lock.lock()
+	def play_queue(self, queue: list, index: int, lock: bool=True):
+		if lock:
+			self.lock.lock()
+
 		if len(queue) == 0:
 			self.lock.unlock()
 			return
@@ -241,22 +249,25 @@ class Player:
 		self.index = index
 		song = queue[index]
 		self.play_song(song)
-		self.lock.unlock()
+
+		if lock:
+			self.lock.unlock()
 
 	def unqueue_song(self):
+		self.lock.lock()
 		if not self.queue:
+			self.lock.unlock()
 			return
 
 		self.queue.pop(self.index)
-		self.index = self.index - 1 if self.index else 0
-		if not self.queue:
-			self.next_song(True)
-			return
-
-		GLib.Thread.new(None, self.play_queue, self.queue, self.index)
+		self.index -= 1
+		self.next_song(True, lock=False)
+		self.lock.unlock()
 
 	def queue_song(self, song: dict):
-		self.lock.lock()
+		if not self.lock.trylock():
+			return
+
 		if not self.queue:
 			self.play_song(song)
 
@@ -264,11 +275,15 @@ class Player:
 		self.lock.unlock()
 
 	def seek(self, target: float):
-		duration = self.playbin.query_duration(Gst.Format.TIME)[1]
+		if not self.lock.trylock():
+			return
 
+		duration = self.playbin.query_duration(Gst.Format.TIME)[1]
 		if duration > 0:
 			self.playbin.seek_simple(
 				Gst.Format.TIME,
 				Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT,
 				round(duration * target)
 			)
+
+		self.lock.unlock()
