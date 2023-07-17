@@ -153,9 +153,8 @@ class Player:
 		else:
 			print('Resuming', song['id'], 'in playback mode', self.mode)
 
-		if len(self.recent_songs) > 1000:
-			self.recent_songs = []
-		self.recent_songs.append(song['id'])
+		if song['id'] not in self.recent_songs:
+			self.recent_songs.append(song['id'])
 		monophony.backend.history.add_song(song)
 		self.playbin.set_state(Gst.State.READY)
 
@@ -223,7 +222,8 @@ class Player:
 				if s['id'] not in self.recent_songs:
 					break
 			else: # nobreak
-				self.recent_songs = []
+				if self.recent_songs:
+					self.recent_songs = [self.recent_songs[-1]]
 
 			song = random.choice([
 				s for s in self.queue if s['id'] not in self.recent_songs
@@ -251,10 +251,15 @@ class Player:
 		if not self.lock.trylock():
 			return
 		self.playbin.set_state(Gst.State.READY)
-		self.index -= 1
 
-		if self.index < 0:
-			self.index = 0
+		self.index = max(self.index - 1, 0)
+		if len(self.recent_songs) > 1:
+			recent = self.recent_songs[-2]
+			for i, queue_song in enumerate(self.queue):
+				if queue_song['id'] == recent:
+					self.index = i
+					self.recent_songs.pop(-1)
+					break
 
 		if len(self.queue) > 0:
 			song = self.queue[self.index]
