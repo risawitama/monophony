@@ -27,6 +27,9 @@ def add_playlist(name: str, songs: dict = None):
 
 
 def rename_playlist(name: str, new_name: str) -> bool:
+	if name == new_name:
+		return True
+
 	new_lists = read_playlists()
 	if new_name not in new_lists:
 		new_lists[new_name] = new_lists.pop(name)
