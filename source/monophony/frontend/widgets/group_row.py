@@ -38,14 +38,14 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		self.add_prefix(btn_play)
 
 		if self.editable:
-			self.btn_more = Gtk.MenuButton()
-			self.btn_more.set_tooltip_text(_('More actions'))
-			self.btn_more.set_icon_name('view-more-symbolic')
-			self.btn_more.set_has_frame(False)
-			self.btn_more.set_vexpand(False)
-			self.btn_more.set_valign(Gtk.Align.CENTER)
-			self.btn_more.set_create_popup_func(self._on_show_actions)
-			self.add_action(self.btn_more)
+			btn_more = Gtk.MenuButton()
+			btn_more.set_tooltip_text(_('More actions'))
+			btn_more.set_icon_name('view-more-symbolic')
+			btn_more.set_has_frame(False)
+			btn_more.set_vexpand(False)
+			btn_more.set_valign(Gtk.Align.CENTER)
+			btn_more.set_create_popup_func(self._on_show_actions)
+			self.add_action(btn_more)
 
 			GLib.timeout_add(100, self.update)
 		else:
@@ -95,36 +95,46 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			None,
 			lambda w, *_: w._on_duplicate_playlist(self)
 		)
-		mnu_rename = Gio.Menu()
+		mnu_actions.append(_('Rename...'), 'rename-playlist')
+		window.install_action(
+			'rename-playlist',
+			None,
+			lambda *_: self._on_open_rename_menu(btn)
+		)
+		pop_menu = Gtk.PopoverMenu()
+		pop_menu.set_menu_model(mnu_actions)
+		btn.set_popover(pop_menu)
+
+	def _on_open_rename_menu(self, btn: Gtk.MenuButton):
+		pop_rename = Gtk.Popover.new()
 		ent_name = Gtk.Entry.new()
 		ent_name.set_text(self.group['title'])
-		ent_name.connect('activate', lambda e: self._on_rename(e.get_text()))
+		ent_name.connect(
+			'activate', lambda e: self._on_rename(e.get_text(), pop_rename)
+		)
 		btn_rename = Gtk.Button.new_with_label(_('Rename'))
 		btn_rename.add_css_class('suggested-action')
-		btn_rename.connect('clicked', lambda _b: self._on_rename(ent_name.get_text()))
+		btn_rename.connect(
+			'clicked', lambda _b: self._on_rename(ent_name.get_text(), pop_rename)
+		)
 		box_rename = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 		box_rename.set_spacing(5)
-		box_rename.set_margin_top(10)
+		box_rename.set_margin_top(5)
 		box_rename.set_margin_bottom(5)
 		box_rename.set_margin_start(5)
 		box_rename.set_margin_end(5)
 		box_rename.append(ent_name)
 		box_rename.append(btn_rename)
-		itm_rename = Gio.MenuItem()
-		itm_rename.set_attribute_value('custom',  GLib.Variant.new_string('rename'))
-		mnu_rename.append_item(itm_rename)
-		mnu_actions.append_submenu(_('Rename...'), mnu_rename)
+		pop_rename.set_child(box_rename)
+		pop_rename.set_parent(btn)
+		btn.popdown()
+		pop_rename.popup()
 
-		pop_menu = Gtk.PopoverMenu()
-		pop_menu.set_menu_model(mnu_actions)
-		pop_menu.add_child(box_rename, 'rename')
-		btn.set_popover(pop_menu)
-
-	def _on_rename(self, name: str):
+	def _on_rename(self, name: str, pop: Gtk.Popover):
+		pop.popdown()
 		success = monophony.backend.playlists.rename_playlist(
 			self.group['title'], name
 		)
-		self.btn_more.popdown()
 		if success:
 			self.group['title'] = name
 			self.set_title(name)
