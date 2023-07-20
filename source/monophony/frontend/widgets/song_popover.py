@@ -33,7 +33,7 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 				lambda w, *_: w._on_uncache_song(song)
 			)
 		else:
-			menu.append(_('Download to Music Folder'), 'cache-song')
+			menu.append(_('Download'), 'cache-song')
 			window.install_action(
 				'cache-song',
 				None,
