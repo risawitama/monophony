@@ -298,14 +298,12 @@ class MonophonyPlayer(Gtk.Box):
 
 	def update(self) -> True:
 		self.box_sng_info.set_visible(not self.player.is_busy())
-		self.player.update_volume()
 
-		saved_volume = round(
-			float(monophony.backend.settings.get_value('volume', 1)),
-			4
-		)
+		self.player.update_volume()
+		mute = self.player.get_mute()
+		saved_volume = round(self.player.get_volume(), 4)
 		round_voume = round(self.scl_volume.get_value(), 4)
-		if saved_volume != round_voume and not self.player.get_mute():
+		if saved_volume != round_voume and not mute:
 			self.scl_volume.set_value(saved_volume)
 
 		if not self.player.is_busy():

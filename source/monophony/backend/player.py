@@ -22,6 +22,7 @@ class Player:
 	def __init__(self):
 		Gst.init([])
 		self.lock = GLib.Mutex()
+		self.settings_lock = GLib.Mutex()
 		self.interrupt = False
 		self.index = 0
 		self.queue = []
@@ -78,18 +79,23 @@ class Player:
 		return (position / duration) if duration > 0 else 0.0
 
 	def set_volume(self, volume_cubic: float, notify_mpris: bool):
+		self.settings_lock.lock()
 		monophony.backend.settings.set_value('volume', volume_cubic)
 		volume_linear = self.playbin.convert_volume(
 			GstAudio.StreamVolumeFormat.CUBIC,
 			GstAudio.StreamVolumeFormat.LINEAR,
 			volume_cubic
 		)
+		self.playbin.set_property('volume', volume_linear)
+		self.settings_lock.unlock()
 		if notify_mpris:
 			self.mpris_adapter.on_volume()
-		self.playbin.set_property('volume', volume_linear)
 
 	def get_volume(self) -> float:
-		return float(monophony.backend.settings.get_value('volume', 1))
+		self.settings_lock.lock()
+		volume = float(monophony.backend.settings.get_value('volume', 1))
+		self.settings_lock.unlock()
+		return volume
 
 	def update_volume(self):
 		volume_linear = self.playbin.get_property('volume')
@@ -102,11 +108,16 @@ class Player:
 			self.set_volume(volume_cubic, True)
 
 	def set_mute(self, value: bool):
+		self.settings_lock.lock()
 		monophony.backend.settings.set_value('mute', int(value))
 		self.playbin.set_property('mute', value)
+		self.settings_lock.unlock()
 
 	def get_mute(self) -> bool:
-		return bool(int(monophony.backend.settings.get_value('mute', 0)))
+		self.settings_lock.lock()
+		mute = bool(int(monophony.backend.settings.get_value('mute', 0)))
+		self.settings_lock.unlock()
+		return mute
 
 	### --- EVENT HANDLERS --- ###
 
@@ -171,12 +182,12 @@ class Player:
 
 		self.playbin.set_property('uri', uri)
 		self.playbin.set_state(Gst.State.PLAYING)
-		if not self.mpris_server._publication_token:
-			self.mpris_server.publish()
+		self.mpris_server.unpublish()
+		self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
 		self.set_volume(self.get_volume(), True)
-		self.set_mute(self.get_mute())
+		self.playbin.set_property('mute', self.get_mute())
 
 		if lock:
 			self.lock.unlock()

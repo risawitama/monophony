@@ -37,7 +37,6 @@ class Adapter(MprisAdapter):
 
 	def resume(self):
 		self.monophony_player.toggle_pause()
-		pass
 
 	def stop(self):
 		pass
@@ -46,8 +45,6 @@ class Adapter(MprisAdapter):
 		pass
 
 	def get_playstate(self) -> PlayState:
-		if not self.monophony_player.get_current_song():
-			return PlayState.STOPPED
 		if self.monophony_player.is_paused():
 			return PlayState.PAUSED
 		return PlayState.PLAYING
