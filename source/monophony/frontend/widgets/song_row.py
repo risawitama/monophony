@@ -77,7 +77,6 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 			self.drp_target.connect('enter', self._on_dnd_enter)
 			self.add_controller(self.drp_target)
 			btn_more.set_create_popup_func(MonophonySongPopover, song, group)
-
 		else:
 			btn_more.set_create_popup_func(MonophonySongPopover, song, None)
 

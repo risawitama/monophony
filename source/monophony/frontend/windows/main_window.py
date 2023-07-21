@@ -5,7 +5,7 @@ import monophony.backend.playlists
 import monophony.backend.settings
 from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
-from monophony.frontend.pages.search_page import MonophonySearchPage
+from monophony.frontend.pages.results_page import MonophonyResultsPage
 from monophony.frontend.widgets.player import MonophonyPlayer
 from monophony.frontend.windows.add_window import MonophonyAddWindow
 
@@ -33,13 +33,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.stack.set_can_navigate_back(False)
 		self.stack.set_can_unfold(False)
 		pge_library = MonophonyLibraryPage(self.player)
-		lfp_library = self.stack.append(pge_library)
-		lfp_library.set_navigatable(True)
-		lfp_library.set_name('library')
-		self.pge_search = MonophonySearchPage(self.player)
-		lfp_search = self.stack.append(self.pge_search)
-		lfp_search.set_navigatable(True)
-		lfp_search.set_name('search')
+		self.stack.append(pge_library)
 		self.stack.set_visible_child(pge_library)
 
 		self.toaster = Adw.ToastOverlay.new()
@@ -94,25 +88,33 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.get_application().set_accels_for_action('focus-search', ['<Control>f'])
 		self.connect('close-request', MonophonyMainWindow._on_quit)
 
+	def append_page(self, widget: Gtk.Widget):
+		while child := self.stack.get_adjacent_child(Adw.NavigationDirection.FORWARD):
+			self.stack.remove(child)
+
+		self.stack.append(widget)
+		self.stack.navigate(Adw.NavigationDirection.FORWARD)
+		self.btn_back.set_visible(True)
+
 	def _on_quit(self):
 		size = self.get_default_size()
 		monophony.backend.settings.set_value('window-width', size.width)
 		monophony.backend.settings.set_value('window-height', size.height)
 
 	def _on_search(self, ent: Gtk.Entry):
-		self.stack.set_visible_child_name('search')
-		self.btn_back.set_visible(True)
-		self.pge_search._on_search(ent)
+		self.append_page(MonophonyResultsPage(self.player, ent.get_text()))
 
-	def _on_show_artist(self, artist_id: str):
-		self.stack.set_visible_child_name('search')
-		self.btn_back.set_visible(True)
-		self.pge_search.show_artist(artist_id)
+	def _on_show_more(self, query: str, category: str):
+		self.append_page(
+			MonophonyResultsPage(self.player, query=query, filter_=category)
+		)
+
+	def _on_show_artist(self, artist: str):
+		self.append_page(MonophonyResultsPage(self.player, artist=artist))
 
 	def _on_back_clicked(self, _b):
-		self.pge_search.go_back()
-		if not self.pge_search.results_pages:
-			self.stack.set_visible_child_name('library')
+		self.stack.navigate(Adw.NavigationDirection.BACK)
+		if not self.stack.get_adjacent_child(Adw.NavigationDirection.BACK):
 			self.btn_back.set_visible(False)
 			self.ent_search.set_text('')
 
