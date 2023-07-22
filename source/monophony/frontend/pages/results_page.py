@@ -95,7 +95,7 @@ class MonophonyResultsPage(Gtk.Box):
 			box_artists.set_title(_('Artists'))
 			window = self.get_ancestor(Gtk.Window)
 
-			if not self.filter:
+			if not self.filter and not self.artist:
 				btn_more = Gtk.Button.new_with_label(_('More'))
 				btn_more.connect(
 					'clicked',
