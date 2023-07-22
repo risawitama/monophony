@@ -1,7 +1,7 @@
 import monophony.backend.history
 import monophony.backend.playlists
-from monophony.frontend.widgets.group_row import MonophonyGroupRow
-from monophony.frontend.widgets.song_row import MonophonySongRow
+from monophony.frontend.rows.local_group_row import MonophonyLocalGroupRow
+from monophony.frontend.rows.song_row import MonophonySongRow
 
 import gi
 gi.require_version('Adw', '1')
@@ -78,10 +78,8 @@ class MonophonyLibraryPage(Gtk.Box):
 				if widget.get_title() == GLib.markup_escape_text(title, -1):
 					break
 			else: # nobreak
-				new_widget = MonophonyGroupRow(
-					{'title': title, 'contents': new_playlists[title]},
-					self.player,
-					True
+				new_widget = MonophonyLocalGroupRow(
+					{'title': title, 'contents': new_playlists[title]}, self.player
 				)
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)

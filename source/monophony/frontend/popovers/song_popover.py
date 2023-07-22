@@ -7,21 +7,11 @@ from gi.repository import Gio, Gtk
 
 
 class MonophonySongPopover(Gtk.PopoverMenu):
-	def __init__(self, btn: Gtk.MenuButton, song: dict, group: dict=None):
+	def __init__(self, btn: Gtk.MenuButton, song: dict):
 		super().__init__()
 
 		window = btn.get_ancestor(Gtk.Window)
 		menu = Gio.Menu()
-		window.install_action(
-			'move-song-up',
-			None,
-			lambda w, *_: w._on_move_song(song, group, -1)
-		)
-		window.install_action(
-			'move-song-down',
-			None,
-			lambda w, *_: w._on_move_song(song, group, 1)
-		)
 
 		if monophony.backend.cache.is_song_being_cached(song['id']):
 			pass
@@ -38,14 +28,6 @@ class MonophonySongPopover(Gtk.PopoverMenu):
 				'cache-song',
 				None,
 				lambda w, *_: w._on_cache_song(song)
-			)
-
-		if group:
-			menu.append(_('Remove From Playlist'), 'remove-song')
-			window.install_action(
-				'remove-song',
-				None,
-				lambda w, *_: w._on_remove_song(song['id'], group['title'])
 			)
 
 		menu.append(_('Add to...'), 'add-song-to')
