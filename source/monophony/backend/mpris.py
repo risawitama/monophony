@@ -126,7 +126,7 @@ class Adapter(MprisAdapter):
 
 
 def init(player: object):
-	mpris = Server('monophony', adapter = Adapter(player))
-	player.mpris_adapter = EventAdapter(root = mpris.root, player = mpris.player)
+	mpris = Server('monophony', adapter=Adapter(player))
+	player.mpris_adapter = EventAdapter(root=mpris.root, player=mpris.player)
 	player.mpris_server = mpris
 	player.mpris_server.loop()

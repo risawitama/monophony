@@ -9,7 +9,7 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 class MonophonyPlayer(Gtk.Box):
 	def __init__(self, window: Gtk.Window, player: object):
-		super().__init__(orientation = Gtk.Orientation.VERTICAL)
+		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 		volume = float(monophony.backend.settings.get_value('volume', 1))
 
 		self.window = window
@@ -23,7 +23,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.spn_loading.bind_property('visible', self.spn_loading, 'spinning', 0)
 		self.spn_loading.set_visible(False)
 
-		box_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		box_info.set_margin_start(16)
 		box_info.set_spacing(5)
 		box_info.set_margin_end(5)
@@ -39,14 +39,14 @@ class MonophonyPlayer(Gtk.Box):
 		self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
 		self.lnk_title.add_css_class('title-link')
 
-		self.lbl_author = Gtk.Label(label = '')
+		self.lbl_author = Gtk.Label(label='')
 		self.lbl_author.set_margin_top(2)
 		self.lbl_author.set_halign(Gtk.Align.START)
 		self.lbl_author.add_css_class('caption')
 		self.lbl_author.add_css_class('dim-label')
 		self.lbl_author.set_ellipsize(Pango.EllipsizeMode.END)
 
-		self.box_sng_info = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		self.box_sng_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_sng_info.append(self.lnk_title)
 		self.box_sng_info.append(self.lbl_author)
 		self.box_sng_info.bind_property(
@@ -99,7 +99,7 @@ class MonophonyPlayer(Gtk.Box):
 		btn_more.set_create_popup_func(self.build_menu_popup)
 		btn_more.set_has_frame(False)
 
-		box_controls = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_controls = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 		box_controls.set_spacing(2)
 		box_controls.set_valign(Gtk.Align.CENTER)
 		box_controls.set_halign(Gtk.Align.END)
@@ -110,7 +110,7 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.append(btn_next)
 		box_controls.append(btn_more)
 
-		box_meta = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL)
+		box_meta = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 		box_meta.set_margin_top(10)
 		box_meta.set_margin_bottom(10)
 		box_meta.set_margin_start(5)

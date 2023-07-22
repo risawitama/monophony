@@ -11,7 +11,7 @@ def main():
 	if os.getenv('container', '') == 'flatpak':
 		path = '/app/share/locale'
 
-	gettext.translation('monophony', path, fallback = True).install()
+	gettext.translation('monophony', path, fallback=True).install()
 	monophony.backend.cache.clean_up()
 	MonophonyApplication().run()
 

@@ -38,6 +38,7 @@ class Player:
 		self.playbin.get_bus().connect('message::eos', self._on_song_end)
 
 	### --- UTILITY METHODS --- ###
+
 	def terminate(self):
 		self.lock.lock()
 		self.playbin.set_state(Gst.State.NULL)
@@ -171,7 +172,7 @@ class Player:
 
 		song = None
 		for id_ in id_queue:
-			song = monophony.backend.yt.get_similar_song(id_, ignore = id_queue)
+			song = monophony.backend.yt.get_similar_song(id_, ignore=id_queue)
 			if song:
 				break
 

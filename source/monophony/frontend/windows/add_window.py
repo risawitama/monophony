@@ -72,7 +72,7 @@ class MonophonyAddWindow(Adw.Window):
 		page_list.add(grp_queue)
 		page_list.add(self.grp_list)
 
-		box_main = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_main = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		box_main.append(headerbar)
 		box_main.append(page_list)
 		box_main.append(bar_name)

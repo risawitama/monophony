@@ -7,7 +7,7 @@ def set_value(key: str, value):
 	write_settings(settings)
 
 
-def get_value(key: str, default = '') -> str:
+def get_value(key: str, default='') -> str:
 	return read_settings().get(key, default)
 
 

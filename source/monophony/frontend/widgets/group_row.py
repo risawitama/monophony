@@ -9,7 +9,7 @@ from gi.repository import Adw, Gio, GLib, Gtk
 
 
 class MonophonyGroupRow(Adw.ExpanderRow):
-	def __init__(self, group: dict, player: object, editable: bool = False):
+	def __init__(self, group: dict, player: object, editable: bool=False):
 		super().__init__()
 
 		self.player = player

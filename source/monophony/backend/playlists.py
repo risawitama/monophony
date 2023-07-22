@@ -13,7 +13,7 @@ import ytmusicapi
 ### --- PLAYLIST FUNCTIONS --- ###
 
 
-def add_playlist(name: str, songs: dict = None):
+def add_playlist(name: str, songs: dict=None):
 	new_lists = read_playlists()
 	name = get_unique_name(name)
 
@@ -45,7 +45,7 @@ def import_playlist(name: str, data: str) -> bool:
 
 	yt = ytmusicapi.YTMusic()
 	playlist_id = data.split('list=')[1].split('&')[0]
-	songs = yt.get_playlist(playlist_id, limit = None)['tracks']
+	songs = yt.get_playlist(playlist_id, limit=None)['tracks']
 
 	for song in songs:
 		if not song['videoId']:

@@ -119,11 +119,11 @@ def get_song_uri(video_id: str) -> str | None:
 	return out.decode().split('\n')[0]
 
 
-def get_similar_song(video_id: str, ignore: list = None) -> dict:
+def get_similar_song(video_id: str, ignore: list=None) -> dict:
 	ignore = ignore if ignore else []
 	try:
 		yt = ytmusicapi.YTMusic()
-		data = yt.get_watch_playlist(video_id, radio = True)['tracks']
+		data = yt.get_watch_playlist(video_id, radio=True)['tracks']
 	except:
 		return {}
 
@@ -216,11 +216,11 @@ def get_artist(browse_id: str) -> list:
 	return _parse_results(data)
 
 
-def search(query: str, filter_: str = '') -> list:
+def search(query: str, filter_: str='') -> list:
 	try:
 		yt = ytmusicapi.YTMusic()
 		if filter_:
-			data = yt.search(query, filter = filter_)
+			data = yt.search(query, filter=filter_)
 		else:
 			data = yt.search(query)
 	except:

@@ -11,7 +11,7 @@ from gi.repository import Adw, GLib, GObject, Gtk
 
 class MonophonyLibraryPage(Gtk.Box):
 	def __init__(self, player: object):
-		super().__init__(orientation = Gtk.Orientation.VERTICAL)
+		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
 		self.player = player
 		self.playlist_widgets = []

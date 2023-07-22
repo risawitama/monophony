@@ -11,7 +11,7 @@ from gi.repository import Adw, GLib, GObject, Gtk
 
 class MonophonyResultsPage(Gtk.Box):
 	def __init__(self, player: object, query: str='', artist: str='', filter_: str=''):
-		super().__init__(orientation = Gtk.Orientation.VERTICAL)
+		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
 		self.pge_status = Adw.StatusPage()
 		self.pge_status.set_vexpand(True)
@@ -31,7 +31,7 @@ class MonophonyResultsPage(Gtk.Box):
 		spn_loading.set_halign(Gtk.Align.CENTER)
 		spn_loading.set_valign(Gtk.Align.CENTER)
 		spn_loading.set_vexpand(True)
-		self.box_loading = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
 		self.box_loading.append(spn_loading)
 		self.box_loading.bind_property(

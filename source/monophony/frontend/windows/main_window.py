@@ -67,7 +67,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.player_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
 		self.player_revealer.set_child(MonophonyPlayer(self, self.player))
 
-		box_content = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+		box_content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		box_content.append(header_bar)
 		box_content.append(self.toaster)
 		box_content.append(self.player_revealer)
