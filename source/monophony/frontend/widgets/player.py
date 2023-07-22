@@ -10,9 +10,11 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 class MonophonyPlayer(Gtk.Box):
 	def __init__(self, window: Gtk.Window, player: object):
 		super().__init__(orientation = Gtk.Orientation.VERTICAL)
+		volume = float(monophony.backend.settings.get_value('volume', 1))
 
 		self.window = window
 		self.player = player
+		self.player.set_volume(volume, False)
 
 		self.spn_loading = Gtk.Spinner.new()
 		self.spn_loading.set_halign(Gtk.Align.START)
@@ -71,9 +73,7 @@ class MonophonyPlayer(Gtk.Box):
 		box_volume = popup_volume.get_child()
 		box_scl_volume = box_volume.get_first_child().get_next_sibling()
 		box_scl_volume.set_round_digits(-1)
-		self.scl_volume.set_value(
-			float(monophony.backend.settings.get_value('volume', 1))
-		)
+		self.scl_volume.set_value(volume)
 		self.scl_volume.connect('value-changed', self._on_volume_changed)
 
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
@@ -292,20 +292,10 @@ class MonophonyPlayer(Gtk.Box):
 
 	def _on_volume_changed(self, _scl, value):
 		self.player.set_volume(value, True)
-		if self.player.get_mute():
-			self.player.set_mute(False)
-			return
+		monophony.backend.settings.set_value('volume', value)
 
 	def update(self) -> True:
 		self.box_sng_info.set_visible(not self.player.is_busy())
-
-		self.player.update_volume()
-		mute = self.player.get_mute()
-		saved_volume = round(self.player.get_volume(), 4)
-		round_voume = round(self.scl_volume.get_value(), 4)
-		if saved_volume != round_voume and not mute:
-			self.scl_volume.set_value(saved_volume)
-
 		if not self.player.is_busy():
 			self.scl_progress.set_value(self.player.get_progress())
 

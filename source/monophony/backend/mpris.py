@@ -89,10 +89,10 @@ class Adapter(MprisAdapter):
 		return ''
 
 	def is_mute(self) -> bool:
-		return self.monophony_player.get_mute()
+		return False
 
-	def set_mute(self, val: bool):
-		self.monophony_player.set_mute(val)
+	def set_mute(self, _val: bool):
+		pass
 
 	def can_go_next(self) -> bool:
 		return True
