@@ -186,11 +186,11 @@ class MonophonyPlayer(Gtk.Box):
 				None,
 				lambda w, *_: w._on_add_clicked(current_song)
 			)
-			sec_actions.append(_('Remove From Queue'), 'unqueue-song')
-			self.install_action(
-				'unqueue-song',
+			sec_actions.append(_('Show Queue'), 'show-queue')
+			self.window.install_action(
+				'show-queue',
 				None,
-				lambda p, *_: p._on_unqueue_clicked()
+				lambda w, *_: w._on_show_queue()
 			)
 			sec_actions.append(_('Show Artist'), 'show-artist')
 			self.install_action(
@@ -278,17 +278,10 @@ class MonophonyPlayer(Gtk.Box):
 		if btn.get_active():
 			self.player.mode = monophony.backend.player.PlaybackMode.RADIO
 
-	def _on_unqueue_clicked(self):
-		GLib.Thread.new(None, self.player.unqueue_song)
-
 	def _on_show_artist_clicked(self):
 		song = self.player.get_current_song()
 		if song:
-			if 'author_id' in song:
-				id_ = song['author_id']
-			else:
-				id_ = monophony.backend.yt.get_song(song['id'])['author_id']
-			self.window._on_show_artist(id_)
+			self.window._on_show_artist(song['author_id'])
 
 	def _on_volume_changed(self, _scl, value):
 		self.player.set_volume(value, True)

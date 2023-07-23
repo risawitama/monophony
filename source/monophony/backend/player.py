@@ -269,15 +269,42 @@ class Player:
 		self.play_song(song)
 		self.lock.unlock()
 
-	def unqueue_song(self):
+	def unqueue_song(self, song_id: str):
 		self.lock.lock()
 		if not self.queue:
 			self.lock.unlock()
 			return
 
-		self.queue.pop(self.index)
-		self.index -= 1
-		self.next_song(True, lock=False)
+		for i, song in enumerate(self.queue):
+			if song['id'] == song_id:
+				old_index = self.index
+				self.queue.pop(i)
+				if old_index < i:
+					break
+				self.index -= 1
+				if old_index == i:
+					self.next_song(True, lock=False)
+				break
+
+		self.lock.unlock()
+
+	def move_song(self, from_i: int, to_i: int):
+		if not self.lock.trylock():
+			return
+
+		to_song = self.queue[to_i]
+		from_song = self.queue.pop(from_i)
+		self.queue.insert(self.queue.index(to_song), from_song)
+		if from_i == self.index:
+			if to_i > self.index:
+				self.index = to_i - 1
+			else:
+				self.index = to_i
+		elif from_i < self.index and to_i > self.index:
+			self.index -= 1
+		elif from_i > self.index and to_i <= self.index:
+			self.index += 1
+
 		self.lock.unlock()
 
 	def queue_song(self, song: dict):

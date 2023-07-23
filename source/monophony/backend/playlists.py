@@ -1,5 +1,7 @@
 import json, os
 
+import monophony.backend.yt
+
 import ytmusicapi
 
 
@@ -161,8 +163,24 @@ def read_playlists() -> dict:
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
 	) + '/monophony/playlists.json'
 
+	lists = {}
 	try:
 		with open(lists_path, 'r') as lists_file:
-			return json.load(lists_file)
+			lists = json.load(lists_file)
 	except OSError:
 		return {}
+
+	updated = False
+	for name, playlist in lists.items():
+		for i, song in enumerate(playlist):
+			if 'author_id' not in song:
+				print('Updating song', song['id'])
+				lists[name][i]['author_id'] = monophony.backend.yt.get_song(
+					song['id']
+				)['author_id']
+				updated = True
+
+	if updated:
+		write_playlists(lists)
+
+	return lists

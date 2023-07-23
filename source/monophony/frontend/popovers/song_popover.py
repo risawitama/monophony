@@ -9,7 +9,10 @@ from gi.repository import Gio, Gtk
 class MonophonySongPopover(Gtk.PopoverMenu):
 	def __init__(self, btn: Gtk.MenuButton, song: dict):
 		super().__init__()
+		if 'author_id' not in song:
+			print(song)
 
+		self.song = song
 		window = btn.get_ancestor(Gtk.Window)
 		menu = Gio.Menu()
 

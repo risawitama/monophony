@@ -34,7 +34,10 @@ class MonophonyAddWindow(Adw.Window):
 
 		grp_queue = Adw.PreferencesGroup()
 		self.chk_queue = Gtk.CheckButton()
+		self.chk_queue.set_active(False)
+		self.chk_queue.set_sensitive(True)
 		self.row_queue = Adw.ActionRow()
+		self.row_queue.set_sensitive(True)
 		self.row_queue.add_suffix(self.chk_queue)
 		self.row_queue.set_title(_('Queue'))
 		self.row_queue.set_property('activatable-widget', self.chk_queue)
@@ -86,15 +89,12 @@ class MonophonyAddWindow(Adw.Window):
 
 		self.playlists.clear()
 
-		for queue_song in self.player.queue:
+		for queue_song in self.player.queue.copy():
 			if queue_song['id'] == self.song['id']:
 				self.chk_queue.set_active(True)
 				self.chk_queue.set_sensitive(False)
 				self.row_queue.set_sensitive(False)
-			else:
-				self.chk_queue.set_active(False)
-				self.chk_queue.set_sensitive(True)
-				self.row_queue.set_sensitive(True)
+				break
 
 		for playlist, contents in monophony.backend.playlists.read_playlists().items():
 			chk_list = Gtk.CheckButton.new()

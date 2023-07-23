@@ -5,6 +5,7 @@ import monophony.backend.playlists
 import monophony.backend.settings
 from monophony import __version__, APP_ID
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
+from monophony.frontend.pages.queue_page import MonophonyQueuePage
 from monophony.frontend.pages.results_page import MonophonyResultsPage
 from monophony.frontend.widgets.player import MonophonyPlayer
 from monophony.frontend.windows.add_window import MonophonyAddWindow
@@ -111,6 +112,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 	def _on_show_artist(self, artist: str):
 		self.append_page(MonophonyResultsPage(self.player, artist=artist))
+
+	def _on_show_queue(self):
+		self.append_page(MonophonyQueuePage(self.player))
 
 	def _on_back_clicked(self, _b):
 		self.stack.navigate(Adw.NavigationDirection.BACK)
