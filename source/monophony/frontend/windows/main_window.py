@@ -13,7 +13,7 @@ from monophony.frontend.windows.add_window import MonophonyAddWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
@@ -45,10 +45,15 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.btn_back.set_visible(False)
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
-		btn_about = Gtk.Button.new_from_icon_name('help-about-symbolic')
-		btn_about.set_tooltip_text(_('About'))
-		btn_about.set_has_frame(False)
-		btn_about.connect('clicked', self._on_about_clicked)
+		mnu_main = Gio.Menu()
+		mnu_main.append(_('About Monophony'), 'about-app')
+		self.install_action(
+			'about-app', None, (lambda w, a, t: w._on_about_clicked())
+		)
+		btn_menu = Gtk.MenuButton()
+		btn_menu.set_primary(True)
+		btn_menu.set_icon_name('open-menu-symbolic')
+		btn_menu.set_menu_model(mnu_main)
 
 		self.ent_search = Gtk.SearchEntry()
 		self.ent_search.set_property('placeholder-text', _('Search for Content...'))
@@ -61,7 +66,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		header_bar = Adw.HeaderBar()
 		header_bar.pack_start(self.btn_back)
 		header_bar.set_title_widget(clm_search)
-		header_bar.pack_end(btn_about)
+		header_bar.pack_end(btn_menu)
 
 		self.player_revealer = Gtk.Revealer()
 		self.player_revealer.set_property('overflow', Gtk.Overflow.VISIBLE)
@@ -122,7 +127,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			self.btn_back.set_visible(False)
 			self.ent_search.set_text('')
 
-	def _on_about_clicked(self, _b):
+	def _on_about_clicked(self):
 		win_about = Adw.AboutWindow.new()
 		win_about.set_application_icon(APP_ID)
 		win_about.set_application_name('Monophony')
