@@ -174,8 +174,12 @@ def get_recommendations() -> dict:
 
 
 def get_song(id_: str) -> dict:
-	yt = ytmusicapi.YTMusic()
-	result = yt.get_song(id_)['videoDetails']
+	try:
+		yt = ytmusicapi.YTMusic()
+		result = yt.get_song(id_)['videoDetails']
+	except:
+		return {'id': id_, 'author': '', 'author_id': ''}
+
 	return {
 		'id': result['videoId'],
 		'author': result['author'],
