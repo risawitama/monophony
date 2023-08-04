@@ -188,8 +188,9 @@ def get_song(id_: str) -> dict:
 
 
 def get_artist(browse_id: str) -> list:
-	yt = ytmusicapi.YTMusic()
+	yt = None
 	try:
+		yt = ytmusicapi.YTMusic()
 		artist = yt.get_artist(browse_id)
 	except:
 		print('Could not get artist')
