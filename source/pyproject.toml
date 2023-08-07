@@ -2,7 +2,6 @@
 builtins = ['_']
 extend-ignore = ['E4', 'E74', 'E722']
 extend-select = ['ARG', 'Q']
-extend-exclude = ['.vscode-oss']
 #tab_size = 4
 
 [tool.ruff.flake8-quotes]
