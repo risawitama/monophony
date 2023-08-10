@@ -25,6 +25,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		btn_play.set_valign(Gtk.Align.CENTER)
 		btn_play.connect('clicked', self._on_play_clicked)
 		self.add_prefix(btn_play)
+		self.set_expanded(False)
 
 	def _on_play_clicked(self, _b):
 		if not self.group:

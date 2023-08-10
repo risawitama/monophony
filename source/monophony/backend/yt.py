@@ -38,6 +38,7 @@ def _parse_results(data: list) -> list:
 			try:
 				album = yt.get_album(result['browseId'])
 				item['author'] = result['artists'][0]['name']
+				item['id'] = result['browseId']
 				item['title'] = result['title']
 				item['contents'] = [
 					{
@@ -58,6 +59,7 @@ def _parse_results(data: list) -> list:
 			try:
 				album = yt.get_playlist(result['browseId'])
 				item['author'] = result['author']
+				item['id'] = result['browseId']
 				item['title'] = result['title']
 				item['contents'] = [
 					{

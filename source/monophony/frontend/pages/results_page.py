@@ -1,5 +1,5 @@
 import monophony.backend.yt
-from monophony.frontend.rows.external_group_row import MonophonyExternalGroupRow
+from monophony.frontend.rows.importable_group_row import MonophonyImportableGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
 from monophony.frontend.rows.artist_row import MonophonyArtistRow
 
@@ -156,18 +156,18 @@ class MonophonyResultsPage(Gtk.Box):
 						non_empty.append(box_videos)
 				elif item['type'] == 'album':
 					if item['top']:
-						box_top.add(MonophonyExternalGroupRow(item, self.player))
+						box_top.add(MonophonyImportableGroupRow(item, self.player))
 						non_empty.append(box_top)
 						continue
-					box_albums.add(MonophonyExternalGroupRow(item, self.player))
+					box_albums.add(MonophonyImportableGroupRow(item, self.player))
 					if box_albums not in non_empty:
 						non_empty.append(box_albums)
 				elif item['type'] == 'playlist':
 					if item['top']:
-						box_top.add(MonophonyExternalGroupRow(item, self.player))
+						box_top.add(MonophonyImportableGroupRow(item, self.player))
 						non_empty.append(box_top)
 						continue
-					box_playlists.add(MonophonyExternalGroupRow(item, self.player))
+					box_playlists.add(MonophonyImportableGroupRow(item, self.player))
 					if box_playlists not in non_empty:
 						non_empty.append(box_playlists)
 				elif item['type'] == 'artist':
