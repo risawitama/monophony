@@ -70,7 +70,7 @@ class MonophonyLibraryPage(Gtk.Box):
 		for _title, content in monophony.backend.playlists.read_playlists().items():
 			all_songs.extend(content)
 		for playlist in monophony.backend.playlists.read_external_playlists():
-			all_songs.extend(playlist['content'])
+			all_songs.extend(playlist['contents'])
 
 		GLib.Thread.new(None, self.player.play_queue, all_songs, 0)
 
