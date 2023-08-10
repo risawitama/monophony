@@ -27,10 +27,6 @@ class MonophonyQueuePage(Gtk.Box):
 		GLib.timeout_add(100, self.update)
 
 	def update(self) -> True:
-		# player could be adding to queue at this moment
-		if self.player.is_busy():
-			return True
-
 		new_queue = self.player.queue.copy()
 		new_index = self.player.index
 		if new_queue != self.old_queue or new_index != self.old_index:

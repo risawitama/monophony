@@ -4,7 +4,7 @@ import monophony.backend.yt
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -16,20 +16,12 @@ class MonophonyPlayer(Gtk.Box):
 		self.player = player
 		self.player.set_volume(volume, False)
 
-		self.spn_loading = Gtk.Spinner.new()
-		self.spn_loading.set_halign(Gtk.Align.START)
-		self.spn_loading.set_margin_start(10)
-		self.spn_loading.set_margin_end(10)
-		self.spn_loading.bind_property('visible', self.spn_loading, 'spinning', 0)
-		self.spn_loading.set_visible(False)
-
 		box_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		box_info.set_margin_start(16)
 		box_info.set_spacing(5)
 		box_info.set_margin_end(5)
 		box_info.set_halign(Gtk.Align.START)
 		box_info.set_valign(Gtk.Align.CENTER)
-		box_info.append(self.spn_loading)
 
 		self.lnk_title = Gtk.LinkButton.new_with_label('', '')
 		self.lnk_title.set_margin_bottom(2)
@@ -49,14 +41,6 @@ class MonophonyPlayer(Gtk.Box):
 		self.box_sng_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_sng_info.append(self.lnk_title)
 		self.box_sng_info.append(self.lbl_author)
-		self.box_sng_info.bind_property(
-			'visible',
-			self.spn_loading,
-			'visible',
-			GObject.BindingFlags.SYNC_CREATE
-			| GObject.BindingFlags.BIDIRECTIONAL
-			| GObject.BindingFlags.INVERT_BOOLEAN
-		)
 		box_info.append(self.box_sng_info)
 
 		self.scl_volume = Gtk.ScaleButton.new(
@@ -288,7 +272,21 @@ class MonophonyPlayer(Gtk.Box):
 		monophony.backend.settings.set_value('volume', value)
 
 	def update(self) -> True:
-		self.box_sng_info.set_visible(not self.player.is_busy())
+		song = self.player.get_current_song()
+		if song:
+			self.lnk_title.set_label(song['title'])
+			self.lnk_title.set_uri(
+				'https://music.youtube.com/watch?v=' + song['id']
+			)
+			self.lbl_author.set_label(song['author'])
+			self.window.player_revealer.set_reveal_child(True)
+		else:
+			self.lnk_title.set_label('')
+			self.lnk_title.set_uri('')
+			self.lbl_author.set_label('')
+			self.window.player_revealer.set_reveal_child(False)
+
+		self.scl_progress.set_sensitive(not self.player.is_busy())
 		if not self.player.is_busy():
 			self.scl_progress.set_value(self.player.get_progress())
 
@@ -296,20 +294,6 @@ class MonophonyPlayer(Gtk.Box):
 				self.btn_pause.set_icon_name('media-playback-start-symbolic')
 			else:
 				self.btn_pause.set_icon_name('media-playback-pause-symbolic')
-
-			song = self.player.get_current_song()
-			if song:
-				self.lnk_title.set_label(song['title'])
-				self.lnk_title.set_uri(
-					'https://music.youtube.com/watch?v=' + song['id']
-				)
-				self.lbl_author.set_label(song['author'])
-				self.window.player_revealer.set_reveal_child(True)
-			else:
-				self.lnk_title.set_label('')
-				self.lnk_title.set_uri('')
-				self.lbl_author.set_label('')
-				self.window.player_revealer.set_reveal_child(False)
 		else:
 			self.window.player_revealer.set_reveal_child(True)
 

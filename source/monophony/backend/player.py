@@ -58,14 +58,20 @@ class Player:
 
 	def get_current_song(self, lock: bool=True) -> dict:
 		if lock and not self.lock.trylock():
-			return {}
+			try:
+				return self.queue[self.index]
+			except IndexError:
+				return {}
 
 		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
 		acceptable_states = {Gst.State.PAUSED, Gst.State.PLAYING}
 		result = {}
 
-		if len(self.queue) > self.index and state in acceptable_states:
-			result = self.queue[self.index]
+		if state in acceptable_states:
+			try:
+				result = self.queue[self.index]
+			except IndexError:
+				pass
 
 		if lock:
 			self.lock.unlock()
@@ -145,6 +151,10 @@ class Player:
 		monophony.backend.history.add_song(song)
 		self.playbin.set_state(Gst.State.READY)
 
+		self.mpris_server.unpublish()
+		self.mpris_server.publish()
+		self.mpris_adapter.emit_all()
+
 		uri = monophony.backend.cache.get_song_uri(song['id'])
 		if not uri:
 			while True:
@@ -158,9 +168,6 @@ class Player:
 
 		self.playbin.set_property('uri', uri)
 		self.playbin.set_state(Gst.State.PLAYING)
-		self.mpris_server.unpublish()
-		self.mpris_server.publish()
-		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
 
 		if lock:
