@@ -3,15 +3,23 @@ import traceback, random, subprocess
 import ytmusicapi
 
 
-def _parse_results(data: list) -> list:
+def _parse_results(data: list, loader: object=None) -> list:
 	try:
 		yt = ytmusicapi.YTMusic()
 	except:
 		return []
 
+	if loader:
+		loader.lock.lock()
+		loader.set_text(_('Parsing Results...'))
+		loader.target = len(data)
+
 	results = []
 	expected_types = {'album', 'song', 'video', 'playlist', 'artist', 'single'}
 	for result in data:
+		if loader:
+			loader.progress()
+
 		if 'resultType' not in result or result['resultType'] not in expected_types:
 			continue
 
@@ -95,6 +103,9 @@ def _parse_results(data: list) -> list:
 				continue
 
 		results.append(item)
+
+	if loader:
+		loader.lock.unlock()
 
 	return results
 
@@ -223,7 +234,9 @@ def get_artist(browse_id: str) -> list:
 	return _parse_results(data)
 
 
-def search(query: str, filter_: str='') -> list:
+def search(query: str, filter_: str='', loader: object=None) -> list:
+	if loader:
+		loader.lock.lock()
 	try:
 		yt = ytmusicapi.YTMusic()
 		if filter_:
@@ -231,6 +244,10 @@ def search(query: str, filter_: str='') -> list:
 		else:
 			data = yt.search(query)
 	except:
+		if loader:
+			loader.lock.unlock()
 		return []
 
-	return _parse_results(data)
+	if loader:
+		loader.lock.unlock()
+	return _parse_results(data, loader=loader)

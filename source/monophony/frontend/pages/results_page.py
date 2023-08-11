@@ -2,11 +2,12 @@ import monophony.backend.yt
 from monophony.frontend.rows.importable_group_row import MonophonyImportableGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
 from monophony.frontend.rows.artist_row import MonophonyArtistRow
+from monophony.frontend.widgets.progress_bar import MonophonyProgressBar
 
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, GObject, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyResultsPage(Gtk.Box):
@@ -27,21 +28,15 @@ class MonophonyResultsPage(Gtk.Box):
 		self.pge_results.set_visible(False)
 		self.append(self.pge_results)
 
-		spn_loading = Gtk.Spinner.new()
-		spn_loading.set_halign(Gtk.Align.CENTER)
-		spn_loading.set_valign(Gtk.Align.CENTER)
-		spn_loading.set_vexpand(True)
+		bar_loading = MonophonyProgressBar(_('Searching...'))
+		bar_loading.set_halign(Gtk.Align.CENTER)
+		bar_loading.set_valign(Gtk.Align.CENTER)
+		bar_loading.set_vexpand(True)
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
-		self.box_loading.append(spn_loading)
-		self.box_loading.bind_property(
-			'visible',
-			spn_loading,
-			'spinning',
-			GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
-		)
-		self.append(self.box_loading)
+		self.box_loading.append(bar_loading)
 		self.box_loading.set_visible(True)
+		self.append(self.box_loading)
 
 		self.set_vexpand(True)
 		self.query = query
@@ -56,7 +51,9 @@ class MonophonyResultsPage(Gtk.Box):
 
 	def do_search(self):
 		self.search_lock.lock()
-		self.results = monophony.backend.yt.search(self.query, self.filter)
+		self.results = monophony.backend.yt.search(
+			self.query, self.filter, self.box_loading.get_last_child()
+		)
 		self.search_lock.unlock()
 
 	def do_get_artist(self):

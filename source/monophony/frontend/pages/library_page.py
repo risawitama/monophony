@@ -45,8 +45,8 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
 		self.box_loading.append(bar_loading)
-		self.append(self.box_loading)
 		self.box_loading.set_visible(True)
+		self.append(self.box_loading)
 
 		self.btn_play = Gtk.Button.new_with_label(_('Play All'))
 		self.btn_play.connect('clicked', self._on_play_all)
