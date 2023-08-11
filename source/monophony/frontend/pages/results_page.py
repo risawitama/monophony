@@ -35,7 +35,7 @@ class MonophonyResultsPage(Gtk.Box):
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
 		self.box_loading.append(bar_loading)
-		self.box_loading.set_visible(True)
+		self.box_loading.set_visible(bool(query))
 		self.append(self.box_loading)
 
 		self.set_vexpand(True)
@@ -58,10 +58,16 @@ class MonophonyResultsPage(Gtk.Box):
 
 	def do_get_artist(self):
 		self.search_lock.lock()
+		loader = self.box_loading.get_last_child()
+		loader.set_text(_('Loading...'))
+		loader.target = 1
+		self.box_loading.set_visible(True)
 		results = monophony.backend.yt.get_artist(self.artist)
+		loader.progress()
 		if not results:
-			self.pge_status.set_visible(True)
+			self.pge_status.set_title(_('Artist Not Found'))
 			self.box_loading.set_visible(False)
+			self.pge_status.set_visible(True)
 			self.search_lock.unlock()
 			return
 
@@ -74,9 +80,7 @@ class MonophonyResultsPage(Gtk.Box):
 
 		self.box_loading.set_visible(False)
 		self.pge_status.set_visible(len(self.results) == 0)
-		if not self.results:
-			self.pge_status.set_title(_('No Results'))
-		else:
+		if self.results:
 			self.pge_results.set_visible(True)
 			box_top = Adw.PreferencesGroup.new()
 			box_songs = Adw.PreferencesGroup.new()
