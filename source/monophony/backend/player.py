@@ -151,10 +151,6 @@ class Player:
 		monophony.backend.history.add_song(song)
 		self.playbin.set_state(Gst.State.READY)
 
-		self.mpris_server.unpublish()
-		self.mpris_server.publish()
-		self.mpris_adapter.emit_all()
-
 		uri = monophony.backend.cache.get_song_uri(song['id'])
 		if not uri:
 			while True:
@@ -168,6 +164,9 @@ class Player:
 
 		self.playbin.set_property('uri', uri)
 		self.playbin.set_state(Gst.State.PLAYING)
+		self.mpris_server.unpublish()
+		self.mpris_server.publish()
+		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
 
 		if lock:
