@@ -14,30 +14,37 @@ msgstr ""
 
 #: monophony/frontend/pages/results_page.py:20
 #: monophony/frontend/pages/results_page.py:81
+#: monophony/frontend/pages/results_page.py:21
 msgid "No Results"
 msgstr "Keine Ergebnisse"
 
 #: monophony/frontend/pages/results_page.py:90
+#: monophony/frontend/pages/results_page.py:91
 msgid "Top Result"
 msgstr "Bestes Ergebnis"
 
 #: monophony/frontend/pages/results_page.py:91
+#: monophony/frontend/pages/results_page.py:92
 msgid "Songs"
 msgstr "Titel"
 
 #: monophony/frontend/pages/results_page.py:92
+#: monophony/frontend/pages/results_page.py:93
 msgid "Albums"
 msgstr "Alben"
 
 #: monophony/frontend/pages/results_page.py:93
+#: monophony/frontend/pages/results_page.py:94
 msgid "Videos"
 msgstr "Videos"
 
 #: monophony/frontend/pages/results_page.py:94
+#: monophony/frontend/pages/results_page.py:95
 msgid "Community Playlists"
 msgstr "Community-Wiedergabelisten"
 
 #: monophony/frontend/pages/results_page.py:95
+#: monophony/frontend/pages/results_page.py:96
 msgid "Artists"
 msgstr "Interpreten"
 
@@ -46,31 +53,42 @@ msgstr "Interpreten"
 #: monophony/frontend/pages/results_page.py:115
 #: monophony/frontend/pages/results_page.py:123
 #: monophony/frontend/pages/results_page.py:131
+#: monophony/frontend/pages/results_page.py:100
+#: monophony/frontend/pages/results_page.py:108
+#: monophony/frontend/pages/results_page.py:116
+#: monophony/frontend/pages/results_page.py:124
+#: monophony/frontend/pages/results_page.py:132
 msgid "More"
 msgstr "Mehr"
 
 #: monophony/frontend/pages/library_page.py:31
+#: monophony/frontend/pages/library_page.py:35
 msgid "Your Library is Empty"
 msgstr "Ihre Bibliothek ist leer"
 
 #: monophony/frontend/pages/library_page.py:33
+#: monophony/frontend/pages/library_page.py:37
 msgid "Find songs to play using the search bar above"
 msgstr "Suchen Sie in der Leiste oben nach Titeln zum Wiedergeben"
 
 #: monophony/frontend/pages/library_page.py:45
+#: monophony/frontend/pages/library_page.py:51
 msgid "Play All"
 msgstr "Alle wiedergeben"
 
 #: monophony/frontend/pages/library_page.py:48
 #: monophony/frontend/windows/add_window.py:48
+#: monophony/frontend/pages/library_page.py:54
 msgid "Your Playlists"
 msgstr "Eigene Wiedergabelisten"
 
 #: monophony/frontend/pages/library_page.py:54
+#: monophony/frontend/pages/library_page.py:60
 msgid "Recently Played"
 msgstr "Zuletzt wiedergegeben"
 
 #: monophony/frontend/windows/main_window.py:44
+#: monophony/frontend/windows/main_window.py:45
 msgid "Go back"
 msgstr "Zurückgehen"
 
@@ -79,33 +97,40 @@ msgid "About"
 msgstr "Info"
 
 #: monophony/frontend/windows/main_window.py:54
+#: monophony/frontend/windows/main_window.py:64
 msgid "Search for Content..."
 msgstr "Nach Inhalten suchen …"
 
 #: monophony/frontend/windows/main_window.py:138
+#: monophony/frontend/windows/main_window.py:148
 msgid "translator-credits"
 msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2023"
 
 #: monophony/frontend/windows/main_window.py:174
+#: monophony/frontend/windows/main_window.py:191
 #, python-brace-format
 msgid "Deleted \"{playlist_name}\""
-msgstr "\"{playlist_name}\" gelöscht"
+msgstr "»{playlist_name}« gelöscht"
 
 #: monophony/frontend/windows/main_window.py:177
+#: monophony/frontend/windows/main_window.py:194
 msgid "Undo"
 msgstr "Rückgängig"
 
 #: monophony/frontend/windows/main_window.py:199
+#: monophony/frontend/windows/main_window.py:222
 msgid "Added"
 msgstr "Hinzugefügt"
 
 #: monophony/frontend/windows/add_window.py:19
 #: monophony/frontend/popovers/song_popover.py:36
 #: monophony/frontend/widgets/player.py:183
+#: monophony/frontend/widgets/player.py:167
 msgid "Add to..."
 msgstr "Hinzufügen zu …"
 
 #: monophony/frontend/windows/add_window.py:25
+#: monophony/frontend/windows/import_window.py:53
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -139,49 +164,63 @@ msgstr "Aus den heruntergeladenen Dateien entfernen"
 
 #: monophony/frontend/popovers/song_popover.py:29
 #: monophony/frontend/rows/local_group_row.py:42
+#: monophony/frontend/rows/importable_group_row.py:28
+#: monophony/frontend/rows/external_group_row.py:44
 msgid "Download"
 msgstr "Herunterladen"
 
 #: monophony/frontend/popovers/song_popover.py:42
 #: monophony/frontend/widgets/player.py:195
+#: monophony/frontend/widgets/player.py:179
 msgid "Show Artist"
 msgstr "Interpret anzeigen"
 
 #: monophony/frontend/widgets/player.py:82
+#: monophony/frontend/widgets/player.py:66
 msgid "Toggle pause"
 msgstr "Wiedergabe/Pause"
 
 #: monophony/frontend/widgets/player.py:86
+#: monophony/frontend/widgets/player.py:70
 msgid "Next song"
 msgstr "Nächster Titel"
 
 #: monophony/frontend/widgets/player.py:91
+#: monophony/frontend/widgets/player.py:75
 msgid "Previous song"
 msgstr "Voriger Titel"
 
 #: monophony/frontend/widgets/player.py:98
 #: monophony/frontend/rows/song_row.py:42
 #: monophony/frontend/rows/local_group_row.py:23
+#: monophony/frontend/widgets/player.py:82
+#: monophony/frontend/rows/importable_group_row.py:17
+#: monophony/frontend/rows/external_group_row.py:24
 msgid "More actions"
 msgstr "Weitere Aktionen"
 
 #: monophony/frontend/widgets/player.py:189
+#: monophony/frontend/widgets/player.py:173
 msgid "Show Queue"
 msgstr "Warteschlange anzeigen"
 
 #: monophony/frontend/widgets/player.py:203
+#: monophony/frontend/widgets/player.py:187
 msgid "Normal Playback"
 msgstr "Normale Wiedergabe"
 
 #: monophony/frontend/widgets/player.py:210
+#: monophony/frontend/widgets/player.py:194
 msgid "Radio Mode"
 msgstr "Radiomodus"
 
 #: monophony/frontend/widgets/player.py:220
+#: monophony/frontend/widgets/player.py:204
 msgid "Repeat Song"
 msgstr "Titel wiederholen"
 
 #: monophony/frontend/widgets/player.py:230
+#: monophony/frontend/widgets/player.py:214
 msgid "Shuffle"
 msgstr "Durchmischen"
 
@@ -196,6 +235,7 @@ msgid "View Artist"
 msgstr "Interpret anzeigen"
 
 #: monophony/frontend/rows/local_group_row.py:36
+#: monophony/frontend/rows/external_group_row.py:38
 msgid "Delete"
 msgstr "Löschen"
 
@@ -204,24 +244,111 @@ msgid "Duplicate"
 msgstr "Duplizieren"
 
 #: monophony/frontend/rows/local_group_row.py:54
+#: monophony/frontend/rows/external_group_row.py:50
 msgid "Rename..."
 msgstr "Umbenennen …"
 
 #: monophony/frontend/rows/local_group_row.py:71
+#: monophony/frontend/rows/external_group_row.py:67
 msgid "Rename"
 msgstr "Umbenennen"
 
 #: monophony/frontend/rows/local_group_row.py:100
+#: monophony/frontend/rows/external_group_row.py:96
 msgid "Could not Rename"
 msgstr "Umbenennen nicht möglich"
 
 #: monophony/frontend/rows/local_group_row.py:101
+#: monophony/frontend/rows/external_group_row.py:97
 msgid "Playlist already exists"
 msgstr "Wiedergabeliste existiert bereits"
 
 #: monophony/frontend/rows/external_group_row.py:18
 msgid "Add to library"
 msgstr "Zur Bibliothek hinzufügen"
+
+#: monophony/frontend/pages/queue_page.py:24
+#: monophony/frontend/windows/add_window.py:42
+msgid "Queue"
+msgstr "Warteschlange"
+
+#: monophony/frontend/pages/results_page.py:31
+msgid "Searching..."
+msgstr "Suchvorgang …"
+
+#: monophony/frontend/pages/results_page.py:62
+msgid "Loading..."
+msgstr "Ladevorgang …"
+
+#: monophony/frontend/pages/results_page.py:68
+msgid "Artist Not Found"
+msgstr "Interpret nicht gefunden"
+
+#: monophony/frontend/pages/library_page.py:41
+msgid "Loading Library..."
+msgstr "Bibliothek wird geladen …"
+
+#: monophony/frontend/windows/main_window.py:50
+msgid "Import Playlist"
+msgstr "Wiedergabeliste importieren"
+
+#: monophony/frontend/windows/main_window.py:54
+msgid "About Monophony"
+msgstr "Info zu Monophony"
+
+#: monophony/frontend/windows/import_window.py:21
+msgid "Enter Playlist Name..."
+msgstr "Name der Wiedergabeliste eingeben …"
+
+#: monophony/frontend/windows/import_window.py:28
+msgid "Enter Playlist URL..."
+msgstr "Adresse der Wiedergabeliste eingeben …"
+
+#: monophony/frontend/windows/import_window.py:33
+msgid "External Playlist"
+msgstr "Externe Wiedergabeliste"
+
+#: monophony/frontend/windows/import_window.py:34
+msgid "Local Playlist"
+msgstr "Lokale Wiedergabeliste"
+
+#: monophony/frontend/windows/import_window.py:55
+msgid "Import"
+msgstr "Importieren"
+
+#: monophony/frontend/windows/import_window.py:73
+msgid "Import playlist..."
+msgstr "Wiedergabeliste importieren …"
+
+#: monophony/frontend/windows/import_window.py:97
+#: monophony/frontend/windows/import_window.py:115
+#: monophony/frontend/windows/import_window.py:121
+msgid "Could not Import Playlist"
+msgstr "Wiedergabeliste konnte nicht importiert werden"
+
+#: monophony/frontend/windows/import_window.py:98
+msgid "Failed to retrieve playlist data from server."
+msgstr "Abrufen der Wiedergabelistendaten vom Server fehlgeschlagen."
+
+#: monophony/frontend/windows/import_window.py:115
+msgid "A name is required."
+msgstr "Ein Name ist erforderlich."
+
+#: monophony/frontend/windows/import_window.py:121
+msgid "A URL is required."
+msgstr "Eine Adresse ist erforderlich."
+
+#: monophony/frontend/rows/importable_group_row.py:34
+msgid "Import..."
+msgstr "Importieren …"
+
+#: monophony/frontend/rows/external_group_row.py:31
+msgid "External"
+msgstr "Extern"
+
+#: monophony/backend/yt.py:14
+msgid "Parsing Results..."
+msgstr "Ergebnisse werden verarbeitet …"
 
 #~ msgid "Delete Playlist?"
 #~ msgstr "Wiedergabeliste löschen?"
@@ -231,9 +358,6 @@ msgstr "Zur Bibliothek hinzufügen"
 
 #~ msgid "New Playlist"
 #~ msgstr "Neue Wiedergabeliste"
-
-#~ msgid "Rename Playlist"
-#~ msgstr "Wiedergabeliste umbenennen"
 
 #~ msgid "Saved"
 #~ msgstr "Gespeichert"
@@ -262,14 +386,8 @@ msgstr "Zur Bibliothek hinzufügen"
 #~ msgid "Add to Queue"
 #~ msgstr "Zur Warteschlange hinzufügen"
 
-#~ msgid "New Playlist..."
-#~ msgstr "Neue Wiedergabeliste …"
-
 #~ msgid "Enter new Name..."
 #~ msgstr "Neuen Namen eingeben …"
-
-#~ msgid "Create Playlist..."
-#~ msgstr "Wiedergabeliste erstellen …"
 
 #~ msgid "No playlists found"
 #~ msgstr "Keine Wiedergabelisten gefunden"
