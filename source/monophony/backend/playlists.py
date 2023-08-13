@@ -66,7 +66,7 @@ def rename_playlist(name: str, new_name: str, local: bool=True) -> bool:
 	return False
 
 
-def import_playlist(name: str, url: str, local: bool) -> bool:
+def import_playlist(name: str, url: str, local: bool, overwrite: bool=False) -> bool:
 	new_lists = read_playlists()
 	new_ext_lists = read_external_playlists()
 	songs = []
@@ -103,11 +103,12 @@ def import_playlist(name: str, url: str, local: bool) -> bool:
 		if parsed_song not in songs:
 			songs.append(parsed_song)
 
-	name = get_unique_name(name)
+	name = get_unique_name(name) if not overwrite else name
 	if local:
 		new_lists[name] = songs
 		write_playlists(playlists=new_lists)
 	else:
+		new_ext_lists = [l for l in new_ext_lists if l['title'] != name]
 		new_ext_lists.append({'title': name, 'id': playlist_id, 'contents': songs})
 		write_playlists(external_playlists=new_ext_lists)
 
@@ -133,8 +134,7 @@ def update_external_playlists(loader: object):
 	lists = read_external_playlists()
 	loader.target = len(lists)
 	for playlist in lists:
-		remove_external_playlist(playlist['title'])
-		import_playlist(playlist['title'], playlist['id'], False)
+		import_playlist(playlist['title'], playlist['id'], False, True)
 		loader.progress()
 
 	loader.lock.unlock()
