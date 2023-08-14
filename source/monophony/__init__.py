@@ -1,2 +1,2 @@
-__version__ = '2.0.0-pre.1'
+__version__ = '2.0.0'
 APP_ID = 'io.gitlab.zehkira.Monophony'

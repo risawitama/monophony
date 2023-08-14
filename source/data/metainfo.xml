@@ -30,6 +30,22 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="2.0.0" date="2023-08-14">
+      <description>
+        <ul>
+          <li>Added full queue management</li>
+          <li>Added playlist synchronization</li>
+          <li>Added playlist importing by URL</li>
+          <li>Added Japanese translation</li>
+          <li>Moved downloads directory to an internal path (songs will need to be manually redownloaded)</li>
+          <li>Redesigned the icon</li>
+          <li>Made various interface changes</li>
+          <li>Improved handling of connection errors to allow for continuous playback regardless of conntection quality</li>
+          <li>Fixed several freezes in edge cases</li>
+          <li>Fixed "back" button behavior in shuffle mode</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.10.0" date="2023-07-04">
       <description>
         <ul>
