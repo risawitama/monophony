@@ -29,6 +29,8 @@ def _parse_results(data: list, loader: object=None) -> list:
 		item = {'type': result['resultType'], 'top': False}
 		if 'category' in result:
 			item['top'] = (result['category'] == 'Top result')
+			if result['category'] == 'Profiles':
+				continue
 
 		if result['resultType'] == 'artist':
 			try:
