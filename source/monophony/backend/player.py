@@ -179,7 +179,7 @@ class Player:
 		song = None
 		for id_ in id_queue:
 			song = monophony.backend.yt.get_similar_song(id_, ignore=id_queue)
-			if song:
+			if song and song['id']:
 				break
 
 		if song:

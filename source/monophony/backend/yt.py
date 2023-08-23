@@ -59,7 +59,7 @@ def _parse_results(data: list, loader: object=None) -> list:
 						'author_id': s['artists'][0]['id'],
 						'length': s['duration'],
 						'thumbnail': album['thumbnails'][0]['url']
-					} for s in album['tracks']
+					} for s in album['tracks'] if s['videoId']
 				]
 			except Exception:
 				print('Failed to parse album result')
@@ -80,7 +80,7 @@ def _parse_results(data: list, loader: object=None) -> list:
 						'author_id': s['artists'][0]['id'],
 						'length': s['duration'],
 						'thumbnail': s['thumbnails'][0]['url']
-					} for s in album['tracks']
+					} for s in album['tracks'] if s['videoId']
 				]
 			except:
 				print('Failed to parse playlist result')
@@ -88,6 +88,8 @@ def _parse_results(data: list, loader: object=None) -> list:
 				continue
 		elif result['resultType'] in {'song', 'video'}:
 			try:
+				if not result['videoId']:
+					continue
 				item['id'] = str(result['videoId'])
 				item['title'] = result['title']
 				item['author'] = result['artists'][0]['name']
@@ -152,6 +154,9 @@ def get_similar_song(video_id: str, ignore: list=None) -> dict:
 			'id': item['videoId'],
 			'thumbnail': item['thumbnail'][0]['url']
 		}
+		if not track['id']:
+			continue
+
 		for id_ in ignore:
 			if id_ == track['id']:
 				break
