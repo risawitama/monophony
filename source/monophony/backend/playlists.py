@@ -137,7 +137,25 @@ def update_external_playlists(loader: object):
 		import_playlist(playlist['title'], playlist['id'], False, True)
 		loader.progress()
 
+	clean_up_playlists()
 	loader.lock.unlock()
+
+
+def clean_up_playlists():
+	lists = read_playlists()
+	ext_lists = read_external_playlists()
+
+	new_lists = {}
+	for k, l in lists.items():
+		new_lists[k] = [s for s in l if s['id']]
+
+	new_ext_lists = []
+	for l in ext_lists:
+		new_l = l.copy()
+		new_l['contents'] = [s for s in new_l['contents'] if s['id']]
+		new_ext_lists.append(new_l)
+
+	write_playlists(playlists=new_lists, external_playlists=new_ext_lists)
 
 
 ### --- SONG FUNCTIONS --- ###
