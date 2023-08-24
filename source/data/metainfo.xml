@@ -30,6 +30,15 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="2.0.1" date="2023-08-24">
+      <description>
+        <ul>
+          <li>Fixed playback not working due to YTM changes</li>
+          <li>Fixed handling of songs with empty id</li>
+          <li>Fixed user profiles in search results causing parsing errors</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.0" date="2023-08-14">
       <description>
         <ul>
