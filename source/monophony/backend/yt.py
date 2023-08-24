@@ -124,7 +124,7 @@ def is_available() -> bool:
 
 def get_song_uri(video_id: str) -> str | None:
 	out, err = subprocess.Popen(
-		f'yt-dlp -g -x https://music.youtube.com/watch?v={video_id}',
+		f'yt-dlp -g -x --no-warnings https://music.youtube.com/watch?v={video_id}',
 		shell=True,
 		stdout=subprocess.PIPE,
 		stderr=subprocess.PIPE,
