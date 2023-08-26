@@ -40,7 +40,8 @@ def cache_songs(ids: list):
 			open(f'{path}{video_id}.monophony', 'w').close()
 
 	subprocess.Popen(
-		'yt-dlp -x --no-cache-dir --audio-quality 0 --add-metadata ' +
+		'yt-dlp -x ' +
+		'--no-cache-dir --audio-quality 0 --audio-format wav --add-metadata ' +
 		f'-o "{path}%(id)s.%(ext)s" https://music.youtube.com/watch?v=' +
 		(' https://music.youtube.com/watch?v='.join(needed_ids)),
 		shell = True,
