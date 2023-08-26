@@ -92,6 +92,7 @@ class MonophonyAddWindow(Adw.Window):
 		for queue_song in self.player.queue.copy():
 			if queue_song['id'] == self.song['id']:
 				self.chk_queue.set_active(True)
+				self.add_to_queue = False
 				self.chk_queue.set_sensitive(False)
 				self.row_queue.set_sensitive(False)
 				break
