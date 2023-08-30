@@ -11,7 +11,7 @@ from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyResultsPage(Gtk.Box):
-	def __init__(self, player: object, query: str='', artist: str='', filter_: str=''):
+	def __init__(self, player: object, query: str='', filter_: str=''):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
 		self.pge_status = Adw.StatusPage()
@@ -41,12 +41,11 @@ class MonophonyResultsPage(Gtk.Box):
 		self.set_vexpand(True)
 		self.query = query
 		self.filter = filter_
-		self.artist = artist
 		self.results = []
 		self.search_lock = GLib.Mutex()
 		self.player = player
 
-		GLib.Thread.new(None, self.do_search if self.query else self.do_get_artist)
+		GLib.Thread.new(None, self.do_search)
 		GLib.timeout_add(500, self.await_results)
 
 	def do_search(self):
@@ -54,24 +53,6 @@ class MonophonyResultsPage(Gtk.Box):
 		self.results = monophony.backend.yt.search(
 			self.query, self.filter, self.box_loading.get_last_child()
 		)
-		self.search_lock.unlock()
-
-	def do_get_artist(self):
-		self.search_lock.lock()
-		loader = self.box_loading.get_last_child()
-		loader.set_text(_('Loading...'))
-		loader.target = 1
-		self.box_loading.set_visible(True)
-		results = monophony.backend.yt.get_artist(self.artist)
-		loader.progress()
-		if not results:
-			self.pge_status.set_title(_('Artist Not Found'))
-			self.box_loading.set_visible(False)
-			self.pge_status.set_visible(True)
-			self.search_lock.unlock()
-			return
-
-		self.results = results
 		self.search_lock.unlock()
 
 	def await_results(self) -> bool:
@@ -96,7 +77,7 @@ class MonophonyResultsPage(Gtk.Box):
 			box_artists.set_title(_('Artists'))
 			window = self.get_ancestor(Gtk.Window)
 
-			if not self.filter and not self.artist:
+			if not self.filter:
 				btn_more = Gtk.Button.new_with_label(_('More'))
 				btn_more.connect(
 					'clicked',

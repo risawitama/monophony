@@ -4,6 +4,7 @@ import monophony.backend.player
 import monophony.backend.playlists
 import monophony.backend.settings
 from monophony import __version__, APP_ID
+from monophony.frontend.pages.artist_page import MonophonyArtistPage
 from monophony.frontend.pages.library_page import MonophonyLibraryPage
 from monophony.frontend.pages.queue_page import MonophonyQueuePage
 from monophony.frontend.pages.results_page import MonophonyResultsPage
@@ -121,7 +122,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		)
 
 	def _on_show_artist(self, artist: str):
-		self.append_page(MonophonyResultsPage(self.player, artist=artist))
+		self.append_page(MonophonyArtistPage(self.player, artist))
 
 	def _on_show_queue(self):
 		self.append_page(MonophonyQueuePage(self.player))
