@@ -4,7 +4,7 @@ import monophony.backend.yt
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gdk, Gio, GLib, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -60,11 +60,30 @@ class MonophonyPlayer(Gtk.Box):
 		self.scl_volume.set_value(volume)
 		self.scl_volume.connect('value-changed', self._on_volume_changed)
 
+		self.spn_loading = Gtk.Spinner.new()
+		self.spn_loading.set_halign(Gtk.Align.CENTER)
+		self.spn_loading.set_margin_start(9)
+		self.spn_loading.set_margin_end(9)
+		self.spn_loading.set_visible(False)
+		self.spn_loading.bind_property(
+			'visible',
+			self.spn_loading,
+			'spinning',
+			GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
+		)
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
 		self.btn_pause.set_valign(Gtk.Align.CENTER)
-		self.btn_pause.connect('clicked', self._on_pause_clicked)
 		self.btn_pause.set_tooltip_text(_('Toggle pause'))
 		self.btn_pause.set_has_frame(False)
+		self.btn_pause.bind_property(
+			'visible',
+			self.spn_loading,
+			'visible',
+			GObject.BindingFlags.BIDIRECTIONAL |
+			GObject.BindingFlags.SYNC_CREATE |
+			GObject.BindingFlags.INVERT_BOOLEAN
+		)
+		self.btn_pause.connect('clicked', self._on_pause_clicked)
 		btn_next = Gtk.Button.new_from_icon_name('media-skip-forward-symbolic')
 		btn_next.set_valign(Gtk.Align.CENTER)
 		btn_next.set_tooltip_text(_('Next song'))
@@ -91,6 +110,7 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.append(self.scl_volume)
 		box_controls.append(btn_prev)
 		box_controls.append(self.btn_pause)
+		box_controls.append(self.spn_loading)
 		box_controls.append(btn_next)
 		box_controls.append(btn_more)
 
@@ -287,6 +307,7 @@ class MonophonyPlayer(Gtk.Box):
 			self.window.player_revealer.set_reveal_child(False)
 
 		self.scl_progress.set_sensitive(not self.player.is_busy())
+		self.btn_pause.set_visible(self.scl_progress.get_sensitive())
 		if not self.player.is_busy():
 			self.scl_progress.set_value(self.player.get_progress())
 
