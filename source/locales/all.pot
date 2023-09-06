@@ -4,36 +4,45 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 #: monophony/frontend/pages/results_page.py:20
 #: monophony/frontend/pages/results_page.py:81
 #: monophony/frontend/pages/results_page.py:21
+#: monophony/frontend/pages/artist_page.py:20
 msgid "No Results"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:90
 #: monophony/frontend/pages/results_page.py:91
+#: monophony/frontend/pages/results_page.py:72
 msgid "Top Result"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:91
 #: monophony/frontend/pages/results_page.py:92
+#: monophony/frontend/pages/results_page.py:73
 msgid "Songs"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:92
 #: monophony/frontend/pages/results_page.py:93
+#: monophony/frontend/pages/results_page.py:74
+#: monophony/frontend/pages/artist_page.py:77
 msgid "Albums"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:93
 #: monophony/frontend/pages/results_page.py:94
+#: monophony/frontend/pages/results_page.py:75
 msgid "Videos"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:94
 #: monophony/frontend/pages/results_page.py:95
+#: monophony/frontend/pages/results_page.py:76
+#: monophony/frontend/pages/artist_page.py:78
 msgid "Community Playlists"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:95
 #: monophony/frontend/pages/results_page.py:96
+#: monophony/frontend/pages/results_page.py:77
 msgid "Artists"
 msgstr ""
 
@@ -47,6 +56,11 @@ msgstr ""
 #: monophony/frontend/pages/results_page.py:116
 #: monophony/frontend/pages/results_page.py:124
 #: monophony/frontend/pages/results_page.py:132
+#: monophony/frontend/pages/results_page.py:81
+#: monophony/frontend/pages/results_page.py:89
+#: monophony/frontend/pages/results_page.py:97
+#: monophony/frontend/pages/results_page.py:105
+#: monophony/frontend/pages/results_page.py:113
 msgid "More"
 msgstr ""
 
@@ -78,6 +92,7 @@ msgstr ""
 
 #: monophony/frontend/windows/main_window.py:44
 #: monophony/frontend/windows/main_window.py:45
+#: monophony/frontend/windows/main_window.py:46
 msgid "Go back"
 msgstr ""
 
@@ -87,27 +102,32 @@ msgstr ""
 
 #: monophony/frontend/windows/main_window.py:54
 #: monophony/frontend/windows/main_window.py:64
+#: monophony/frontend/windows/main_window.py:65
 msgid "Search for Content..."
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:138
 #: monophony/frontend/windows/main_window.py:148
+#: monophony/frontend/windows/main_window.py:149
 msgid "translator-credits"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:174
 #: monophony/frontend/windows/main_window.py:191
+#: monophony/frontend/windows/main_window.py:192
 #, python-brace-format
 msgid "Deleted \"{playlist_name}\""
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:177
 #: monophony/frontend/windows/main_window.py:194
+#: monophony/frontend/windows/main_window.py:195
 msgid "Undo"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:199
 #: monophony/frontend/windows/main_window.py:222
+#: monophony/frontend/windows/main_window.py:223
 msgid "Added"
 msgstr ""
 
@@ -115,6 +135,7 @@ msgstr ""
 #: monophony/frontend/popovers/song_popover.py:36
 #: monophony/frontend/widgets/player.py:183
 #: monophony/frontend/widgets/player.py:167
+#: monophony/frontend/widgets/player.py:187
 msgid "Add to..."
 msgstr ""
 
@@ -161,21 +182,25 @@ msgstr ""
 #: monophony/frontend/popovers/song_popover.py:42
 #: monophony/frontend/widgets/player.py:195
 #: monophony/frontend/widgets/player.py:179
+#: monophony/frontend/widgets/player.py:199
 msgid "Show Artist"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:82
 #: monophony/frontend/widgets/player.py:66
+#: monophony/frontend/widgets/player.py:76
 msgid "Toggle pause"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:86
 #: monophony/frontend/widgets/player.py:70
+#: monophony/frontend/widgets/player.py:89
 msgid "Next song"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:91
 #: monophony/frontend/widgets/player.py:75
+#: monophony/frontend/widgets/player.py:94
 msgid "Previous song"
 msgstr ""
 
@@ -185,31 +210,37 @@ msgstr ""
 #: monophony/frontend/widgets/player.py:82
 #: monophony/frontend/rows/importable_group_row.py:17
 #: monophony/frontend/rows/external_group_row.py:24
+#: monophony/frontend/widgets/player.py:101
 msgid "More actions"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:189
 #: monophony/frontend/widgets/player.py:173
+#: monophony/frontend/widgets/player.py:193
 msgid "Show Queue"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:203
 #: monophony/frontend/widgets/player.py:187
+#: monophony/frontend/widgets/player.py:207
 msgid "Normal Playback"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:210
 #: monophony/frontend/widgets/player.py:194
+#: monophony/frontend/widgets/player.py:214
 msgid "Radio Mode"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:220
 #: monophony/frontend/widgets/player.py:204
+#: monophony/frontend/widgets/player.py:224
 msgid "Repeat Song"
 msgstr ""
 
 #: monophony/frontend/widgets/player.py:230
 #: monophony/frontend/widgets/player.py:214
+#: monophony/frontend/widgets/player.py:234
 msgid "Shuffle"
 msgstr ""
 
@@ -266,10 +297,12 @@ msgid "Searching..."
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:62
+#: monophony/frontend/pages/artist_page.py:30
 msgid "Loading..."
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:68
+#: monophony/frontend/pages/artist_page.py:56
 msgid "Artist Not Found"
 msgstr ""
 
@@ -278,10 +311,12 @@ msgid "Loading Library..."
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:50
+#: monophony/frontend/windows/main_window.py:51
 msgid "Import Playlist"
 msgstr ""
 
 #: monophony/frontend/windows/main_window.py:54
+#: monophony/frontend/windows/main_window.py:55
 msgid "About Monophony"
 msgstr ""
 
@@ -337,4 +372,16 @@ msgstr ""
 
 #: monophony/backend/yt.py:14
 msgid "Parsing Results..."
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:76
+msgid "Other"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:101
+msgid "All Songs"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:107
+msgid "All Videos"
 msgstr ""
