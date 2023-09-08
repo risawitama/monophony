@@ -17,7 +17,7 @@ These packages are maintained by third parties. Install at your own risk.
 
 ## Building from source
 
-The following instructions cas be used to build the app from source for testing purposes:
+Follow these steps to build the app from source for testing purposes:
 
 1. Install `git` and `flatpak-builder`.
 2. Download the repository: `git clone https://gitlab.com/zehkira/monophony.git`
