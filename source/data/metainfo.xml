@@ -38,6 +38,14 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="2.1.0" date="2023-09-06">
+      <description>
+        <ul>
+          <li>Various interface changes</li>
+          <li>Fixed songs being duplicated in the queue</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.1" date="2023-08-24">
       <description>
         <ul>
