@@ -57,6 +57,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			'about-app', None, (lambda w, _a, _t: w._on_about_clicked())
 		)
 		btn_menu = Gtk.MenuButton()
+		btn_menu.set_tooltip_text(_('Primary Menu'))
 		btn_menu.set_primary(True)
 		btn_menu.set_icon_name('open-menu-symbolic')
 		btn_menu.set_menu_model(mnu_main)

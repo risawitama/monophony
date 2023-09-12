@@ -53,6 +53,7 @@ class MonophonyPlayer(Gtk.Box):
 				'audio-volume-high-symbolic'
 			]
 		)
+		self.scl_volume.set_tooltip_text(_('Volume'))
 		popup_volume = self.scl_volume.get_popup()
 		box_volume = popup_volume.get_child()
 		box_scl_volume = box_volume.get_first_child().get_next_sibling()
