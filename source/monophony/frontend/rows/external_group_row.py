@@ -28,7 +28,7 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 		btn_more.set_valign(Gtk.Align.CENTER)
 		btn_more.set_create_popup_func(self._on_show_actions)
 		self.add_action(btn_more)
-		self.set_subtitle(_('External'))
+		self.set_subtitle(_('Synchronized'))
 
 		GLib.timeout_add(100, self.update)
 
