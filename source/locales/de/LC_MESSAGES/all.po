@@ -49,7 +49,7 @@ msgstr "Videos"
 #: monophony/frontend/pages/results_page.py:76
 #: monophony/frontend/pages/artist_page.py:78
 msgid "Community Playlists"
-msgstr "Community-Wiedergabelisten"
+msgstr "Gemeinschaftswiedergabelisten"
 
 #: monophony/frontend/pages/results_page.py:95
 #: monophony/frontend/pages/results_page.py:96
@@ -114,18 +114,21 @@ msgstr "Info"
 #: monophony/frontend/windows/main_window.py:54
 #: monophony/frontend/windows/main_window.py:64
 #: monophony/frontend/windows/main_window.py:65
+#: monophony/frontend/windows/main_window.py:66
 msgid "Search for Content..."
 msgstr "Nach Inhalten suchen …"
 
 #: monophony/frontend/windows/main_window.py:138
 #: monophony/frontend/windows/main_window.py:148
 #: monophony/frontend/windows/main_window.py:149
+#: monophony/frontend/windows/main_window.py:150
 msgid "translator-credits"
 msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2023"
 
 #: monophony/frontend/windows/main_window.py:174
 #: monophony/frontend/windows/main_window.py:191
 #: monophony/frontend/windows/main_window.py:192
+#: monophony/frontend/windows/main_window.py:193
 #, python-brace-format
 msgid "Deleted \"{playlist_name}\""
 msgstr "»{playlist_name}« gelöscht"
@@ -133,12 +136,14 @@ msgstr "»{playlist_name}« gelöscht"
 #: monophony/frontend/windows/main_window.py:177
 #: monophony/frontend/windows/main_window.py:194
 #: monophony/frontend/windows/main_window.py:195
+#: monophony/frontend/windows/main_window.py:196
 msgid "Undo"
 msgstr "Rückgängig"
 
 #: monophony/frontend/windows/main_window.py:199
 #: monophony/frontend/windows/main_window.py:222
 #: monophony/frontend/windows/main_window.py:223
+#: monophony/frontend/windows/main_window.py:224
 msgid "Added"
 msgstr "Hinzugefügt"
 
@@ -147,6 +152,7 @@ msgstr "Hinzugefügt"
 #: monophony/frontend/widgets/player.py:183
 #: monophony/frontend/widgets/player.py:167
 #: monophony/frontend/widgets/player.py:187
+#: monophony/frontend/widgets/player.py:188
 msgid "Add to..."
 msgstr "Hinzufügen zu …"
 
@@ -194,24 +200,28 @@ msgstr "Herunterladen"
 #: monophony/frontend/widgets/player.py:195
 #: monophony/frontend/widgets/player.py:179
 #: monophony/frontend/widgets/player.py:199
+#: monophony/frontend/widgets/player.py:200
 msgid "Show Artist"
 msgstr "Interpret anzeigen"
 
 #: monophony/frontend/widgets/player.py:82
 #: monophony/frontend/widgets/player.py:66
 #: monophony/frontend/widgets/player.py:76
+#: monophony/frontend/widgets/player.py:77
 msgid "Toggle pause"
 msgstr "Wiedergabe/Pause"
 
 #: monophony/frontend/widgets/player.py:86
 #: monophony/frontend/widgets/player.py:70
 #: monophony/frontend/widgets/player.py:89
+#: monophony/frontend/widgets/player.py:90
 msgid "Next song"
 msgstr "Nächster Titel"
 
 #: monophony/frontend/widgets/player.py:91
 #: monophony/frontend/widgets/player.py:75
 #: monophony/frontend/widgets/player.py:94
+#: monophony/frontend/widgets/player.py:95
 msgid "Previous song"
 msgstr "Voriger Titel"
 
@@ -222,36 +232,42 @@ msgstr "Voriger Titel"
 #: monophony/frontend/rows/importable_group_row.py:17
 #: monophony/frontend/rows/external_group_row.py:24
 #: monophony/frontend/widgets/player.py:101
+#: monophony/frontend/widgets/player.py:102
 msgid "More actions"
 msgstr "Weitere Aktionen"
 
 #: monophony/frontend/widgets/player.py:189
 #: monophony/frontend/widgets/player.py:173
 #: monophony/frontend/widgets/player.py:193
+#: monophony/frontend/widgets/player.py:194
 msgid "Show Queue"
 msgstr "Warteschlange anzeigen"
 
 #: monophony/frontend/widgets/player.py:203
 #: monophony/frontend/widgets/player.py:187
 #: monophony/frontend/widgets/player.py:207
+#: monophony/frontend/widgets/player.py:208
 msgid "Normal Playback"
 msgstr "Normale Wiedergabe"
 
 #: monophony/frontend/widgets/player.py:210
 #: monophony/frontend/widgets/player.py:194
 #: monophony/frontend/widgets/player.py:214
+#: monophony/frontend/widgets/player.py:215
 msgid "Radio Mode"
 msgstr "Radiomodus"
 
 #: monophony/frontend/widgets/player.py:220
 #: monophony/frontend/widgets/player.py:204
 #: monophony/frontend/widgets/player.py:224
+#: monophony/frontend/widgets/player.py:225
 msgid "Repeat Song"
 msgstr "Titel wiederholen"
 
 #: monophony/frontend/widgets/player.py:230
 #: monophony/frontend/widgets/player.py:214
 #: monophony/frontend/widgets/player.py:234
+#: monophony/frontend/widgets/player.py:235
 msgid "Shuffle"
 msgstr "Durchmischen"
 
@@ -397,6 +413,26 @@ msgstr "Alle Titel"
 msgid "All Videos"
 msgstr "Alle Videos"
 
+#: monophony/frontend/rows/external_group_row.py:31
+msgid "Synchronized"
+msgstr "Abgeglichen"
+
+#: monophony/frontend/widgets/player.py:56
+msgid "Volume"
+msgstr "Lautstärke"
+
+#: monophony/frontend/windows/import_window.py:33
+msgid "As Synchronized Playlist"
+msgstr "Als abgeglichene Wiedergabeliste"
+
+#: monophony/frontend/windows/import_window.py:34
+msgid "As Editable Playlist"
+msgstr "Als bearbeitbare Wiedergabeliste"
+
+#: monophony/frontend/windows/main_window.py:60
+msgid "Primary Menu"
+msgstr "Primäres Menü"
+
 #~ msgid "Delete Playlist?"
 #~ msgstr "Wiedergabeliste löschen?"
 
@@ -414,9 +450,6 @@ msgstr "Alle Videos"
 
 #~ msgid "Add to playlist"
 #~ msgstr "Zur Wiedergabeliste hinzufügen"
-
-#~ msgid "Volume"
-#~ msgstr "Lautstärke"
 
 #~ msgid "Loop"
 #~ msgstr "Dauerschleife"
