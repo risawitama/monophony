@@ -48,9 +48,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.btn_back.connect('clicked', self._on_back_clicked)
 
 		mnu_main = Gio.Menu()
-		mnu_main.append(_('Import Playlist'), 'import-playlist')
+		mnu_main.append(_('Import Playlist'), 'import-custom-playlist')
 		self.install_action(
-			'import-playlist', None, (lambda w, _a, _t: w._on_import_clicked())
+			'import-custom-playlist', None, (lambda w, _a, _t: w._on_import_clicked())
 		)
 		mnu_main.append(_('About Monophony'), 'about-app')
 		self.install_action(
