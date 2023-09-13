@@ -38,6 +38,15 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="2.2.0" date="2023-09-13">
+      <description>
+        <ul>
+          <li>Added tooltips to more buttons</li>
+          <li>Renamed "local" and "external" playlists to "editable" and "synchronized"</li>
+          <li>Fixed primary menu import not always opening a blank import window</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.1.0" date="2023-09-06">
       <description>
         <ul>
