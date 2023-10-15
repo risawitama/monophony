@@ -296,6 +296,7 @@ class MonophonyPlayer(Gtk.Box):
 		song = self.player.get_current_song()
 		if song:
 			self.lnk_title.set_label(song['title'])
+			self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
 			self.lnk_title.set_uri(
 				'https://music.youtube.com/watch?v=' + song['id']
 			)
