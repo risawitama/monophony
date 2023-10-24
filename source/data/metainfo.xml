@@ -38,6 +38,15 @@
   <launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
   <content_rating type="oars-1.1"></content_rating>
   <releases>
+    <release version="2.3.0" date="2023-10-24">
+      <description>
+        <ul>
+          <li>Made the player restore the last playback mode when the app starts</li>
+          <li>Fixed downloaded songs being saved as WebM (again)</li>
+          <li>Fixed missing metadata in downloaded songs (again)</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.2.3" date="2023-10-13">
       <description>
         <ul>
