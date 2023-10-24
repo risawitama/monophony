@@ -27,7 +27,9 @@ class Player:
 		self.queue = []
 		self.recent_songs = []
 		self.last_progress = 0
-		self.mode = PlaybackMode.NORMAL
+		self.mode = int(
+			monophony.backend.settings.get_value('mode', PlaybackMode.NORMAL)
+		)
 		self.mpris_adapter = None
 		self.mpris_server = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')

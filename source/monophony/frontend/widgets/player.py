@@ -269,19 +269,27 @@ class MonophonyPlayer(Gtk.Box):
 
 	def _on_shuffle_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
-			self.player.mode = monophony.backend.player.PlaybackMode.SHUFFLE
+			mode = monophony.backend.player.PlaybackMode.SHUFFLE
+			self.player.mode = mode
+			monophony.backend.settings.set_value('mode', mode)
 
 	def _on_loop_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
-			self.player.mode = monophony.backend.player.PlaybackMode.LOOP
+			mode = monophony.backend.player.PlaybackMode.LOOP
+			self.player.mode = mode
+			monophony.backend.settings.set_value('mode', mode)
 
 	def _on_normal_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
-			self.player.mode = monophony.backend.player.PlaybackMode.NORMAL
+			mode = monophony.backend.player.PlaybackMode.NORMAL
+			self.player.mode = mode
+			monophony.backend.settings.set_value('mode', mode)
 
 	def _on_radio_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
-			self.player.mode = monophony.backend.player.PlaybackMode.RADIO
+			mode = monophony.backend.player.PlaybackMode.RADIO
+			self.player.mode = mode
+			monophony.backend.settings.set_value('mode', mode)
 
 	def _on_show_artist_clicked(self):
 		song = self.player.get_current_song()
