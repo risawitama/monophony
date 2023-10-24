@@ -41,7 +41,7 @@ def cache_songs(ids: list):
 
 	subprocess.Popen(
 		'yt-dlp -x ' +
-		'--no-cache-dir --audio-quality 0 --audio-format wav --add-metadata ' +
+		'--no-cache-dir --audio-quality 0 --add-metadata ' +
 		f'-o "{path}%(id)s.%(ext)s" https://music.youtube.com/watch?v=' +
 		(' https://music.youtube.com/watch?v='.join(needed_ids)),
 		shell = True,
