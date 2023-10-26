@@ -17,12 +17,16 @@
   </requires>
   <summary>Stream music from YouTube</summary>
   <summary xml:lang="de">Musik von YouTube streamen</summary>
+  <summary xml:lang="fr">Streaming musical depuis YouTube</summary>
   <description>
     <p>
       Listen to your favorite music without ads. Create local playlists. No account required.
     </p>
     <p xml:lang="de">
       Hören Sie Ihre Lieblingsmusik, ohne einen Browser zu verwenden.
+    </p>
+    <p xml:lang="fr">
+      Écoutez vos musiques favorites sans publicités et créez vos playlists locales sans avoir besoin d’un compte.
     </p>
   </description>
   <screenshots>

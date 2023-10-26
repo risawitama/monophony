@@ -10,41 +10,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: monophony/frontend/pages/results_page.py:20
 #: monophony/frontend/pages/results_page.py:81
 #: monophony/frontend/pages/results_page.py:21
+#: monophony/frontend/pages/artist_page.py:20
 msgid "No Results"
 msgstr "Aucun résultat"
 
 #: monophony/frontend/pages/results_page.py:90
 #: monophony/frontend/pages/results_page.py:91
+#: monophony/frontend/pages/results_page.py:72
 msgid "Top Result"
 msgstr "Résultat en tête"
 
 #: monophony/frontend/pages/results_page.py:91
 #: monophony/frontend/pages/results_page.py:92
+#: monophony/frontend/pages/results_page.py:73
 msgid "Songs"
 msgstr "Titres"
 
 #: monophony/frontend/pages/results_page.py:92
 #: monophony/frontend/pages/results_page.py:93
+#: monophony/frontend/pages/results_page.py:74
+#: monophony/frontend/pages/artist_page.py:77
 msgid "Albums"
 msgstr "Albums"
 
 #: monophony/frontend/pages/results_page.py:93
 #: monophony/frontend/pages/results_page.py:94
+#: monophony/frontend/pages/results_page.py:75
 msgid "Videos"
 msgstr "Vidéos"
 
 #: monophony/frontend/pages/results_page.py:94
 #: monophony/frontend/pages/results_page.py:95
+#: monophony/frontend/pages/results_page.py:76
+#: monophony/frontend/pages/artist_page.py:78
 msgid "Community Playlists"
 msgstr "Playlists de la communauté"
 
 #: monophony/frontend/pages/results_page.py:95
 #: monophony/frontend/pages/results_page.py:96
+#: monophony/frontend/pages/results_page.py:77
 msgid "Artists"
 msgstr "Artistes"
 
@@ -58,6 +67,11 @@ msgstr "Artistes"
 #: monophony/frontend/pages/results_page.py:116
 #: monophony/frontend/pages/results_page.py:124
 #: monophony/frontend/pages/results_page.py:132
+#: monophony/frontend/pages/results_page.py:81
+#: monophony/frontend/pages/results_page.py:89
+#: monophony/frontend/pages/results_page.py:97
+#: monophony/frontend/pages/results_page.py:105
+#: monophony/frontend/pages/results_page.py:113
 msgid "More"
 msgstr "Plus"
 
@@ -89,6 +103,7 @@ msgstr "Joué récemment"
 
 #: monophony/frontend/windows/main_window.py:44
 #: monophony/frontend/windows/main_window.py:45
+#: monophony/frontend/windows/main_window.py:46
 msgid "Go back"
 msgstr "Retour"
 
@@ -98,27 +113,37 @@ msgstr "À propos"
 
 #: monophony/frontend/windows/main_window.py:54
 #: monophony/frontend/windows/main_window.py:64
+#: monophony/frontend/windows/main_window.py:65
+#: monophony/frontend/windows/main_window.py:66
 msgid "Search for Content..."
 msgstr "Rechercher du contenu…"
 
 #: monophony/frontend/windows/main_window.py:138
 #: monophony/frontend/windows/main_window.py:148
+#: monophony/frontend/windows/main_window.py:149
+#: monophony/frontend/windows/main_window.py:150
 msgid "translator-credits"
 msgstr "Irénée Thirion"
 
 #: monophony/frontend/windows/main_window.py:174
 #: monophony/frontend/windows/main_window.py:191
+#: monophony/frontend/windows/main_window.py:192
+#: monophony/frontend/windows/main_window.py:193
 #, python-brace-format
 msgid "Deleted \"{playlist_name}\""
 msgstr "Supprimer « {playlist_name} »"
 
 #: monophony/frontend/windows/main_window.py:177
 #: monophony/frontend/windows/main_window.py:194
+#: monophony/frontend/windows/main_window.py:195
+#: monophony/frontend/windows/main_window.py:196
 msgid "Undo"
 msgstr "Annuler"
 
 #: monophony/frontend/windows/main_window.py:199
 #: monophony/frontend/windows/main_window.py:222
+#: monophony/frontend/windows/main_window.py:223
+#: monophony/frontend/windows/main_window.py:224
 msgid "Added"
 msgstr "Ajouté"
 
@@ -126,6 +151,8 @@ msgstr "Ajouté"
 #: monophony/frontend/popovers/song_popover.py:36
 #: monophony/frontend/widgets/player.py:183
 #: monophony/frontend/widgets/player.py:167
+#: monophony/frontend/widgets/player.py:187
+#: monophony/frontend/widgets/player.py:188
 msgid "Add to..."
 msgstr "Ajouter à…"
 
@@ -172,21 +199,29 @@ msgstr "Télécharger"
 #: monophony/frontend/popovers/song_popover.py:42
 #: monophony/frontend/widgets/player.py:195
 #: monophony/frontend/widgets/player.py:179
+#: monophony/frontend/widgets/player.py:199
+#: monophony/frontend/widgets/player.py:200
 msgid "Show Artist"
 msgstr "Afficher l’artiste"
 
 #: monophony/frontend/widgets/player.py:82
 #: monophony/frontend/widgets/player.py:66
+#: monophony/frontend/widgets/player.py:76
+#: monophony/frontend/widgets/player.py:77
 msgid "Toggle pause"
 msgstr "Mettre en pause"
 
 #: monophony/frontend/widgets/player.py:86
 #: monophony/frontend/widgets/player.py:70
+#: monophony/frontend/widgets/player.py:89
+#: monophony/frontend/widgets/player.py:90
 msgid "Next song"
 msgstr "Titre suivant"
 
 #: monophony/frontend/widgets/player.py:91
 #: monophony/frontend/widgets/player.py:75
+#: monophony/frontend/widgets/player.py:94
+#: monophony/frontend/widgets/player.py:95
 msgid "Previous song"
 msgstr "Titre précédent"
 
@@ -196,31 +231,43 @@ msgstr "Titre précédent"
 #: monophony/frontend/widgets/player.py:82
 #: monophony/frontend/rows/importable_group_row.py:17
 #: monophony/frontend/rows/external_group_row.py:24
+#: monophony/frontend/widgets/player.py:101
+#: monophony/frontend/widgets/player.py:102
 msgid "More actions"
 msgstr "Plus d’actions"
 
 #: monophony/frontend/widgets/player.py:189
 #: monophony/frontend/widgets/player.py:173
+#: monophony/frontend/widgets/player.py:193
+#: monophony/frontend/widgets/player.py:194
 msgid "Show Queue"
 msgstr "Afficher la file d’attente"
 
 #: monophony/frontend/widgets/player.py:203
 #: monophony/frontend/widgets/player.py:187
+#: monophony/frontend/widgets/player.py:207
+#: monophony/frontend/widgets/player.py:208
 msgid "Normal Playback"
 msgstr "Lecture normale"
 
 #: monophony/frontend/widgets/player.py:210
 #: monophony/frontend/widgets/player.py:194
+#: monophony/frontend/widgets/player.py:214
+#: monophony/frontend/widgets/player.py:215
 msgid "Radio Mode"
 msgstr "Mode radio"
 
 #: monophony/frontend/widgets/player.py:220
 #: monophony/frontend/widgets/player.py:204
+#: monophony/frontend/widgets/player.py:224
+#: monophony/frontend/widgets/player.py:225
 msgid "Repeat Song"
 msgstr "Répéter le titre"
 
 #: monophony/frontend/widgets/player.py:230
 #: monophony/frontend/widgets/player.py:214
+#: monophony/frontend/widgets/player.py:234
+#: monophony/frontend/widgets/player.py:235
 msgid "Shuffle"
 msgstr "Mélanger"
 
@@ -277,10 +324,12 @@ msgid "Searching..."
 msgstr "Rechercher…"
 
 #: monophony/frontend/pages/results_page.py:62
+#: monophony/frontend/pages/artist_page.py:30
 msgid "Loading..."
 msgstr "Chargement…"
 
 #: monophony/frontend/pages/results_page.py:68
+#: monophony/frontend/pages/artist_page.py:56
 msgid "Artist Not Found"
 msgstr "Artiste non trouvé"
 
@@ -289,10 +338,12 @@ msgid "Loading Library..."
 msgstr "Chargement de la bibliothèque…"
 
 #: monophony/frontend/windows/main_window.py:50
+#: monophony/frontend/windows/main_window.py:51
 msgid "Import Playlist"
-msgstr "Importer la playlist"
+msgstr "Importer une playlist"
 
 #: monophony/frontend/windows/main_window.py:54
+#: monophony/frontend/windows/main_window.py:55
 msgid "About Monophony"
 msgstr "À propos de Monophony"
 
@@ -350,6 +401,38 @@ msgstr "Externe"
 msgid "Parsing Results..."
 msgstr "Analyse des résultats…"
 
+#: monophony/frontend/pages/artist_page.py:76
+msgid "Other"
+msgstr "Autre"
+
+#: monophony/frontend/pages/artist_page.py:101
+msgid "All Songs"
+msgstr "Tous les titres"
+
+#: monophony/frontend/pages/artist_page.py:107
+msgid "All Videos"
+msgstr "Toutes les vidéos"
+
+#: monophony/frontend/rows/external_group_row.py:31
+msgid "Synchronized"
+msgstr "Synchronisé"
+
+#: monophony/frontend/widgets/player.py:56
+msgid "Volume"
+msgstr "Volume"
+
+#: monophony/frontend/windows/import_window.py:33
+msgid "As Synchronized Playlist"
+msgstr "Playlist synchronisée"
+
+#: monophony/frontend/windows/import_window.py:34
+msgid "As Editable Playlist"
+msgstr "Playlist modifiable"
+
+#: monophony/frontend/windows/main_window.py:60
+msgid "Primary Menu"
+msgstr "Menu principal"
+
 #~ msgid "Donate"
 #~ msgstr "Faire un don"
 
@@ -361,9 +444,6 @@ msgstr "Analyse des résultats…"
 
 #~ msgid "Add to playlist"
 #~ msgstr "Ajouter à la playlist"
-
-#~ msgid "Volume"
-#~ msgstr "Volume"
 
 #~ msgid "Loop"
 #~ msgstr "Jouer en boucle"
