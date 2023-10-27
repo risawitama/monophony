@@ -11,7 +11,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 		self.player = player
 		self.group = group
 
-		if 'author' in self.group:
+		if 'author' in self.group and self.group['author'] is not None:
 			self.set_subtitle(GLib.markup_escape_text(self.group['author'], -1))
 
 		self.set_title(GLib.markup_escape_text(
