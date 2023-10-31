@@ -1,8 +1,9 @@
 [tool.ruff]
 builtins = ['_']
 extend-ignore = ['E4', 'E74', 'E722']
-extend-select = ['ARG', 'Q']
-#tab_size = 4
+extend-select = ['ARG', 'Q', 'E5']
+line-length = 88
+indent-width = 4
 
 [tool.ruff.flake8-quotes]
 inline-quotes = 'single'
