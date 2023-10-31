@@ -326,7 +326,6 @@ class MonophonyPlayer(Gtk.Box):
 			else:
 				self.btn_pause.set_icon_name('media-playback-pause-symbolic')
 		else:
-			self.scl_progress.set_value(0)
 			self.window.player_revealer.set_reveal_child(True)
 
 		return True
