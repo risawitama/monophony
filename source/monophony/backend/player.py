@@ -1,4 +1,4 @@
-import random
+import random, time
 
 import monophony.backend.cache
 import monophony.backend.history
@@ -26,6 +26,11 @@ class Player:
 		self.index = 0
 		self.queue = []
 		self.recent_songs = []
+		self.next_fetch_lock = GLib.Mutex()
+		self.next_stream_url = ''
+		self.next_expected_id = ''
+		self.next_fetch_time = 0
+		self.next_random_index = -1
 		self.last_progress = 0
 		self.mode = int(
 			monophony.backend.settings.get_value('mode', PlaybackMode.NORMAL)
@@ -136,6 +141,49 @@ class Player:
 
 		GLib.Thread.new(None, self.next_song)
 
+	### --- MISC --- ###
+
+	def fetch_next_song_url(self):
+		self.lock.lock()
+		if self.mode == PlaybackMode.SHUFFLE:
+			if self.next_random_index != -1:
+				i = self.next_random_index
+			else:
+				self.lock.unlock()
+				return
+		elif self.index < len(self.queue):
+			i = self.index + 1
+		song_id = self.queue[i]['id']
+		print('Fetching stream URL for predicted song', song_id)
+		self.lock.unlock()
+
+		self.next_fetch_lock.lock()
+		url = monophony.backend.yt.get_song_uri(song_id)
+		if url:
+			self.next_expected_id = song_id
+			self.next_stream_url = url
+			self.next_fetch_time = time.time()
+
+		self.next_fetch_lock.unlock()
+
+	def choose_next_random_song(self):
+		self.lock.lock()
+		self.next_random_index = -1
+		if len(self.queue) > 1:
+			for s in self.queue:
+				if s['id'] not in self.recent_songs:
+					break
+			else: # nobreak
+				if self.recent_songs:
+					self.recent_songs = [self.recent_songs[-1]]
+
+			song = random.choice([
+				s for s in self.queue if s['id'] not in self.recent_songs
+			])
+			self.next_random_index = self.queue.index(song)
+
+		self.lock.unlock()
+
 	### --- PLAYBACK CONTROLS --- ###
 
 	def play_song(self, song: dict, lock: bool=False, resume: bool=False):
@@ -153,7 +201,28 @@ class Player:
 		monophony.backend.history.add_song(song)
 		self.playbin.set_state(Gst.State.READY)
 
+		print('Attempting to use song cache')
 		uri = monophony.backend.cache.get_song_uri(song['id'])
+
+		if not uri:
+			print('Attempting to use prepared stream URL')
+			if self.next_fetch_lock.trylock():
+				if self.next_stream_url:
+					if time.time() - self.next_fetch_time < 60 * 5:
+						if song['id'] == self.next_expected_id:
+							uri = self.next_stream_url
+							print('Using prepared stream URL for predicted song')
+						else:
+							print('Predicted song ID is incorrect')
+					else:
+						print('Predicted song stream URL is too old')
+				else:
+					print('No stream URL prepeared')
+
+				self.next_fetch_lock.unlock()
+			else:
+				print('Predicted song stream URL is not yet ready')
+
 		if not uri:
 			while True:
 				uri = monophony.backend.yt.get_song_uri(song['id'])
@@ -170,6 +239,10 @@ class Player:
 		self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
+
+		GLib.Thread.new(None, self.fetch_next_song_url)
+		if self.mode == PlaybackMode.SHUFFLE:
+			GLib.Thread.new(None, self.choose_next_random_song)
 
 		if lock:
 			self.lock.unlock()
@@ -210,18 +283,9 @@ class Player:
 		song = None
 		if self.mode == PlaybackMode.LOOP and not ignore_loop:
 			song = self.queue[self.index]
-		elif self.mode == PlaybackMode.SHUFFLE and queue_length > 1:
-			for s in self.queue:
-				if s['id'] not in self.recent_songs:
-					break
-			else: # nobreak
-				if self.recent_songs:
-					self.recent_songs = [self.recent_songs[-1]]
-
-			song = random.choice([
-				s for s in self.queue if s['id'] not in self.recent_songs
-			])
-			self.index = self.queue.index(song)
+		elif self.mode == PlaybackMode.SHUFFLE and self.next_random_index != -1:
+			song = self.queue[self.next_random_index]
+			self.index = self.next_random_index
 		elif queue_length - 1 > self.index :
 			self.index += 1
 			song = self.queue[self.index]
@@ -294,6 +358,10 @@ class Player:
 					self.next_song(True, lock=False)
 				break
 
+		GLib.Thread.new(None, self.fetch_next_song_url)
+		if self.mode == PlaybackMode.SHUFFLE:
+			GLib.Thread.new(None, self.choose_next_random_song)
+
 		self.lock.unlock()
 
 	def move_song(self, from_i: int, to_i: int):
@@ -313,6 +381,10 @@ class Player:
 		elif from_i > self.index and to_i <= self.index:
 			self.index += 1
 
+		GLib.Thread.new(None, self.fetch_next_song_url)
+		if self.mode == PlaybackMode.SHUFFLE:
+			GLib.Thread.new(None, self.choose_next_random_song)
+
 		self.lock.unlock()
 
 	def queue_song(self, song: dict):
@@ -323,6 +395,11 @@ class Player:
 			self.play_song(song)
 
 		self.queue.append(song)
+
+		GLib.Thread.new(None, self.fetch_next_song_url)
+		if self.mode == PlaybackMode.SHUFFLE:
+			GLib.Thread.new(None, self.choose_next_random_song)
+
 		self.lock.unlock()
 
 	def seek(self, target: float):
