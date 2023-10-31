@@ -42,7 +42,9 @@ class Player:
 		self.playbin.get_bus().add_signal_watch()
 		self.playbin.get_bus().connect('message::error', self._on_bus_error)
 		self.playbin.get_bus().connect('message::stream-start', self._on_song_start)
-		self.playbin.get_bus().connect('message::eos', self._on_song_end)
+		self.playbin.get_bus().connect(
+			'message::eos', lambda *_: GLib.Thread.new(None, self._on_song_end)
+		)
 
 	### --- UTILITY METHODS --- ###
 
@@ -113,6 +115,7 @@ class Player:
 	def _on_bus_error(self, _, err):
 		print('Playback error:', err.parse_error().gerror.message)
 		self.last_progress = self.playbin.query_position(Gst.Format.TIME)[1]
+		print('Failed at', self.last_progress)
 		GLib.Thread.new(
 			None,
 			self.play_song,
@@ -124,37 +127,42 @@ class Player:
 	def _on_song_start(self, _bus, _msg):
 		self.lock.lock()
 
-		if self.last_progress >= 0:
+		if self.last_progress > 0:
 			print('Seeking to', self.last_progress)
 			self.playbin.seek_simple(
 				Gst.Format.TIME,
-				Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT | Gst.SeekFlags.ACCURATE,
+				Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE,
 				self.last_progress
 			)
 
 		self.last_progress = 0
 		self.lock.unlock()
 
-	def _on_song_end(self, *_):
+	def _on_song_end(self):
+		self.lock.lock()
 		if self.playbin.get_bus().have_pending():
+			self.lock.unlock()
 			return
 
-		GLib.Thread.new(None, self.next_song)
+		print('Song has ended')
+		self.next_song(lock=False)
+		self.lock.unlock()
 
 	### --- MISC --- ###
 
 	def fetch_next_song_url(self):
 		self.lock.lock()
+		i = None
 		if self.mode == PlaybackMode.SHUFFLE:
 			if self.next_random_index != -1:
 				i = self.next_random_index
-			else:
-				self.lock.unlock()
-				return
-		elif self.index < len(self.queue):
+		elif self.index < len(self.queue) - 1:
 			i = self.index + 1
+		if i is None:
+			self.lock.unlock()
+			return
 		song_id = self.queue[i]['id']
-		print('Fetching stream URL for predicted song', song_id)
+		print(f'Fetching stream URL for predicted song {song_id}...')
 		self.lock.unlock()
 
 		self.next_fetch_lock.lock()
@@ -164,10 +172,14 @@ class Player:
 			self.next_stream_url = url
 			self.next_fetch_time = time.time()
 
+		print('Done fetching')
 		self.next_fetch_lock.unlock()
 
-	def choose_next_random_song(self):
-		self.lock.lock()
+	def choose_next_random_song(self, lock: bool=True):
+		if lock:
+			self.lock.lock()
+
+		print('Picking next random song...')
 		self.next_random_index = -1
 		if len(self.queue) > 1:
 			for s in self.queue:
@@ -182,7 +194,9 @@ class Player:
 			])
 			self.next_random_index = self.queue.index(song)
 
-		self.lock.unlock()
+		print('Done picking')
+		if lock:
+			self.lock.unlock()
 
 	### --- PLAYBACK CONTROLS --- ###
 
@@ -201,11 +215,11 @@ class Player:
 		monophony.backend.history.add_song(song)
 		self.playbin.set_state(Gst.State.READY)
 
-		print('Attempting to use song cache')
+		print('Attempting to get song from cache...')
 		uri = monophony.backend.cache.get_song_uri(song['id'])
 
 		if not uri:
-			print('Attempting to use prepared stream URL')
+			print('Attempting to use prepared stream URL...')
 			if self.next_fetch_lock.trylock():
 				if self.next_stream_url:
 					if time.time() - self.next_fetch_time < 60 * 5:
@@ -213,17 +227,18 @@ class Player:
 							uri = self.next_stream_url
 							print('Using prepared stream URL for predicted song')
 						else:
-							print('Predicted song ID is incorrect')
+							print('Predicted song ID is incorrect!')
 					else:
-						print('Predicted song stream URL is too old')
+						print('Predicted song stream URL is too old!')
 				else:
-					print('No stream URL prepeared')
+					print('No stream URL prepeared!')
 
 				self.next_fetch_lock.unlock()
 			else:
-				print('Predicted song stream URL is not yet ready')
+				print('Predicted song stream URL is not yet ready!')
 
 		if not uri:
+			print('Fetching stream from YT...')
 			while True:
 				uri = monophony.backend.yt.get_song_uri(song['id'])
 				if uri is not None:
@@ -233,6 +248,7 @@ class Player:
 						self.lock.unlock()
 					return
 
+		print('Starting playback')
 		self.playbin.set_property('uri', uri)
 		self.playbin.set_state(Gst.State.PLAYING)
 		self.mpris_server.unpublish()
@@ -240,9 +256,10 @@ class Player:
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
 
-		GLib.Thread.new(None, self.fetch_next_song_url)
+		self.next_random_index = -1
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
+		GLib.Thread.new(None, self.fetch_next_song_url)
 
 		if lock:
 			self.lock.unlock()
@@ -279,6 +296,9 @@ class Player:
 		if lock and not self.lock.trylock():
 			return
 
+		if self.next_random_index == -1:
+			self.choose_next_random_song(lock=False)
+
 		queue_length = len(self.queue)
 		song = None
 		if self.mode == PlaybackMode.LOOP and not ignore_loop:
@@ -286,7 +306,7 @@ class Player:
 		elif self.mode == PlaybackMode.SHUFFLE and self.next_random_index != -1:
 			song = self.queue[self.next_random_index]
 			self.index = self.next_random_index
-		elif queue_length - 1 > self.index :
+		elif queue_length - 1 > self.index:
 			self.index += 1
 			song = self.queue[self.index]
 
@@ -358,9 +378,9 @@ class Player:
 					self.next_song(True, lock=False)
 				break
 
-		GLib.Thread.new(None, self.fetch_next_song_url)
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
+		GLib.Thread.new(None, self.fetch_next_song_url)
 
 		self.lock.unlock()
 
@@ -381,9 +401,9 @@ class Player:
 		elif from_i > self.index and to_i <= self.index:
 			self.index += 1
 
-		GLib.Thread.new(None, self.fetch_next_song_url)
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
+		GLib.Thread.new(None, self.fetch_next_song_url)
 
 		self.lock.unlock()
 
@@ -396,9 +416,9 @@ class Player:
 
 		self.queue.append(song)
 
-		GLib.Thread.new(None, self.fetch_next_song_url)
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
+		GLib.Thread.new(None, self.fetch_next_song_url)
 
 		self.lock.unlock()
 
