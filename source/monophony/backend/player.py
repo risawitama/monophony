@@ -156,6 +156,8 @@ class Player:
 		if self.mode == PlaybackMode.SHUFFLE:
 			if self.next_random_index != -1:
 				i = self.next_random_index
+		elif self.mode == PlaybackMode.LOOP:
+			i = self.index
 		elif self.index < len(self.queue) - 1:
 			i = self.index + 1
 		if i is None:
