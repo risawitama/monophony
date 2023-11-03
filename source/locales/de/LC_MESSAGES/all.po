@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4\n"
 
 #: monophony/frontend/pages/results_page.py:20
 #: monophony/frontend/pages/results_page.py:81
@@ -414,6 +414,7 @@ msgid "All Videos"
 msgstr "Alle Videos"
 
 #: monophony/frontend/rows/external_group_row.py:31
+#: monophony/frontend/windows/import_window.py:33
 msgid "Synchronized"
 msgstr "Abgeglichen"
 
@@ -432,6 +433,10 @@ msgstr "Als bearbeitbare Wiedergabeliste"
 #: monophony/frontend/windows/main_window.py:60
 msgid "Primary Menu"
 msgstr "Primäres Menü"
+
+#: monophony/frontend/windows/import_window.py:34
+msgid "Editable"
+msgstr "Bearbeitbar"
 
 #~ msgid "Delete Playlist?"
 #~ msgstr "Wiedergabeliste löschen?"
