@@ -10,11 +10,11 @@ These packages are maintained by project members.
 
 These packages are maintained by third parties. Install at your own risk.
 
-| Repository | Package |
-| - | - |
-| Arch User Repository | [monophony](https://aur.archlinux.org/packages/monophony)
-| Nixpkgs | [monophony](https://search.nixos.org/packages?channel=unstable&show=monophony&type=packages)
-| Snap | [monophony](https://snapcraft.io/monophony)
+| Repository | Package | Version |
+| - | - | - |
+| Arch User Repository | [monophony](https://aur.archlinux.org/packages/monophony) | ![](https://repology.org/badge/version-for-repo/aur/monophony.svg?header=) |
+| Nixpkgs | [monophony](https://search.nixos.org/packages?channel=unstable&show=monophony&type=packages) | ![](https://repology.org/badge/version-for-repo/nix_unstable/monophony.svg?header=) |
+| Snap | [monophony](https://snapcraft.io/monophony) | N/A |
 
 ## Building from source
 
