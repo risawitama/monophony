@@ -13,6 +13,7 @@ These packages are maintained by third parties. Install at your own risk.
 | Repository | Package |
 | - | - |
 | Arch User Repository | [monophony](https://aur.archlinux.org/packages/monophony)
+| Nixpkgs | [monophony](https://search.nixos.org/packages?channel=unstable&show=monophony&type=packages)
 | Snap | [monophony](https://snapcraft.io/monophony)
 
 ## Building from source
