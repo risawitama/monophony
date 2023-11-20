@@ -14,7 +14,7 @@ These packages are maintained by third parties. Install at your own risk.
 | - | - | - |
 | Arch User Repository | [monophony](https://aur.archlinux.org/packages/monophony) | ![](https://repology.org/badge/version-for-repo/aur/monophony.svg?header=) |
 | Nixpkgs | [monophony](https://search.nixos.org/packages?channel=unstable&show=monophony&type=packages) | ![](https://repology.org/badge/version-for-repo/nix_unstable/monophony.svg?header=) |
-| Snap | [monophony](https://snapcraft.io/monophony) | N/A |
+| Snap | [monophony](https://snapcraft.io/monophony) | ![](https://img.shields.io/badge/N%2FA-grey) |
 
 ## Building from source
 
