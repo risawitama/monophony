@@ -4,10 +4,9 @@ import monophony.backend.player
 import monophony.backend.playlists
 import monophony.backend.settings
 from monophony import __version__, APP_ID
-from monophony.frontend.pages.artist_page import MonophonyArtistPage
-from monophony.frontend.pages.library_page import MonophonyLibraryPage
-from monophony.frontend.pages.queue_page import MonophonyQueuePage
-from monophony.frontend.pages.results_page import MonophonyResultsPage
+from monophony.frontend.tabs.library_tab import MonophonyLibraryTab
+from monophony.frontend.tabs.queue_tab import MonophonyQueueTab
+from monophony.frontend.tabs.search_tab import MonophonySearchTab
 from monophony.frontend.widgets.player import MonophonyPlayer
 from monophony.frontend.windows.add_window import MonophonyAddWindow
 from monophony.frontend.windows.import_window import MonophonyImportWindow
@@ -15,7 +14,7 @@ from monophony.frontend.windows.import_window import MonophonyImportWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyMainWindow(Adw.ApplicationWindow):
@@ -31,49 +30,40 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.removed_playlists = []
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
-		self.stack = Adw.Leaflet()
-		self.stack.set_can_navigate_forward(False)
-		self.stack.set_can_navigate_back(False)
-		self.stack.set_can_unfold(False)
-		pge_library = MonophonyLibraryPage(self.player)
-		self.stack.append(pge_library)
-		self.stack.set_visible_child(pge_library)
+		self.stack = Adw.ViewStack()
+		self.stack.add_titled_with_icon(
+			MonophonyLibraryTab(self.player),
+			'library',
+			_('Library'),
+			'emblem-music-symbolic'
+		)
+		self.stack.add_titled_with_icon(
+			MonophonySearchTab(self.player),
+			'search',
+			_('Search'),
+			'system-search-symbolic'
+		)
+		self.stack.add_titled_with_icon(
+			MonophonyQueueTab(self.player),
+			'queue',
+			_('Queue'),
+			'view-list-symbolic'
+		)
+		self.stack.set_visible_child_name('library')
 
 		self.toaster = Adw.ToastOverlay.new()
 		self.toaster.set_child(self.stack)
 
-		self.btn_back = Gtk.Button.new_from_icon_name('go-previous-symbolic')
-		self.btn_back.set_tooltip_text(_('Go back'))
-		self.btn_back.set_visible(False)
-		self.btn_back.connect('clicked', self._on_back_clicked)
+		btn_about = Gtk.Button.new_from_icon_name('help-about-symbolic')
+		btn_about.set_tooltip_text(_('About'))
+		btn_about.connect('clicked', lambda _b: self._on_about_clicked())
 
-		mnu_main = Gio.Menu()
-		mnu_main.append(_('Import Playlist'), 'import-custom-playlist')
-		self.install_action(
-			'import-custom-playlist', None, (lambda w, _a, _t: w._on_import_clicked())
-		)
-		mnu_main.append(_('About Monophony'), 'about-app')
-		self.install_action(
-			'about-app', None, (lambda w, _a, _t: w._on_about_clicked())
-		)
-		btn_menu = Gtk.MenuButton()
-		btn_menu.set_tooltip_text(_('Primary Menu'))
-		btn_menu.set_primary(True)
-		btn_menu.set_icon_name('open-menu-symbolic')
-		btn_menu.set_menu_model(mnu_main)
-
-		self.ent_search = Gtk.SearchEntry()
-		self.ent_search.set_property('placeholder-text', _('Search for Content...'))
-		self.ent_search.set_hexpand(True)
-		self.ent_search.set_halign(Gtk.Align.FILL)
-		self.ent_search.connect('activate', self._on_search)
-		clm_search = Adw.Clamp.new()
-		clm_search.set_child(self.ent_search)
+		switcher = Adw.ViewSwitcher()
+		switcher.set_stack(self.stack)
 
 		header_bar = Adw.HeaderBar()
-		header_bar.pack_start(self.btn_back)
-		header_bar.set_title_widget(clm_search)
-		header_bar.pack_end(btn_menu)
+		header_bar.set_title_widget(switcher)
+		header_bar.pack_start(btn_about)
 
 		self.player_revealer = Gtk.Revealer()
 		self.player_revealer.set_property('overflow', Gtk.Overflow.VISIBLE)
@@ -90,7 +80,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			'quit-app', None, (lambda w, *_: w.close())
 		)
 		self.install_action(
-			'focus-search', None, (lambda w, *_: w.ent_search.grab_focus())
+			'focus-search',
+			None,
+			(lambda w, *_: w.stack.set_visible_child_name('search'))
 		)
 		self.install_action(
 			'playlist-delete-undo', None, (lambda w, *_: w._on_undo_deletion())
@@ -107,32 +99,19 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 		self.stack.append(widget)
 		self.stack.navigate(Adw.NavigationDirection.FORWARD)
-		self.btn_back.set_visible(True)
 
 	def _on_quit(self):
 		size = self.get_default_size()
 		monophony.backend.settings.set_value('window-width', size.width)
 		monophony.backend.settings.set_value('window-height', size.height)
 
-	def _on_search(self, ent: Gtk.Entry):
-		self.append_page(MonophonyResultsPage(self.player, ent.get_text()))
-
-	def _on_show_more(self, query: str, category: str):
-		self.append_page(
-			MonophonyResultsPage(self.player, query=query, filter_=category)
-		)
+	def _on_show_more(self, query: str, filter_: str):
+		self.stack.set_visible_child_name('search')
+		self.stack.get_visible_child().show_more(query, filter_)
 
 	def _on_show_artist(self, artist: str):
-		self.append_page(MonophonyArtistPage(self.player, artist))
-
-	def _on_show_queue(self):
-		self.append_page(MonophonyQueuePage(self.player))
-
-	def _on_back_clicked(self, _b):
-		self.stack.navigate(Adw.NavigationDirection.BACK)
-		if not self.stack.get_adjacent_child(Adw.NavigationDirection.BACK):
-			self.btn_back.set_visible(False)
-			self.ent_search.set_text('')
+		self.stack.set_visible_child_name('search')
+		self.stack.get_visible_child().show_artist(artist)
 
 	def _on_about_clicked(self):
 		win_about = Adw.AboutWindow.new()
@@ -145,7 +124,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			'ytmusicapi', 'Copyright © 2020 sigma67', Gtk.License.MIT_X11
 		)
 		win_about.add_legal_section(
-			'mpris_server','Copyright © Alex DeLorenzo', Gtk.License.AGPL_3_0
+			'mpris_server', 'Copyright © Alex DeLorenzo', Gtk.License.AGPL_3_0
 		)
 		win_about.set_translator_credits(_('translator-credits'))
 		win_about.set_issue_url('https://gitlab.com/zehkira/monophony/-/issues')

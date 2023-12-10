@@ -1,7 +1,7 @@
 import monophony.backend.yt
 from monophony.frontend.rows.importable_group_row import MonophonyImportableGroupRow
 from monophony.frontend.rows.locked_group_row import MonophonyLockedGroupRow
-from monophony.frontend.widgets.progress_bar import MonophonyProgressBar
+from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 
 import gi
 gi.require_version('Adw', '1')
@@ -27,14 +27,9 @@ class MonophonyArtistPage(Gtk.Box):
 		self.pge_results.set_visible(False)
 		self.append(self.pge_results)
 
-		self.bar_loading = MonophonyProgressBar(_('Loading...'))
-		self.bar_loading.target = 2
-		self.bar_loading.set_halign(Gtk.Align.CENTER)
-		self.bar_loading.set_valign(Gtk.Align.CENTER)
-		self.bar_loading.set_vexpand(True)
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
-		self.box_loading.append(self.bar_loading)
+		self.box_loading.append(MonophonyBigSpinner())
 		self.box_loading.set_visible(True)
 		self.append(self.box_loading)
 
@@ -49,9 +44,7 @@ class MonophonyArtistPage(Gtk.Box):
 
 	def do_get_artist(self):
 		self.search_lock.lock()
-		self.bar_loading.progress()
 		results = monophony.backend.yt.get_artist(self.artist)
-		self.bar_loading.progress()
 		if not results:
 			self.pge_status.set_title(_('Artist Not Found'))
 			self.box_loading.set_visible(False)

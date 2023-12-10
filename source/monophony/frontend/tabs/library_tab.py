@@ -3,15 +3,15 @@ import monophony.backend.playlists
 from monophony.frontend.rows.local_group_row import MonophonyLocalGroupRow
 from monophony.frontend.rows.external_group_row import MonophonyExternalGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
-from monophony.frontend.widgets.progress_bar import MonophonyProgressBar
+from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, GObject, Gtk
 
 
-class MonophonyLibraryPage(Gtk.Box):
+class MonophonyLibraryTab(Gtk.Box):
 	def __init__(self, player: object):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
@@ -19,6 +19,7 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.playlist_widgets = []
 		self.recents_widgets = []
 		self.old_recents = []
+		self.loading_lock = GLib.Mutex()
 		self.set_vexpand(True)
 
 		self.box_meta = Adw.PreferencesPage.new()
@@ -27,32 +28,39 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.box_meta.set_valign(Gtk.Align.FILL)
 		self.append(self.box_meta)
 
-		self.pge_status = Adw.StatusPage()
-		self.pge_status.set_vexpand(True)
-		self.pge_status.set_visible(False)
-		self.pge_status.set_valign(Gtk.Align.FILL)
-		self.pge_status.set_icon_name('io.gitlab.zehkira.Monophony')
-		self.pge_status.set_title(_('Your Library is Empty'))
-		self.pge_status.set_description(
-			_('Find songs to play using the search bar above')
-		)
-		self.append(self.pge_status)
-
-		bar_loading = MonophonyProgressBar(_('Loading Library...'))
-		bar_loading.set_halign(Gtk.Align.CENTER)
-		bar_loading.set_valign(Gtk.Align.CENTER)
-		bar_loading.set_vexpand(True)
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
-		self.box_loading.append(bar_loading)
+		self.box_loading.append(MonophonyBigSpinner())
 		self.box_loading.set_visible(True)
 		self.append(self.box_loading)
 
-		self.btn_play = Gtk.Button.new_with_label(_('Play All'))
+		self.box_meta.bind_property(
+			'visible',
+			self.box_loading,
+			'visible',
+			GObject.BindingFlags.SYNC_CREATE |
+			GObject.BindingFlags.INVERT_BOOLEAN |
+			GObject.BindingFlags.BIDIRECTIONAL
+		)
+
+		btn_import = Gtk.Button.new_from_icon_name('list-add-symbolic')
+		btn_import.set_tooltip_text(_('Import playlist'))
+		btn_import.connect(
+			'clicked', lambda _b: self.get_ancestor(Gtk.Window)._on_import_clicked()
+		)
+
+		self.btn_play = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
+		self.btn_play.set_tooltip_text(_('Play all'))
 		self.btn_play.connect('clicked', self._on_play_all)
+
+		box_suffix = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+		box_suffix.set_spacing(5)
+		box_suffix.append(btn_import)
+		box_suffix.append(self.btn_play)
+
 		self.box_playlists = Adw.PreferencesGroup()
 		self.box_playlists.set_title(_('Your Playlists'))
-		self.box_playlists.set_header_suffix(self.btn_play)
+		self.box_playlists.set_header_suffix(box_suffix)
 		self.box_meta.add(self.box_playlists)
 
 		self.box_recents = Adw.PreferencesGroup()
@@ -61,7 +69,9 @@ class MonophonyLibraryPage(Gtk.Box):
 		self.box_meta.add(self.box_recents)
 
 		GLib.Thread.new(
-			None, monophony.backend.playlists.update_external_playlists, bar_loading
+			None,
+			monophony.backend.playlists.update_external_playlists,
+	  		self.loading_lock
 		)
 		GLib.timeout_add(100, self.update)
 
@@ -75,9 +85,9 @@ class MonophonyLibraryPage(Gtk.Box):
 		GLib.Thread.new(None, self.player.play_queue, all_songs, 0)
 
 	def update(self) -> bool:
-		if not self.box_loading.get_last_child().lock.trylock():
+		if not self.loading_lock.trylock():
 			return True
-		self.box_loading.get_last_child().lock.unlock()
+		self.loading_lock.unlock()
 		self.box_loading.set_visible(False)
 
 		new_playlists = monophony.backend.playlists.read_playlists()
@@ -110,8 +120,6 @@ class MonophonyLibraryPage(Gtk.Box):
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
 
-		self.box_playlists.set_visible(len(self.playlist_widgets) > 0)
-
 		# player could be adding to recents at this moment
 		if self.player.is_busy():
 			return True
@@ -131,10 +139,6 @@ class MonophonyLibraryPage(Gtk.Box):
 				self.box_recents.add(widget)
 				self.recents_widgets.append(widget)
 
-		self.box_meta.set_visible(
-			self.box_playlists.get_visible() or self.box_recents.get_visible()
-		)
-		self.pge_status.set_visible(
-			not (self.box_meta.get_visible() or self.box_loading.get_visible())
-		)
+		self.box_recents.set_visible(bool(new_recents))
+
 		return True

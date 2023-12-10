@@ -6,7 +6,7 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Adw, GLib, Gtk
 
 
-class MonophonyQueuePage(Gtk.Box):
+class MonophonyQueueTab(Gtk.Box):
 	def __init__(self, player: object):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
@@ -16,13 +16,21 @@ class MonophonyQueuePage(Gtk.Box):
 		self.queue_widgets = []
 		self.set_vexpand(True)
 
+		self.pge_status = Adw.StatusPage()
+		self.pge_status.set_vexpand(True)
+		self.pge_status.set_valign(Gtk.Align.FILL)
+		self.pge_status.set_icon_name('view-list-symbolic')
+		self.pge_status.set_title(_('Queue Empty'))
+		self.pge_status.set_visible(False)
+
 		self.box_meta = Adw.PreferencesPage.new()
 		self.box_meta.set_vexpand(True)
 		self.box_meta.set_valign(Gtk.Align.FILL)
-		self.append(self.box_meta)
 		self.box_queue = Adw.PreferencesGroup()
-		self.box_queue.set_title(_('Queue'))
 		self.box_meta.add(self.box_queue)
+
+		self.append(self.box_meta)
+		self.append(self.pge_status)
 
 		GLib.timeout_add(100, self.update)
 
@@ -32,6 +40,9 @@ class MonophonyQueuePage(Gtk.Box):
 		if new_queue != self.old_queue or new_index != self.old_index:
 			for widget in self.queue_widgets:
 				self.box_queue.remove(widget)
+
+			self.box_meta.set_visible(bool(new_queue))
+			self.pge_status.set_visible(not bool(new_queue))
 
 			self.queue_widgets = []
 			self.old_queue = new_queue

@@ -129,16 +129,14 @@ def remove_external_playlist(name: str):
 	)
 
 
-def update_external_playlists(loader: object):
-	loader.lock.lock()
+def update_external_playlists(lock: object):
+	lock.lock()
 	lists = read_external_playlists()
-	loader.target = len(lists)
 	for playlist in lists:
 		import_playlist(playlist['title'], playlist['id'], False, True)
-		loader.progress()
 
 	clean_up_playlists()
-	loader.lock.unlock()
+	lock.unlock()
 
 
 def clean_up_playlists():

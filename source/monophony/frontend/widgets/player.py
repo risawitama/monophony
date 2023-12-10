@@ -8,6 +8,17 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
+	playback_icons = {
+		monophony.backend.player.PlaybackMode.NORMAL:
+		'media-playlist-consecutive-symbolic',
+		monophony.backend.player.PlaybackMode.LOOP:
+		'media-playlist-repeat-symbolic',
+		monophony.backend.player.PlaybackMode.SHUFFLE:
+		'media-playlist-shuffle-symbolic',
+		monophony.backend.player.PlaybackMode.RADIO:
+		'io.gitlab.zehkira.Monophony-symbolic',
+	}
+
 	def __init__(self, window: Gtk.Window, player: object):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 		volume = float(monophony.backend.settings.get_value('volume', 1))
@@ -17,7 +28,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.player.set_volume(volume, False)
 
 		box_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-		box_info.set_margin_start(16)
+		box_info.set_margin_start(11)
 		box_info.set_spacing(5)
 		box_info.set_margin_end(5)
 		box_info.set_halign(Gtk.Align.START)
@@ -96,12 +107,12 @@ class MonophonyPlayer(Gtk.Box):
 		btn_prev.connect('clicked', self._on_previous_clicked)
 		btn_prev.set_has_frame(False)
 
-		btn_more = Gtk.MenuButton()
-		btn_more.set_valign(Gtk.Align.CENTER)
-		btn_more.set_icon_name('view-more-symbolic')
-		btn_more.set_tooltip_text(_('More actions'))
-		btn_more.set_create_popup_func(self.build_menu_popup)
-		btn_more.set_has_frame(False)
+		self.btn_mode = Gtk.MenuButton()
+		self.btn_mode.set_valign(Gtk.Align.CENTER)
+		self.btn_mode.set_icon_name(MonophonyPlayer.playback_icons[player.mode])
+		self.btn_mode.set_tooltip_text(_('Playback mode'))
+		self.btn_mode.set_create_popup_func(self.build_menu_popup)
+		self.btn_mode.set_has_frame(False)
 
 		box_controls = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 		box_controls.set_spacing(2)
@@ -113,13 +124,13 @@ class MonophonyPlayer(Gtk.Box):
 		box_controls.append(self.btn_pause)
 		box_controls.append(self.spn_loading)
 		box_controls.append(btn_next)
-		box_controls.append(btn_more)
+		box_controls.append(self.btn_mode)
 
 		box_meta = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 		box_meta.set_margin_top(10)
 		box_meta.set_margin_bottom(10)
 		box_meta.set_margin_start(5)
-		box_meta.set_margin_end(5)
+		box_meta.set_margin_end(8)
 		box_meta.set_valign(Gtk.Align.END)
 		box_meta.set_halign(Gtk.Align.FILL)
 		box_meta.set_hexpand(True)
@@ -181,30 +192,7 @@ class MonophonyPlayer(Gtk.Box):
 		GLib.timeout_add(250, self.update)
 
 	def build_menu_popup(self, btn: Gtk.MenuButton):
-		current_song = self.player.get_current_song()
 		mnu_more = Gio.Menu()
-		if current_song:
-			sec_actions = Gio.Menu()
-			sec_actions.append(_('Add to...'), 'add-song-to')
-			self.window.install_action(
-				'add-song-to',
-				None,
-				lambda w, *_: w._on_add_clicked(current_song)
-			)
-			sec_actions.append(_('Show Queue'), 'show-queue')
-			self.window.install_action(
-				'show-queue',
-				None,
-				lambda w, *_: w._on_show_queue()
-			)
-			sec_actions.append(_('Show Artist'), 'show-artist')
-			self.install_action(
-				'show-artist',
-				None,
-				lambda p, *_: p._on_show_artist_clicked()
-			)
-			mnu_more.append_section(None, sec_actions)
-		sec_settings = Gio.Menu()
 		chk_normal = Gtk.CheckButton.new_with_label(_('Normal Playback'))
 		chk_normal.set_active(
 			self.player.mode == monophony.backend.player.PlaybackMode.NORMAL
@@ -242,11 +230,10 @@ class MonophonyPlayer(Gtk.Box):
 		itm_shuffle.set_attribute_value(
 			'custom',  GLib.Variant.new_string('shuffle')
 		)
-		sec_settings.append_item(itm_normal)
-		sec_settings.append_item(itm_loop)
-		sec_settings.append_item(itm_shuffle)
-		sec_settings.append_item(itm_autoplay)
-		mnu_more.append_section(None, sec_settings)
+		mnu_more.append_item(itm_normal)
+		mnu_more.append_item(itm_loop)
+		mnu_more.append_item(itm_shuffle)
+		mnu_more.append_item(itm_autoplay)
 		pop_menu = Gtk.PopoverMenu()
 		pop_menu.set_menu_model(mnu_more)
 		pop_menu.add_child(chk_normal, 'normal')
@@ -272,24 +259,36 @@ class MonophonyPlayer(Gtk.Box):
 			mode = monophony.backend.player.PlaybackMode.SHUFFLE
 			self.player.mode = mode
 			monophony.backend.settings.set_value('mode', mode)
+			self.btn_mode.set_icon_name(
+				MonophonyPlayer.playback_icons[self.player.mode]
+			)
 
 	def _on_loop_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
 			mode = monophony.backend.player.PlaybackMode.LOOP
 			self.player.mode = mode
 			monophony.backend.settings.set_value('mode', mode)
+			self.btn_mode.set_icon_name(
+				MonophonyPlayer.playback_icons[self.player.mode]
+			)
 
 	def _on_normal_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
 			mode = monophony.backend.player.PlaybackMode.NORMAL
 			self.player.mode = mode
 			monophony.backend.settings.set_value('mode', mode)
+			self.btn_mode.set_icon_name(
+				MonophonyPlayer.playback_icons[self.player.mode]
+			)
 
 	def _on_radio_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
 			mode = monophony.backend.player.PlaybackMode.RADIO
 			self.player.mode = mode
 			monophony.backend.settings.set_value('mode', mode)
+			self.btn_mode.set_icon_name(
+				MonophonyPlayer.playback_icons[self.player.mode]
+			)
 
 	def _on_show_artist_clicked(self):
 		song = self.player.get_current_song()

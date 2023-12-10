@@ -2,7 +2,7 @@ import monophony.backend.yt
 from monophony.frontend.rows.importable_group_row import MonophonyImportableGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
 from monophony.frontend.rows.artist_row import MonophonyArtistRow
-from monophony.frontend.widgets.progress_bar import MonophonyProgressBar
+from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 
 import gi
 gi.require_version('Adw', '1')
@@ -28,13 +28,9 @@ class MonophonyResultsPage(Gtk.Box):
 		self.pge_results.set_visible(False)
 		self.append(self.pge_results)
 
-		bar_loading = MonophonyProgressBar(_('Searching...'))
-		bar_loading.set_halign(Gtk.Align.CENTER)
-		bar_loading.set_valign(Gtk.Align.CENTER)
-		bar_loading.set_vexpand(True)
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
-		self.box_loading.append(bar_loading)
+		self.box_loading.append(MonophonyBigSpinner())
 		self.box_loading.set_visible(bool(query))
 		self.append(self.box_loading)
 
@@ -45,14 +41,16 @@ class MonophonyResultsPage(Gtk.Box):
 		self.search_lock = GLib.Mutex()
 		self.player = player
 
-		GLib.Thread.new(None, self.do_search)
-		GLib.timeout_add(500, self.await_results)
+		if query:
+			GLib.Thread.new(None, self.do_search)
+			GLib.timeout_add(500, self.await_results)
+		else:
+			self.pge_status.set_visible(True)
+			self.pge_status.set_title('')
 
 	def do_search(self):
 		self.search_lock.lock()
-		self.results = monophony.backend.yt.search(
-			self.query, self.filter, self.box_loading.get_last_child()
-		)
+		self.results = monophony.backend.yt.search(self.query, self.filter)
 		self.search_lock.unlock()
 
 	def await_results(self) -> bool:
@@ -78,7 +76,8 @@ class MonophonyResultsPage(Gtk.Box):
 			window = self.get_ancestor(Gtk.Window)
 
 			if not self.filter:
-				btn_more = Gtk.Button.new_with_label(_('More'))
+				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
+				btn_more.set_tooltip_text(_('Show all'))
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -86,7 +85,8 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_songs.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_with_label(_('More'))
+				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
+				btn_more.set_tooltip_text(_('Show all'))
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -94,7 +94,8 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_albums.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_with_label(_('More'))
+				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
+				btn_more.set_tooltip_text(_('Show all'))
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -102,7 +103,8 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_playlists.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_with_label(_('More'))
+				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
+				btn_more.set_tooltip_text(_('Show all'))
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -110,7 +112,8 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_videos.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_with_label(_('More'))
+				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
+				btn_more.set_tooltip_text(_('Show all'))
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
