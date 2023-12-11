@@ -11,11 +11,11 @@ class MonophonySearchTab(Gtk.Box):
 	def __init__(self, player: object):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
-		ent_search = Gtk.SearchEntry()
-		ent_search.set_placeholder_text(_('Search...'))
-		ent_search.set_hexpand(True)
-		ent_search.set_halign(Gtk.Align.FILL)
-		ent_search.connect('activate', lambda e: self._on_search(e.get_text()))
+		self.ent_search = Gtk.SearchEntry()
+		self.ent_search.set_placeholder_text(_('Search...'))
+		self.ent_search.set_hexpand(True)
+		self.ent_search.set_halign(Gtk.Align.FILL)
+		self.ent_search.connect('activate', lambda e: self._on_search(e.get_text()))
 
 		self.btn_back = Gtk.Button.new_from_icon_name('go-previous-symbolic')
 		self.btn_back.set_tooltip_text(_('Go back'))
@@ -25,7 +25,7 @@ class MonophonySearchTab(Gtk.Box):
 		box_search = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
 		box_search.set_spacing(5)
 		box_search.append(self.btn_back)
-		box_search.append(ent_search)
+		box_search.append(self.ent_search)
 
 		clm_search = Adw.Clamp()
 		clm_search.set_child(box_search)
@@ -34,7 +34,7 @@ class MonophonySearchTab(Gtk.Box):
 		search_bar.set_show_close_button(False)
 		search_bar.set_search_mode(True)
 		search_bar.set_child(clm_search)
-		search_bar.set_key_capture_widget(ent_search)
+		search_bar.set_key_capture_widget(self.ent_search)
 		self.append(search_bar)
 
 		self.pge_results = MonophonyResultsPage(player)

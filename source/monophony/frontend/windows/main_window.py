@@ -82,7 +82,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.install_action(
 			'focus-search',
 			None,
-			(lambda w, *_: w.stack.set_visible_child_name('search'))
+			(lambda w, *_: w._on_search())
 		)
 		self.install_action(
 			'playlist-delete-undo', None, (lambda w, *_: w._on_undo_deletion())
@@ -104,6 +104,10 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		size = self.get_default_size()
 		monophony.backend.settings.set_value('window-width', size.width)
 		monophony.backend.settings.set_value('window-height', size.height)
+
+	def _on_search(self):
+		self.stack.set_visible_child_name('search')
+		self.stack.get_visible_child().ent_search.grab_focus()
 
 	def _on_show_more(self, query: str, filter_: str):
 		self.stack.set_visible_child_name('search')
