@@ -8,7 +8,7 @@ import monophony.backend.yt
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstAudio', '1.0')
-from gi.repository import GLib, GObject, Gst, GstAudio
+from gi.repository import GLib, Gst, GstAudio
 
 
 class PlaybackMode:
@@ -18,9 +18,8 @@ class PlaybackMode:
 	RADIO = 3
 
 
-class Player(GObject.GObject):
+class Player:
 	def __init__(self):
-		super().__init__()
 		Gst.init([])
 		self.lock = GLib.Mutex()
 		self.interrupt = False
@@ -110,12 +109,6 @@ class Player(GObject.GObject):
 			GstAudio.StreamVolumeFormat.CUBIC,
 			self.playbin.get_property('volume')
 		)
-
-	### --- SIGNALS --- ###
-
-	@GObject.Signal()
-	def queue_changed(self):
-		return
 
 	### --- EVENT HANDLERS --- ###
 
@@ -288,8 +281,6 @@ class Player(GObject.GObject):
 			self.index += 1
 			self.play_song(song)
 
-		self.emit('queue_changed')
-
 	def toggle_pause(self):
 		if not self.lock.trylock():
 			return
@@ -332,7 +323,6 @@ class Player(GObject.GObject):
 			self.index = 0
 			self.mpris_server.unpublish()
 
-		self.emit('queue_changed')
 		if lock:
 			self.lock.unlock()
 
@@ -354,7 +344,6 @@ class Player(GObject.GObject):
 			song = self.queue[self.index]
 			self.play_song(song)
 
-		self.emit('queue_changed')
 		self.lock.unlock()
 
 	def play_queue(self, queue: list, index: int):
@@ -372,7 +361,6 @@ class Player(GObject.GObject):
 		self.index = index
 		song = queue[index]
 		self.play_song(song)
-		self.emit('queue_changed')
 		self.lock.unlock()
 
 	def unqueue_song(self, song_id: str):
@@ -396,7 +384,6 @@ class Player(GObject.GObject):
 			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 
-		self.emit('queue_changed')
 		self.lock.unlock()
 
 	def move_song(self, from_i: int, to_i: int):
@@ -420,7 +407,6 @@ class Player(GObject.GObject):
 			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 
-		self.emit('queue_changed')
 		self.lock.unlock()
 
 	def queue_song(self, song: dict):
@@ -436,7 +422,6 @@ class Player(GObject.GObject):
 			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 
-		self.emit('queue_changed')
 		self.lock.unlock()
 
 	def seek(self, target: float):
