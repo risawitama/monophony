@@ -21,9 +21,10 @@ class MonophonyQueueTab(Gtk.Box):
 		self.pge_status.set_valign(Gtk.Align.FILL)
 		self.pge_status.set_icon_name('view-list-symbolic')
 		self.pge_status.set_title(_('Queue Empty'))
-		self.pge_status.set_visible(False)
+		self.pge_status.set_visible(True)
 
 		self.box_meta = Adw.PreferencesPage.new()
+		self.box_meta.set_visible(False)
 		self.box_meta.set_vexpand(True)
 		self.box_meta.set_valign(Gtk.Align.FILL)
 		self.box_queue = Adw.PreferencesGroup()
@@ -37,7 +38,8 @@ class MonophonyQueueTab(Gtk.Box):
 	def update(self) -> True:
 		new_queue = self.player.queue.copy()
 		new_index = self.player.index
-		if new_queue != self.old_queue or new_index != self.old_index:
+
+		if new_queue != self.old_queue:
 			for widget in self.queue_widgets:
 				self.box_queue.remove(widget)
 
@@ -45,7 +47,7 @@ class MonophonyQueueTab(Gtk.Box):
 			self.pge_status.set_visible(not bool(new_queue))
 
 			self.queue_widgets = []
-			self.old_queue = new_queue
+			self.old_queue = new_queue.copy()
 			self.old_index = new_index
 			for i, song in enumerate(new_queue):
 				widget = MonophonyQueueSongRow(
@@ -57,5 +59,12 @@ class MonophonyQueueTab(Gtk.Box):
 					widget.add_css_class('current-queue-item')
 				self.box_queue.add(widget)
 				self.queue_widgets.append(widget)
+		elif new_index != self.old_index:
+			self.old_index = new_index
+			for i, widget in enumerate(self.queue_widgets):
+				if i == new_index:
+					widget.add_css_class('current-queue-item')
+				else:
+					widget.remove_css_class('current-queue-item')
 
 		return True
