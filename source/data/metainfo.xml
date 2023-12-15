@@ -15,18 +15,10 @@
   <requires>
     <display_length compare="gt">xsmall</display_length>
   </requires>
-  <summary>Stream music from YouTube</summary>
-  <summary xml:lang="de">Musik von YouTube streamen</summary>
-  <summary xml:lang="fr">Streaming musical depuis YouTube</summary>
+  <summary>Stream music from YouTube Music</summary>
   <description>
     <p>
-      Listen to your favorite music without ads. Create local playlists. No account required.
-    </p>
-    <p xml:lang="de">
-      Hören Sie Ihre Lieblingsmusik ohne Werbung. Erstellen Sie lokale Wiedergabelisten. Kein Konto erforderlich.
-    </p>
-    <p xml:lang="fr">
-      Écoutez vos musiques favorites sans publicités et créez vos playlists locales sans avoir besoin d’un compte.
+      Monophony allows you to listen to music for free and without ads. You can create local playlists or add existing ones to your library. No account required.
     </p>
   </description>
   <screenshots>
