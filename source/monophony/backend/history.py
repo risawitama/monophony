@@ -17,6 +17,10 @@ def add_song(song: dict):
 	write_songs(new_songs)
 
 
+def clear_songs():
+	write_songs([])
+
+
 ### --- UTILITY FUNCTIONS --- ###
 
 

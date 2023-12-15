@@ -62,9 +62,16 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_playlists.set_header_suffix(box_suffix)
 		self.box_meta.add(self.box_playlists)
 
+		btn_clear = Gtk.Button.new_from_icon_name('edit-clear-all-symbolic')
+		btn_clear.set_tooltip_text(_('Clear'))
+		btn_clear.connect(
+			'clicked', lambda _b: monophony.backend.history.clear_songs()
+		)
+
 		self.box_recents = Adw.PreferencesGroup()
 		self.box_recents.set_visible(False)
 		self.box_recents.set_title(_('Recently Played'))
+		self.box_recents.set_header_suffix(btn_clear)
 		self.box_meta.add(self.box_recents)
 
 		GLib.Thread.new(
