@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
   <id>io.gitlab.zehkira.Monophony</id>
-  <metadata_license>FSFAP</metadata_license>
+  <metadata_license>0BSD</metadata_license>
   <project_license>AGPL-3.0-or-later</project_license>
   <name>Monophony</name>
   <developer_name>zehkira</developer_name>
