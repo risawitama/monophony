@@ -4,17 +4,17 @@ import json, os
 ### --- HISTORY FUNCTIONS --- ###
 
 
-def add_search(query: str):
+def add_search(query: str) -> bool:
 	new_searches = read_searches()
 	if query not in new_searches:
-		new_searches.append(query)
-		if len(new_searches) > 5:
+		new_searches.insert(0, query)
+		if len(new_searches) > 3:
 			new_searches = new_searches[1:]
-	else:
-		new_searches.remove(query)
-		new_searches.append(query)
 
-	write_searches(new_searches)
+		write_searches(new_searches)
+		return True
+
+	return False
 
 
 def remove_search(query: str):

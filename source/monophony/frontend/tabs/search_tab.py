@@ -1,5 +1,8 @@
+import monophony.backend.history
+
 from monophony.frontend.pages.artist_page import MonophonyArtistPage
 from monophony.frontend.pages.results_page import MonophonyResultsPage
+from monophony.frontend.widgets.recent_searches import MonophonyRecentSearches
 
 import gi
 gi.require_version('Adw', '1')
@@ -27,8 +30,15 @@ class MonophonySearchTab(Gtk.Box):
 		box_search.append(self.btn_back)
 		box_search.append(self.ent_search)
 
+		self.box_recents = MonophonyRecentSearches(self._on_search)
+
+		box_search_meta = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+		box_search_meta.set_spacing(8)
+		box_search_meta.append(box_search)
+		box_search_meta.append(self.box_recents)
+
 		clm_search = Adw.Clamp()
-		clm_search.set_child(box_search)
+		clm_search.set_child(box_search_meta)
 
 		search_bar = Gtk.SearchBar()
 		search_bar.set_show_close_button(False)
@@ -76,9 +86,12 @@ class MonophonySearchTab(Gtk.Box):
 		self.append(self.pge_detail_results)
 
 	def _on_search(self, text: str):
+		self.ent_search.set_text(text)
 		if not text:
 			return
 
+		if monophony.backend.history.add_search(text):
+			self.box_recents.add_search(text)
 		self.btn_back.set_visible(False)
 		if self.pge_results:
 			self.remove(self.pge_results)
