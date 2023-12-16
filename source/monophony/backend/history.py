@@ -4,6 +4,25 @@ import json, os
 ### --- HISTORY FUNCTIONS --- ###
 
 
+def add_search(query: str):
+	new_searches = read_searches()
+	if query not in new_searches:
+		new_searches.append(query)
+		if len(new_searches) > 5:
+			new_searches = new_searches[1:]
+	else:
+		new_searches.remove(query)
+		new_searches.append(query)
+
+	write_searches(new_searches)
+
+
+def remove_search(query: str):
+	new_searches = read_searches()
+	new_searches.remove(query)
+	write_searches(new_searches)
+
+
 def add_song(song: dict):
 	new_songs = read_songs()
 	if song not in new_songs:
@@ -22,6 +41,32 @@ def clear_songs():
 
 
 ### --- UTILITY FUNCTIONS --- ###
+
+
+def write_searches(searches: list):
+	dir_path = os.getenv(
+		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
+	) + '/monophony'
+	recents_path = dir_path  + '/recent_searches.json'
+
+	try:
+		with open(str(recents_path), 'w') as recents_file:
+			json.dump(searches, recents_file)
+	except FileNotFoundError:
+		os.makedirs(str(dir_path))
+		write_songs(searches)
+
+
+def read_searches() -> list:
+	recents_path = os.getenv(
+		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
+	) + '/monophony/recent_searches.json'
+
+	try:
+		with open(recents_path , 'r') as recents_file:
+			return json.load(recents_file)
+	except OSError:
+		return []
 
 
 def write_songs(songs: list):
