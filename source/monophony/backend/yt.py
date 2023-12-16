@@ -33,8 +33,9 @@ def _parse_results(data: list) -> list:
 					item['author'] = result['artist']
 					item['id'] = result['browseId']
 			except:
-				print('Failed to parse artist result')
+				print('Failed to parse artist result:\033[0;33m')
 				traceback.print_exc()
+				print('\033[0m')
 				continue
 		elif result['resultType'] == 'album':
 			try:
@@ -54,8 +55,9 @@ def _parse_results(data: list) -> list:
 					} for s in album['tracks'] if s['videoId']
 				]
 			except Exception:
-				print('Failed to parse album result')
+				print('Failed to parse album result:\033[0;33m')
 				traceback.print_exc()
+				print('\033[0m')
 				continue
 		elif result['resultType'] == 'playlist':
 			try:
@@ -75,8 +77,9 @@ def _parse_results(data: list) -> list:
 					} for s in album['tracks'] if s['videoId']
 				]
 			except:
-				print('Failed to parse playlist result')
+				print('Failed to parse playlist result:\033[0;33m')
 				traceback.print_exc()
+				print('\033[0m')
 				continue
 		elif result['resultType'] in {'song', 'video'}:
 			try:
@@ -94,8 +97,9 @@ def _parse_results(data: list) -> list:
 				if 'category' in result and result['category'] == 'Songs':
 					item['type'] = 'song'
 			except:
-				print('Failed to parse song/video result')
+				print('Failed to parse song/video result:\033[0;33m')
 				traceback.print_exc()
+				print('\033[0m')
 				continue
 
 		results.append(item)
