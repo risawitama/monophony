@@ -142,6 +142,7 @@ msgid "Cancel"
 msgstr ""
 
 #: monophony/frontend/windows/import_window.py:55
+#: monophony/frontend/tabs/library_tab.py:47
 msgid "Import"
 msgstr ""
 
@@ -178,6 +179,7 @@ msgstr ""
 
 #: monophony/frontend/windows/add_window.py:48
 #: monophony/frontend/tabs/library_tab.py:62
+#: monophony/frontend/tabs/library_tab.py:65
 msgid "Your Playlists"
 msgstr ""
 
@@ -254,10 +256,12 @@ msgid "Top Result"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:71
+#: monophony/frontend/pages/artist_page.py:94
 msgid "Songs"
 msgstr ""
 
 #: monophony/frontend/pages/results_page.py:73
+#: monophony/frontend/pages/artist_page.py:100
 msgid "Videos"
 msgstr ""
 
@@ -278,10 +282,12 @@ msgid "Import playlist"
 msgstr ""
 
 #: monophony/frontend/tabs/library_tab.py:53
+#: monophony/frontend/tabs/library_tab.py:56
 msgid "Play all"
 msgstr ""
 
 #: monophony/frontend/tabs/library_tab.py:68
+#: monophony/frontend/tabs/library_tab.py:77
 msgid "Recently Played"
 msgstr ""
 
@@ -290,9 +296,23 @@ msgid "Queue Empty"
 msgstr ""
 
 #: monophony/frontend/tabs/search_tab.py:15
+#: monophony/frontend/tabs/search_tab.py:18
 msgid "Search..."
 msgstr ""
 
 #: monophony/frontend/tabs/search_tab.py:21
+#: monophony/frontend/tabs/search_tab.py:24
 msgid "Go back"
+msgstr ""
+
+#: monophony/frontend/widgets/recent_searches.py:36
+msgid "Remove"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:71
+msgid "Playlists"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:70
+msgid "Clear"
 msgstr ""
