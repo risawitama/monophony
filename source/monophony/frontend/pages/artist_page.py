@@ -68,7 +68,7 @@ class MonophonyArtistPage(Gtk.Box):
 			box_playlists = Adw.PreferencesGroup.new()
 			box_other.set_title(_('Other'))
 			box_albums.set_title(_('Albums'))
-			box_playlists.set_title(_('Community Playlists'))
+			box_playlists.set_title(_('Playlists'))
 
 			songs = []
 			videos = []
@@ -91,13 +91,13 @@ class MonophonyArtistPage(Gtk.Box):
 				if songs:
 					box_other.add(
 						MonophonyLockedGroupRow(
-							{'title': _('All Songs'), 'contents': songs}, self.player
+							{'title': _('Songs'), 'contents': songs}, self.player
 						)
 					)
 				if videos:
 					box_other.add(
 						MonophonyLockedGroupRow(
-							{'title': _('All Videos'), 'contents': videos}, self.player
+							{'title': _('Videos'), 'contents': videos}, self.player
 						)
 					)
 			for box in non_empty:
