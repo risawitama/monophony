@@ -62,7 +62,10 @@ def _parse_results(data: list) -> list:
 		elif result['resultType'] == 'playlist':
 			try:
 				album = yt.get_playlist(result['browseId'])
-				item['author'] = result['author']
+				if 'author' in result:
+					item['author'] = result['author']
+				else:
+					item['author'] = ', '.join([a['name'] for a in result['artists']])
 				item['id'] = result['browseId']
 				item['title'] = result['title']
 				item['contents'] = [
@@ -206,25 +209,42 @@ def get_artist(browse_id: str) -> list:
 		yt = ytmusicapi.YTMusic()
 		artist = yt.get_artist(browse_id)
 	except:
-		print('Could not get artist')
-		return []
+		try:
+			yt = ytmusicapi.YTMusic()
+			artist = yt.get_user(browse_id)
+		except:
+			print('Could not get artist')
+			return []
 
 	data = []
-	for group in {'songs', 'albums', 'singles', 'videos'}:
+	for group in {'songs', 'albums', 'singles', 'videos', 'playlists'}:
 		content = []
 		if group in artist:
 			if group in {'songs', 'videos'}:
-				browse_id = artist[group]['browseId']
-				if browse_id:
-					content = yt.get_playlist(browse_id)['tracks']
+				try:
+					content = yt.get_playlist(artist[group]['browseId'])['tracks']
+				except:
+					print(f'Failed to get artist {group}:\033[0;33m')
+					traceback.print_exc()
+					print('\033[0m')
+					continue
 			else:
 				content = []
-				for album in artist[group]['results']:
-					content.append({
-						'title': album['title'],
-						'browseId': album['browseId'],
-						'artists': [{'name': artist['name']}]
-					})
+				for alb in artist[group]['results']:
+					try:
+						content.append({
+							'title': alb['title'],
+							'browseId': (
+								alb['browseId'] if 'browseId' in alb else
+								alb['playlistId']
+							),
+							'artists': [{'name': artist['name']}]
+						})
+					except:
+						print(f'Failed to get artist {group}:\033[0;33m')
+						traceback.print_exc()
+						print('\033[0m')
+						continue
 
 			for item in content:
 				item['resultType'] = group[:-1]
