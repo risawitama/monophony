@@ -43,7 +43,11 @@ class MonophonyLibraryTab(Gtk.Box):
 			GObject.BindingFlags.BIDIRECTIONAL
 		)
 
-		btn_import = Gtk.Button.new_with_label(_('Import'))
+		con_import = Adw.ButtonContent.new()
+		con_import.set_label(_('Import'))
+		con_import.set_icon_name('list-add-symbolic')
+		btn_import = Gtk.Button.new()
+		btn_import.set_child(con_import)
 		btn_import.connect(
 			'clicked', lambda _b: self.get_ancestor(Gtk.Window)._on_import_clicked()
 		)
