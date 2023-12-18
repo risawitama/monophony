@@ -3,13 +3,8 @@ root = true
 [*]
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-[{*.py, Makefile}]
-max_line_length = 88
 indent_style = tab
 tab_width = 4
 
-[*.xml]
+[{*.py, Makefile}]
 max_line_length = 88
-indent_style = space
-indent_size = 2
