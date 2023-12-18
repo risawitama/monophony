@@ -9,7 +9,7 @@ def add_search(query: str) -> bool:
 	if query not in new_searches:
 		new_searches.insert(0, query)
 		if len(new_searches) > 3:
-			new_searches = new_searches[1:]
+			new_searches = new_searches[:-1]
 
 		write_searches(new_searches)
 		return True
