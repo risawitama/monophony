@@ -220,8 +220,8 @@ def write_playlists(playlists: dict=None, external_playlists: list=None):
 	dir_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
 	) + '/monophony'
-	lists_path = dir_path  + '/playlists.json'
-	ext_lists_path = dir_path  + '/external-playlists.json'
+	lists_path = dir_path + '/playlists.json'
+	ext_lists_path = dir_path + '/external-playlists.json'
 
 	try:
 		if playlists is not None:

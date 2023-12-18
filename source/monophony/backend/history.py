@@ -47,7 +47,7 @@ def write_searches(searches: list):
 	dir_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
 	) + '/monophony'
-	recents_path = dir_path  + '/recent_searches.json'
+	recents_path = dir_path + '/recent_searches.json'
 
 	try:
 		with open(str(recents_path), 'w') as recents_file:
@@ -73,7 +73,7 @@ def write_songs(songs: list):
 	dir_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
 	) + '/monophony'
-	recents_path = dir_path  + '/recent_songs.json'
+	recents_path = dir_path + '/recent_songs.json'
 
 	try:
 		with open(str(recents_path), 'w') as recents_file:

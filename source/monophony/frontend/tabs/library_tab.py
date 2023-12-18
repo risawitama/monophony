@@ -81,7 +81,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		GLib.Thread.new(
 			None,
 			monophony.backend.playlists.update_external_playlists,
-	  		self.loading_lock
+			self.loading_lock
 		)
 		GLib.timeout_add(100, self.update)
 

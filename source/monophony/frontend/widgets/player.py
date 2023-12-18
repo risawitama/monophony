@@ -199,7 +199,7 @@ class MonophonyPlayer(Gtk.Box):
 		)
 		chk_normal.connect('toggled', self._on_normal_toggled)
 		itm_normal = Gio.MenuItem()
-		itm_normal.set_attribute_value('custom',  GLib.Variant.new_string('normal'))
+		itm_normal.set_attribute_value('custom', GLib.Variant.new_string('normal'))
 		chk_autoplay = Gtk.CheckButton.new_with_label(_('Radio Mode'))
 		chk_autoplay.set_group(chk_normal)
 		chk_autoplay.set_active(
@@ -208,7 +208,7 @@ class MonophonyPlayer(Gtk.Box):
 		chk_autoplay.connect('toggled', self._on_radio_toggled)
 		itm_autoplay = Gio.MenuItem()
 		itm_autoplay.set_attribute_value(
-			'custom',  GLib.Variant.new_string('autoplay')
+			'custom', GLib.Variant.new_string('autoplay')
 		)
 		chk_loop = Gtk.CheckButton.new_with_label(_('Repeat Song'))
 		chk_loop.set_group(chk_normal)
@@ -218,7 +218,7 @@ class MonophonyPlayer(Gtk.Box):
 		)
 		itm_loop = Gio.MenuItem()
 		itm_loop.set_attribute_value(
-			'custom',  GLib.Variant.new_string('loop')
+			'custom', GLib.Variant.new_string('loop')
 		)
 		chk_shuffle = Gtk.CheckButton.new_with_label(_('Shuffle'))
 		chk_shuffle.set_group(chk_normal)
@@ -228,7 +228,7 @@ class MonophonyPlayer(Gtk.Box):
 		chk_shuffle.connect('toggled', self._on_shuffle_toggled)
 		itm_shuffle = Gio.MenuItem()
 		itm_shuffle.set_attribute_value(
-			'custom',  GLib.Variant.new_string('shuffle')
+			'custom', GLib.Variant.new_string('shuffle')
 		)
 		mnu_more.append_item(itm_normal)
 		mnu_more.append_item(itm_loop)
