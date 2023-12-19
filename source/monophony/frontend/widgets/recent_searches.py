@@ -57,6 +57,7 @@ class MonophonyRecentSearches(Gtk.Box):
 
 	def _on_remove_search(self, btn: Gtk.Button, query: str):
 		monophony.backend.history.remove_search(query)
+		self.children.remove(btn.get_parent())
 		self.remove(btn.get_parent())
 		if not monophony.backend.history.read_searches():
 			self.set_visible(False)
