@@ -11,104 +11,13 @@ msgstr ""
 "Language: ja\n"
 "X-Generator: Poedit 2.2.3\n"
 
-#: monophony/frontend/pages/results_page.py:20
-#: monophony/frontend/pages/results_page.py:81
-#: monophony/frontend/pages/results_page.py:21
-#: monophony/frontend/pages/artist_page.py:20
-msgid "No Results"
-msgstr "見つかりませんでした"
+#: monophony/frontend/popovers/local_song_popover.py:17
+msgid "Remove From Playlist"
+msgstr "再生リストから除去"
 
-#: monophony/frontend/pages/results_page.py:90
-#: monophony/frontend/pages/results_page.py:91
-#: monophony/frontend/pages/results_page.py:72
-msgid "Top Result"
-msgstr "検索上位"
-
-#: monophony/frontend/pages/results_page.py:91
-#: monophony/frontend/pages/results_page.py:92
-#: monophony/frontend/pages/results_page.py:73
-msgid "Songs"
-msgstr "曲"
-
-#: monophony/frontend/pages/results_page.py:92
-#: monophony/frontend/pages/results_page.py:93
-#: monophony/frontend/pages/results_page.py:74
-#: monophony/frontend/pages/artist_page.py:77
-msgid "Albums"
-msgstr "アルバム"
-
-#: monophony/frontend/pages/results_page.py:93
-#: monophony/frontend/pages/results_page.py:94
-#: monophony/frontend/pages/results_page.py:75
-msgid "Videos"
-msgstr "動画"
-
-#: monophony/frontend/pages/results_page.py:94
-#: monophony/frontend/pages/results_page.py:95
-#: monophony/frontend/pages/results_page.py:76
-#: monophony/frontend/pages/artist_page.py:78
-msgid "Community Playlists"
-msgstr "コミュニティの再生リスト"
-
-#: monophony/frontend/pages/results_page.py:95
-#: monophony/frontend/pages/results_page.py:96
-#: monophony/frontend/pages/results_page.py:77
-msgid "Artists"
-msgstr "アーティスト"
-
-#: monophony/frontend/pages/results_page.py:99
-#: monophony/frontend/pages/results_page.py:107
-#: monophony/frontend/pages/results_page.py:115
-#: monophony/frontend/pages/results_page.py:123
-#: monophony/frontend/pages/results_page.py:131
-#: monophony/frontend/pages/results_page.py:100
-#: monophony/frontend/pages/results_page.py:108
-#: monophony/frontend/pages/results_page.py:116
-#: monophony/frontend/pages/results_page.py:124
-#: monophony/frontend/pages/results_page.py:132
-#: monophony/frontend/pages/results_page.py:81
-#: monophony/frontend/pages/results_page.py:89
-#: monophony/frontend/pages/results_page.py:97
-#: monophony/frontend/pages/results_page.py:105
-#: monophony/frontend/pages/results_page.py:113
-msgid "More"
-msgstr "もっと"
-
-#: monophony/frontend/pages/library_page.py:31
-#: monophony/frontend/pages/library_page.py:35
-msgid "Your Library is Empty"
-msgstr "ライブラリに何もありません"
-
-#: monophony/frontend/pages/library_page.py:33
-#: monophony/frontend/pages/library_page.py:37
-msgid "Find songs to play using the search bar above"
-msgstr "上の検索バーから聴きたい曲を検索"
-
-#: monophony/frontend/pages/library_page.py:45
-#: monophony/frontend/pages/library_page.py:51
-msgid "Play All"
-msgstr "すべて再生"
-
-#: monophony/frontend/pages/library_page.py:48
-#: monophony/frontend/windows/add_window.py:48
-#: monophony/frontend/pages/library_page.py:54
-msgid "Your Playlists"
-msgstr "再生リスト"
-
-#: monophony/frontend/pages/library_page.py:54
-#: monophony/frontend/pages/library_page.py:60
-msgid "Recently Played"
-msgstr "最近聴いた曲"
-
-#: monophony/frontend/windows/main_window.py:44
-#: monophony/frontend/windows/main_window.py:45
-#: monophony/frontend/windows/main_window.py:46
-msgid "Go back"
-msgstr "戻る"
-
-#: monophony/frontend/windows/main_window.py:49
-msgid "About"
-msgstr "情報"
+#: monophony/frontend/popovers/queue_song_popover.py:18
+msgid "Remove From Queue"
+msgstr "キューから除去"
 
 #: monophony/frontend/windows/main_window.py:54
 #: monophony/frontend/windows/main_window.py:64
@@ -117,157 +26,66 @@ msgstr "情報"
 msgid "Search for Content..."
 msgstr "コンテンツを検索..."
 
-#: monophony/frontend/windows/main_window.py:138
-#: monophony/frontend/windows/main_window.py:148
-#: monophony/frontend/windows/main_window.py:149
-#: monophony/frontend/windows/main_window.py:150
-msgid "translator-credits"
-msgstr "maboroshin"
-
-#: monophony/frontend/windows/main_window.py:174
-#: monophony/frontend/windows/main_window.py:191
-#: monophony/frontend/windows/main_window.py:192
-#: monophony/frontend/windows/main_window.py:193
-#, python-brace-format
-msgid "Deleted \"{playlist_name}\""
-msgstr "「{playlist_name}」を削除しました"
-
-#: monophony/frontend/windows/main_window.py:177
-#: monophony/frontend/windows/main_window.py:194
-#: monophony/frontend/windows/main_window.py:196
-msgid "Undo"
-msgstr "取り消す"
-
-#: monophony/frontend/windows/main_window.py:199
-#: monophony/frontend/windows/main_window.py:222
-#: monophony/frontend/windows/main_window.py:223
-#: monophony/frontend/windows/main_window.py:224
-msgid "Added"
-msgstr "追加しました"
-
-#: monophony/frontend/windows/add_window.py:19
-#: monophony/frontend/popovers/song_popover.py:36
-#: monophony/frontend/widgets/player.py:183
-#: monophony/frontend/widgets/player.py:167
-#: monophony/frontend/widgets/player.py:187
-#: monophony/frontend/widgets/player.py:188
-msgid "Add to..."
-msgstr "追加先を選択..."
-
-#: monophony/frontend/windows/add_window.py:25
-#: monophony/frontend/windows/import_window.py:53
-msgid "Cancel"
-msgstr "キャンセル"
-
-#: monophony/frontend/windows/add_window.py:27
-msgid "Add"
-msgstr "追加"
-
-#: monophony/frontend/windows/add_window.py:54
-msgid "New Playlist Name..."
-msgstr "新しい再生リスト名..."
-
-#: monophony/frontend/windows/add_window.py:56
-msgid "Create"
-msgstr "作成"
-
-#: monophony/frontend/windows/message_window.py:13
-msgid "Ok"
-msgstr "OK"
-
-#: monophony/frontend/popovers/queue_song_popover.py:18
-msgid "Remove From Queue"
-msgstr "キューから削除"
-
-#: monophony/frontend/popovers/local_song_popover.py:17
-msgid "Remove From Playlist"
-msgstr "再生リストから除去"
-
-#: monophony/frontend/popovers/song_popover.py:22
-msgid "Remove From Downloads"
-msgstr "ダウンロードから削除"
-
 #: monophony/frontend/popovers/song_popover.py:29
-#: monophony/frontend/rows/local_group_row.py:42
-#: monophony/frontend/rows/importable_group_row.py:28
 #: monophony/frontend/rows/external_group_row.py:44
+#: monophony/frontend/rows/importable_group_row.py:28
+#: monophony/frontend/rows/local_group_row.py:42
 msgid "Download"
 msgstr "ダウンロード"
 
+#: monophony/frontend/popovers/song_popover.py:36
+#: monophony/frontend/windows/add_window.py:19
+msgid "Add to..."
+msgstr "追加先を選択..."
+
 #: monophony/frontend/popovers/song_popover.py:42
-#: monophony/frontend/widgets/player.py:195
-#: monophony/frontend/widgets/player.py:179
-#: monophony/frontend/widgets/player.py:199
-#: monophony/frontend/widgets/player.py:200
-msgid "Show Artist"
+msgid "View Artist"
 msgstr "アーティストを表示"
 
-#: monophony/frontend/widgets/player.py:82
-#: monophony/frontend/widgets/player.py:66
-#: monophony/frontend/widgets/player.py:76
-#: monophony/frontend/widgets/player.py:77
-msgid "Toggle pause"
-msgstr "再生/停止"
-
-#: monophony/frontend/widgets/player.py:86
-#: monophony/frontend/widgets/player.py:70
-#: monophony/frontend/widgets/player.py:89
-#: monophony/frontend/widgets/player.py:90
-msgid "Next song"
-msgstr "次の曲"
-
-#: monophony/frontend/widgets/player.py:91
-#: monophony/frontend/widgets/player.py:75
-#: monophony/frontend/widgets/player.py:94
-#: monophony/frontend/widgets/player.py:95
-msgid "Previous song"
-msgstr "前の曲"
-
-#: monophony/frontend/widgets/player.py:98
-#: monophony/frontend/rows/song_row.py:42
-#: monophony/frontend/rows/local_group_row.py:23
-#: monophony/frontend/widgets/player.py:82
-#: monophony/frontend/rows/importable_group_row.py:17
 #: monophony/frontend/rows/external_group_row.py:24
-#: monophony/frontend/widgets/player.py:101
-#: monophony/frontend/widgets/player.py:102
+#: monophony/frontend/rows/importable_group_row.py:17
+#: monophony/frontend/rows/local_group_row.py:23
+#: monophony/frontend/rows/song_row.py:42
 msgid "More actions"
 msgstr "ほかの操作"
 
-#: monophony/frontend/widgets/player.py:189
-#: monophony/frontend/widgets/player.py:173
-#: monophony/frontend/widgets/player.py:193
-#: monophony/frontend/widgets/player.py:194
-msgid "Show Queue"
-msgstr "再生キューを表示"
+#: monophony/frontend/rows/external_group_row.py:31
+#: monophony/frontend/windows/import_window.py:33
+msgid "Synchronized"
+msgstr "同期される"
 
-#: monophony/frontend/widgets/player.py:203
-#: monophony/frontend/widgets/player.py:187
-#: monophony/frontend/widgets/player.py:207
-#: monophony/frontend/widgets/player.py:208
-msgid "Normal Playback"
-msgstr "通常の再生"
+#: monophony/frontend/rows/external_group_row.py:38
+#: monophony/frontend/rows/local_group_row.py:36
+msgid "Delete"
+msgstr "削除"
 
-#: monophony/frontend/widgets/player.py:210
-#: monophony/frontend/widgets/player.py:194
-#: monophony/frontend/widgets/player.py:214
-#: monophony/frontend/widgets/player.py:215
-msgid "Radio Mode"
-msgstr "ラジオモード"
+#: monophony/frontend/rows/external_group_row.py:50
+#: monophony/frontend/rows/local_group_row.py:54
+msgid "Rename..."
+msgstr "名前の変更..."
 
-#: monophony/frontend/widgets/player.py:220
-#: monophony/frontend/widgets/player.py:204
-#: monophony/frontend/widgets/player.py:224
-#: monophony/frontend/widgets/player.py:225
-msgid "Repeat Song"
-msgstr "曲をリピート"
+#: monophony/frontend/rows/external_group_row.py:67
+#: monophony/frontend/rows/local_group_row.py:71
+msgid "Rename"
+msgstr "名前の変更"
 
-#: monophony/frontend/widgets/player.py:230
-#: monophony/frontend/widgets/player.py:214
-#: monophony/frontend/widgets/player.py:234
-#: monophony/frontend/widgets/player.py:235
-msgid "Shuffle"
-msgstr "シャッフル"
+#: monophony/frontend/rows/external_group_row.py:96
+#: monophony/frontend/rows/local_group_row.py:100
+msgid "Could not Rename"
+msgstr "名前を変更できません"
+
+#: monophony/frontend/rows/external_group_row.py:97
+#: monophony/frontend/rows/local_group_row.py:101
+msgid "Playlist already exists"
+msgstr "再生リストは既に存在します"
+
+#: monophony/frontend/rows/importable_group_row.py:34
+msgid "Import..."
+msgstr "インポート..."
+
+#: monophony/frontend/rows/local_group_row.py:48
+msgid "Duplicate"
+msgstr "複製"
 
 #: monophony/frontend/rows/song_row.py:18
 #: monophony/frontend/rows/group_row.py:23
@@ -276,74 +94,48 @@ msgstr "再生"
 
 #: monophony/frontend/rows/artist_row.py:14
 #: monophony/frontend/rows/artist_row.py:23
-msgid "View Artist"
+msgid "View artist"
 msgstr "アーティストを表示"
 
-#: monophony/frontend/rows/local_group_row.py:36
-#: monophony/frontend/rows/external_group_row.py:38
-msgid "Delete"
-msgstr "削除"
+#: monophony/frontend/widgets/player.py:67
+msgid "Volume"
+msgstr "音量"
 
-#: monophony/frontend/rows/local_group_row.py:48
-msgid "Duplicate"
-msgstr "複製"
+#: monophony/frontend/widgets/player.py:88
+msgid "Toggle pause"
+msgstr "再生/停止"
 
-#: monophony/frontend/rows/local_group_row.py:54
-#: monophony/frontend/rows/external_group_row.py:50
-msgid "Rename..."
-msgstr "名前の変更..."
+#: monophony/frontend/widgets/player.py:101
+msgid "Next song"
+msgstr "次の曲"
 
-#: monophony/frontend/rows/local_group_row.py:71
-#: monophony/frontend/rows/external_group_row.py:67
-msgid "Rename"
-msgstr "名前を変更"
+#: monophony/frontend/widgets/player.py:106
+msgid "Previous song"
+msgstr "前の曲"
 
-#: monophony/frontend/rows/local_group_row.py:100
-#: monophony/frontend/rows/external_group_row.py:96
-msgid "Could not Rename"
-msgstr "名前を変更できません"
+#: monophony/frontend/widgets/player.py:113
+msgid "Playback mode"
+msgstr "再生モード"
 
-#: monophony/frontend/rows/local_group_row.py:101
-#: monophony/frontend/rows/external_group_row.py:97
-msgid "Playlist already exists"
-msgstr "再生リストは既に存在します"
+#: monophony/frontend/widgets/player.py:196
+msgid "Normal Playback"
+msgstr "通常の再生"
 
-#: monophony/frontend/rows/external_group_row.py:18
-msgid "Add to library"
-msgstr "ライブラリに追加"
+#: monophony/frontend/widgets/player.py:203
+msgid "Radio Mode"
+msgstr "ラジオモード"
 
-#: monophony/frontend/pages/queue_page.py:24
-#: monophony/frontend/windows/add_window.py:42
-msgid "Queue"
-msgstr "再生キュー"
+#: monophony/frontend/widgets/player.py:213
+msgid "Repeat Song"
+msgstr "曲をリピート"
 
-#: monophony/frontend/pages/results_page.py:31
-msgid "Searching..."
-msgstr "検索中..."
+#: monophony/frontend/widgets/player.py:223
+msgid "Shuffle"
+msgstr "シャッフル"
 
-#: monophony/frontend/pages/results_page.py:62
-#: monophony/frontend/pages/artist_page.py:30
-msgid "Loading..."
-msgstr "読み込み中..."
-
-#: monophony/frontend/pages/results_page.py:68
-#: monophony/frontend/pages/artist_page.py:56
-msgid "Artist Not Found"
-msgstr "アーティストが見つかりません"
-
-#: monophony/frontend/pages/library_page.py:41
-msgid "Loading Library..."
-msgstr "ライブラリ 読み込み中..."
-
-#: monophony/frontend/windows/main_window.py:50
-#: monophony/frontend/windows/main_window.py:51
-msgid "Import Playlist"
-msgstr "再生リストのインポート"
-
-#: monophony/frontend/windows/main_window.py:54
-#: monophony/frontend/windows/main_window.py:55
-msgid "About Monophony"
-msgstr "Monophonyについて"
+#: monophony/frontend/windows/message_window.py:13
+msgid "Ok"
+msgstr "OK"
 
 #: monophony/frontend/windows/import_window.py:21
 msgid "Enter Playlist Name..."
@@ -353,31 +145,32 @@ msgstr "再生リストの名前を入力..."
 msgid "Enter Playlist URL..."
 msgstr "再生リストのURLを入力..."
 
-#: monophony/frontend/windows/import_window.py:33
-msgid "External Playlist"
-msgstr "外部の再生リスト"
-
 #: monophony/frontend/windows/import_window.py:34
-msgid "Local Playlist"
-msgstr "端末内の再生リスト"
+msgid "Editable"
+msgstr "編集を許可"
 
-#: monophony/frontend/windows/import_window.py:55
+#: monophony/frontend/windows/import_window.py:53
+#: monophony/frontend/windows/add_window.py:25
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: monophony/frontend/tabs/library_tab.py:47
 msgid "Import"
 msgstr "インポート"
 
 #: monophony/frontend/windows/import_window.py:73
 msgid "Import playlist..."
-msgstr "再生リストのインポート..."
+msgstr "再生リストをインポート..."
 
 #: monophony/frontend/windows/import_window.py:97
 #: monophony/frontend/windows/import_window.py:115
 #: monophony/frontend/windows/import_window.py:121
 msgid "Could not Import Playlist"
-msgstr "再生リストをインポートできません"
+msgstr "再生リストをインポートできませんでした"
 
 #: monophony/frontend/windows/import_window.py:98
 msgid "Failed to retrieve playlist data from server."
-msgstr "サーバーからの再生リストのデータ取得に失敗。"
+msgstr "サーバーから再生リストの取得に失敗しました。"
 
 #: monophony/frontend/windows/import_window.py:115
 msgid "A name is required."
@@ -387,52 +180,142 @@ msgstr "名前は必須です。"
 msgid "A URL is required."
 msgstr "URLは必須です。"
 
-#: monophony/frontend/rows/importable_group_row.py:34
-msgid "Import..."
-msgstr "インポート..."
+#: monophony/frontend/windows/add_window.py:27
+msgid "Add"
+msgstr "追加"
 
-#: monophony/frontend/rows/external_group_row.py:31
-msgid "External"
-msgstr "外部"
+#: monophony/frontend/windows/main_window.py:49
+msgid "Queue"
+msgstr "再生キュー"
 
-#: monophony/backend/yt.py:14
-msgid "Parsing Results..."
-msgstr "結果を描画中..."
+#: monophony/frontend/tabs/library_tab.py:65
+msgid "Your Playlists"
+msgstr "再生リスト"
 
-#: monophony/frontend/pages/artist_page.py:76
+#: monophony/frontend/windows/add_window.py:54
+msgid "New Playlist Name..."
+msgstr "新しい再生リスト名..."
+
+#: monophony/frontend/windows/add_window.py:56
+msgid "Create"
+msgstr "作成"
+
+#: monophony/frontend/windows/main_window.py:37
+msgid "Library"
+msgstr "ライブラリ"
+
+#: monophony/frontend/windows/main_window.py:43
+msgid "Search"
+msgstr "検索"
+
+#: monophony/frontend/windows/main_window.py:58
+msgid "About"
+msgstr "情報"
+
+#: monophony/frontend/windows/main_window.py:133
+msgid "translator-credits"
+msgstr "maboroshin"
+
+#: monophony/frontend/windows/main_window.py:176
+#, python-brace-format
+msgid "Deleted \"{playlist_name}\""
+msgstr "「{playlist_name}」を削除しました"
+
+#: monophony/frontend/windows/main_window.py:179
+msgid "Undo"
+msgstr "取り消す"
+
+#: monophony/frontend/windows/main_window.py:207
+msgid "Added"
+msgstr "追加しました"
+
+#: monophony/frontend/pages/artist_page.py:20
+#: monophony/frontend/pages/results_page.py:21
+msgid "No Results"
+msgstr "見つかりませんでした"
+
+#: monophony/frontend/pages/artist_page.py:49
+msgid "Artist Not Found"
+msgstr "アーティストが見つかりません"
+
+#: monophony/frontend/pages/artist_page.py:69
 msgid "Other"
 msgstr "ほか"
 
-#: monophony/frontend/pages/artist_page.py:101
+#: monophony/frontend/pages/artist_page.py:70
+#: monophony/frontend/pages/results_page.py:72
+msgid "Albums"
+msgstr "アルバム"
+
+#: monophony/frontend/pages/artist_page.py:71
+#: monophony/frontend/pages/results_page.py:74
+msgid "Community Playlists"
+msgstr "コミュニティの再生リスト"
+
+#: monophony/frontend/pages/artist_page.py:94
 msgid "All Songs"
 msgstr "すべての曲"
 
-#: monophony/frontend/pages/artist_page.py:107
+#: monophony/frontend/pages/artist_page.py:100
 msgid "All Videos"
 msgstr "すべての動画"
 
-#: monophony/frontend/rows/external_group_row.py:31
-#: monophony/frontend/windows/import_window.py:33
-msgid "Synchronized"
-msgstr "同期される"
+#: monophony/frontend/pages/results_page.py:70
+msgid "Top Result"
+msgstr "検索上位"
 
-#: monophony/frontend/widgets/player.py:56
-msgid "Volume"
-msgstr "音量"
+#: monophony/frontend/pages/artist_page.py:94
+msgid "Songs"
+msgstr "曲"
 
-#: monophony/frontend/windows/import_window.py:33
-msgid "As Synchronized Playlist"
-msgstr "同期される再生リスト"
+#: monophony/frontend/pages/artist_page.py:100
+msgid "Videos"
+msgstr "動画"
 
-#: monophony/frontend/windows/import_window.py:34
-msgid "As Editable Playlist"
-msgstr "編集可能な再生リスト"
+#: monophony/frontend/pages/results_page.py:75
+msgid "Artists"
+msgstr "アーティスト"
 
-#: monophony/frontend/windows/main_window.py:60
-#, fuzzy
-msgid "Primary Menu"
-msgstr "メインメニュー"
+#: monophony/frontend/pages/results_page.py:80
+#: monophony/frontend/pages/results_page.py:89
+#: monophony/frontend/pages/results_page.py:98
+#: monophony/frontend/pages/results_page.py:107
+#: monophony/frontend/pages/results_page.py:116
+msgid "Show all"
+msgstr "すべて表示"
 
-#: monophony/frontend/windows/import_window.py:34
-msgid "Editable"
-msgstr "編集を許可"
+#: monophony/frontend/tabs/library_tab.py:47
+msgid "Import playlist"
+msgstr "再生リストのインポート"
+
+#: monophony/frontend/tabs/library_tab.py:56
+msgid "Play all"
+msgstr "すべて再生"
+
+#: monophony/frontend/tabs/library_tab.py:77
+msgid "Recently Played"
+msgstr "最近聴いた曲"
+
+#: monophony/frontend/tabs/queue_tab.py:23
+msgid "Queue Empty"
+msgstr "キューなし"
+
+#: monophony/frontend/tabs/search_tab.py:18
+msgid "Search..."
+msgstr "検索..."
+
+#: monophony/frontend/tabs/search_tab.py:24
+msgid "Go back"
+msgstr "戻る"
+
+#: monophony/frontend/widgets/recent_searches.py:36
+msgid "Remove"
+msgstr "除去"
+
+#: monophony/frontend/pages/artist_page.py:71
+msgid "Playlists"
+msgstr "再生リスト"
+
+#: monophony/frontend/tabs/library_tab.py:70
+msgid "Clear"
+msgstr "消去"
