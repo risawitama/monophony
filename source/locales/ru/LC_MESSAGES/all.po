@@ -11,266 +11,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.2.2\n"
-
-#: monophony/frontend/pages/results_page.py:20
-#: monophony/frontend/pages/results_page.py:81
-#: monophony/frontend/pages/results_page.py:21
-#: monophony/frontend/pages/artist_page.py:20
-msgid "No Results"
-msgstr "Нет Результатов"
-
-#: monophony/frontend/pages/results_page.py:90
-#: monophony/frontend/pages/results_page.py:91
-#: monophony/frontend/pages/results_page.py:72
-msgid "Top Result"
-msgstr "Лучший Результат"
-
-#: monophony/frontend/pages/results_page.py:91
-#: monophony/frontend/pages/results_page.py:92
-#: monophony/frontend/pages/results_page.py:73
-msgid "Songs"
-msgstr "Песни"
-
-#: monophony/frontend/pages/results_page.py:92
-#: monophony/frontend/pages/results_page.py:93
-#: monophony/frontend/pages/results_page.py:74
-#: monophony/frontend/pages/artist_page.py:77
-msgid "Albums"
-msgstr "Альбомы"
-
-#: monophony/frontend/pages/results_page.py:93
-#: monophony/frontend/pages/results_page.py:94
-#: monophony/frontend/pages/results_page.py:75
-msgid "Videos"
-msgstr "Видео"
-
-#: monophony/frontend/pages/results_page.py:94
-#: monophony/frontend/pages/results_page.py:95
-#: monophony/frontend/pages/results_page.py:76
-#: monophony/frontend/pages/artist_page.py:78
-msgid "Community Playlists"
-msgstr "Плейлисты Сообщества"
-
-#: monophony/frontend/pages/results_page.py:95
-#: monophony/frontend/pages/results_page.py:96
-#: monophony/frontend/pages/results_page.py:77
-msgid "Artists"
-msgstr "Исполнители"
-
-#: monophony/frontend/pages/results_page.py:99
-#: monophony/frontend/pages/results_page.py:107
-#: monophony/frontend/pages/results_page.py:115
-#: monophony/frontend/pages/results_page.py:123
-#: monophony/frontend/pages/results_page.py:131
-#: monophony/frontend/pages/results_page.py:100
-#: monophony/frontend/pages/results_page.py:108
-#: monophony/frontend/pages/results_page.py:116
-#: monophony/frontend/pages/results_page.py:124
-#: monophony/frontend/pages/results_page.py:132
-#: monophony/frontend/pages/results_page.py:81
-#: monophony/frontend/pages/results_page.py:89
-#: monophony/frontend/pages/results_page.py:97
-#: monophony/frontend/pages/results_page.py:105
-#: monophony/frontend/pages/results_page.py:113
-msgid "More"
-msgstr "Больше"
-
-#: monophony/frontend/pages/library_page.py:31
-#: monophony/frontend/pages/library_page.py:35
-msgid "Your Library is Empty"
-msgstr "Ваша Библиотека Пуста"
-
-#: monophony/frontend/pages/library_page.py:33
-#: monophony/frontend/pages/library_page.py:37
-msgid "Find songs to play using the search bar above"
-msgstr "Найдите песни для воспроизведения, используя строку поиска выше"
-
-#: monophony/frontend/pages/library_page.py:45
-#: monophony/frontend/pages/library_page.py:51
-msgid "Play All"
-msgstr "Воспроизвести Все"
-
-#: monophony/frontend/pages/library_page.py:48
-#: monophony/frontend/windows/add_window.py:48
-#: monophony/frontend/pages/library_page.py:54
-msgid "Your Playlists"
-msgstr "Ваши Плейлисты"
-
-#: monophony/frontend/pages/library_page.py:54
-#: monophony/frontend/pages/library_page.py:60
-msgid "Recently Played"
-msgstr "Последние Запущенные"
-
-#: monophony/frontend/windows/main_window.py:44
-#: monophony/frontend/windows/main_window.py:45
-#: monophony/frontend/windows/main_window.py:46
-msgid "Go back"
-msgstr "Вернуться назад"
-
-#: monophony/frontend/windows/main_window.py:49
-msgid "About"
-msgstr "О Программе"
-
-#: monophony/frontend/windows/main_window.py:54
-#: monophony/frontend/windows/main_window.py:64
-#: monophony/frontend/windows/main_window.py:65
-#: monophony/frontend/windows/main_window.py:66
-msgid "Search for Content..."
-msgstr "Поиск Контента..."
-
-#: monophony/frontend/windows/main_window.py:138
-#: monophony/frontend/windows/main_window.py:148
-#: monophony/frontend/windows/main_window.py:149
-#: monophony/frontend/windows/main_window.py:150
-msgid "translator-credits"
-msgstr "Alex Kryuchkov https://github.com/alexkdeveloper"
-
-#: monophony/frontend/windows/main_window.py:174
-#: monophony/frontend/windows/main_window.py:191
-#: monophony/frontend/windows/main_window.py:192
-#: monophony/frontend/windows/main_window.py:193
-#, python-brace-format
-msgid "Deleted \"{playlist_name}\""
-msgstr "\"{playlist_name}\" удалено"
-
-#: monophony/frontend/windows/main_window.py:177
-#: monophony/frontend/windows/main_window.py:194
-#: monophony/frontend/windows/main_window.py:195
-#: monophony/frontend/windows/main_window.py:196
-msgid "Undo"
-msgstr "Отменить"
-
-#: monophony/frontend/windows/main_window.py:199
-#: monophony/frontend/windows/main_window.py:222
-#: monophony/frontend/windows/main_window.py:223
-#: monophony/frontend/windows/main_window.py:224
-msgid "Added"
-msgstr "Добавлен"
-
-#: monophony/frontend/windows/add_window.py:19
-#: monophony/frontend/popovers/song_popover.py:36
-#: monophony/frontend/widgets/player.py:183
-#: monophony/frontend/widgets/player.py:167
-#: monophony/frontend/widgets/player.py:187
-#: monophony/frontend/widgets/player.py:188
-msgid "Add to..."
-msgstr "Добавить в..."
-
-#: monophony/frontend/windows/add_window.py:25
-#: monophony/frontend/windows/import_window.py:53
-msgid "Cancel"
-msgstr "Отмена"
-
-#: monophony/frontend/windows/add_window.py:27
-msgid "Add"
-msgstr "Добавить"
-
-#: monophony/frontend/windows/add_window.py:54
-msgid "New Playlist Name..."
-msgstr "Новое Название Плейлиста..."
-
-#: monophony/frontend/windows/add_window.py:56
-msgid "Create"
-msgstr "Создать"
-
-#: monophony/frontend/windows/message_window.py:13
-msgid "Ok"
-msgstr "Ok"
-
-#: monophony/frontend/popovers/queue_song_popover.py:18
-msgid "Remove From Queue"
-msgstr "Удалить из Очереди"
+"X-Generator: Poedit 3.4\n"
 
 #: monophony/frontend/popovers/local_song_popover.py:17
 msgid "Remove From Playlist"
 msgstr "Удалить из Плейлиста"
+
+#: monophony/frontend/popovers/queue_song_popover.py:18
+msgid "Remove From Queue"
+msgstr "Удалить из Очереди"
 
 #: monophony/frontend/popovers/song_popover.py:22
 msgid "Remove From Downloads"
 msgstr "Удалить из Загрузок"
 
 #: monophony/frontend/popovers/song_popover.py:29
-#: monophony/frontend/rows/local_group_row.py:42
-#: monophony/frontend/rows/importable_group_row.py:28
 #: monophony/frontend/rows/external_group_row.py:44
+#: monophony/frontend/rows/importable_group_row.py:28
+#: monophony/frontend/rows/local_group_row.py:42
 msgid "Download"
 msgstr "Скачать"
 
+#: monophony/frontend/popovers/song_popover.py:36
+#: monophony/frontend/windows/add_window.py:19
+msgid "Add to..."
+msgstr "Добавить в..."
+
 #: monophony/frontend/popovers/song_popover.py:42
-#: monophony/frontend/widgets/player.py:195
-#: monophony/frontend/widgets/player.py:179
-#: monophony/frontend/widgets/player.py:199
-#: monophony/frontend/widgets/player.py:200
-msgid "Show Artist"
-msgstr "Показать Исполнителя"
+msgid "View Artist"
+msgstr "Просмотр Исполнителя"
 
-#: monophony/frontend/widgets/player.py:82
-#: monophony/frontend/widgets/player.py:66
-#: monophony/frontend/widgets/player.py:76
-#: monophony/frontend/widgets/player.py:77
-msgid "Toggle pause"
-msgstr "Переключить паузу"
-
-#: monophony/frontend/widgets/player.py:86
-#: monophony/frontend/widgets/player.py:70
-#: monophony/frontend/widgets/player.py:89
-#: monophony/frontend/widgets/player.py:90
-msgid "Next song"
-msgstr "Следующая песня"
-
-#: monophony/frontend/widgets/player.py:91
-#: monophony/frontend/widgets/player.py:75
-#: monophony/frontend/widgets/player.py:94
-#: monophony/frontend/widgets/player.py:95
-msgid "Previous song"
-msgstr "Предыдущая песня"
-
-#: monophony/frontend/widgets/player.py:98
-#: monophony/frontend/rows/song_row.py:42
-#: monophony/frontend/rows/local_group_row.py:23
-#: monophony/frontend/widgets/player.py:82
-#: monophony/frontend/rows/importable_group_row.py:17
 #: monophony/frontend/rows/external_group_row.py:24
-#: monophony/frontend/widgets/player.py:101
-#: monophony/frontend/widgets/player.py:102
+#: monophony/frontend/rows/importable_group_row.py:17
+#: monophony/frontend/rows/local_group_row.py:23
+#: monophony/frontend/rows/song_row.py:42
 msgid "More actions"
 msgstr "Больше действий"
 
-#: monophony/frontend/widgets/player.py:189
-#: monophony/frontend/widgets/player.py:173
-#: monophony/frontend/widgets/player.py:193
-#: monophony/frontend/widgets/player.py:194
-msgid "Show Queue"
-msgstr "Показать Очередь"
+#: monophony/frontend/rows/external_group_row.py:31
+#: monophony/frontend/windows/import_window.py:33
+msgid "Synchronized"
+msgstr "Синхронизированный"
 
-#: monophony/frontend/widgets/player.py:203
-#: monophony/frontend/widgets/player.py:187
-#: monophony/frontend/widgets/player.py:207
-#: monophony/frontend/widgets/player.py:208
-msgid "Normal Playback"
-msgstr "Обычное Воспроизведение"
+#: monophony/frontend/rows/external_group_row.py:38
+#: monophony/frontend/rows/local_group_row.py:36
+msgid "Delete"
+msgstr "Удалить"
 
-#: monophony/frontend/widgets/player.py:210
-#: monophony/frontend/widgets/player.py:194
-#: monophony/frontend/widgets/player.py:214
-#: monophony/frontend/widgets/player.py:215
-msgid "Radio Mode"
-msgstr "Режим Радио"
+#: monophony/frontend/rows/external_group_row.py:50
+#: monophony/frontend/rows/local_group_row.py:54
+msgid "Rename..."
+msgstr "Переименовать..."
 
-#: monophony/frontend/widgets/player.py:220
-#: monophony/frontend/widgets/player.py:204
-#: monophony/frontend/widgets/player.py:224
-#: monophony/frontend/widgets/player.py:225
-msgid "Repeat Song"
-msgstr "Повторять Песню"
+#: monophony/frontend/rows/external_group_row.py:67
+#: monophony/frontend/rows/local_group_row.py:71
+msgid "Rename"
+msgstr "Переименовать"
 
-#: monophony/frontend/widgets/player.py:230
-#: monophony/frontend/widgets/player.py:214
-#: monophony/frontend/widgets/player.py:234
-#: monophony/frontend/widgets/player.py:235
-msgid "Shuffle"
-msgstr "Перемешать"
+#: monophony/frontend/rows/external_group_row.py:96
+#: monophony/frontend/rows/local_group_row.py:100
+msgid "Could not Rename"
+msgstr "Не Удалось Переименовать"
+
+#: monophony/frontend/rows/external_group_row.py:97
+#: monophony/frontend/rows/local_group_row.py:101
+msgid "Playlist already exists"
+msgstr "Список воспроизведения уже существует"
+
+#: monophony/frontend/rows/importable_group_row.py:34
+msgid "Import..."
+msgstr "Импорт..."
+
+#: monophony/frontend/rows/local_group_row.py:48
+msgid "Duplicate"
+msgstr "Дублировать"
 
 #: monophony/frontend/rows/song_row.py:18
 #: monophony/frontend/rows/group_row.py:23
@@ -279,74 +93,48 @@ msgstr "Воспроизвести"
 
 #: monophony/frontend/rows/artist_row.py:14
 #: monophony/frontend/rows/artist_row.py:23
-msgid "View Artist"
-msgstr "Просмотр Исполнителя"
+msgid "View artist"
+msgstr "Просмотр исполнителя"
 
-#: monophony/frontend/rows/local_group_row.py:36
-#: monophony/frontend/rows/external_group_row.py:38
-msgid "Delete"
-msgstr "Удалить"
+#: monophony/frontend/widgets/player.py:67
+msgid "Volume"
+msgstr "Громкость"
 
-#: monophony/frontend/rows/local_group_row.py:48
-msgid "Duplicate"
-msgstr "Дублировать"
+#: monophony/frontend/widgets/player.py:88
+msgid "Toggle pause"
+msgstr "Переключить паузу"
 
-#: monophony/frontend/rows/local_group_row.py:54
-#: monophony/frontend/rows/external_group_row.py:50
-msgid "Rename..."
-msgstr "Переименовать..."
+#: monophony/frontend/widgets/player.py:101
+msgid "Next song"
+msgstr "Следующая песня"
 
-#: monophony/frontend/rows/local_group_row.py:71
-#: monophony/frontend/rows/external_group_row.py:67
-msgid "Rename"
-msgstr "Переименовать"
+#: monophony/frontend/widgets/player.py:106
+msgid "Previous song"
+msgstr "Предыдущая песня"
 
-#: monophony/frontend/rows/local_group_row.py:100
-#: monophony/frontend/rows/external_group_row.py:96
-msgid "Could not Rename"
-msgstr "Не Удалось Переименовать"
+#: monophony/frontend/widgets/player.py:113
+msgid "Playback mode"
+msgstr "Режим воспроизведения"
 
-#: monophony/frontend/rows/local_group_row.py:101
-#: monophony/frontend/rows/external_group_row.py:97
-msgid "Playlist already exists"
-msgstr "Список воспроизведения уже существует"
+#: monophony/frontend/widgets/player.py:196
+msgid "Normal Playback"
+msgstr "Обычное Воспроизведение"
 
-#: monophony/frontend/rows/external_group_row.py:18
-msgid "Add to library"
-msgstr "Добавить в библиотеку"
+#: monophony/frontend/widgets/player.py:203
+msgid "Radio Mode"
+msgstr "Режим Радио"
 
-#: monophony/frontend/pages/queue_page.py:24
-#: monophony/frontend/windows/add_window.py:42
-msgid "Queue"
-msgstr "Очередь"
+#: monophony/frontend/widgets/player.py:213
+msgid "Repeat Song"
+msgstr "Повторять Песню"
 
-#: monophony/frontend/pages/results_page.py:31
-msgid "Searching..."
-msgstr "Поиск..."
+#: monophony/frontend/widgets/player.py:223
+msgid "Shuffle"
+msgstr "Перемешать"
 
-#: monophony/frontend/pages/results_page.py:62
-#: monophony/frontend/pages/artist_page.py:30
-msgid "Loading..."
-msgstr "Загрузка..."
-
-#: monophony/frontend/pages/results_page.py:68
-#: monophony/frontend/pages/artist_page.py:56
-msgid "Artist Not Found"
-msgstr "Исполнитель не Найден"
-
-#: monophony/frontend/pages/library_page.py:41
-msgid "Loading Library..."
-msgstr "Загрузка Библиотеки..."
-
-#: monophony/frontend/windows/main_window.py:50
-#: monophony/frontend/windows/main_window.py:51
-msgid "Import Playlist"
-msgstr "Импорт Списка Воспроизведения"
-
-#: monophony/frontend/windows/main_window.py:54
-#: monophony/frontend/windows/main_window.py:55
-msgid "About Monophony"
-msgstr "О Monophony"
+#: monophony/frontend/windows/message_window.py:13
+msgid "Ok"
+msgstr "Ok"
 
 #: monophony/frontend/windows/import_window.py:21
 msgid "Enter Playlist Name..."
@@ -356,15 +144,17 @@ msgstr "Введите Название Плейлиста..."
 msgid "Enter Playlist URL..."
 msgstr "Введите URL Плейлиста..."
 
-#: monophony/frontend/windows/import_window.py:33
-msgid "External Playlist"
-msgstr "Внешний Плейлист"
-
 #: monophony/frontend/windows/import_window.py:34
-msgid "Local Playlist"
-msgstr "Локальный Плейлист"
+msgid "Editable"
+msgstr "Редактируемый"
+
+#: monophony/frontend/windows/import_window.py:53
+#: monophony/frontend/windows/add_window.py:25
+msgid "Cancel"
+msgstr "Отмена"
 
 #: monophony/frontend/windows/import_window.py:55
+#: monophony/frontend/tabs/library_tab.py:47
 msgid "Import"
 msgstr "Импорт"
 
@@ -390,49 +180,207 @@ msgstr "Требуется указать имя."
 msgid "A URL is required."
 msgstr "Требуется указать URL-адрес."
 
-#: monophony/frontend/rows/importable_group_row.py:34
-msgid "Import..."
-msgstr "Импорт..."
+#: monophony/frontend/windows/add_window.py:27
+msgid "Add"
+msgstr "Добавить"
 
-#: monophony/frontend/rows/external_group_row.py:31
-msgid "External"
-msgstr "Внешний"
+#: monophony/frontend/windows/add_window.py:42
+#: monophony/frontend/windows/main_window.py:49
+msgid "Queue"
+msgstr "Очередь"
 
-#: monophony/backend/yt.py:14
-msgid "Parsing Results..."
-msgstr "Анализ Результатов..."
+#: monophony/frontend/windows/add_window.py:48
+#: monophony/frontend/tabs/library_tab.py:62
+#: monophony/frontend/tabs/library_tab.py:65
+msgid "Your Playlists"
+msgstr "Ваши Плейлисты"
 
-#: monophony/frontend/pages/artist_page.py:76
+#: monophony/frontend/windows/add_window.py:54
+msgid "New Playlist Name..."
+msgstr "Новое Название Плейлиста..."
+
+#: monophony/frontend/windows/add_window.py:56
+msgid "Create"
+msgstr "Создать"
+
+#: monophony/frontend/windows/main_window.py:37
+msgid "Library"
+msgstr "Библиотека"
+
+#: monophony/frontend/windows/main_window.py:43
+msgid "Search"
+msgstr "Поиск"
+
+#: monophony/frontend/windows/main_window.py:58
+msgid "About"
+msgstr "О Программе"
+
+#: monophony/frontend/windows/main_window.py:133
+msgid "translator-credits"
+msgstr "Alex Kryuchkov https://github.com/alexkdeveloper"
+
+#: monophony/frontend/windows/main_window.py:176
+#, python-brace-format
+msgid "Deleted \"{playlist_name}\""
+msgstr "\"{playlist_name}\" удалено"
+
+#: monophony/frontend/windows/main_window.py:179
+msgid "Undo"
+msgstr "Отменить"
+
+#: monophony/frontend/windows/main_window.py:207
+msgid "Added"
+msgstr "Добавлен"
+
+#: monophony/frontend/pages/artist_page.py:20
+#: monophony/frontend/pages/results_page.py:21
+msgid "No Results"
+msgstr "Нет Результатов"
+
+#: monophony/frontend/pages/artist_page.py:49
+msgid "Artist Not Found"
+msgstr "Исполнитель не Найден"
+
+#: monophony/frontend/pages/artist_page.py:69
 msgid "Other"
 msgstr "Прочее"
 
-#: monophony/frontend/pages/artist_page.py:101
+#: monophony/frontend/pages/artist_page.py:70
+#: monophony/frontend/pages/results_page.py:72
+msgid "Albums"
+msgstr "Альбомы"
+
+#: monophony/frontend/pages/artist_page.py:71
+#: monophony/frontend/pages/results_page.py:74
+msgid "Community Playlists"
+msgstr "Плейлисты Сообщества"
+
+#: monophony/frontend/pages/artist_page.py:94
 msgid "All Songs"
 msgstr "Все Песни"
 
-#: monophony/frontend/pages/artist_page.py:107
+#: monophony/frontend/pages/artist_page.py:100
 msgid "All Videos"
 msgstr "Все Видео"
 
-#: monophony/frontend/rows/external_group_row.py:31
-msgid "Synchronized"
-msgstr "Синхронизированный"
+#: monophony/frontend/pages/results_page.py:70
+msgid "Top Result"
+msgstr "Лучший Результат"
 
-#: monophony/frontend/widgets/player.py:56
-msgid "Volume"
-msgstr "Громкость"
+#: monophony/frontend/pages/results_page.py:71
+#: monophony/frontend/pages/artist_page.py:94
+msgid "Songs"
+msgstr "Песни"
 
-#: monophony/frontend/windows/import_window.py:33
-msgid "As Synchronized Playlist"
-msgstr "Как Синхронизированный Список Воспроизведения"
+#: monophony/frontend/pages/results_page.py:73
+#: monophony/frontend/pages/artist_page.py:100
+msgid "Videos"
+msgstr "Видео"
 
-#: monophony/frontend/windows/import_window.py:34
-msgid "As Editable Playlist"
-msgstr "Как Редактируемый Список Воспроизведения"
+#: monophony/frontend/pages/results_page.py:75
+msgid "Artists"
+msgstr "Исполнители"
 
-#: monophony/frontend/windows/main_window.py:60
-msgid "Primary Menu"
-msgstr "Основное Меню"
+#: monophony/frontend/pages/results_page.py:80
+#: monophony/frontend/pages/results_page.py:89
+#: monophony/frontend/pages/results_page.py:98
+#: monophony/frontend/pages/results_page.py:107
+#: monophony/frontend/pages/results_page.py:116
+msgid "Show all"
+msgstr "Показать всё"
+
+#: monophony/frontend/tabs/library_tab.py:47
+msgid "Import playlist"
+msgstr "Импорт списка воспроизведения"
+
+#: monophony/frontend/tabs/library_tab.py:53
+#: monophony/frontend/tabs/library_tab.py:56
+msgid "Play all"
+msgstr "Воспроизвести всё"
+
+#: monophony/frontend/tabs/library_tab.py:68
+#: monophony/frontend/tabs/library_tab.py:77
+msgid "Recently Played"
+msgstr "Последние Запущенные"
+
+#: monophony/frontend/tabs/queue_tab.py:23
+msgid "Queue Empty"
+msgstr "Очередь Пуста"
+
+#: monophony/frontend/tabs/search_tab.py:15
+#: monophony/frontend/tabs/search_tab.py:18
+#, fuzzy
+#| msgid "Searching..."
+msgid "Search..."
+msgstr "Поиск..."
+
+#: monophony/frontend/tabs/search_tab.py:21
+#: monophony/frontend/tabs/search_tab.py:24
+msgid "Go back"
+msgstr "Вернуться назад"
+
+#: monophony/frontend/widgets/recent_searches.py:36
+msgid "Remove"
+msgstr "Удалить"
+
+#: monophony/frontend/pages/artist_page.py:71
+msgid "Playlists"
+msgstr "Плейлисты"
+
+#: monophony/frontend/tabs/library_tab.py:70
+msgid "Clear"
+msgstr "Очистить"
+
+#~ msgid "More"
+#~ msgstr "Больше"
+
+#~ msgid "Your Library is Empty"
+#~ msgstr "Ваша Библиотека Пуста"
+
+#~ msgid "Find songs to play using the search bar above"
+#~ msgstr "Найдите песни для воспроизведения, используя строку поиска выше"
+
+#~ msgid "Search for Content..."
+#~ msgstr "Поиск Контента..."
+
+#~ msgid "Show Artist"
+#~ msgstr "Показать Исполнителя"
+
+#~ msgid "Show Queue"
+#~ msgstr "Показать Очередь"
+
+#~ msgid "Add to library"
+#~ msgstr "Добавить в библиотеку"
+
+#~ msgid "Loading..."
+#~ msgstr "Загрузка..."
+
+#~ msgid "Loading Library..."
+#~ msgstr "Загрузка Библиотеки..."
+
+#~ msgid "About Monophony"
+#~ msgstr "О Monophony"
+
+#~ msgid "External Playlist"
+#~ msgstr "Внешний Плейлист"
+
+#~ msgid "Local Playlist"
+#~ msgstr "Локальный Плейлист"
+
+#~ msgid "External"
+#~ msgstr "Внешний"
+
+#~ msgid "Parsing Results..."
+#~ msgstr "Анализ Результатов..."
+
+#~ msgid "As Synchronized Playlist"
+#~ msgstr "Как Синхронизированный Список Воспроизведения"
+
+#~ msgid "As Editable Playlist"
+#~ msgstr "Как Редактируемый Список Воспроизведения"
+
+#~ msgid "Primary Menu"
+#~ msgstr "Основное Меню"
 
 #~ msgid "Donate"
 #~ msgstr "Пожертвовать"
