@@ -207,13 +207,30 @@ def get_artist(browse_id: str) -> list:
 	yt = None
 	try:
 		yt = ytmusicapi.YTMusic()
-		artist = yt.get_artist(browse_id)
+		metadata = yt.get_artist(browse_id)
+		artist = {'name': metadata['name']}
+		for group in ['albums', 'singles']:
+			artist[group] = {}
+			if 'params' in metadata[group]:
+				artist[group]['results'] = yt.get_artist_albums(
+					metadata[group]['browseId'], metadata[group]['params']
+				)
+			else:
+				artist[group]['results'] = metadata[group]['results']
+
+		for group in ['songs', 'videos', 'playlists']:
+			if group in metadata:
+				artist[group] = metadata[group]
+			else:
+				print('Artist has no', group)
 	except:
 		try:
 			yt = ytmusicapi.YTMusic()
 			artist = yt.get_user(browse_id)
 		except:
-			print('Could not get artist')
+			print('Could not get artist:\033[0;31m')
+			traceback.print_exc()
+			print('\033[0m')
 			return []
 
 	data = []
@@ -224,10 +241,7 @@ def get_artist(browse_id: str) -> list:
 				try:
 					content = yt.get_playlist(artist[group]['browseId'])['tracks']
 				except:
-					print(f'Failed to get artist {group}:\033[0;33m')
-					traceback.print_exc()
-					print('\033[0m')
-					continue
+					content = artist[group]['results']
 			else:
 				content = []
 				for alb in artist[group]['results']:
