@@ -1,27 +1,23 @@
 # System information
 
-### Operating system name and version
+**Operating system name and version:**
 <!-- Example: Fedora Linux 39 (Workstation Edition) -->
 
-
-
-### Desktop environment (or window manager) name and version
+**Desktop environment name and version:**
 <!-- Example: GNOME 45.1 -->
 
-
-
-### Installation source/method
+**Installation source/method:**
 <!-- Example: Flatpak from Flathub -->
 
+**App version:**
+<!-- Example: 2.5.1 -->
 
 
 # Bug description
 
-### Detailed bug description
+**Description:**
 
-
-
-### Terminal output
+**Terminal output:**
 ```sh
 
 
