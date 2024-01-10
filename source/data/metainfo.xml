@@ -34,6 +34,14 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.5.2" date="2024-01-10">
+			<description>
+				<ul>
+					<li>Fixed not all albums appearing on artist pages</li>
+					<li>Updated translations</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.5.1" date="2023-12-19">
 			<description>
 				<ul>
