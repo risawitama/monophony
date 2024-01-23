@@ -2,7 +2,7 @@ Monophony is a free and open source Linux app for streaming music from YouTube. 
 
 Copyright © 2022-present zehkira, [AGPLv3](https://gitlab.com/zehkira/monophony/-/blob/master/source/LICENSE). [Metadata](https://gitlab.com/zehkira/monophony/-/blob/master/source/data/metainfo.xml) provided under the [0BSD](https://opensource.org/license/0bsd/) license.
 
-| [Install](https://gitlab.com/zehkira/monophony/-/blob/master/INSTALL.md) |
-|-|
+| [Install](https://gitlab.com/zehkira/monophony/-/blob/master/INSTALL.md) | Donate BTC: 3AsijftSuJtUAGBpuqBv45vmsoVHLa8PJV |
+|-|-|
 
 <img src='https://gitlab.com/zehkira/monophony/-/raw/master/assets/screenshot1.png' alt='screenshot'>
