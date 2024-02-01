@@ -1,3 +1,4 @@
+from monophony import APP_ID
 from monophony.backend.player import PlaybackMode
 
 from gi.repository import GLib
@@ -10,6 +11,9 @@ class Adapter(MprisAdapter):
 	def __init__(self, monophony_player: object):
 		super().__init__()
 		self.monophony_player = monophony_player
+
+	def get_desktop_entry(self) -> str:
+		return APP_ID
 
 	def get_uri_schemes(self) -> list:
 		return []
@@ -126,7 +130,7 @@ class Adapter(MprisAdapter):
 
 
 def init(player: object):
-	mpris = Server('monophony', adapter=Adapter(player))
+	mpris = Server('Monophony', adapter=Adapter(player))
 	player.mpris_adapter = EventAdapter(root=mpris.root, player=mpris.player)
 	player.mpris_server = mpris
 	player.mpris_server.loop()

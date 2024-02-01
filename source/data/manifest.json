@@ -11,7 +11,7 @@
 		"--share=ipc",
 		"--share=network",
 		"--device=dri",
-		"--own-name=org.mpris.MediaPlayer2.monophony"
+		"--own-name=org.mpris.MediaPlayer2.Monophony"
 	],
 	"modules": [
 		"python3-modules.json",
