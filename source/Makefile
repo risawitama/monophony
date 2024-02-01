@@ -35,7 +35,8 @@ install:
 
 	@# icons
 	$(INSTALL_DATA) data/icons/scalable.svg $(ICONS_DIR)/scalable/apps/$(ID).svg
-	$(INSTALL_DATA) data/icons/symbolic.svg $(ICONS_DIR)/symbolic/apps/$(ID)-symbolic.svg
+	$(INSTALL_DATA) \
+		data/icons/symbolic.svg $(ICONS_DIR)/symbolic/apps/$(ID)-symbolic.svg
 	$(INSTALL_DATA) data/icons/128.png $(ICONS_DIR)/128x128/apps/$(ID).png
 	$(INSTALL_DATA) data/icons/16.png $(ICONS_DIR)/16x16/apps/$(ID).png
 	$(INSTALL_DATA) data/icons/192.png $(ICONS_DIR)/192x192/apps/$(ID).png
