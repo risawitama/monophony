@@ -21,7 +21,7 @@ def _parse_results(data: list) -> list:
 		item = {'type': result['resultType'], 'top': False}
 		if 'category' in result:
 			item['top'] = (result['category'] == 'Top result')
-			if result['category'] == 'Profiles':
+			if result['category'] in ['Profiles', 'Episodes']:
 				continue
 
 		if result['resultType'] == 'artist':
