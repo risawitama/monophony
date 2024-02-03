@@ -61,7 +61,7 @@ def _parse_results(data: list) -> list:
 				continue
 		elif result['resultType'] == 'playlist':
 			try:
-				album = yt.get_playlist(result['browseId'])
+				album = yt.get_playlist(result['browseId'], limit=None)
 				if 'author' in result:
 					item['author'] = result['author']
 				else:
@@ -239,7 +239,9 @@ def get_artist(browse_id: str) -> list:
 		if group in artist:
 			if group in {'songs', 'videos'}:
 				try:
-					content = yt.get_playlist(artist[group]['browseId'])['tracks']
+					content = yt.get_playlist(
+						artist[group]['browseId'], limit=None
+					)['tracks']
 				except:
 					content = artist[group]['results']
 			else:
