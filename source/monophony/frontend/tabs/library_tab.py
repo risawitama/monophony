@@ -1,5 +1,6 @@
 import monophony.backend.history
 import monophony.backend.playlists
+import monophony.backend.yt
 from monophony.frontend.rows.local_group_row import MonophonyLocalGroupRow
 from monophony.frontend.rows.external_group_row import MonophonyExternalGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
@@ -19,6 +20,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.playlist_widgets = []
 		self.recents_widgets = []
 		self.old_recents = []
+		self.recommendations = []
 		self.loading_lock = GLib.Mutex()
 		self.set_vexpand(True)
 
@@ -42,6 +44,11 @@ class MonophonyLibraryTab(Gtk.Box):
 			GObject.BindingFlags.INVERT_BOOLEAN |
 			GObject.BindingFlags.BIDIRECTIONAL
 		)
+
+		self.box_recommendations = Adw.PreferencesGroup()
+		self.box_recommendations.set_visible(False)
+		self.box_recommendations.set_title(_('Recommended'))
+		self.box_meta.add(self.box_recommendations)
 
 		con_import = Adw.ButtonContent.new()
 		con_import.set_label(_('Import'))
@@ -78,11 +85,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_recents.set_header_suffix(btn_clear)
 		self.box_meta.add(self.box_recents)
 
-		GLib.Thread.new(
-			None,
-			monophony.backend.playlists.update_external_playlists,
-			self.loading_lock
-		)
+		GLib.Thread.new('library-load', self.load)
 		GLib.timeout_add(100, self.update)
 
 	def _on_play_all(self, _b):
@@ -93,6 +96,12 @@ class MonophonyLibraryTab(Gtk.Box):
 			all_songs.extend(playlist['contents'])
 
 		GLib.Thread.new(None, self.player.play_queue, all_songs, 0)
+
+	def load(self):
+		self.loading_lock.lock()
+		monophony.backend.playlists.update_external_playlists()
+		self.recommendations = monophony.backend.yt.get_recommendations()
+		self.loading_lock.unlock()
 
 	def update(self) -> bool:
 		if not self.loading_lock.trylock():
@@ -129,6 +138,14 @@ class MonophonyLibraryTab(Gtk.Box):
 				new_widget = MonophonyExternalGroupRow(playlist, self.player)
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
+
+		if self.recommendations:
+			self.box_recommendations.set_visible(True)
+			for song in self.recommendations:
+				widget = MonophonySongRow(song, self.player)
+				self.box_recommendations.add(widget)
+
+			self.recommendations = []
 
 		# player could be adding to recents at this moment
 		if self.player.is_busy():

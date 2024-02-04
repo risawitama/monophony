@@ -129,14 +129,12 @@ def remove_external_playlist(name: str):
 	)
 
 
-def update_external_playlists(lock: object):
-	lock.lock()
+def update_external_playlists():
 	lists = read_external_playlists()
 	for playlist in lists:
 		import_playlist(playlist['title'], playlist['id'], False, True)
 
 	clean_up_playlists()
-	lock.unlock()
 
 
 def clean_up_playlists():

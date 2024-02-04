@@ -164,16 +164,15 @@ def get_similar_song(video_id: str, ignore: list=None) -> dict:
 	return {}
 
 
-def get_recommendations() -> dict:
+def get_recommendations() -> list:
 	try:
 		yt = ytmusicapi.YTMusic()
 		data = yt.get_home()
 	except:
 		return {}
 
-	results = {}
+	songs = []
 	for group in data:
-		songs = []
 		for item in group['contents']:
 			if 'videoId' in item:
 				songs.append({
@@ -183,10 +182,8 @@ def get_recommendations() -> dict:
 					'id': item['videoId'],
 				})
 
-		if songs:
-			results[group['title']] = songs
-
-	return results
+	random.shuffle(songs)
+	return songs[:5]
 
 
 def get_song(id_: str) -> dict:
