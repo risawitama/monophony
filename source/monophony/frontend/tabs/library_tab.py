@@ -1,8 +1,9 @@
 import monophony.backend.history
 import monophony.backend.playlists
 import monophony.backend.yt
-from monophony.frontend.rows.local_group_row import MonophonyLocalGroupRow
 from monophony.frontend.rows.external_group_row import MonophonyExternalGroupRow
+from monophony.frontend.rows.local_group_row import MonophonyLocalGroupRow
+from monophony.frontend.rows.locked_group_row import MonophonyLockedGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
 from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 
@@ -20,7 +21,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.playlist_widgets = []
 		self.recents_widgets = []
 		self.old_recents = []
-		self.recommendations = []
+		self.recommendations = {}
 		self.loading_lock = GLib.Mutex()
 		self.set_vexpand(True)
 
@@ -141,11 +142,14 @@ class MonophonyLibraryTab(Gtk.Box):
 
 		if self.recommendations:
 			self.box_recommendations.set_visible(True)
-			for song in self.recommendations:
-				widget = MonophonySongRow(song, self.player)
+			for group in self.recommendations:
+				widget = MonophonyLockedGroupRow(
+					{'title': group, 'contents': self.recommendations[group]},
+					self.player
+				)
 				self.box_recommendations.add(widget)
 
-			self.recommendations = []
+			self.recommendations = {}
 
 		# player could be adding to recents at this moment
 		if self.player.is_busy():
