@@ -38,6 +38,17 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.6.0" date="2024-02-05">
+			<description>
+				<ul>
+					<li>Added recommendations to library</li>
+					<li>Expanded MPRIS support for better desktop integration</li>
+					<li>Fixed podcast episodes appearing in video results</li>
+					<li>Fixed large playlists not showing all songs in some cases</li>
+					<li>Updated translations</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.5.2" date="2024-01-10">
 			<description>
 				<ul>
