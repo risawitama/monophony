@@ -16,10 +16,14 @@
 		<display_length compare="gt">xsmall</display_length>
 	</requires>
 	<summary>Stream music from YouTube Music</summary>
+	<summary xml:lang="de">Musik von YouTube streamen</summary>
 	<description>
 		<p>
 			Monophony allows you to listen to music for free and without ads. You can create local playlists or add existing ones to your library. No account required.
 		</p>
+		<p xml:lang="de">
+			Monophony ermöglicht es Ihnen, Musik kostenlos und ohne Werbung zu hören. Sie können lokale Wiedergabelisten erstellen oder bestehende Listen Ihrer Bibliothek hinzufügen. Kein Konto erforderlich.
+    </p>
 	</description>
 	<screenshots>
 		<screenshot type="default">

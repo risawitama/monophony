@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: monophony/frontend/popovers/local_song_popover.py:17
 msgid "Remove From Playlist"
@@ -131,6 +131,10 @@ msgstr "Titel wiederholen"
 msgid "Shuffle"
 msgstr "Durchmischen"
 
+#: monophony/frontend/widgets/recent_searches.py:36
+msgid "Remove"
+msgstr "Entfernen"
+
 #: monophony/frontend/windows/message_window.py:13
 msgid "Ok"
 msgstr "OK"
@@ -153,7 +157,7 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: monophony/frontend/windows/import_window.py:55
-#: monophony/frontend/tabs/library_tab.py:47
+#: monophony/frontend/tabs/library_tab.py:55
 msgid "Import"
 msgstr "Importieren"
 
@@ -189,8 +193,7 @@ msgid "Queue"
 msgstr "Warteschlange"
 
 #: monophony/frontend/windows/add_window.py:48
-#: monophony/frontend/tabs/library_tab.py:62
-#: monophony/frontend/tabs/library_tab.py:65
+#: monophony/frontend/tabs/library_tab.py:73
 msgid "Your Playlists"
 msgstr "Eigene Wiedergabelisten"
 
@@ -216,7 +219,7 @@ msgstr "Info"
 
 #: monophony/frontend/windows/main_window.py:133
 msgid "translator-credits"
-msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2023"
+msgstr "Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024"
 
 #: monophony/frontend/windows/main_window.py:176
 #, python-brace-format
@@ -231,36 +234,10 @@ msgstr "Rückgängig"
 msgid "Added"
 msgstr "Hinzugefügt"
 
-#: monophony/frontend/pages/artist_page.py:20
 #: monophony/frontend/pages/results_page.py:21
+#: monophony/frontend/pages/artist_page.py:20
 msgid "No Results"
 msgstr "Keine Ergebnisse"
-
-#: monophony/frontend/pages/artist_page.py:49
-msgid "Artist Not Found"
-msgstr "Interpret nicht gefunden"
-
-#: monophony/frontend/pages/artist_page.py:69
-msgid "Other"
-msgstr "Weitere"
-
-#: monophony/frontend/pages/artist_page.py:70
-#: monophony/frontend/pages/results_page.py:72
-msgid "Albums"
-msgstr "Alben"
-
-#: monophony/frontend/pages/artist_page.py:71
-#: monophony/frontend/pages/results_page.py:74
-msgid "Community Playlists"
-msgstr "Gemeinschaftswiedergabelisten"
-
-#: monophony/frontend/pages/artist_page.py:94
-msgid "All Songs"
-msgstr "Alle Titel"
-
-#: monophony/frontend/pages/artist_page.py:100
-msgid "All Videos"
-msgstr "Alle Videos"
 
 #: monophony/frontend/pages/results_page.py:70
 msgid "Top Result"
@@ -271,10 +248,19 @@ msgstr "Bestes Ergebnis"
 msgid "Songs"
 msgstr "Titel"
 
+#: monophony/frontend/pages/results_page.py:72
+#: monophony/frontend/pages/artist_page.py:70
+msgid "Albums"
+msgstr "Alben"
+
 #: monophony/frontend/pages/results_page.py:73
 #: monophony/frontend/pages/artist_page.py:100
 msgid "Videos"
 msgstr "Videos"
+
+#: monophony/frontend/pages/results_page.py:74
+msgid "Community Playlists"
+msgstr "Gemeinschaftswiedergabelisten"
 
 #: monophony/frontend/pages/results_page.py:75
 msgid "Artists"
@@ -288,45 +274,54 @@ msgstr "Interpreten"
 msgid "Show all"
 msgstr "Alle anzeigen"
 
-#: monophony/frontend/tabs/library_tab.py:47
-msgid "Import playlist"
-msgstr "Wiedergabeliste importieren"
+#: monophony/frontend/pages/artist_page.py:49
+msgid "Artist Not Found"
+msgstr "Interpret nicht gefunden"
 
-#: monophony/frontend/tabs/library_tab.py:53
-#: monophony/frontend/tabs/library_tab.py:56
-msgid "Play all"
-msgstr "Alle wiedergeben"
-
-#: monophony/frontend/tabs/library_tab.py:68
-#: monophony/frontend/tabs/library_tab.py:77
-msgid "Recently Played"
-msgstr "Zuletzt wiedergegeben"
-
-#: monophony/frontend/tabs/queue_tab.py:23
-msgid "Queue Empty"
-msgstr "Warteschlange ist leer"
-
-#: monophony/frontend/tabs/search_tab.py:15
-#: monophony/frontend/tabs/search_tab.py:18
-msgid "Search..."
-msgstr "Suchen …"
-
-#: monophony/frontend/tabs/search_tab.py:21
-#: monophony/frontend/tabs/search_tab.py:24
-msgid "Go back"
-msgstr "Zurückgehen"
-
-#: monophony/frontend/widgets/recent_searches.py:36
-msgid "Remove"
-msgstr "Entfernen"
+#: monophony/frontend/pages/artist_page.py:69
+msgid "Other"
+msgstr "Weitere"
 
 #: monophony/frontend/pages/artist_page.py:71
 msgid "Playlists"
 msgstr "Wiedergabelisten"
 
-#: monophony/frontend/tabs/library_tab.py:70
+#: monophony/frontend/tabs/queue_tab.py:23
+msgid "Queue Empty"
+msgstr "Warteschlange ist leer"
+
+#: monophony/frontend/tabs/search_tab.py:18
+msgid "Search..."
+msgstr "Suchen …"
+
+#: monophony/frontend/tabs/search_tab.py:24
+msgid "Go back"
+msgstr "Zurückgehen"
+
+#: monophony/frontend/tabs/library_tab.py:51
+msgid "Recommended"
+msgstr "Empfohlen"
+
+#: monophony/frontend/tabs/library_tab.py:64
+msgid "Play all"
+msgstr "Alle wiedergeben"
+
+#: monophony/frontend/tabs/library_tab.py:78
 msgid "Clear"
 msgstr "Leeren"
+
+#: monophony/frontend/tabs/library_tab.py:85
+msgid "Recently Played"
+msgstr "Zuletzt wiedergegeben"
+
+#~ msgid "All Songs"
+#~ msgstr "Alle Titel"
+
+#~ msgid "All Videos"
+#~ msgstr "Alle Videos"
+
+#~ msgid "Import playlist"
+#~ msgstr "Wiedergabeliste importieren"
 
 #~ msgid "More"
 #~ msgstr "Mehr"
