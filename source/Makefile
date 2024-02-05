@@ -77,6 +77,8 @@ flatpak:
 
 # updates the trasnslation template
 translation:
+	printf 'msgid \"\"\nmsgstr \"Content-Type: text/plain; charset=UTF-8\\n\"' \
+		> locales/all.pot
 	find monophony -iname "*.py" | xargs xgettext --omit-header -j -o locales/all.pot
 
 
