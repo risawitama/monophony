@@ -122,7 +122,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		win_about.set_application_icon(APP_ID)
 		win_about.set_application_name('Monophony')
 		win_about.set_version(__version__)
-		win_about.set_copyright('Copyright © 2022-present zehkira')
+		win_about.set_copyright('Copyright © 2022-present Zehkira')
 		win_about.set_license_type(Gtk.License.AGPL_3_0)
 		win_about.add_legal_section(
 			'ytmusicapi', 'Copyright © 2020 sigma67', Gtk.License.MIT_X11
