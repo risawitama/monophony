@@ -1,11 +1,11 @@
 [tool.ruff]
 builtins = ['_']
-extend-ignore = ['E4', 'E74', 'E722']
-extend-select = ['ARG', 'Q', 'E5']
+lint.extend-ignore = ['E4', 'E74', 'E722']
+lint.extend-select = ['ARG', 'Q', 'E5']
 line-length = 88
 indent-width = 4
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = 'single'
 docstring-quotes = 'single'
 multiline-quotes = 'single'
