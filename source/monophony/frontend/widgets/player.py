@@ -26,6 +26,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.window = window
 		self.player = player
 		self.player.set_volume(volume, False)
+		self.player.ui_update_callback = self.update
 
 		box_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		box_info.set_margin_start(11)
@@ -189,7 +190,7 @@ class MonophonyPlayer(Gtk.Box):
 			Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 		)
 
-		GLib.timeout_add(250, self.update)
+		GLib.timeout_add(1000, self.update_progress)
 
 	def build_menu_popup(self, btn: Gtk.MenuButton):
 		mnu_more = Gio.Menu()
@@ -299,8 +300,14 @@ class MonophonyPlayer(Gtk.Box):
 		self.player.set_volume(value, True)
 		monophony.backend.settings.set_value('volume', value)
 
-	def update(self) -> True:
-		song = self.player.get_current_song()
+	def update_progress(self) -> bool:
+		progress = self.player.get_progress()
+		if progress:
+			self.scl_progress.set_value(progress)
+
+		return True
+
+	def update(self, song: dict, busy: bool, paused: bool, progress: float) -> bool:
 		if song:
 			self.lnk_title.set_label(song['title'])
 			self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
@@ -315,16 +322,12 @@ class MonophonyPlayer(Gtk.Box):
 			self.lbl_author.set_label('')
 			self.window.player_revealer.set_reveal_child(False)
 
-		self.scl_progress.set_sensitive(not self.player.is_busy())
-		self.btn_pause.set_visible(self.scl_progress.get_sensitive())
-		if not self.player.is_busy():
-			self.scl_progress.set_value(self.player.get_progress())
+		self.scl_progress.set_sensitive(not busy)
+		self.btn_pause.set_visible(not busy)
+		self.scl_progress.set_value(progress)
+		self.btn_pause.set_icon_name(
+			'media-playback-start-symbolic' if paused else
+			'media-playback-pause-symbolic'
+		)
 
-			if self.player.is_paused():
-				self.btn_pause.set_icon_name('media-playback-start-symbolic')
-			else:
-				self.btn_pause.set_icon_name('media-playback-pause-symbolic')
-		else:
-			self.window.player_revealer.set_reveal_child(True)
-
-		return True
+		return False
