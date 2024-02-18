@@ -3,7 +3,7 @@ from monophony.frontend.rows.queue_song_row import MonophonyQueueSongRow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, Gtk
 
 
 class MonophonyQueueTab(Gtk.Box):
@@ -11,6 +11,7 @@ class MonophonyQueueTab(Gtk.Box):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
 		self.player = player
+		self.player.queue_change_callback = self.update
 		self.old_queue = []
 		self.old_index = -1
 		self.queue_widgets = []
@@ -32,8 +33,6 @@ class MonophonyQueueTab(Gtk.Box):
 
 		self.append(self.box_meta)
 		self.append(self.pge_status)
-
-		GLib.timeout_add(100, self.update)
 
 	def update(self) -> True:
 		new_queue = self.player.queue.copy()

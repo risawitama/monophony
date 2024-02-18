@@ -38,6 +38,7 @@ class Player:
 		self.mpris_adapter = None
 		self.mpris_server = None
 		self.ui_update_callback = None
+		self.queue_change_callback = None
 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.get_bus().add_signal_watch()
@@ -208,6 +209,7 @@ class Player:
 			self.lock.lock()
 
 		GLib.idle_add(self.ui_update_callback, song, True, False, 0)
+		GLib.idle_add(self.queue_change_callback)
 		if not resume:
 			print('Playing', song['id'], 'in playback mode', self.mode)
 			self.last_progress = 0
@@ -332,6 +334,7 @@ class Player:
 			self.queue = []
 			self.index = 0
 			self.mpris_server.unpublish()
+			GLib.idle_add(self.queue_change_callback)
 			GLib.idle_add(self.ui_update_callback, None, False, False, 0)
 
 		if lock:
@@ -394,6 +397,7 @@ class Player:
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
+		GLib.idle_add(self.queue_change_callback)
 
 		self.lock.unlock()
 
@@ -417,6 +421,7 @@ class Player:
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
+		GLib.idle_add(self.queue_change_callback)
 
 		self.lock.unlock()
 
@@ -432,6 +437,7 @@ class Player:
 		if self.mode == PlaybackMode.SHUFFLE:
 			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
+		GLib.idle_add(self.queue_change_callback)
 
 		self.lock.unlock()
 
