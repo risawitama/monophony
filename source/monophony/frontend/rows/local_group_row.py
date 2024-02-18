@@ -91,10 +91,7 @@ class MonophonyLocalGroupRow(MonophonyGroupRow):
 		success = monophony.backend.playlists.rename_playlist(
 			self.group['title'], name
 		)
-		if success:
-			self.group['title'] = name
-			self.set_title(name)
-		else:
+		if not success:
 			MonophonyMessageWindow(
 				self.get_ancestor(Gtk.Window),
 				_('Could not Rename'),

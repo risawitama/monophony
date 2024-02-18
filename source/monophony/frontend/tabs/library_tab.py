@@ -87,7 +87,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_meta.add(self.box_recents)
 
 		GLib.Thread.new('library-load', self.load)
-		GLib.timeout_add(100, self.update)
+		GLib.timeout_add(200, self.update)
 
 	def _on_play_all(self, _b):
 		all_songs = []
@@ -129,6 +129,7 @@ class MonophonyLibraryTab(Gtk.Box):
 				)
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
+				break # one per update call
 
 		for playlist in new_ext_lists:
 			title = GLib.markup_escape_text(playlist['title'], -1)
@@ -139,6 +140,7 @@ class MonophonyLibraryTab(Gtk.Box):
 				new_widget = MonophonyExternalGroupRow(playlist, self.player)
 				self.playlist_widgets.append(new_widget)
 				self.box_playlists.add(new_widget)
+				break # one per update call
 
 		if self.recommendations:
 			self.box_recommendations.set_visible(True)
