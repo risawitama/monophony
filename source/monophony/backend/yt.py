@@ -132,7 +132,7 @@ def get_song_uri(video_id: str) -> str | None:
 	return out.decode().split('\n')[0]
 
 
-def get_similar_song(video_id: str, ignore: list=None) -> dict:
+def get_similar_song(video_id: str, ignore: list | None = None) -> dict:
 	ignore = ignore if ignore else []
 	try:
 		yt = ytmusicapi.YTMusic()
@@ -173,15 +173,14 @@ def get_recommendations() -> dict:
 
 	categories = {}
 	for group in data:
-		songs = []
-		for item in group['contents']:
-			if 'videoId' in item:
-				songs.append({
-					'title': item['title'],
-					'author': ', '.join([a['name'] for a in item['artists']]),
-					'author_id': item['artists'][0]['id'],
-					'id': item['videoId'],
-				})
+		songs = [
+			{
+				'title': item['title'],
+				'author': ', '.join([a['name'] for a in item['artists']]),
+				'author_id': item['artists'][0]['id'],
+				'id': item['videoId'],
+			} for item in group['contents'] if 'videoId' in item
+		]
 
 		if songs:
 			categories[group['title']] = songs
@@ -234,7 +233,7 @@ def get_artist(browse_id: str) -> list:
 			return []
 
 	data = []
-	for group in {'songs', 'albums', 'singles', 'videos', 'playlists'}:
+	for group in ['songs', 'albums', 'singles', 'videos', 'playlists']:
 		content = []
 		if group in artist:
 			if group in {'songs', 'videos'}:
@@ -247,20 +246,19 @@ def get_artist(browse_id: str) -> list:
 			else:
 				content = []
 				for alb in artist[group]['results']:
-					try:
-						content.append({
-							'title': alb['title'],
-							'browseId': (
-								alb['browseId'] if 'browseId' in alb else
-								alb['playlistId']
-							),
-							'artists': [{'name': artist['name']}]
-						})
-					except:
+					if not ('browseId' in alb or 'playlistId' in alb):
 						print(f'Failed to get artist {group}:\033[0;33m')
 						traceback.print_exc()
 						print('\033[0m')
 						continue
+
+					content.append({
+						'title': alb['title'],
+						'browseId': (
+							alb['browseId' if 'browseId' in alb else 'playlistId']
+						),
+						'artists': [{'name': artist['name']}]
+					})
 
 			for item in content:
 				item['resultType'] = group[:-1]

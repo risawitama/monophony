@@ -31,7 +31,7 @@ def read_settings() -> dict:
 	) + '/monophony/settings.json'
 
 	try:
-		with open(sets_path, 'r') as sets_file:
+		with open(sets_path) as sets_file:
 			return json.load(sets_file)
 	except OSError:
 		return {}

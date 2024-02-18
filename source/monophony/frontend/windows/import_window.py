@@ -9,7 +9,7 @@ from gi.repository import Adw, GLib, GObject, Gtk
 
 
 class MonophonyImportWindow(Adw.Window):
-	def __init__(self, url: str='', group: list=None):
+	def __init__(self, url: str='', group: list | None = None):
 		super().__init__()
 
 		self.import_lock = GLib.Mutex()

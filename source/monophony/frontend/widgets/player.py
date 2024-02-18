@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 import monophony.backend.player
 import monophony.backend.settings
 import monophony.backend.yt
@@ -8,7 +10,7 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
-	playback_icons = {
+	playback_icons: ClassVar = {
 		monophony.backend.player.PlaybackMode.NORMAL:
 		'media-playlist-consecutive-symbolic',
 		monophony.backend.player.PlaybackMode.LOOP:

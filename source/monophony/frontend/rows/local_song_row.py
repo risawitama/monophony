@@ -9,7 +9,7 @@ from gi.repository import Adw, Gdk, Gtk
 
 
 class MonophonyLocalSongRow(MonophonySongRow):
-	def __init__(self, song: dict, player: object, group: dict=None):
+	def __init__(self, song: dict, player: object, group: dict | None = None):
 		super().__init__(song, player, group)
 
 		img_handle = Gtk.Image.new_from_icon_name('list-drag-handle-symbolic')

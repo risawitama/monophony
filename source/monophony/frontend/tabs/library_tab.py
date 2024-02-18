@@ -91,7 +91,7 @@ class MonophonyLibraryTab(Gtk.Box):
 
 	def _on_play_all(self, _b):
 		all_songs = []
-		for _title, content in monophony.backend.playlists.read_playlists().items():
+		for content in monophony.backend.playlists.read_playlists().values():
 			all_songs.extend(content)
 		for playlist in monophony.backend.playlists.read_external_playlists():
 			all_songs.extend(playlist['contents'])
@@ -113,10 +113,9 @@ class MonophonyLibraryTab(Gtk.Box):
 		new_playlists = monophony.backend.playlists.read_playlists()
 		new_ext_lists = monophony.backend.playlists.read_external_playlists()
 
-		remaining_widgets = []
-		for widget in self.playlist_widgets:
-			if widget.is_ancestor(self.box_meta):
-				remaining_widgets.append(widget)
+		remaining_widgets = [
+			w for w in self.playlist_widgets if w.is_ancestor(self.box_meta)
+		]
 		self.playlist_widgets = remaining_widgets
 
 		for title in new_playlists.keys():

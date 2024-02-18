@@ -25,7 +25,7 @@ import ytmusicapi
 ### --- PLAYLIST FUNCTIONS --- ###
 
 
-def add_playlist(name: str, songs: list=None):
+def add_playlist(name: str, songs: list | None = None):
 	new_lists = read_playlists()
 	name = get_unique_name(name)
 
@@ -41,7 +41,7 @@ def add_playlist(name: str, songs: list=None):
 def add_external_playlist(playlist: dict):
 	lists = read_external_playlists()
 	lists.append(playlist)
-	write_playlists(external_playlists=lists)
+	write_playlists(ext_playlists=lists)
 
 
 def rename_playlist(name: str, new_name: str, local: bool=True) -> bool:
@@ -60,7 +60,7 @@ def rename_playlist(name: str, new_name: str, local: bool=True) -> bool:
 	for i, playlist in enumerate(new_lists):
 		if playlist['title'] == name:
 			new_lists[i]['title'] = new_name
-			write_playlists(external_playlists=new_lists)
+			write_playlists(ext_playlists=new_lists)
 			return True
 
 	return False
@@ -110,7 +110,7 @@ def import_playlist(name: str, url: str, local: bool, overwrite: bool=False) -> 
 	else:
 		new_ext_lists = [l for l in new_ext_lists if l['title'] != name]
 		new_ext_lists.append({'title': name, 'id': playlist_id, 'contents': songs})
-		write_playlists(external_playlists=new_ext_lists)
+		write_playlists(ext_playlists=new_ext_lists)
 
 	return True
 
@@ -123,7 +123,7 @@ def remove_playlist(name: str):
 
 def remove_external_playlist(name: str):
 	write_playlists(
-		external_playlists=[
+		ext_playlists=[
 			l for l in read_external_playlists() if l['title'] != name
 		]
 	)
@@ -151,7 +151,7 @@ def clean_up_playlists():
 		new_l['contents'] = [s for s in new_l['contents'] if s['id']]
 		new_ext_lists.append(new_l)
 
-	write_playlists(playlists=new_lists, external_playlists=new_ext_lists)
+	write_playlists(playlists=new_lists, ext_playlists=new_ext_lists)
 
 
 ### --- SONG FUNCTIONS --- ###
@@ -206,15 +206,15 @@ def get_unique_name(base: str) -> str:
 
 	if name in taken_names:
 		i = 1
-		while f'{name} ({str(i)})' in taken_names:
+		while f'{name} ({i})' in taken_names:
 			i += 1
 
-		name = f'{name} ({str(i)})'
+		name = f'{name} ({i})'
 
 	return name
 
 
-def write_playlists(playlists: dict=None, external_playlists: list=None):
+def write_playlists(playlists: dict | None = None, ext_playlists: list | None = None):
 	dir_path = os.getenv(
 		'XDG_CONFIG_HOME', os.path.expanduser('~/.config')
 	) + '/monophony'
@@ -225,12 +225,12 @@ def write_playlists(playlists: dict=None, external_playlists: list=None):
 		if playlists is not None:
 			with open(str(lists_path), 'w') as lists_file:
 				json.dump(playlists, lists_file)
-		if external_playlists is not None:
+		if ext_playlists is not None:
 			with open(str(ext_lists_path), 'w') as ext_lists_file:
-				json.dump(external_playlists, ext_lists_file)
+				json.dump(ext_playlists, ext_lists_file)
 	except FileNotFoundError:
 		os.makedirs(str(dir_path))
-		write_playlists(playlists=playlists, external_playlists=external_playlists)
+		write_playlists(playlists=playlists, ext_playlists=ext_playlists)
 
 
 def read_playlists() -> dict:
@@ -240,7 +240,7 @@ def read_playlists() -> dict:
 
 	lists = {}
 	try:
-		with open(lists_path, 'r') as lists_file:
+		with open(lists_path) as lists_file:
 			lists = json.load(lists_file)
 	except OSError:
 		return {}
@@ -268,7 +268,7 @@ def read_external_playlists() -> list:
 
 	lists = []
 	try:
-		with open(lists_path, 'r') as lists_file:
+		with open(lists_path) as lists_file:
 			lists = json.load(lists_file)
 	except OSError:
 		return []

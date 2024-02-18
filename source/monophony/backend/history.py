@@ -63,7 +63,7 @@ def read_searches() -> list:
 	) + '/monophony/recent_searches.json'
 
 	try:
-		with open(recents_path , 'r') as recents_file:
+		with open(recents_path) as recents_file:
 			return json.load(recents_file)
 	except OSError:
 		return []
@@ -89,7 +89,7 @@ def read_songs() -> list:
 	) + '/monophony/recent_songs.json'
 
 	try:
-		with open(songs_path, 'r') as songs_file:
+		with open(songs_path) as songs_file:
 			return json.load(songs_file)
 	except OSError:
 		return []

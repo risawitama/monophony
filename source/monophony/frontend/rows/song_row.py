@@ -8,7 +8,7 @@ from gi.repository import Adw, GLib, GObject, Gtk
 
 
 class MonophonySongRow(Adw.ActionRow, GObject.Object):
-	def __init__(self, song: dict, player: object, group: dict=None):
+	def __init__(self, song: dict, player: object, group: dict | None = None):
 		super().__init__()
 
 		self.player = player
@@ -20,14 +20,14 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.connect('activated', self._on_play_clicked)
 
 		title = GLib.markup_escape_text(
-			song['title'] if 'title' in song and song['title'] else '________', -1
+			song['title'] if song.get('title', None) else '________', -1
 		)
 		length = GLib.markup_escape_text(
 			song['length'], -1
-		) if 'length' in song and song['length'] else ''
+		) if song.get('length', None) else ''
 		author = GLib.markup_escape_text(
 			song['author'], -1
-		) if 'author' in song and song['author'] else ''
+		) if song.get('author', None) else ''
 		subtitle = author
 		if length:
 			subtitle = length + ' ' + subtitle

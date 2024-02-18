@@ -138,7 +138,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		win_about.set_transient_for(self)
 		win_about.present()
 
-	def _on_import_clicked(self, url: str='', group: list=None):
+	def _on_import_clicked(self, url: str='', group: list | None = None):
 		popup = MonophonyImportWindow(url=url, group=group)
 		popup.set_transient_for(self)
 		popup.present()

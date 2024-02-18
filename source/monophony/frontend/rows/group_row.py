@@ -15,7 +15,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			self.set_subtitle(GLib.markup_escape_text(self.group['author'], -1))
 
 		self.set_title(GLib.markup_escape_text(
-			group['title'] if 'title' in group and group['title'] else '________',
+			group['title'] if group.get('title', None) else '________',
 			-1
 		))
 

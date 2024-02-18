@@ -28,6 +28,6 @@ class MonophonyArtistRow(Adw.ActionRow):
 		)
 
 		self.set_title(GLib.markup_escape_text(
-			artist['author'] if 'author' in artist and artist['author'] else '_',
+			artist['author'] if artist.get('author', None) else '_',
 			-1
 		))
