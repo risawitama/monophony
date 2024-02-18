@@ -53,7 +53,7 @@ class Player:
 	def terminate(self):
 		self.lock.lock()
 		self.playbin.set_state(Gst.State.NULL)
-		del self.playbin
+		self.mpris_server.unpublish()
 
 	def is_busy(self) -> bool:
 		if not self.lock.trylock():

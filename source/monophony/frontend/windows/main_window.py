@@ -101,9 +101,11 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.stack.navigate(Adw.NavigationDirection.FORWARD)
 
 	def _on_quit(self):
+		self.player.terminate()
 		size = self.get_default_size()
 		monophony.backend.settings.set_value('window-width', size.width)
 		monophony.backend.settings.set_value('window-height', size.height)
+		self.get_application().quit()
 
 	def _on_search(self):
 		self.stack.set_visible_child_name('search')
