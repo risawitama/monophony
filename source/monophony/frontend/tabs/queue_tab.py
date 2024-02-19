@@ -34,7 +34,7 @@ class MonophonyQueueTab(Gtk.Box):
 		self.append(self.box_meta)
 		self.append(self.pge_status)
 
-	def update(self) -> True:
+	def update(self) -> bool:
 		new_queue = self.player.queue.copy()
 		new_index = self.player.index
 
@@ -66,4 +66,4 @@ class MonophonyQueueTab(Gtk.Box):
 				else:
 					widget.remove_css_class('current-queue-item')
 
-		return True
+		return False
