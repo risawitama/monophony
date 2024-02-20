@@ -36,29 +36,22 @@ class MonophonyArtistPage(Gtk.Box):
 		self.set_vexpand(True)
 		self.artist = artist
 		self.results = []
-		self.search_lock = GLib.Mutex()
 		self.player = player
 
 		GLib.Thread.new(None, self.do_get_artist)
-		GLib.timeout_add(500, self.await_results)
 
 	def do_get_artist(self):
-		self.search_lock.lock()
 		results = monophony.backend.yt.get_artist(self.artist)
 		if not results:
 			self.pge_status.set_title(_('Artist Not Found'))
 			self.box_loading.set_visible(False)
 			self.pge_status.set_visible(True)
-			self.search_lock.unlock()
 			return
 
 		self.results = results
-		self.search_lock.unlock()
+		GLib.idle_add(self.present_results)
 
-	def await_results(self) -> bool:
-		if not self.search_lock.trylock():
-			return True
-
+	def present_results(self) -> bool:
 		self.box_loading.set_visible(False)
 		self.pge_status.set_visible(len(self.results) == 0)
 		if self.results:
@@ -103,5 +96,4 @@ class MonophonyArtistPage(Gtk.Box):
 			for box in non_empty:
 				self.pge_results.add(box)
 
-		self.search_lock.unlock()
 		return False
