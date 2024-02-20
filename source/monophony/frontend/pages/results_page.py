@@ -38,25 +38,19 @@ class MonophonyResultsPage(Gtk.Box):
 		self.query = query
 		self.filter = filter_
 		self.results = []
-		self.search_lock = GLib.Mutex()
 		self.player = player
 
 		if query:
-			GLib.Thread.new(None, self.do_search)
-			GLib.timeout_add(500, self.await_results)
+			GLib.Thread.new('search', self.do_search)
 		else:
 			self.pge_status.set_visible(True)
 			self.pge_status.set_title('')
 
 	def do_search(self):
-		self.search_lock.lock()
 		self.results = monophony.backend.yt.search(self.query, self.filter)
-		self.search_lock.unlock()
+		GLib.idle_add(self.await_results)
 
 	def await_results(self) -> bool:
-		if not self.search_lock.trylock():
-			return True
-
 		self.box_loading.set_visible(False)
 		self.pge_status.set_visible(len(self.results) == 0)
 		if self.results:
@@ -166,5 +160,4 @@ class MonophonyResultsPage(Gtk.Box):
 			for box in non_empty:
 				self.pge_results.add(box)
 
-		self.search_lock.unlock()
 		return False
