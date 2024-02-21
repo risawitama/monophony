@@ -38,6 +38,14 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.6.1" date="2024-02-21">
+			<description>
+				<ul>
+					<li>Improved performance</li>
+					<li>Fixed app not exiting properly</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.6.0" date="2024-02-05">
 			<description>
 				<ul>
