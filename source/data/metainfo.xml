@@ -13,7 +13,7 @@
 		<control>touch</control>
 	</supports>
 	<requires>
-		<display_length compare="gt">xsmall</display_length>
+		<display_length compare="ge">360</display_length>
 	</requires>
 	<summary>Stream music from YouTube Music</summary>
 	<summary xml:lang="de">Musik von YouTube streamen</summary>
