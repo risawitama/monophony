@@ -80,9 +80,19 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			'quit-app', None, (lambda w, *_: w.close())
 		)
 		self.install_action(
+			'focus-library',
+			None,
+			(lambda w, *_: w.stack.set_visible_child_name('library'))
+		)
+		self.install_action(
 			'focus-search',
 			None,
 			(lambda w, *_: w._on_search())
+		)
+		self.install_action(
+			'focus-queue',
+			None,
+			(lambda w, *_: w.stack.set_visible_child_name('queue'))
 		)
 		self.install_action(
 			'playlist-delete-undo', None, (lambda w, *_: w._on_undo_deletion())
@@ -90,7 +100,11 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.get_application().set_accels_for_action(
 			'quit-app', ['<Control>w', '<Control>q']
 		)
-		self.get_application().set_accels_for_action('focus-search', ['<Control>f'])
+		self.get_application().set_accels_for_action('focus-library', ['<Alt>1'])
+		self.get_application().set_accels_for_action(
+			'focus-search', ['<Control>f', '<Alt>2']
+		)
+		self.get_application().set_accels_for_action('focus-queue', ['<Alt>3'])
 		self.connect('close-request', MonophonyMainWindow._on_quit)
 
 	def append_page(self, widget: Gtk.Widget):
