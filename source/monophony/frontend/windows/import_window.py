@@ -75,6 +75,10 @@ class MonophonyImportWindow(Adw.Window):
 		self.set_resizable(False)
 		self.set_content(self.box_content)
 		self.connect('close-request', lambda w: not w.box_content.get_sensitive())
+		self.add_shortcut(Gtk.Shortcut.new(
+			Gtk.ShortcutTrigger.parse_string('Escape'),
+			Gtk.CallbackAction.new((lambda w, _: w.close()))
+		))
 
 	def do_import(self, name: str, url: str, local: bool):
 		self.import_lock.lock()

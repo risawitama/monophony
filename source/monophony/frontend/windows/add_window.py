@@ -80,6 +80,10 @@ class MonophonyAddWindow(Adw.Window):
 		box_main.append(page_list)
 		box_main.append(bar_name)
 
+		self.add_shortcut(Gtk.Shortcut.new(
+			Gtk.ShortcutTrigger.parse_string('Escape'),
+			Gtk.CallbackAction.new((lambda w, _: w.close()))
+		))
 		self.set_content(box_main)
 		self.update_groups()
 
