@@ -38,6 +38,14 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.7.0" date="2024-03-04">
+			<description>
+				<ul>
+					<li>Added alt+number keyboard shortcuts for switching tabs</li>
+					<li>Added escape keyboard shortcut for closing dialogs</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.6.1" date="2024-02-21">
 			<description>
 				<ul>
