@@ -39,7 +39,7 @@ class Player:
 		self.mpris_server = None
 		self.ui_update_callback = None
 		self.queue_change_callback = None
-		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
+		self.playbin = Gst.ElementFactory.make('playbin3', 'playbin3')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.get_bus().add_signal_watch()
 		self.playbin.get_bus().connect('message::error', self._on_bus_error)
