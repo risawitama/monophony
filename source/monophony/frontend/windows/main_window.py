@@ -141,7 +141,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		win_about.set_copyright('Copyright © 2022-present Zehkira')
 		win_about.set_license_type(Gtk.License.AGPL_3_0)
 		win_about.add_legal_section(
-			'ytmusicapi', 'Copyright © 2020 sigma67', Gtk.License.MIT_X11
+			'ytmusicapi', 'Copyright © 2024 sigma67', Gtk.License.MIT_X11
 		)
 		win_about.add_legal_section(
 			'mpris_server', 'Copyright © Alex DeLorenzo', Gtk.License.AGPL_3_0
