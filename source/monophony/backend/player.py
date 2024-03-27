@@ -23,6 +23,8 @@ class Player:
 		Gst.init([])
 		self.lock = GLib.Mutex()
 		self.interrupt = False
+		self.paused = False
+		self.buffering = False
 		self.index = 0
 		self.queue = []
 		self.recent_songs = []
@@ -44,6 +46,7 @@ class Player:
 		self.playbin.get_bus().add_signal_watch()
 		self.playbin.get_bus().connect('message::error', self._on_bus_error)
 		self.playbin.get_bus().connect('message::stream-start', self._on_song_start)
+		self.playbin.get_bus().connect('message::buffering', self._on_buffering)
 		self.playbin.get_bus().connect(
 			'message::eos', lambda *_: GLib.Thread.new(None, self._on_song_end)
 		)
@@ -60,12 +63,10 @@ class Player:
 			return True
 
 		self.lock.unlock()
-		return False
+		return self.buffering
 
 	def is_paused(self) -> bool:
-		return self.playbin.get_state(
-			Gst.CLOCK_TIME_NONE
-		)[1] != Gst.State.PLAYING
+		return self.paused
 
 	def get_current_song(self, lock: bool=True) -> dict:
 		if lock and not self.lock.trylock():
@@ -114,7 +115,25 @@ class Player:
 
 	### --- EVENT HANDLERS --- ###
 
-	def _on_bus_error(self, _, err):
+	def _on_buffering(self, _bus, msg):
+		percent = msg.parse_buffering()
+		if not self.buffering and percent < 100:
+			print('Buffering...')
+			self.buffering = True
+			self.playbin.set_state(Gst.State.PAUSED)
+			GLib.idle_add(
+				self.ui_update_callback, self.get_current_song(), True, self.paused, 0
+			)
+		elif percent >= 100:
+			print('Done buffering')
+			self.buffering = False
+			if not self.paused:
+				self.playbin.set_state(Gst.State.PLAYING)
+			GLib.idle_add(
+				self.ui_update_callback, self.get_current_song(), False, self.paused, 0
+			)
+
+	def _on_bus_error(self, _bus, err):
 		print('Playback error:', err.parse_error().gerror.message)
 		self.last_progress = self.playbin.query_position(Gst.Format.TIME)[1]
 		print('Failed at', self.last_progress)
@@ -256,6 +275,7 @@ class Player:
 
 		print('Starting playback')
 		self.playbin.set_property('uri', uri)
+		self.paused = False
 		self.playbin.set_state(Gst.State.PLAYING)
 		self.mpris_server.unpublish()
 		self.mpris_server.publish()
@@ -289,19 +309,23 @@ class Player:
 	def toggle_pause(self):
 		if not self.lock.trylock():
 			return
+		if self.buffering:
+			self.lock.unlock()
+			return
 
-		state = self.playbin.get_state(Gst.CLOCK_TIME_NONE)[1]
-		if state == Gst.State.PLAYING:
+		if not self.paused:
 			self.playbin.set_state(Gst.State.PAUSED)
+			self.paused = True
 		else:
 			self.playbin.set_state(Gst.State.PLAYING)
+			self.paused = False
 
 		self.mpris_adapter.on_playpause()
 		GLib.idle_add(
 			self.ui_update_callback,
 			self.get_current_song(),
 			False,
-			state == Gst.State.PLAYING,
+			self.paused,
 			self.get_progress()
 		)
 		self.lock.unlock()
