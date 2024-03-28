@@ -3,6 +3,18 @@ import traceback, random, subprocess
 import ytmusicapi
 
 
+def _get_artist_names(artists: list) -> list:
+	return [artist['name'] for artist in artists if artist['id']]
+
+def _get_artist_id(artists: list) -> str:
+	a_id = ''
+	for i in range(len(artists)):
+		a_id = artists[i]['id']
+		if a_id:
+			break
+
+	return a_id
+
 def _parse_results(data: list) -> list:
 	try:
 		yt = ytmusicapi.YTMusic()
@@ -27,8 +39,8 @@ def _parse_results(data: list) -> list:
 		if result['resultType'] == 'artist':
 			try:
 				if result['category'] == 'Top result':
-					item['author'] = result['artists'][0]['name']
-					item['id'] = result['artists'][0]['id']
+					item['author'] = ', '.join(_get_artist_names(result['artists']))
+					item['id'] = _get_artist_id(result['artists'])
 				else:
 					item['author'] = result['artist']
 					item['id'] = result['browseId']
@@ -40,7 +52,7 @@ def _parse_results(data: list) -> list:
 		elif result['resultType'] == 'album':
 			try:
 				album = yt.get_album(result['browseId'])
-				item['author'] = ', '.join([a['name'] for a in result['artists']])
+				item['author'] = result['artists'][0]['name']
 				item['id'] = result['browseId']
 				item['title'] = result['title']
 				item['contents'] = [
@@ -48,8 +60,8 @@ def _parse_results(data: list) -> list:
 						'id': str(s['videoId']),
 						'title': s['title'],
 						'type': 'song',
-						'author': ', '.join([a['name'] for a in s['artists']]),
-						'author_id': s['artists'][0]['id'],
+						'author': ', '.join(_get_artist_names(s['artists'])),
+						'author_id': _get_artist_id(s['artists']),
 						'length': s['duration'],
 						'thumbnail': album['thumbnails'][0]['url']
 					} for s in album['tracks'] if s['videoId']
@@ -65,7 +77,7 @@ def _parse_results(data: list) -> list:
 				if 'author' in result:
 					item['author'] = result['author']
 				else:
-					item['author'] = ', '.join([a['name'] for a in result['artists']])
+					item['author'] = ', '.join(_get_artist_names(result['artists']))
 				item['id'] = result['browseId']
 				item['title'] = result['title']
 				item['contents'] = [
@@ -73,8 +85,8 @@ def _parse_results(data: list) -> list:
 						'id': str(s['videoId']),
 						'title': s['title'],
 						'type': 'song',
-						'author': ', '.join([a['name'] for a in s['artists']]),
-						'author_id': s['artists'][0]['id'],
+						'author': ', '.join(_get_artist_names(s['artists'])),
+						'author_id': _get_artist_id(s['artists']),
 						'length': s['duration'],
 						'thumbnail': s['thumbnails'][0]['url']
 					} for s in album['tracks'] if s['videoId']
@@ -90,8 +102,8 @@ def _parse_results(data: list) -> list:
 					continue
 				item['id'] = str(result['videoId'])
 				item['title'] = result['title']
-				item['author'] = ', '.join([a['name'] for a in result['artists']])
-				item['author_id'] = result['artists'][0]['id']
+				item['author'] = ', '.join(_get_artist_names(result['artists']))
+				item['author_id'] = _get_artist_id(result['artists'])
 				if 'duration' in result:
 					item['length'] = result['duration']
 				item['thumbnail'] = result['thumbnails'][0]['url']
@@ -144,8 +156,8 @@ def get_similar_song(video_id: str, ignore: list | None = None) -> dict:
 	for item in data:
 		track = {
 			'title': item['title'],
-			'author': ', '.join([a['name'] for a in item['artists']]),
-			'author_id': item['artists'][0]['id'],
+			'author': ', '.join(_get_artist_names(item['artists'])),
+			'author_id': _get_artist_id(item['artists']),
 			'length': item['length'],
 			'id': item['videoId'],
 			'thumbnail': item['thumbnail'][0]['url']
@@ -176,8 +188,8 @@ def get_recommendations() -> dict:
 		songs = [
 			{
 				'title': item['title'],
-				'author': ', '.join([a['name'] for a in item['artists']]),
-				'author_id': item['artists'][0]['id'],
+				'author': ', '.join(_get_artist_names(item['artists'])),
+				'author_id': _get_artist_id(item['artists']),
 				'id': item['videoId'],
 			} for item in group['contents'] if 'videoId' in item
 		]
