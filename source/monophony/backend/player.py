@@ -276,12 +276,13 @@ class Player:
 		print('Starting playback')
 		self.playbin.set_property('uri', uri)
 		self.paused = False
-		self.playbin.set_state(Gst.State.PLAYING)
+		# buffering expected, so don't actually start yet
+		self.playbin.set_state(Gst.State.PAUSED)
 		self.mpris_server.unpublish()
 		self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
-		GLib.idle_add(self.ui_update_callback, song, False, False, 0)
+		GLib.idle_add(self.ui_update_callback, song, True, False, 0)
 
 		self.next_random_index = -1
 		if self.mode == PlaybackMode.SHUFFLE:
