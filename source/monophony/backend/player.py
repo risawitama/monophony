@@ -227,6 +227,7 @@ class Player:
 		if lock:
 			self.lock.lock()
 
+		online_stream = False
 		GLib.idle_add(self.ui_update_callback, song, True, False, 0)
 		GLib.idle_add(self.queue_change_callback)
 		if not resume:
@@ -244,6 +245,7 @@ class Player:
 		uri = monophony.backend.cache.get_song_uri(song['id'])
 
 		if not uri:
+			online_stream = True
 			print('Attempting to use prepared stream URL...')
 			if self.next_fetch_lock.trylock():
 				if self.next_stream_url:
@@ -276,13 +278,16 @@ class Player:
 		print('Starting playback')
 		self.playbin.set_property('uri', uri)
 		self.paused = False
-		# buffering expected, so don't actually start yet
-		self.playbin.set_state(Gst.State.PAUSED)
+		# buffering expected, so don't actually start yet (unless offline)
+		if online_stream:
+			self.playbin.set_state(Gst.State.PAUSED)
+		else:
+			self.playbin.set_state(Gst.State.PLAYING)
 		self.mpris_server.unpublish()
 		self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
-		GLib.idle_add(self.ui_update_callback, song, True, False, 0)
+		GLib.idle_add(self.ui_update_callback, song, online_stream, False, 0)
 
 		self.next_random_index = -1
 		if self.mode == PlaybackMode.SHUFFLE:
