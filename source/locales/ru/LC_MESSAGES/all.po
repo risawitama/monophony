@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: monophony/frontend/popovers/local_song_popover.py:17
 msgid "Remove From Playlist"
@@ -132,6 +132,10 @@ msgstr "Повторять Песню"
 msgid "Shuffle"
 msgstr "Перемешать"
 
+#: monophony/frontend/widgets/recent_searches.py:36
+msgid "Remove"
+msgstr "Удалить"
+
 #: monophony/frontend/windows/message_window.py:13
 msgid "Ok"
 msgstr "Ok"
@@ -154,7 +158,7 @@ msgid "Cancel"
 msgstr "Отмена"
 
 #: monophony/frontend/windows/import_window.py:55
-#: monophony/frontend/tabs/library_tab.py:47
+#: monophony/frontend/tabs/library_tab.py:55
 msgid "Import"
 msgstr "Импорт"
 
@@ -190,8 +194,7 @@ msgid "Queue"
 msgstr "Очередь"
 
 #: monophony/frontend/windows/add_window.py:48
-#: monophony/frontend/tabs/library_tab.py:62
-#: monophony/frontend/tabs/library_tab.py:65
+#: monophony/frontend/tabs/library_tab.py:73
 msgid "Your Playlists"
 msgstr "Ваши Плейлисты"
 
@@ -232,36 +235,10 @@ msgstr "Отменить"
 msgid "Added"
 msgstr "Добавлен"
 
-#: monophony/frontend/pages/artist_page.py:20
 #: monophony/frontend/pages/results_page.py:21
+#: monophony/frontend/pages/artist_page.py:20
 msgid "No Results"
 msgstr "Нет Результатов"
-
-#: monophony/frontend/pages/artist_page.py:49
-msgid "Artist Not Found"
-msgstr "Исполнитель не Найден"
-
-#: monophony/frontend/pages/artist_page.py:69
-msgid "Other"
-msgstr "Прочее"
-
-#: monophony/frontend/pages/artist_page.py:70
-#: monophony/frontend/pages/results_page.py:72
-msgid "Albums"
-msgstr "Альбомы"
-
-#: monophony/frontend/pages/artist_page.py:71
-#: monophony/frontend/pages/results_page.py:74
-msgid "Community Playlists"
-msgstr "Плейлисты Сообщества"
-
-#: monophony/frontend/pages/artist_page.py:94
-msgid "All Songs"
-msgstr "Все Песни"
-
-#: monophony/frontend/pages/artist_page.py:100
-msgid "All Videos"
-msgstr "Все Видео"
 
 #: monophony/frontend/pages/results_page.py:70
 msgid "Top Result"
@@ -272,10 +249,19 @@ msgstr "Лучший Результат"
 msgid "Songs"
 msgstr "Песни"
 
+#: monophony/frontend/pages/results_page.py:72
+#: monophony/frontend/pages/artist_page.py:70
+msgid "Albums"
+msgstr "Альбомы"
+
 #: monophony/frontend/pages/results_page.py:73
 #: monophony/frontend/pages/artist_page.py:100
 msgid "Videos"
 msgstr "Видео"
+
+#: monophony/frontend/pages/results_page.py:74
+msgid "Community Playlists"
+msgstr "Плейлисты Сообщества"
 
 #: monophony/frontend/pages/results_page.py:75
 msgid "Artists"
@@ -289,47 +275,56 @@ msgstr "Исполнители"
 msgid "Show all"
 msgstr "Показать всё"
 
-#: monophony/frontend/tabs/library_tab.py:47
-msgid "Import playlist"
-msgstr "Импорт списка воспроизведения"
+#: monophony/frontend/pages/artist_page.py:49
+msgid "Artist Not Found"
+msgstr "Исполнитель не Найден"
 
-#: monophony/frontend/tabs/library_tab.py:53
-#: monophony/frontend/tabs/library_tab.py:56
-msgid "Play all"
-msgstr "Воспроизвести всё"
+#: monophony/frontend/pages/artist_page.py:69
+msgid "Other"
+msgstr "Прочее"
 
-#: monophony/frontend/tabs/library_tab.py:68
-#: monophony/frontend/tabs/library_tab.py:77
-msgid "Recently Played"
-msgstr "Последние Запущенные"
+#: monophony/frontend/pages/artist_page.py:71
+msgid "Playlists"
+msgstr "Плейлисты"
 
 #: monophony/frontend/tabs/queue_tab.py:23
 msgid "Queue Empty"
 msgstr "Очередь Пуста"
 
-#: monophony/frontend/tabs/search_tab.py:15
 #: monophony/frontend/tabs/search_tab.py:18
 #, fuzzy
 #| msgid "Searching..."
 msgid "Search..."
 msgstr "Поиск..."
 
-#: monophony/frontend/tabs/search_tab.py:21
 #: monophony/frontend/tabs/search_tab.py:24
 msgid "Go back"
 msgstr "Вернуться назад"
 
-#: monophony/frontend/widgets/recent_searches.py:36
-msgid "Remove"
-msgstr "Удалить"
+#: monophony/frontend/tabs/library_tab.py:51
+msgid "Recommended"
+msgstr "Рекомендуемый"
 
-#: monophony/frontend/pages/artist_page.py:71
-msgid "Playlists"
-msgstr "Плейлисты"
+#: monophony/frontend/tabs/library_tab.py:64
+msgid "Play all"
+msgstr "Воспроизвести всё"
 
-#: monophony/frontend/tabs/library_tab.py:70
+#: monophony/frontend/tabs/library_tab.py:78
 msgid "Clear"
 msgstr "Очистить"
+
+#: monophony/frontend/tabs/library_tab.py:85
+msgid "Recently Played"
+msgstr "Последние Запущенные"
+
+#~ msgid "All Songs"
+#~ msgstr "Все Песни"
+
+#~ msgid "All Videos"
+#~ msgstr "Все Видео"
+
+#~ msgid "Import playlist"
+#~ msgstr "Импорт списка воспроизведения"
 
 #~ msgid "More"
 #~ msgstr "Больше"
