@@ -50,6 +50,7 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.btn_more.set_create_popup_func(MonophonySongPopover, self.song)
 		self.add_suffix(self.btn_more)
 
+		self.update()
 		GLib.timeout_add(1000, self.update)
 
 	def _on_play_clicked(self, _b):
