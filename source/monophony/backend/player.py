@@ -457,8 +457,7 @@ class Player:
 		self.lock.unlock()
 
 	def queue_song(self, song: dict):
-		if not self.lock.trylock():
-			return
+		self.lock.lock()
 
 		if not self.queue:
 			self.play_song(song)
