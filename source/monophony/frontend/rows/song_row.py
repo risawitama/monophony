@@ -32,6 +32,9 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		if length:
 			subtitle = length + ' ' + subtitle
 
+		self.checkmark = Gtk.Image.new_from_icon_name('emblem-ok-symbolic')
+		self.checkmark.set_tooltip_text(_('Downloaded'))
+		self.add_suffix(self.checkmark)
 		self.spinner = Gtk.Spinner.new()
 		self.spinner.bind_property('visible', self.spinner, 'spinning', 0)
 		self.add_suffix(self.spinner)
@@ -61,6 +64,10 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 	def update(self) -> True:
 		self.spinner.set_visible(
 			monophony.backend.cache.is_song_being_cached(self.song['id'])
+		)
+		self.checkmark.set_visible(
+			not self.spinner.get_visible() and
+			monophony.backend.cache.is_song_cached(self.song['id'])
 		)
 
 		return True
