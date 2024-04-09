@@ -41,14 +41,7 @@ class MonophonyArtistPage(Gtk.Box):
 		GLib.Thread.new(None, self.do_get_artist)
 
 	def do_get_artist(self):
-		results = monophony.backend.yt.get_artist(self.artist)
-		if not results:
-			self.pge_status.set_title(_('Artist Not Found'))
-			self.box_loading.set_visible(False)
-			self.pge_status.set_visible(True)
-			return
-
-		self.results = results
+		self.results = monophony.backend.yt.get_artist(self.artist)
 		GLib.idle_add(self.present_results)
 
 	def present_results(self) -> bool:
@@ -95,5 +88,9 @@ class MonophonyArtistPage(Gtk.Box):
 					)
 			for box in non_empty:
 				self.pge_results.add(box)
+		else:
+			self.pge_status.set_title(_('Artist Not Found'))
+			self.box_loading.set_visible(False)
+			self.pge_status.set_visible(True)
 
 		return False
