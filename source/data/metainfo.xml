@@ -15,6 +15,10 @@
 	<requires>
 		<display_length compare="ge">360</display_length>
 	</requires>
+	<branding>
+		<color type="primary" scheme_preference="light">#f65151</color>
+		<color type="primary" scheme_preference="dark">#911221</color>
+	</branding>
 	<summary>Stream music from YouTube Music</summary>
 	<summary xml:lang="de">Musik von YouTube streamen</summary>
 	<description>
