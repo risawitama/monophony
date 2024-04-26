@@ -8,7 +8,7 @@ stages:
 .parallel-hidden-job:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
+      when: manual
     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
       when: never
   parallel:
