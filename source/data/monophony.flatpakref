@@ -1,0 +1,10 @@
+[Flatpak Ref]
+Title=Monophony
+Name=io.gitlab.zehkira.Monophony
+Url=https://zehkira.gitlab.io/monophony/
+SuggestRemoteName=Monophony
+Homepage=https://gitlab.com/zehkira/monophony
+Icon=https://gitlab.com/zehkira/monophony/-/raw/master/source/data/icons/scalable.svg
+RuntimeRepo=https://dl.flathub.org/repo/flathub.flatpakrepo
+IsRuntime=false
+GPGKey=mDMEZioy6RYJKwYBBAHaRw8BAQdAGfQuvrYXdlwGlfedvIs+muO38JJcDSpiNjotNATlxdu0B1plaGtpcmGIkwQTFgoAOxYhBDfnynReVcRXXmWNqZeUWhn5Hz/GBQJmKjLpAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEJeUWhn5Hz/GpLkA/AxCcj5SD/u7I4d77IBie1MhRnwWAM9+dd+D+3bCBWT0AP4pQH/lfLIAuDIPMyFzCrmoUT0ej5HqDGSb//gWYd88Bbg4BGYqMukSCisGAQQBl1UBBQEBB0B9j57DPBDAqa7jU+ulOa1IBW20mRQ8SjAnLSA4lZ9gYQMBCAeIeAQYFgoAIBYhBDfnynReVcRXXmWNqZeUWhn5Hz/GBQJmKjLpAhsMAAoJEJeUWhn5Hz/GQBoBALUGrXoEdDAEoneMXjO6aLBwd+KHXws9x3kZLlbyy6JEAP4uIDfhv7DUm77ZYi6cYHgvo/qsXIdv7FcibZ6j5bq0Dw==
