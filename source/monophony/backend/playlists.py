@@ -245,14 +245,18 @@ def read_playlists() -> dict:
 	except OSError:
 		return {}
 
+	# backwards compatibility
 	updated = False
 	for name, playlist in lists.items():
 		for i, song in enumerate(playlist):
 			if 'author_id' not in song:
-				print('Updating song', song['id'])
-				lists[name][i]['author_id'] = monophony.backend.yt.get_song(
-					song['id']
-				)['author_id']
+				print(f'Updating song {song["id"]}...')
+				song_details = monophony.backend.yt.get_song(song['id'])
+				if song_details:
+					lists[name][i]['author_id'] = song_details['author_id']
+					print('Updated song', song['id'])
+				else:
+					print('Failed to update song', song['id'])
 				updated = True
 
 	if updated:
