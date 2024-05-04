@@ -15,7 +15,7 @@ class MonophonySearchTab(Gtk.Box):
 		super().__init__(orientation=Gtk.Orientation.VERTICAL)
 
 		self.ent_search = Gtk.SearchEntry()
-		self.ent_search.set_placeholder_text(_('Search...'))
+		self.ent_search.set_placeholder_text(_('Enter text or paste a URL...'))
 		self.ent_search.set_hexpand(True)
 		self.ent_search.set_halign(Gtk.Align.FILL)
 		self.ent_search.connect('activate', lambda e: self._on_search(e.get_text()))

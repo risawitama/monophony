@@ -200,17 +200,25 @@ def get_recommendations() -> dict:
 	return categories
 
 
-def get_song(id_: str) -> dict:
+def get_song(id_: str) -> dict | None:
 	try:
 		yt = ytmusicapi.YTMusic()
 		result = yt.get_song(id_)['videoDetails']
 	except:
-		return {'id': id_, 'author': '', 'author_id': ''}
+		return None
 
+	seconds = int(result['lengthSeconds'])
+	minutes = seconds // 60
+	seconds %= 60
 	return {
+		'top': True,
+		'type': 'video',
 		'id': result['videoId'],
+		'title': result['title'],
 		'author': result['author'],
 		'author_id': result['channelId'],
+		'length': f'{minutes}:{seconds:02}',
+		'thumbnail': result['thumbnail']['thumbnails'][0]
 	}
 
 
@@ -283,6 +291,13 @@ def get_artist(browse_id: str) -> list:
 def search(query: str, filter_: str='') -> list:
 	try:
 		yt = ytmusicapi.YTMusic()
+		if '?v=' in query and '/' in query:
+			song = get_song(query.split('?v=')[-1].split('&')[0])
+			return [song] if song else []
+		elif 'youtu.be/' in query:
+			song = get_song(query.split('youtu.be/')[-1].split('?')[0])
+			return [song] if song else []
+
 		if filter_:
 			data = yt.search(query, filter=filter_)
 		else:
