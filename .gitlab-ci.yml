@@ -3,25 +3,13 @@ variables:
 
 
 stages:
-  - build
+  - build-x86_64
+  - build-aarch64
   - deploy
 
 
-.parallel-hidden-job:
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: manual
-    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-      when: never
-  parallel:
-    matrix:
-      - ARCH: [x86_64, aarch64]
-
-
-build-job:
+.build:
   image: bilelmoussaoui/flatpak-github-actions:gnome-46
-  extends: .parallel-hidden-job
-  stage: build
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: manual
@@ -42,6 +30,22 @@ build-job:
   artifacts:
     paths:
       - repo
+
+
+build-x86_64:
+  variables:
+    ARCH: x86_64
+  extends: .build
+  stage: build-x86_64
+
+
+build-aarch64:
+  variables:
+    ARCH: aarch64
+  extends: .build
+  stage: build-aarch64
+  dependencies:
+    - "build-x86_64"
 
 
 pages:
