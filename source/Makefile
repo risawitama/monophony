@@ -12,20 +12,12 @@ LICENSE_DIR = $(prefix)/share/licenses
 BIN_DIR = $(prefix)/bin
 
 
-build:
-	python3 -m nuitka bin/monophony.py \
-		--show-progress \
-		--remove-output \
-		--clean-cache=all \
-		--follow-import-to=monophony \
-		--follow-import-to=mpris_server \
-		--follow-import-to=gi \
-		-o monophony.bin
-
-
 install:
-	@# app binary
-	$(INSTALL) monophony.bin $(BIN_DIR)/monophony
+	@# main module
+	pip install --prefix=$(prefix) --no-build-isolation --no-index --no-deps .
+
+	@# executable
+	$(INSTALL) bin/monophony.py $(BIN_DIR)/monophony
 
 	@# desktop file
 	$(INSTALL_DATA) data/monophony.desktop $(APPS_DIR)/$(ID).desktop
@@ -63,8 +55,7 @@ install:
 	$(INSTALL_DATA) LICENSE $(LICENSE_DIR)/monophony/LICENSE
 
 
-# for testing purposes. builds and installs a flatpak. packages should use
-# "make build" and "make install" instead
+# for testing purposes - builds and installs a flatpak
 flatpak:
 	flatpak-builder \
 		--user \
@@ -81,22 +72,3 @@ translation:
 		> locales/all.pot
 	find monophony -iname "*.py" | xargs xgettext --omit-header -j -o locales/all.pot
 
-
-uninstall:
-	@# app binary
-	$(UNINSTALL) $(BIN_DIR)/monophony
-
-	@# desktop file
-	$(UNINSTALL) $(APPS_DIR)/$(ID).desktop
-
-	@# metainfo
-	$(UNINSTALL) $(META_DIR)/$(ID).metainfo.xml
-
-	@# icons
-	$(UNINSTALL) $(ICONS_DIR)/*/apps/$(ID)*
-
-	@# translations
-	$(UNINSTALL) $(LOCALES_DIR)/*/LC_MESSAGES/monophony.mo
-
-	@# license
-	$(UNINSTALL) $(LICENSE_DIR)/monophony/
