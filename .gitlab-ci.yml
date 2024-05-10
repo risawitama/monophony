@@ -10,11 +10,6 @@ stages:
 
 .build:
   image: bilelmoussaoui/flatpak-github-actions:gnome-46
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: manual
-    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-      when: never
   script:
     - flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
@@ -35,6 +30,11 @@ stages:
 build-x86_64:
   variables:
     ARCH: x86_64
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+      when: never
   extends: .build
   stage: build-x86_64
 
