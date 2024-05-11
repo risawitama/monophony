@@ -89,7 +89,6 @@ class MonophonyPlayer(Gtk.Box):
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
 		self.btn_pause.set_valign(Gtk.Align.CENTER)
 		self.btn_pause.set_tooltip_text(_('Toggle pause'))
-		self.btn_pause.set_has_frame(False)
 		self.btn_pause.bind_property(
 			'visible',
 			self.spn_loading,
@@ -153,16 +152,18 @@ class MonophonyPlayer(Gtk.Box):
 		self.append(self.scl_progress)
 		self.append(box_meta)
 		self.add_css_class('playerbar')
+		self.add_css_class('toolbar')
 
 		css = Gtk.CssProvider.new()
 		css.load_from_data('''
 			.seekbar {
-				padding: 0;
+				margin-bottom: -6px;
+				padding: 0px;
 				min-height: 10px;
 			}
 
 			.seekbar trough, .seekbar highlight {
-				border-radius: 0;
+				border-radius: 0px;
 				border-left: none;
 				border-right: none;
 				min-height: 10px;
@@ -183,7 +184,7 @@ class MonophonyPlayer(Gtk.Box):
 			}
 
 			.playerbar {
-				background-color: @headerbar_bg_color;
+				padding: 0px;
 			}
 		''', -1)
 		Gtk.StyleContext.add_provider_for_display(
@@ -303,7 +304,7 @@ class MonophonyPlayer(Gtk.Box):
 		monophony.backend.settings.set_value('volume', value)
 
 	def update_progress(self) -> bool:
-		if self.player.buffering or not self.window.player_revealer.get_reveal_child():
+		if self.player.buffering or not self.lnk_title.get_label():
 			return True
 
 		progress = self.player.get_progress()
@@ -320,12 +321,12 @@ class MonophonyPlayer(Gtk.Box):
 				'https://music.youtube.com/watch?v=' + song['id']
 			)
 			self.lbl_author.set_label(song['author'])
-			self.window.player_revealer.set_reveal_child(True)
+			self.window.toolbar_view.set_reveal_bottom_bars(True)
 		else:
 			self.lnk_title.set_label('')
 			self.lnk_title.set_uri('')
 			self.lbl_author.set_label('')
-			self.window.player_revealer.set_reveal_child(False)
+			self.window.toolbar_view.set_reveal_bottom_bars(False)
 
 		self.scl_progress.set_sensitive(not busy)
 		self.btn_pause.set_visible(not busy)

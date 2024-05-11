@@ -65,16 +65,12 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		header_bar.set_title_widget(switcher)
 		header_bar.pack_start(btn_about)
 
-		self.player_revealer = Gtk.Revealer()
-		self.player_revealer.set_property('overflow', Gtk.Overflow.VISIBLE)
-		self.player_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
-		self.player_revealer.set_child(MonophonyPlayer(self, self.player))
-
-		box_content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-		box_content.append(header_bar)
-		box_content.append(self.toaster)
-		box_content.append(self.player_revealer)
-		self.set_content(box_content)
+		self.toolbar_view = Adw.ToolbarView()
+		self.toolbar_view.add_top_bar(header_bar)
+		self.toolbar_view.add_bottom_bar(MonophonyPlayer(self, self.player))
+		self.toolbar_view.set_content(self.toaster)
+		self.toolbar_view.set_reveal_bottom_bars(False)
+		self.set_content(self.toolbar_view)
 
 		self.install_action(
 			'quit-app', None, (lambda w, *_: w.close())

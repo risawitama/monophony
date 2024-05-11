@@ -17,9 +17,9 @@ class MonophonyAddWindow(Adw.Window):
 		self.playlists = []
 
 		self.set_title(_('Add to...'))
-		self.set_default_size(400, 600)
+		self.set_default_size(200, 200)
 		self.set_property('width-request', 360)
-		self.set_property('height-request', 360)
+		self.set_property('height-request', 480)
 		self.set_modal(True)
 
 		btn_cancel = Gtk.Button.new_with_label(_('Cancel'))
@@ -75,16 +75,16 @@ class MonophonyAddWindow(Adw.Window):
 		page_list.add(grp_queue)
 		page_list.add(self.grp_list)
 
-		box_main = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-		box_main.append(headerbar)
-		box_main.append(page_list)
-		box_main.append(bar_name)
+		toolbar_view = Adw.ToolbarView()
+		toolbar_view.add_top_bar(headerbar)
+		toolbar_view.add_bottom_bar(bar_name)
+		toolbar_view.set_content(page_list)
 
 		self.add_shortcut(Gtk.Shortcut.new(
 			Gtk.ShortcutTrigger.parse_string('Escape'),
 			Gtk.CallbackAction.new((lambda w, _: w.close()))
 		))
-		self.set_content(box_main)
+		self.set_content(toolbar_view)
 		self.update_groups()
 
 	def update_groups(self):

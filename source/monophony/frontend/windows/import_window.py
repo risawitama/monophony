@@ -64,16 +64,20 @@ class MonophonyImportWindow(Adw.Window):
 		self.box_content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_content.set_spacing(10)
 		self.box_content.set_margin_bottom(10)
-		self.box_content.append(headerbar)
+		self.box_content.set_margin_top(10)
 		self.box_content.append(self.ent_name)
 		if not self.group:
 			self.box_content.append(self.ent_url)
 		self.box_content.append(box_type)
 
+		toolbar_view = Adw.ToolbarView()
+		toolbar_view.add_top_bar(headerbar)
+		toolbar_view.set_content(self.box_content)
+
 		self.set_title(_('Import playlist...'))
 		self.set_modal(True)
 		self.set_resizable(False)
-		self.set_content(self.box_content)
+		self.set_content(toolbar_view)
 		self.connect('close-request', lambda w: not w.box_content.get_sensitive())
 		self.add_shortcut(Gtk.Shortcut.new(
 			Gtk.ShortcutTrigger.parse_string('Escape'),

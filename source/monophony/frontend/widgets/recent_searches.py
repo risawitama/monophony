@@ -11,7 +11,7 @@ class MonophonyRecentSearches(Gtk.Box):
 
 		self.children = []
 		self.set_visible(False)
-		self.set_spacing(4)
+		self.set_spacing(8)
 		self.set_hexpand(True)
 		self.set_halign(Gtk.Align.FILL)
 		self.search_callback = search_callback

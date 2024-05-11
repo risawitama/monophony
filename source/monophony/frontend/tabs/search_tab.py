@@ -41,6 +41,7 @@ class MonophonySearchTab(Gtk.Box):
 		clm_search.set_child(box_search_meta)
 
 		search_bar = Gtk.SearchBar()
+		search_bar.add_css_class('inline')
 		search_bar.set_show_close_button(False)
 		search_bar.set_search_mode(True)
 		search_bar.set_child(clm_search)
