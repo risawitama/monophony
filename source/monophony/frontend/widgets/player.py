@@ -313,7 +313,10 @@ class MonophonyPlayer(Gtk.Box):
 
 		return True
 
-	def update(self, song: dict, busy: bool, paused: bool) -> bool:
+	def update(self, song: dict, busy: bool, paused: bool, starting: bool) -> bool:
+		if starting:
+			self.scl_progress.set_value(0)
+
 		if song:
 			self.lnk_title.set_label(song['title'])
 			self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
