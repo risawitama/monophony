@@ -70,8 +70,14 @@ class MonophonyResultsPage(Gtk.Box):
 			window = self.get_ancestor(Gtk.Window)
 
 			if not self.filter:
-				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
-				btn_more.set_tooltip_text(_('Show all'))
+				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
+				lbl_text = Gtk.Label.new(_('Show All'))
+				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+				box_btn.set_spacing(8)
+				box_btn.append(lbl_text)
+				box_btn.append(img_icon)
+				btn_more = Gtk.Button()
+				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -79,8 +85,14 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_songs.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
-				btn_more.set_tooltip_text(_('Show all'))
+				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
+				lbl_text = Gtk.Label.new(_('Show All'))
+				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+				box_btn.set_spacing(8)
+				box_btn.append(lbl_text)
+				box_btn.append(img_icon)
+				btn_more = Gtk.Button()
+				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -88,8 +100,14 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_albums.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
-				btn_more.set_tooltip_text(_('Show all'))
+				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
+				lbl_text = Gtk.Label.new(_('Show All'))
+				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+				box_btn.set_spacing(8)
+				box_btn.append(lbl_text)
+				box_btn.append(img_icon)
+				btn_more = Gtk.Button()
+				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -97,8 +115,14 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_playlists.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
-				btn_more.set_tooltip_text(_('Show all'))
+				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
+				lbl_text = Gtk.Label.new(_('Show All'))
+				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+				box_btn.set_spacing(8)
+				box_btn.append(lbl_text)
+				box_btn.append(img_icon)
+				btn_more = Gtk.Button()
+				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
@@ -106,8 +130,14 @@ class MonophonyResultsPage(Gtk.Box):
 				)
 				box_videos.set_header_suffix(btn_more)
 
-				btn_more = Gtk.Button.new_from_icon_name('go-next-symbolic')
-				btn_more.set_tooltip_text(_('Show all'))
+				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
+				lbl_text = Gtk.Label.new(_('Show All'))
+				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+				box_btn.set_spacing(8)
+				box_btn.append(lbl_text)
+				box_btn.append(img_icon)
+				btn_more = Gtk.Button()
+				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
 					lambda _b, f: window._on_show_more(self.query, f),
