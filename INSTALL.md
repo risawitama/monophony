@@ -8,7 +8,7 @@ These packages are maintained by project members.
 
 ## Community packages
 
-These packages are maintained by third parties. Install at your own risk.
+These packages are maintained by third parties.
 
 | Repository | Package | Version |
 | - | - | - |
@@ -20,7 +20,7 @@ These packages are maintained by third parties. Install at your own risk.
 
 Follow these steps to build the app from source for testing purposes:
 
-1. Install `git` and `flatpak-builder`.
+1. Install `git` and `flatpak-builder`
 2. Download the repository: `git clone https://gitlab.com/zehkira/monophony.git`
 3. Enter the source directory: `cd monophony/source`
 4. Build and install the app as a Flatpak: `make flatpak`
