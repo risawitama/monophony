@@ -122,7 +122,7 @@ class Player:
 			self.buffering = True
 			self.playbin.set_state(Gst.State.PAUSED)
 			GLib.idle_add(
-				self.ui_update_callback, self.get_current_song(), True, self.paused, 0
+				self.ui_update_callback, self.get_current_song(), True, self.paused
 			)
 		elif percent >= 100:
 			print('Done buffering')
@@ -130,7 +130,7 @@ class Player:
 			if not self.paused:
 				self.playbin.set_state(Gst.State.PLAYING)
 			GLib.idle_add(
-				self.ui_update_callback, self.get_current_song(), False, self.paused, 0
+				self.ui_update_callback, self.get_current_song(), False, self.paused
 			)
 
 	def _on_bus_error(self, _bus, err):
@@ -151,7 +151,7 @@ class Player:
 			print('No buffering occured at start of stream')
 			self.playbin.set_state(Gst.State.PLAYING)
 			GLib.idle_add(
-				self.ui_update_callback, self.get_current_song(), False, False, 0
+				self.ui_update_callback, self.get_current_song(), False, False
 			)
 
 		if self.last_progress > 0:
@@ -233,7 +233,7 @@ class Player:
 		if lock:
 			self.lock.lock()
 
-		GLib.idle_add(self.ui_update_callback, song, True, False, 0)
+		GLib.idle_add(self.ui_update_callback, song, True, False)
 		GLib.idle_add(self.queue_change_callback)
 		if not resume:
 			print('Playing', song['id'], 'in playback mode', self.mode)
@@ -288,7 +288,7 @@ class Player:
 		self.mpris_server.publish()
 		self.mpris_adapter.emit_all()
 		self.mpris_adapter.on_playback()
-		GLib.idle_add(self.ui_update_callback, song, True, False, 0)
+		GLib.idle_add(self.ui_update_callback, song, True, False)
 
 		self.next_random_index = -1
 		if self.mode == PlaybackMode.SHUFFLE:
@@ -332,8 +332,7 @@ class Player:
 			self.ui_update_callback,
 			self.get_current_song(),
 			False,
-			self.paused,
-			self.get_progress()
+			self.paused
 		)
 		self.lock.unlock()
 
@@ -366,7 +365,7 @@ class Player:
 			self.index = 0
 			self.mpris_server.unpublish()
 			GLib.idle_add(self.queue_change_callback)
-			GLib.idle_add(self.ui_update_callback, None, False, False, 0)
+			GLib.idle_add(self.ui_update_callback, None, False, False)
 
 		if lock:
 			self.lock.unlock()

@@ -303,13 +303,14 @@ class MonophonyPlayer(Gtk.Box):
 		monophony.backend.settings.set_value('volume', value)
 
 	def update_progress(self) -> bool:
-		progress = self.player.get_progress()
-		if progress:
-			self.scl_progress.set_value(progress)
+		if not self.player.buffering:
+			progress = self.player.get_progress()
+			if progress:
+				self.scl_progress.set_value(progress)
 
 		return True
 
-	def update(self, song: dict, busy: bool, paused: bool, progress: float) -> bool:
+	def update(self, song: dict, busy: bool, paused: bool) -> bool:
 		if song:
 			self.lnk_title.set_label(song['title'])
 			self.lnk_title.get_child().set_ellipsize(Pango.EllipsizeMode.END)
@@ -326,7 +327,6 @@ class MonophonyPlayer(Gtk.Box):
 
 		self.scl_progress.set_sensitive(not busy)
 		self.btn_pause.set_visible(not busy)
-		self.scl_progress.set_value(progress)
 		self.btn_pause.set_icon_name(
 			'media-playback-start-symbolic' if paused else
 			'media-playback-pause-symbolic'
