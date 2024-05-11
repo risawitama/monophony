@@ -303,10 +303,12 @@ class MonophonyPlayer(Gtk.Box):
 		monophony.backend.settings.set_value('volume', value)
 
 	def update_progress(self) -> bool:
-		if not self.player.buffering:
-			progress = self.player.get_progress()
-			if progress:
-				self.scl_progress.set_value(progress)
+		if self.player.buffering or not self.window.player_revealer.get_reveal_child():
+			return True
+
+		progress = self.player.get_progress()
+		if progress:
+			self.scl_progress.set_value(progress)
 
 		return True
 
