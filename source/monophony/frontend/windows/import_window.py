@@ -74,7 +74,7 @@ class MonophonyImportWindow(Adw.Window):
 		toolbar_view.add_top_bar(headerbar)
 		toolbar_view.set_content(self.box_content)
 
-		self.set_title(_('Import playlist...'))
+		self.set_title(_('Import Playlist...'))
 		self.set_modal(True)
 		self.set_resizable(False)
 		self.set_content(toolbar_view)
@@ -102,7 +102,7 @@ class MonophonyImportWindow(Adw.Window):
 				self.btn_import.set_visible(True)
 				MonophonyMessageWindow(
 					self,
-					_('Could not Import Playlist'),
+					_('Could not import playlist'),
 					_('Failed to retrieve playlist data from server.')
 				).present()
 			else:
@@ -120,13 +120,13 @@ class MonophonyImportWindow(Adw.Window):
 
 		if not name:
 			MonophonyMessageWindow(
-				self, _('Could not Import Playlist'), _('A name is required.')
+				self, _('Could not import playlist'), _('A name is required.')
 			).present()
 			return
 
 		if not url and not self.group:
 			MonophonyMessageWindow(
-				self, _('Could not Import Playlist'), _('A URL is required.')
+				self, _('Could not import playlist'), _('A URL is required.')
 			).present()
 			return
 
