@@ -19,6 +19,7 @@
 			"name": "monophony",
 			"buildsystem": "simple",
 			"build-commands": [
+				"mv source/bin/yt-dlp ${FLATPAK_DEST}/bin/",
 				"cd source && make prefix=${FLATPAK_DEST} install"
 			],
 			"sources": [
@@ -27,20 +28,6 @@
 					"path": "../.."
 				}
 			]
-		},
-		{
-			"name": "yt-dlp",
-			"buildsystem": "simple",
-			"build-commands": [
-				"mv source/bin/yt-dlp ${FLATPAK_DEST}/bin/"
-			],
-			"sources": [
-				{
-					"type": "dir",
-					"path": "../.."
-				}
-			]
 		}
-
 	]
 }
