@@ -42,6 +42,16 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.10.0" date="2024-05-12">
+			<description>
+				<ul>
+					<li>Added support for YTM URLs in the search bar</li>
+					<li>Reworked some parts of the interface</li>
+					<li>Fixed handling of errors when updating playlists created in older versions of the app</li>
+					<li>Fixed progress bar behavior when seeking</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.9.0" date="2024-04-15">
 			<description>
 				<ul>
