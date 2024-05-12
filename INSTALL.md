@@ -1,9 +1,10 @@
 ## Official packages
 
-These packages are maintained by project members.
+The recommended way to install Monophony is using the Flatpak package hosted on GitLab. This package is always the first to receive updates.
 
 | Repository | Package |
 | - | - |
+| GitLab | [io.gitlab.zehkira.Monophony](https://gitlab.com/zehkira/monophony/-/raw/master/source/data/monophony.flatpakref?ref_type=heads&inline=false) |
 | Flathub | [io.gitlab.zehkira.Monophony](https://flathub.org/apps/details/io.gitlab.zehkira.Monophony) |
 
 ## Community packages
