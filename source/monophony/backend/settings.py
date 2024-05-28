@@ -33,5 +33,5 @@ def read_settings() -> dict:
 	try:
 		with open(sets_path) as sets_file:
 			return json.load(sets_file)
-	except OSError:
+	except (OSError, json.decoder.JSONDecodeError):
 		return {}

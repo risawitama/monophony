@@ -65,7 +65,7 @@ def read_searches() -> list:
 	try:
 		with open(recents_path) as recents_file:
 			return json.load(recents_file)
-	except OSError:
+	except (OSError, json.decoder.JSONDecodeError):
 		return []
 
 
@@ -91,5 +91,5 @@ def read_songs() -> list:
 	try:
 		with open(songs_path) as songs_file:
 			return json.load(songs_file)
-	except OSError:
+	except (OSError, json.decoder.JSONDecodeError):
 		return []

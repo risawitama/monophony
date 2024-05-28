@@ -242,7 +242,7 @@ def read_playlists() -> dict:
 	try:
 		with open(lists_path) as lists_file:
 			lists = json.load(lists_file)
-	except OSError:
+	except (OSError, json.decoder.JSONDecodeError):
 		return {}
 
 	# backwards compatibility
@@ -274,7 +274,7 @@ def read_external_playlists() -> list:
 	try:
 		with open(lists_path) as lists_file:
 			lists = json.load(lists_file)
-	except OSError:
+	except (OSError, json.decoder.JSONDecodeError):
 		return []
 
 	return lists
