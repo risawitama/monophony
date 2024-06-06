@@ -14,7 +14,7 @@ BIN_DIR = $(prefix)/bin
 
 install:
 	@# main module
-	pip install --prefix=$(prefix) --no-build-isolation --no-index --no-deps .
+	pip install --prefix=$(prefix) --no-build-isolation .
 
 	@# executable
 	$(INSTALL) bin/monophony.py $(BIN_DIR)/monophony
