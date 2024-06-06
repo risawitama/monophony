@@ -2,7 +2,6 @@ prefix = /usr
 
 INSTALL = install -D
 INSTALL_DATA = ${INSTALL} -m 644
-UNINSTALL = rm -rf
 ID = io.gitlab.zehkira.Monophony
 ICONS_DIR = $(prefix)/share/icons/hicolor
 LOCALES_DIR = $(prefix)/share/locale
