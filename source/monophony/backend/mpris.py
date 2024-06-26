@@ -57,7 +57,7 @@ class Adapter(MprisAdapter):
 		return
 
 	def is_repeating(self) -> bool:
-		return self.monophony_player.mode == PlaybackMode.LOOP
+		return self.monophony_player.mode == PlaybackMode.LOOP_SONG
 
 	def is_playlist(self) -> bool:
 		return True
@@ -75,7 +75,7 @@ class Adapter(MprisAdapter):
 		pass
 
 	def get_shuffle(self) -> bool:
-		return self.monophony_player.mode == PlaybackMode.SHUFFLE
+		return False
 
 	def set_shuffle(self, _val: bool):
 		pass

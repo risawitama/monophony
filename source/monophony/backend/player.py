@@ -13,8 +13,8 @@ from gi.repository import GLib, Gst, GstAudio
 
 class PlaybackMode:
 	NORMAL = 0
-	LOOP = 1
-	SHUFFLE = 2
+	LOOP_SONG = 1
+	LOOP_QUEUE = 2
 	RADIO = 3
 
 
@@ -32,7 +32,6 @@ class Player:
 		self.next_stream_url = ''
 		self.next_expected_id = ''
 		self.next_fetch_time = 0
-		self.next_random_index = -1
 		self.last_progress = 0
 		self.mode = int(
 			monophony.backend.settings.get_value('mode', PlaybackMode.NORMAL)
@@ -188,13 +187,12 @@ class Player:
 	def fetch_next_song_url(self):
 		self.lock.lock()
 		i = None
-		if self.mode == PlaybackMode.SHUFFLE:
-			if self.next_random_index != -1:
-				i = self.next_random_index
-		elif self.mode == PlaybackMode.LOOP:
+		if self.mode == PlaybackMode.LOOP_SONG:
 			i = self.index
 		elif self.index < len(self.queue) - 1:
 			i = self.index + 1
+		elif self.mode == PlaybackMode.LOOP_QUEUE:
+			i = 0
 		if i is None:
 			self.lock.unlock()
 			return
@@ -211,29 +209,6 @@ class Player:
 
 		print('Done fetching')
 		self.next_fetch_lock.unlock()
-
-	def choose_next_random_song(self, lock: bool=True):
-		if lock:
-			self.lock.lock()
-
-		print('Picking next random song...')
-		self.next_random_index = -1
-		if len(self.queue) > 1:
-			for s in self.queue:
-				if s['id'] not in self.recent_songs:
-					break
-			else: # nobreak
-				if self.recent_songs:
-					self.recent_songs = [self.recent_songs[-1]]
-
-			song = random.choice([
-				s for s in self.queue if s['id'] not in self.recent_songs
-			])
-			self.next_random_index = self.queue.index(song)
-
-		print('Done picking')
-		if lock:
-			self.lock.unlock()
 
 	### --- PLAYBACK CONTROLS --- ###
 
@@ -298,9 +273,6 @@ class Player:
 		self.mpris_adapter.on_playback()
 		GLib.idle_add(self.ui_update_callback, song, True, False, True)
 
-		self.next_random_index = -1
-		if self.mode == PlaybackMode.SHUFFLE:
-			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 
 		if lock:
@@ -349,18 +321,15 @@ class Player:
 		if lock and not self.lock.trylock():
 			return
 
-		if self.next_random_index == -1:
-			self.choose_next_random_song(lock=False)
-
 		queue_length = len(self.queue)
 		song = None
-		if self.mode == PlaybackMode.LOOP and not ignore_loop:
+		if self.mode == PlaybackMode.LOOP_SONG and not ignore_loop:
 			song = self.queue[self.index]
-		elif self.mode == PlaybackMode.SHUFFLE and self.next_random_index != -1:
-			song = self.queue[self.next_random_index]
-			self.index = self.next_random_index
 		elif queue_length - 1 > self.index:
 			self.index += 1
+			song = self.queue[self.index]
+		elif self.mode == PlaybackMode.LOOP_QUEUE:
+			self.index = 0
 			song = self.queue[self.index]
 
 		if song:
@@ -433,8 +402,6 @@ class Player:
 					self.next_song(True, lock=False)
 				break
 
-		if self.mode == PlaybackMode.SHUFFLE:
-			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 		GLib.idle_add(self.queue_change_callback)
 
@@ -457,8 +424,6 @@ class Player:
 		elif from_i > self.index and to_i <= self.index:
 			self.index += 1
 
-		if self.mode == PlaybackMode.SHUFFLE:
-			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 		GLib.idle_add(self.queue_change_callback)
 
@@ -472,8 +437,6 @@ class Player:
 
 		self.queue.append(song)
 
-		if self.mode == PlaybackMode.SHUFFLE:
-			GLib.Thread.new(None, self.choose_next_random_song)
 		GLib.Thread.new(None, self.fetch_next_song_url)
 		GLib.idle_add(self.queue_change_callback)
 

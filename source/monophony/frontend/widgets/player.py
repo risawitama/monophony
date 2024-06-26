@@ -13,10 +13,10 @@ class MonophonyPlayer(Gtk.Box):
 	playback_icons: ClassVar = {
 		monophony.backend.player.PlaybackMode.NORMAL:
 		'media-playlist-consecutive-symbolic',
-		monophony.backend.player.PlaybackMode.LOOP:
+		monophony.backend.player.PlaybackMode.LOOP_SONG:
+		'media-playlist-repeat-song-symbolic',
+		monophony.backend.player.PlaybackMode.LOOP_QUEUE:
 		'media-playlist-repeat-symbolic',
-		monophony.backend.player.PlaybackMode.SHUFFLE:
-		'media-playlist-shuffle-symbolic',
 		monophony.backend.player.PlaybackMode.RADIO:
 		'io.gitlab.zehkira.Monophony-symbolic',
 	}
@@ -218,31 +218,31 @@ class MonophonyPlayer(Gtk.Box):
 		chk_loop.set_group(chk_normal)
 		chk_loop.connect('toggled', self._on_loop_toggled)
 		chk_loop.set_active(
-			self.player.mode == monophony.backend.player.PlaybackMode.LOOP
+			self.player.mode == monophony.backend.player.PlaybackMode.LOOP_SONG
 		)
 		itm_loop = Gio.MenuItem()
 		itm_loop.set_attribute_value(
 			'custom', GLib.Variant.new_string('loop')
 		)
-		chk_shuffle = Gtk.CheckButton.new_with_label(_('Shuffle'))
-		chk_shuffle.set_group(chk_normal)
-		chk_shuffle.set_active(
-			self.player.mode == monophony.backend.player.PlaybackMode.SHUFFLE
+		chk_loop_q = Gtk.CheckButton.new_with_label(_('Repeat Queue'))
+		chk_loop_q.set_group(chk_normal)
+		chk_loop_q.set_active(
+			self.player.mode == monophony.backend.player.PlaybackMode.LOOP_QUEUE
 		)
-		chk_shuffle.connect('toggled', self._on_shuffle_toggled)
-		itm_shuffle = Gio.MenuItem()
-		itm_shuffle.set_attribute_value(
-			'custom', GLib.Variant.new_string('shuffle')
+		chk_loop_q.connect('toggled', self._on_loop_q_toggled)
+		itm_loop_q = Gio.MenuItem()
+		itm_loop_q.set_attribute_value(
+			'custom', GLib.Variant.new_string('loop_q')
 		)
 		mnu_more.append_item(itm_normal)
 		mnu_more.append_item(itm_loop)
-		mnu_more.append_item(itm_shuffle)
+		mnu_more.append_item(itm_loop_q)
 		mnu_more.append_item(itm_autoplay)
 		pop_menu = Gtk.PopoverMenu()
 		pop_menu.set_menu_model(mnu_more)
 		pop_menu.add_child(chk_normal, 'normal')
 		pop_menu.add_child(chk_loop, 'loop')
-		pop_menu.add_child(chk_shuffle, 'shuffle')
+		pop_menu.add_child(chk_loop_q, 'loop_q')
 		pop_menu.add_child(chk_autoplay, 'autoplay')
 		btn.set_popover(pop_menu)
 
@@ -258,9 +258,9 @@ class MonophonyPlayer(Gtk.Box):
 	def _on_previous_clicked(self, _b):
 		GLib.Thread.new(None, self.player.previous_song)
 
-	def _on_shuffle_toggled(self, btn: Gtk.CheckButton):
+	def _on_loop_q_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
-			mode = monophony.backend.player.PlaybackMode.SHUFFLE
+			mode = monophony.backend.player.PlaybackMode.LOOP_QUEUE
 			self.player.mode = mode
 			monophony.backend.settings.set_value('mode', mode)
 			self.btn_mode.set_icon_name(
@@ -269,7 +269,7 @@ class MonophonyPlayer(Gtk.Box):
 
 	def _on_loop_toggled(self, btn: Gtk.CheckButton):
 		if btn.get_active():
-			mode = monophony.backend.player.PlaybackMode.LOOP
+			mode = monophony.backend.player.PlaybackMode.LOOP_SONG
 			self.player.mode = mode
 			monophony.backend.settings.set_value('mode', mode)
 			self.btn_mode.set_icon_name(
