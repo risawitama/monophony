@@ -115,6 +115,7 @@ class Player:
 	### --- EVENT HANDLERS --- ###
 
 	def _on_buffering(self, _bus, msg):
+		self.lock.lock()
 		percent = msg.parse_buffering()
 		if not self.buffering and percent < 100:
 			print('Buffering...')
@@ -139,6 +140,8 @@ class Player:
 				self.paused,
 				False
 			)
+
+		self.lock.unlock()
 
 	def _on_bus_error(self, _bus, err):
 		print('Playback error:', err.parse_error().gerror.message)
