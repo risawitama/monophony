@@ -388,6 +388,19 @@ class Player:
 		self.play_song(song)
 		self.lock.unlock()
 
+	def shuffle_queue(self):
+		self.lock.lock()
+		song = self.get_current_song(lock=False)
+		random.shuffle(self.queue)
+		if song:
+			self.index = self.queue.index(song)
+
+		GLib.Thread.new(None, self.fetch_next_song_url)
+		GLib.idle_add(self.queue_change_callback)
+
+		self.lock.unlock()
+
+
 	def unqueue_song(self, song_id: str):
 		self.lock.lock()
 		if not self.queue:
