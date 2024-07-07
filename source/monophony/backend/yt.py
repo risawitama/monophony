@@ -230,6 +230,10 @@ def get_artist(browse_id: str) -> list:
 		artist = {'name': metadata['name']}
 		for group in ['albums', 'singles']:
 			artist[group] = {}
+			artist[group]['results'] = []
+			if group not in metadata:
+				continue
+
 			if 'params' in metadata[group]:
 				artist[group]['results'] = yt.get_artist_albums(
 					metadata[group]['browseId'], metadata[group]['params']
