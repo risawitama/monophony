@@ -56,11 +56,13 @@ class MonophonyLibraryTab(Gtk.Box):
 		con_import.set_icon_name('list-add-symbolic')
 		btn_import = Gtk.Button.new()
 		btn_import.set_child(con_import)
+		btn_import.add_css_class('suggested-action')
 		btn_import.connect(
 			'clicked', lambda _b: self.get_ancestor(Gtk.Window)._on_import_clicked()
 		)
 
 		self.btn_play = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
+		self.btn_play.add_css_class('suggested-action')
 		self.btn_play.set_tooltip_text(_('Play all'))
 		self.btn_play.connect('clicked', self._on_play_all)
 
@@ -75,6 +77,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_meta.add(self.box_playlists)
 
 		btn_clear = Gtk.Button.new_from_icon_name('edit-clear-all-symbolic')
+		btn_clear.add_css_class('destructive-action')
 		btn_clear.set_tooltip_text(_('Clear'))
 		btn_clear.connect(
 			'clicked', lambda _b: monophony.backend.history.clear_songs()

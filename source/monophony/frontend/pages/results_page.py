@@ -77,6 +77,7 @@ class MonophonyResultsPage(Gtk.Box):
 				box_btn.append(lbl_text)
 				box_btn.append(img_icon)
 				btn_more = Gtk.Button()
+				btn_more.add_css_class('suggested-action')
 				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
@@ -92,6 +93,7 @@ class MonophonyResultsPage(Gtk.Box):
 				box_btn.append(lbl_text)
 				box_btn.append(img_icon)
 				btn_more = Gtk.Button()
+				btn_more.add_css_class('suggested-action')
 				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
@@ -107,6 +109,7 @@ class MonophonyResultsPage(Gtk.Box):
 				box_btn.append(lbl_text)
 				box_btn.append(img_icon)
 				btn_more = Gtk.Button()
+				btn_more.add_css_class('suggested-action')
 				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
@@ -122,6 +125,7 @@ class MonophonyResultsPage(Gtk.Box):
 				box_btn.append(lbl_text)
 				box_btn.append(img_icon)
 				btn_more = Gtk.Button()
+				btn_more.add_css_class('suggested-action')
 				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',
@@ -137,6 +141,7 @@ class MonophonyResultsPage(Gtk.Box):
 				box_btn.append(lbl_text)
 				box_btn.append(img_icon)
 				btn_more = Gtk.Button()
+				btn_more.add_css_class('suggested-action')
 				btn_more.set_child(box_btn)
 				btn_more.connect(
 					'clicked',

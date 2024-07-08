@@ -32,7 +32,7 @@ class MonophonyRecentSearches(Gtk.Box):
 		btn_search.connect(
 			'clicked', lambda b: self._on_search(b.get_child().get_label())
 		)
-		btn_remove = Gtk.Button.new_from_icon_name('list-remove-symbolic')
+		btn_remove = Gtk.Button.new_from_icon_name('edit-delete-symbolic')
 		btn_remove.set_tooltip_text(_('Remove'))
 		btn_remove.connect(
 			'clicked',
