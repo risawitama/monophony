@@ -42,6 +42,17 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.12.0" date="2024-07-08">
+			<description>
+				<ul>
+					<li>Added repeat queue mode</li>
+					<li>Replaced shuffle mode with shuffle button in queue tab</li>
+					<li>Tweaked some interface elements</li>
+					<li>Fixed unpredictable player behavior when skipping songs in some cases</li>
+					<li>Fixed artist view for artists without albums and/or singles</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.11.0" date="2024-06-02">
 			<description>
 				<ul>
