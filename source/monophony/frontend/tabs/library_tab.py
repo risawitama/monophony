@@ -115,6 +115,7 @@ class MonophonyLibraryTab(Gtk.Box):
 
 		new_playlists = monophony.backend.playlists.read_playlists()
 		new_ext_lists = monophony.backend.playlists.read_external_playlists()
+		self.btn_play.set_visible(new_playlists or new_ext_lists)
 
 		remaining_widgets = [
 			w for w in self.playlist_widgets if w.is_ancestor(self.box_meta)
