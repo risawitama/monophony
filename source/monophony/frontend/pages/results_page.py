@@ -51,16 +51,36 @@ class MonophonyResultsPage(Gtk.Box):
 		GLib.idle_add(self.await_results)
 
 	def await_results(self) -> bool:
+		def create_result_box(result_type: str, filtered: bool):
+			box = Adw.PreferencesGroup.new()
+			if not filtered:
+				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
+				lbl_text = Gtk.Label.new(_('Show All'))
+				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+				box_btn.set_spacing(8)
+				box_btn.append(lbl_text)
+				box_btn.append(img_icon)
+				btn_more = Gtk.Button()
+				btn_more.add_css_class('suggested-action')
+				btn_more.set_child(box_btn)
+				btn_more.connect(
+					'clicked',
+					lambda _b, f: window._on_show_more(self.query, f),
+					result_type
+				)
+				box.set_header_suffix(btn_more)
+			return box
+
 		self.box_loading.set_visible(False)
 		self.pge_status.set_visible(len(self.results) == 0)
 		if self.results:
 			self.pge_results.set_visible(True)
 			box_top = Adw.PreferencesGroup.new()
-			box_songs = Adw.PreferencesGroup.new()
-			box_videos = Adw.PreferencesGroup.new()
-			box_albums = Adw.PreferencesGroup.new()
-			box_playlists = Adw.PreferencesGroup.new()
-			box_artists = Adw.PreferencesGroup.new()
+			box_songs = create_result_box('songs', self.filter != '')
+			box_videos = create_result_box('videos', self.filter != '')
+			box_albums = create_result_box('albums', self.filter != '')
+			box_playlists = create_result_box('playlists', self.filter != '')
+			box_artists = create_result_box('artists', self.filter != '')
 			box_top.set_title(_('Top Result'))
 			box_songs.set_title(_('Songs'))
 			box_albums.set_title(_('Albums'))
@@ -68,87 +88,6 @@ class MonophonyResultsPage(Gtk.Box):
 			box_playlists.set_title(_('Community Playlists'))
 			box_artists.set_title(_('Artists'))
 			window = self.get_ancestor(Gtk.Window)
-
-			if not self.filter:
-				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
-				lbl_text = Gtk.Label.new(_('Show All'))
-				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-				box_btn.set_spacing(8)
-				box_btn.append(lbl_text)
-				box_btn.append(img_icon)
-				btn_more = Gtk.Button()
-				btn_more.add_css_class('suggested-action')
-				btn_more.set_child(box_btn)
-				btn_more.connect(
-					'clicked',
-					lambda _b, f: window._on_show_more(self.query, f),
-					'songs'
-				)
-				box_songs.set_header_suffix(btn_more)
-
-				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
-				lbl_text = Gtk.Label.new(_('Show All'))
-				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-				box_btn.set_spacing(8)
-				box_btn.append(lbl_text)
-				box_btn.append(img_icon)
-				btn_more = Gtk.Button()
-				btn_more.add_css_class('suggested-action')
-				btn_more.set_child(box_btn)
-				btn_more.connect(
-					'clicked',
-					lambda _b, f: window._on_show_more(self.query, f),
-					'albums'
-				)
-				box_albums.set_header_suffix(btn_more)
-
-				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
-				lbl_text = Gtk.Label.new(_('Show All'))
-				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-				box_btn.set_spacing(8)
-				box_btn.append(lbl_text)
-				box_btn.append(img_icon)
-				btn_more = Gtk.Button()
-				btn_more.add_css_class('suggested-action')
-				btn_more.set_child(box_btn)
-				btn_more.connect(
-					'clicked',
-					lambda _b, f: window._on_show_more(self.query, f),
-					'playlists'
-				)
-				box_playlists.set_header_suffix(btn_more)
-
-				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
-				lbl_text = Gtk.Label.new(_('Show All'))
-				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-				box_btn.set_spacing(8)
-				box_btn.append(lbl_text)
-				box_btn.append(img_icon)
-				btn_more = Gtk.Button()
-				btn_more.add_css_class('suggested-action')
-				btn_more.set_child(box_btn)
-				btn_more.connect(
-					'clicked',
-					lambda _b, f: window._on_show_more(self.query, f),
-					'videos'
-				)
-				box_videos.set_header_suffix(btn_more)
-
-				img_icon = Gtk.Image.new_from_icon_name('go-next-symbolic')
-				lbl_text = Gtk.Label.new(_('Show All'))
-				box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-				box_btn.set_spacing(8)
-				box_btn.append(lbl_text)
-				box_btn.append(img_icon)
-				btn_more = Gtk.Button()
-				btn_more.add_css_class('suggested-action')
-				btn_more.set_child(box_btn)
-				btn_more.connect(
-					'clicked',
-					lambda _b, f: window._on_show_more(self.query, f),
-					'artists'
-				)
-				box_artists.set_header_suffix(btn_more)
 
 			non_empty = []
 			for item in self.results:
