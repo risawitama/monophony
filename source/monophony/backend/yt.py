@@ -6,6 +6,7 @@ import ytmusicapi
 def _get_artist_names(artists: list) -> list:
 	return [artist['name'] for artist in artists if artist['id']]
 
+
 def _get_artist_id(artists: list) -> str:
 	a_id = ''
 	for i in range(len(artists)):
@@ -14,6 +15,7 @@ def _get_artist_id(artists: list) -> str:
 			break
 
 	return a_id
+
 
 def _parse_results(data: list) -> list:
 	try:
@@ -272,7 +274,7 @@ def get_artist(browse_id: str) -> list:
 				for alb in artist[group]['results']:
 					if not ('browseId' in alb or 'playlistId' in alb):
 						print(f'Failed to get artist {group}:\033[0;33m')
-						traceback.print_exc()
+						print('browseId/playlistId missing')
 						print('\033[0m')
 						continue
 
@@ -281,7 +283,7 @@ def get_artist(browse_id: str) -> list:
 						'browseId': (
 							alb['browseId' if 'browseId' in alb else 'playlistId']
 						),
-						'artists': [{'name': artist['name']}]
+						'artists': [{'name': artist['name'], 'id': browse_id}]
 					})
 
 			for item in content:
