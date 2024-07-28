@@ -27,6 +27,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.set_title('Monophony')
 		self.set_icon_name(APP_ID)
 		self.player = monophony.backend.player.Player()
+		self.player.queue_end_callback = self._on_queue_end
 		self.removed_playlists = []
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
@@ -73,7 +74,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.set_content(self.toolbar_view)
 
 		self.install_action(
-			'quit-app', None, (lambda w, *_: w.close())
+			'quit-app', None, (lambda w, *_: w._on_quit())
 		)
 		self.install_action(
 			'focus-library',
@@ -101,7 +102,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 			'focus-search', ['<Control>f', '<Alt>2']
 		)
 		self.get_application().set_accels_for_action('focus-queue', ['<Alt>3'])
-		self.connect('close-request', MonophonyMainWindow._on_quit)
+		self.connect('close-request', MonophonyMainWindow.run_background)
 
 	def append_page(self, widget: Gtk.Widget):
 		while child := self.stack.get_adjacent_child(Adw.NavigationDirection.FORWARD):
@@ -109,6 +110,14 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 
 		self.stack.append(widget)
 		self.stack.navigate(Adw.NavigationDirection.FORWARD)
+
+	def run_background(self) -> bool:
+		if self.player.get_current_song():
+			self.set_visible(False)
+			return True
+
+		self._on_quit()
+		return False
 
 	def _on_quit(self):
 		self.player.terminate()
@@ -217,3 +226,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 	def _on_save_playlist(self, name: str, contents: list):
 		monophony.backend.playlists.add_playlist(name, contents)
 		self.toaster.add_toast(Adw.Toast.new(_('Added')))
+
+	def _on_queue_end(self):
+		if not self.is_visible():
+			self._on_quit()

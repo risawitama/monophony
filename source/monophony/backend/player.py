@@ -40,6 +40,7 @@ class Player:
 		self.mpris_server = None
 		self.ui_update_callback = None
 		self.queue_change_callback = None
+		self.queue_end_callback = None
 		self.playbin = Gst.ElementFactory.make('playbin3', 'playbin3')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.get_bus().add_signal_watch()
@@ -347,6 +348,7 @@ class Player:
 			self.mpris_server.unpublish()
 			GLib.idle_add(self.queue_change_callback)
 			GLib.idle_add(self.ui_update_callback, None, False, False, False)
+			GLib.idle_add(self.queue_end_callback)
 
 		if lock:
 			self.lock.unlock()

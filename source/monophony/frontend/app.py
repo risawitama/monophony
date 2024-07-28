@@ -15,12 +15,17 @@ class MonophonyApplication(Adw.Application):
 		)
 
 	def do_activate(self):
-		self.window = MonophonyMainWindow(
-			application = self
-		)
-		self.inhibit(
-			self.window,
-			Gtk.ApplicationInhibitFlags.SUSPEND | Gtk.ApplicationInhibitFlags.IDLE,
-			None
-		)
-		self.window.present()
+		windows = self.get_windows()
+
+		if len(windows) > 0:
+			windows[0].set_visible(True)
+		else:
+			self.window = MonophonyMainWindow(
+				application = self
+			)
+			self.inhibit(
+				self.window,
+				Gtk.ApplicationInhibitFlags.SUSPEND | Gtk.ApplicationInhibitFlags.IDLE,
+				None
+			)
+			self.window.present()
