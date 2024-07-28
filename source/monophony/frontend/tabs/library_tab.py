@@ -122,7 +122,7 @@ class MonophonyLibraryTab(Gtk.Box):
 		]
 		self.playlist_widgets = remaining_widgets
 
-		for title in new_playlists.keys():
+		for title in new_playlists:
 			for widget in self.playlist_widgets:
 				if widget.get_title() == GLib.markup_escape_text(title, -1):
 					break

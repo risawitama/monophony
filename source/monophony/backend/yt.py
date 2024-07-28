@@ -68,7 +68,7 @@ def _parse_results(data: list) -> list:
 						'thumbnail': album['thumbnails'][0]['url']
 					} for s in album['tracks'] if s['videoId']
 				]
-			except Exception:
+			except:
 				print('Failed to parse album result:\033[0;33m')
 				traceback.print_exc()
 				print('\033[0m')
@@ -127,9 +127,10 @@ def _parse_results(data: list) -> list:
 def is_available() -> bool:
 	try:
 		ytmusicapi.YTMusic()
-		return True
 	except:
 		return False
+	else:
+		return True
 
 
 def get_song_uri(video_id: str) -> str | None:
@@ -300,14 +301,11 @@ def search(query: str, filter_: str='') -> list:
 		if '?v=' in query and '/' in query:
 			song = get_song(query.split('?v=')[-1].split('&')[0])
 			return [song] if song else []
-		elif 'youtu.be/' in query:
+		if 'youtu.be/' in query:
 			song = get_song(query.split('youtu.be/')[-1].split('?')[0])
 			return [song] if song else []
 
-		if filter_:
-			data = yt.search(query, filter=filter_)
-		else:
-			data = yt.search(query)
+		data = yt.search(query, filter=filter_) if filter_ else yt.search(query)
 	except:
 		return []
 

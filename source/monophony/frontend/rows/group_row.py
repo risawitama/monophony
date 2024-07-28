@@ -15,8 +15,7 @@ class MonophonyGroupRow(Adw.ExpanderRow):
 			self.set_subtitle(GLib.markup_escape_text(self.group['author'], -1))
 
 		self.set_title(GLib.markup_escape_text(
-			group['title'] if group.get('title', None) else '________',
-			-1
+			group['title'] if group.get('title') else '________', -1
 		))
 
 		btn_play = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')

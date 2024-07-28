@@ -1,4 +1,4 @@
-import glob, os, subprocess
+import contextlib, glob, os, subprocess
 
 
 ### --- CACHE FUNCTIONS --- ###
@@ -17,6 +17,8 @@ def is_song_being_cached(video_id: str) -> bool:
 
 	if not has_result:
 		return has_temp
+
+	return False
 
 
 def is_song_cached(video_id: str) -> bool:
@@ -49,10 +51,8 @@ def cache_songs(ids: list):
 	).communicate()
 
 	for video_id in needed_ids:
-		try:
+		with contextlib.suppress(OSError, FileNotFoundError):
 			os.remove(f'{path}{video_id}.monophony')
-		except (OSError, FileNotFoundError):
-			pass
 
 	# rename id.* files to id
 	for file in glob.glob(path + '*.*'):
@@ -60,10 +60,8 @@ def cache_songs(ids: list):
 
 
 def uncache_song(video_id: str):
-	try:
+	with contextlib.suppress(OSError, FileNotFoundError):
 		os.remove(get_cache_directory() + video_id)
-	except (OSError, FileNotFoundError):
-		pass
 
 
 def clean_up():

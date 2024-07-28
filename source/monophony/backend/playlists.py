@@ -92,7 +92,7 @@ def import_playlist(name: str, url: str, local: bool, overwrite: bool=False) -> 
 			'title': item['title'],
 			'author': item['artists'][0]['name'],
 			'author_id': item['artists'][0]['id'],
-			'length': item['duration'] if 'duration' in item else '',
+			'length': item.get('duration', ''),
 			'id': item['videoId']
 		}
 		if is_album:

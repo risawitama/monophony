@@ -121,8 +121,8 @@ class Adapter(MprisAdapter):
 		if song:
 			return {
 				'mpris:trackid': '/track/1',
-				'mpris:artUrl': song['thumbnail'] if 'thumbnail' in song else '',
-				'xesam:title': song['title'] if 'title' in song else '',
+				'mpris:artUrl': song.get('thumbnail', ''),
+				'xesam:title': song.get('title', ''),
 				'xesam:artist': [song['author']] if 'author' in song else []
 			}
 

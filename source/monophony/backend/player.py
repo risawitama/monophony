@@ -1,4 +1,4 @@
-import random, time
+import contextlib, random, time
 
 import monophony.backend.cache
 import monophony.backend.history
@@ -80,10 +80,8 @@ class Player:
 		result = {}
 
 		if state in acceptable_states:
-			try:
+			with contextlib.suppress(IndexError):
 				result = self.queue[self.index]
-			except IndexError:
-				pass
 
 		if lock:
 			self.lock.unlock()
