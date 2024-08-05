@@ -339,14 +339,7 @@ class Player:
 		elif self.mode == PlaybackMode.RADIO:
 			self.play_radio_song()
 		else:
-			self.playbin.set_state(Gst.State.NULL)
-			self.playbin.set_property('uri', '')
-			self.queue = []
-			self.index = 0
-			self.mpris_server.unpublish()
-			GLib.idle_add(self.queue_change_callback)
-			GLib.idle_add(self.ui_update_callback, None, False, False, False)
-			GLib.idle_add(self.queue_end_callback)
+			self.clear_queue(lock=False)
 
 		if lock:
 			self.lock.unlock()
@@ -387,6 +380,22 @@ class Player:
 		song = queue[index]
 		self.play_song(song)
 		self.lock.unlock()
+
+	def clear_queue(self, lock: bool=True):
+		if lock:
+			self.lock.lock()
+
+		self.playbin.set_state(Gst.State.NULL)
+		self.playbin.set_property('uri', '')
+		self.queue = []
+		self.index = 0
+		self.mpris_server.unpublish()
+		GLib.idle_add(self.queue_change_callback)
+		GLib.idle_add(self.ui_update_callback, None, False, False, False)
+		GLib.idle_add(self.queue_end_callback)
+
+		if lock:
+			self.lock.unlock()
 
 	def shuffle_queue(self):
 		self.lock.lock()

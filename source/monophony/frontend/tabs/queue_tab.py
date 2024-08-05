@@ -24,12 +24,22 @@ class MonophonyQueueTab(Gtk.Box):
 		self.pge_status.set_title(_('Queue Empty'))
 		self.pge_status.set_visible(True)
 
+		btn_clear = Gtk.Button.new_from_icon_name('edit-clear-all-symbolic')
+		btn_clear.add_css_class('destructive-action')
+		btn_clear.set_tooltip_text(_('Clear'))
+		btn_clear.connect('clicked', lambda _b: player.clear_queue())
+
 		btn_shuffle = Gtk.Button.new_from_icon_name('media-playlist-shuffle-symbolic')
 		btn_shuffle.set_tooltip_text(_('Shuffle'))
 		btn_shuffle.connect('clicked', lambda _b: self.player.shuffle_queue())
 
+		box_actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+		box_actions.set_spacing(5)
+		box_actions.append(btn_clear)
+		box_actions.append(btn_shuffle)
+
 		self.box_queue = Adw.PreferencesGroup()
-		self.box_queue.set_header_suffix(btn_shuffle)
+		self.box_queue.set_header_suffix(box_actions)
 		self.box_queue.set_title(_('Queue'))
 
 		self.box_meta = Adw.PreferencesPage.new()
