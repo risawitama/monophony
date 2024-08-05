@@ -42,6 +42,17 @@
 	<launchable type="desktop-id">io.gitlab.zehkira.Monophony.desktop</launchable>
 	<content_rating type="oars-1.1"></content_rating>
 	<releases>
+		<release version="2.14.0" date="2024-08-05">
+			<description>
+				<ul>
+					<li>Added support for running the app in the background</li>
+					<li>Added button for clearing the queue</li>
+					<li>Added ability to stop playback using system media controls</li>
+					<li>Made the shuffle button also move the current song to the start of the queue</li>
+					<li>Fixed seeking during online playback</li>
+				</ul>
+			</description>
+		</release>
 		<release version="2.13.0" date="2024-07-24">
 			<description>
 				<ul>
