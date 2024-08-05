@@ -43,7 +43,7 @@ class Adapter(MprisAdapter):
 		self.monophony_player.toggle_pause()
 
 	def stop(self):
-		pass
+		self.monophony_player.clear_queue()
 
 	def play(self):
 		pass
