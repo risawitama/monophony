@@ -393,7 +393,9 @@ class Player:
 		song = self.get_current_song(lock=False)
 		random.shuffle(self.queue)
 		if song:
-			self.index = self.queue.index(song)
+			self.queue.remove(song)
+			self.queue.insert(0, song)
+			self.index = 0
 
 		GLib.Thread.new(None, self.fetch_next_song_url)
 		GLib.idle_add(self.queue_change_callback)
