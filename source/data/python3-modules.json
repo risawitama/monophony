@@ -46,7 +46,7 @@
 			"name": "python3-ytmusicapi",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"ytmusicapi==1.7.4\" --no-build-isolation"
+				"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"ytmusicapi==1.8.0\" --no-build-isolation"
 			],
 			"sources": [
 				{
@@ -76,8 +76,8 @@
 				},
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/56/13/f67cd65091b7e3e71bc11fc0a969c47611081581ed3c351864f2f8214f1c/ytmusicapi-1.7.4-py3-none-any.whl",
-					"sha256": "270381345570c7422b18df818e87520808ac0ed1777aaf84c9b052037728cde7"
+					"url": "https://files.pythonhosted.org/packages/96/73/bacba4cf259e6b8cedefad4bf1ea19daa3062a5a9591de1729ee1f368950/ytmusicapi-1.8.0-py3-none-any.whl",
+					"sha256": "b4a73991e8bcaf9537b6245712734303725ddd435768000ec5dd45fa993f26ee"
 				}
 			]
 		}
