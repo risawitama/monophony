@@ -9,3 +9,4 @@ StartupNotify=false
 Icon=io.gitlab.zehkira.Monophony
 Categories=AudioVideo;Audio;Music;
 X-Purism-FormFactor=Workstation;Mobile;
+Keywords=Music;Stream;Youtube;yt;
