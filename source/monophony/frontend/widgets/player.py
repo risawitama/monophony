@@ -29,6 +29,7 @@ class MonophonyPlayer(Gtk.Box):
 		self.player = player
 		self.player.set_volume(volume, False)
 		self.player.ui_update_callback = self.update
+		self.inhibit_cookie = None
 
 		box_info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		box_info.set_margin_start(11)
@@ -325,11 +326,18 @@ class MonophonyPlayer(Gtk.Box):
 			)
 			self.lbl_author.set_label(song['author'])
 			self.window.toolbar_view.set_reveal_bottom_bars(True)
+			if self.inhibit_cookie is None:
+				self.inhibit_cookie = self.window.get_application().inhibit(
+					self.window, Gtk.ApplicationInhibitFlags.SUSPEND, None
+				)
 		else:
 			self.lnk_title.set_label('')
 			self.lnk_title.set_uri('')
 			self.lbl_author.set_label('')
 			self.window.toolbar_view.set_reveal_bottom_bars(False)
+			if self.inhibit_cookie is not None:
+				self.window.get_application().uninhibit(self.inhibit_cookie)
+				self.inhibit_cookie = None
 
 		self.scl_progress.set_sensitive(not busy)
 		self.btn_pause.set_visible(not busy)
