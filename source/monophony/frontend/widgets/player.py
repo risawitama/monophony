@@ -326,7 +326,7 @@ class MonophonyPlayer(Gtk.Box):
 			)
 			self.lbl_author.set_label(song['author'])
 			self.window.toolbar_view.set_reveal_bottom_bars(True)
-			if self.inhibit_cookie is None:
+			if self.inhibit_cookie is None and not paused:
 				self.inhibit_cookie = self.window.get_application().inhibit(
 					self.window, Gtk.ApplicationInhibitFlags.SUSPEND, None
 				)
@@ -335,9 +335,10 @@ class MonophonyPlayer(Gtk.Box):
 			self.lnk_title.set_uri('')
 			self.lbl_author.set_label('')
 			self.window.toolbar_view.set_reveal_bottom_bars(False)
-			if self.inhibit_cookie is not None:
-				self.window.get_application().uninhibit(self.inhibit_cookie)
-				self.inhibit_cookie = None
+
+		if (paused or not song) and self.inhibit_cookie is not None:
+			self.window.get_application().uninhibit(self.inhibit_cookie)
+			self.inhibit_cookie = None
 
 		self.scl_progress.set_sensitive(not busy)
 		self.btn_pause.set_visible(not busy)
