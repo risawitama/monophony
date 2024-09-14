@@ -1,6 +1,54 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
+#: monophony/frontend/pages/artist_page.py:20
+#: monophony/frontend/pages/results_page.py:21
+msgid "No Results"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:55
+msgid "Other"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:56
+#: monophony/frontend/pages/results_page.py:86
+msgid "Albums"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:57
+msgid "Playlists"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:80
+#: monophony/frontend/pages/results_page.py:85
+msgid "Songs"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:86
+#: monophony/frontend/pages/results_page.py:87
+msgid "Videos"
+msgstr ""
+
+#: monophony/frontend/pages/artist_page.py:92
+msgid "Artist Not Found"
+msgstr ""
+
+#: monophony/frontend/pages/results_page.py:58
+msgid "Show All"
+msgstr ""
+
+#: monophony/frontend/pages/results_page.py:84
+msgid "Top Result"
+msgstr ""
+
+#: monophony/frontend/pages/results_page.py:88
+msgid "Community Playlists"
+msgstr ""
+
+#: monophony/frontend/pages/results_page.py:89
+msgid "Artists"
+msgstr ""
+
 #: monophony/frontend/popovers/local_song_popover.py:17
 msgid "Remove From Playlist"
 msgstr ""
@@ -27,6 +75,11 @@ msgstr ""
 
 #: monophony/frontend/popovers/song_popover.py:42
 msgid "View Artist"
+msgstr ""
+
+#: monophony/frontend/rows/artist_row.py:14
+#: monophony/frontend/rows/artist_row.py:23
+msgid "View artist"
 msgstr ""
 
 #: monophony/frontend/rows/external_group_row.py:24
@@ -66,6 +119,11 @@ msgstr ""
 msgid "Playlist already exists"
 msgstr ""
 
+#: monophony/frontend/rows/group_row.py:22
+#: monophony/frontend/rows/song_row.py:18
+msgid "Play"
+msgstr ""
+
 #: monophony/frontend/rows/importable_group_row.py:34
 msgid "Import..."
 msgstr ""
@@ -74,96 +132,101 @@ msgstr ""
 msgid "Duplicate"
 msgstr ""
 
-#: monophony/frontend/rows/artist_row.py:14
-#: monophony/frontend/rows/artist_row.py:23
-msgid "View artist"
-msgstr ""
-
-#: monophony/frontend/rows/group_row.py:23
-#: monophony/frontend/rows/song_row.py:18
-msgid "Play"
-msgstr ""
-
 #: monophony/frontend/rows/song_row.py:36
 msgid "Downloaded"
+msgstr ""
+
+#: monophony/frontend/tabs/queue_tab.py:24
+msgid "Queue Empty"
+msgstr ""
+
+#: monophony/frontend/tabs/queue_tab.py:29
+#: monophony/frontend/tabs/library_tab.py:82
+msgid "Clear"
+msgstr ""
+
+#: monophony/frontend/tabs/queue_tab.py:33
+msgid "Shuffle"
+msgstr ""
+
+#: monophony/frontend/tabs/queue_tab.py:43
+#: monophony/frontend/windows/add_window.py:42
+#: monophony/frontend/windows/main_window.py:50
+msgid "Queue"
+msgstr ""
+
+#: monophony/frontend/tabs/search_tab.py:18
+msgid "Enter text or paste a URL..."
+msgstr ""
+
+#: monophony/frontend/tabs/search_tab.py:24
+msgid "Go back"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:52
+msgid "Recommended"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:56
+#: monophony/frontend/windows/import_window.py:55
+msgid "Import"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:67
+msgid "Play all"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:76
+#: monophony/frontend/windows/add_window.py:48
+msgid "Your Playlists"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:89
+msgid "Recently Played"
+msgstr ""
+
+#: monophony/frontend/tabs/library_tab.py:94
+msgid "Show Downloaded Songs"
 msgstr ""
 
 #: monophony/frontend/widgets/recent_searches.py:36
 msgid "Remove"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:70
+#: monophony/frontend/widgets/player.py:71
 msgid "Volume"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:91
+#: monophony/frontend/widgets/player.py:92
 msgid "Toggle pause"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:103
+#: monophony/frontend/widgets/player.py:104
 msgid "Next song"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:108
+#: monophony/frontend/widgets/player.py:109
 msgid "Previous song"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:115
+#: monophony/frontend/widgets/player.py:116
 msgid "Playback mode"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:200
+#: monophony/frontend/widgets/player.py:201
 msgid "Normal Playback"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:207
+#: monophony/frontend/widgets/player.py:208
 msgid "Radio Mode"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:217
+#: monophony/frontend/widgets/player.py:218
 msgid "Repeat Song"
 msgstr ""
 
-#: monophony/frontend/widgets/player.py:227
-msgid "Shuffle"
-msgstr ""
-
-#: monophony/frontend/windows/message_window.py:13
-msgid "Ok"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:37
-msgid "Library"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:43
-msgid "Search"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:49
-#: monophony/frontend/windows/add_window.py:42
-msgid "Queue"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:58
-msgid "About"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:145
-msgid "translator-credits"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:188
-#, python-brace-format
-msgid "Deleted \"{playlist_name}\""
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:191
-msgid "Undo"
-msgstr ""
-
-#: monophony/frontend/windows/main_window.py:219
-msgid "Added"
+#: monophony/frontend/widgets/player.py:228
+msgid "Repeat Queue"
 msgstr ""
 
 #: monophony/frontend/windows/add_window.py:25
@@ -173,11 +236,6 @@ msgstr ""
 
 #: monophony/frontend/windows/add_window.py:27
 msgid "Add"
-msgstr ""
-
-#: monophony/frontend/windows/add_window.py:48
-#: monophony/frontend/tabs/library_tab.py:73
-msgid "Your Playlists"
 msgstr ""
 
 #: monophony/frontend/windows/add_window.py:54
@@ -198,11 +256,6 @@ msgstr ""
 
 #: monophony/frontend/windows/import_window.py:34
 msgid "Editable"
-msgstr ""
-
-#: monophony/frontend/windows/import_window.py:55
-#: monophony/frontend/tabs/library_tab.py:55
-msgid "Import"
 msgstr ""
 
 #: monophony/frontend/windows/import_window.py:77
@@ -227,82 +280,35 @@ msgstr ""
 msgid "A URL is required."
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:20
-#: monophony/frontend/pages/results_page.py:21
-msgid "No Results"
+#: monophony/frontend/windows/main_window.py:38
+msgid "Library"
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:55
-msgid "Other"
+#: monophony/frontend/windows/main_window.py:44
+msgid "Search"
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:56
-#: monophony/frontend/pages/results_page.py:66
-msgid "Albums"
+#: monophony/frontend/windows/main_window.py:59
+msgid "About"
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:57
-msgid "Playlists"
+#: monophony/frontend/windows/main_window.py:154
+msgid "translator-credits"
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:80
-#: monophony/frontend/pages/results_page.py:65
-msgid "Songs"
+#: monophony/frontend/windows/main_window.py:197
+#, python-brace-format
+msgid "Deleted \"{playlist_name}\""
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:86
-#: monophony/frontend/pages/results_page.py:67
-msgid "Videos"
+#: monophony/frontend/windows/main_window.py:200
+msgid "Undo"
 msgstr ""
 
-#: monophony/frontend/pages/artist_page.py:92
-msgid "Artist Not Found"
+#: monophony/frontend/windows/main_window.py:228
+msgid "Added"
 msgstr ""
 
-#: monophony/frontend/pages/results_page.py:64
-msgid "Top Result"
-msgstr ""
-
-#: monophony/frontend/pages/results_page.py:68
-msgid "Community Playlists"
-msgstr ""
-
-#: monophony/frontend/pages/results_page.py:69
-msgid "Artists"
-msgstr ""
-
-#: monophony/frontend/pages/results_page.py:74
-#: monophony/frontend/pages/results_page.py:83
-#: monophony/frontend/pages/results_page.py:92
-#: monophony/frontend/pages/results_page.py:101
-#: monophony/frontend/pages/results_page.py:110
-msgid "Show All"
-msgstr ""
-
-#: monophony/frontend/tabs/queue_tab.py:24
-msgid "Queue Empty"
-msgstr ""
-
-#: monophony/frontend/tabs/library_tab.py:51
-msgid "Recommended"
-msgstr ""
-
-#: monophony/frontend/tabs/library_tab.py:64
-msgid "Play all"
-msgstr ""
-
-#: monophony/frontend/tabs/library_tab.py:78
-msgid "Clear"
-msgstr ""
-
-#: monophony/frontend/tabs/library_tab.py:85
-msgid "Recently Played"
-msgstr ""
-
-#: monophony/frontend/tabs/search_tab.py:18
-msgid "Enter text or paste a URL..."
-msgstr ""
-
-#: monophony/frontend/tabs/search_tab.py:24
-msgid "Go back"
+#: monophony/frontend/windows/message_window.py:13
+msgid "Ok"
 msgstr ""

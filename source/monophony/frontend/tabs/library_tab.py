@@ -1,3 +1,4 @@
+import monophony.backend.cache
 import monophony.backend.history
 import monophony.backend.playlists
 import monophony.backend.yt
@@ -10,7 +11,7 @@ from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, GObject, Gtk
+from gi.repository import Adw, Gio, GLib, GObject, Gtk
 
 
 class MonophonyLibraryTab(Gtk.Box):
@@ -89,8 +90,24 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_recents.set_header_suffix(btn_clear)
 		self.box_meta.add(self.box_recents)
 
+		con_downloads = Adw.ButtonContent()
+		con_downloads.set_label(_('Show Downloaded Songs'))
+		con_downloads.set_icon_name('folder-symbolic')
+		btn_downloads = Gtk.Button()
+		btn_downloads.set_child(con_downloads)
+		btn_downloads.connect('clicked', self._on_open_downloads)
+
+		box_actions = Adw.PreferencesGroup()
+		box_actions.add(btn_downloads)
+		self.box_meta.add(box_actions)
+
 		GLib.Thread.new('library-load', self.load)
 		GLib.timeout_add(200, self.update)
+
+	def _on_open_downloads(self, _b):
+		Gio.AppInfo.launch_default_for_uri(
+			'file://' + monophony.backend.cache.get_cache_directory(), None
+		)
 
 	def _on_play_all(self, _b):
 		all_songs = []
