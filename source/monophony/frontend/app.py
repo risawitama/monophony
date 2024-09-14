@@ -23,9 +23,5 @@ class MonophonyApplication(Adw.Application):
 			self.window = MonophonyMainWindow(
 				application = self
 			)
-			self.inhibit(
-				self.window,
-				Gtk.ApplicationInhibitFlags.SUSPEND | Gtk.ApplicationInhibitFlags.IDLE,
-				None
-			)
+			self.inhibit(self.window, Gtk.ApplicationInhibitFlags.SUSPEND, None)
 			self.window.present()
