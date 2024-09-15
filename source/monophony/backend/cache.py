@@ -67,7 +67,7 @@ def uncache_song(video_id: str):
 def clean_up():
 	path = get_cache_directory()
 	for file in os.listdir(path):
-		if file.endswith('.part'):
+		if file.endswith('.part') or file.endswith('.monophony'):
 			os.remove(path + file)
 
 
