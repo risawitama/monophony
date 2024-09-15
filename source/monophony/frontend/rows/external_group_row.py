@@ -7,7 +7,7 @@ from monophony.frontend.windows.message_window import MonophonyMessageWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gtk, Gio, GLib
+from gi.repository import Adw, Gtk, Gio
 
 
 class MonophonyExternalGroupRow(MonophonyGroupRow):
@@ -30,16 +30,21 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 		self.add_action(btn_more)
 		self.set_subtitle(_('Synchronized'))
 
-		GLib.timeout_add(100, self.update)
+		playlists = monophony.backend.playlists.read_external_playlists()
+		for playlist in playlists:
+			if playlist['title'] == self.group['title']:
+				self.group['contents'] = playlist['contents']
+				break
+		for song in self.group['contents']:
+			self.add_row(MonophonySongRow(song, self.player, self.group))
+		self.set_enable_expansion(self.song_widgets != [])
 
 	def _on_show_actions(self, btn: Gtk.MenuButton):
 		window = self.get_ancestor(Gtk.Window)
 		mnu_actions = Gio.Menu()
 		mnu_actions.append(_('Delete'), 'delete-playlist')
 		window.install_action(
-			'delete-playlist',
-			None,
-			lambda w, *_: w._on_delete_playlist(self, local=False)
+			'delete-playlist', None, lambda *_: self._on_delete()
 		)
 		mnu_actions.append(_('Download'), 'cache-playlist')
 		window.install_action(
@@ -82,6 +87,10 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 		btn.popdown()
 		pop_rename.popup()
 
+	def _on_delete(self):
+		self.get_ancestor(Gtk.Window)._on_delete_playlist(self, local=False)
+		self.get_ancestor(Adw.PreferencesGroup).remove(self)
+
 	def _on_rename(self, name: str, pop: Gtk.Popover):
 		pop.popdown()
 		success = monophony.backend.playlists.rename_playlist(
@@ -97,28 +106,3 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 				_('Playlist already exists')
 			).present()
 
-	def update(self) -> bool:
-		self.set_enable_expansion(self.song_widgets != [])
-		playlists = monophony.backend.playlists.read_external_playlists()
-		for playlist in playlists:
-			if playlist['title'] == self.group['title']:
-				contents = playlist['contents']
-				break
-		else: # nobreak
-			self.get_ancestor(Adw.PreferencesGroup).remove(self)
-			return False
-
-		if self.group['contents'] == contents:
-			return True
-
-		for widget in self.song_widgets:
-			self.remove(widget)
-
-		self.song_widgets = []
-		self.group['contents'] = contents
-		for song in self.group['contents']:
-			row = MonophonySongRow(song, self.player, self.group)
-			self.add_row(row)
-			self.song_widgets.append(row)
-
-		return True
