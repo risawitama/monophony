@@ -7,11 +7,12 @@ from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyAddWindow(Adw.Window):
-	def __init__(self, song: dict, player):
+	def __init__(self, song: dict, player, callback):
 		super().__init__()
 
 		self.song = song
 		self.player = player
+		self.callback = callback
 		self.add_to_queue = False
 		self.add_to_playlists = []
 		self.playlists = []
@@ -137,6 +138,7 @@ class MonophonyAddWindow(Adw.Window):
 			GLib.Thread.new(None, self.player.queue_song, self.song)
 
 		self.destroy()
+		self.callback()
 
 	def _on_create(self, ent: Gtk.Entry):
 		text = ent.get_text()

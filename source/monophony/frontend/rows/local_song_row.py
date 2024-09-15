@@ -51,6 +51,7 @@ class MonophonyLocalSongRow(MonophonySongRow):
 			self.group['contents'].index(song_row.song),
 			self.group['contents'].index(self.song),
 		)
+		self.get_ancestor(Gtk.Window).library_tab.update_playlists()
 		return True
 
 	def _on_dnd_prepare(self, *_) -> Gdk.ContentProvider:

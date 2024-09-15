@@ -6,7 +6,7 @@ from monophony.frontend.rows.local_song_row import MonophonyLocalSongRow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 
 class MonophonyLocalGroupRow(MonophonyGroupRow):
@@ -27,8 +27,6 @@ class MonophonyLocalGroupRow(MonophonyGroupRow):
 		btn_more.set_valign(Gtk.Align.CENTER)
 		btn_more.set_create_popup_func(self._on_show_actions)
 		self.add_action(btn_more)
-
-		GLib.timeout_add(100, self.update)
 
 	def _on_show_actions(self, btn: Gtk.MenuButton):
 		window = self.get_ancestor(Gtk.Window)

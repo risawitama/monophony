@@ -32,11 +32,9 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 
 		self.stack = Adw.ViewStack()
+		self.library_tab = MonophonyLibraryTab(self.player)
 		self.stack.add_titled_with_icon(
-			MonophonyLibraryTab(self.player),
-			'library',
-			_('Library'),
-			'emblem-music-symbolic'
+			self.library_tab, 'library', _('Library'), 'emblem-music-symbolic'
 		)
 		self.stack.add_titled_with_icon(
 			MonophonySearchTab(self.player),
@@ -163,18 +161,22 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		popup.present()
 
 	def _on_add_clicked(self, song: dict):
-		popup = MonophonyAddWindow(song, self.player)
+		popup = MonophonyAddWindow(
+			song, self.player, self.library_tab.update_playlists
+		)
 		popup.set_transient_for(self)
 		popup.present()
 
 	def _on_remove_song(self, song: str, playlist: str):
 		monophony.backend.playlists.remove_song(song, playlist)
+		self.library_tab.update_playlists()
 
 	def _on_move_song(self, song: dict, group: dict, direction: int):
 		index = group['contents'].index(song)
 		monophony.backend.playlists.swap_songs(
 			group['title'], index, index + direction
 		)
+		self.library_tab.update_playlists()
 
 	def _on_uncache_song(self, song: dict):
 		monophony.backend.cache.uncache_song(song['id'])

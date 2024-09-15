@@ -124,6 +124,11 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.recommendations = monophony.backend.yt.get_recommendations()
 		self.loading_lock.unlock()
 
+	def update_playlists(self):
+		for w in self.playlist_widgets:
+			if isinstance(w, MonophonyLocalGroupRow):
+				w.update()
+
 	def update(self) -> bool:
 		if not self.loading_lock.trylock():
 			return True
