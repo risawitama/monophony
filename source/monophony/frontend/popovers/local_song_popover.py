@@ -6,8 +6,8 @@ from gi.repository import Gtk
 
 
 class MonophonyLocalSongPopover(MonophonySongPopover):
-	def __init__(self, btn: Gtk.MenuButton, song: dict, group: list):
-		super().__init__(btn, song)
+	def __init__(self, btn: Gtk.MenuButton, song: dict, parent, group: list):
+		super().__init__(btn, song, parent)
 
 		btn.get_ancestor(Gtk.Window).install_action(
 			'remove-song',

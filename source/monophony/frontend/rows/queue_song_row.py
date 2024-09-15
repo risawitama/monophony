@@ -11,7 +11,7 @@ class MonophonyQueueSongRow(MonophonySongRow):
 	def __init__(self, song: dict, player: object, queue: list):
 		super().__init__(song, player, queue)
 		self.btn_more.set_create_popup_func(
-			MonophonyQueueSongPopover, self.song, self.player
+			MonophonyQueueSongPopover, self.song, self, self.player
 		)
 
 		img_handle = Gtk.Image.new_from_icon_name('list-drag-handle-symbolic')

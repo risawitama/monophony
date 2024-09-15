@@ -6,8 +6,8 @@ from gi.repository import Gtk
 
 
 class MonophonyQueueSongPopover(MonophonySongPopover):
-	def __init__(self, btn: Gtk.MenuButton, song: dict, player: object):
-		super().__init__(btn, song)
+	def __init__(self, btn: Gtk.MenuButton, song: dict, parent, player: object):
+		super().__init__(btn, song, parent)
 
 		self.player = player
 		self.install_action(

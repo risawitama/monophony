@@ -42,7 +42,7 @@ class MonophonyLocalSongRow(MonophonySongRow):
 		self.add_controller(self.drp_target)
 
 		self.btn_more.set_create_popup_func(
-			MonophonyLocalSongPopover, self.song, self.group
+			MonophonyLocalSongPopover, self.song, self, self.group
 		)
 
 	def _on_dnd_drop(self, _t, song_row: Adw.ActionRow, _x: float, _y: float) -> bool:

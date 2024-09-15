@@ -47,11 +47,10 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 		self.btn_more.set_has_frame(False)
 		self.btn_more.set_vexpand(False)
 		self.btn_more.set_valign(Gtk.Align.CENTER)
-		self.btn_more.set_create_popup_func(MonophonySongPopover, self.song)
+		self.btn_more.set_create_popup_func(MonophonySongPopover, self.song, self)
 		self.add_suffix(self.btn_more)
 
-		self.update()
-		GLib.timeout_add(1000, self.update)
+		self.update_download_status()
 
 	def _on_play_clicked(self, _b):
 		queue = [self.song]
@@ -62,13 +61,13 @@ class MonophonySongRow(Adw.ActionRow, GObject.Object):
 			None, self.player.play_queue, queue, queue.index(self.song)
 		)
 
-	def update(self) -> True:
-		self.spinner.set_visible(
-			monophony.backend.cache.is_song_being_cached(self.song['id'])
-		)
+	def update_download_status(self) -> bool:
+		if monophony.backend.cache.is_song_being_cached(self.song['id']):
+			return True
+
+		self.spinner.set_visible(False)
 		self.checkmark.set_visible(
-			not self.spinner.get_visible() and
 			monophony.backend.cache.is_song_cached(self.song['id'])
 		)
 
-		return True
+		return False
