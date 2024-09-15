@@ -32,11 +32,7 @@ class MonophonyLocalGroupRow(MonophonyGroupRow):
 		window = self.get_ancestor(Gtk.Window)
 		mnu_actions = Gio.Menu()
 		mnu_actions.append(_('Delete'), 'delete-playlist')
-		window.install_action(
-			'delete-playlist',
-			None,
-			lambda w, *_: w._on_delete_playlist(self)
-		)
+		window.install_action('delete-playlist', None, lambda *_: self._on_delete())
 		mnu_actions.append(_('Download'), 'cache-playlist')
 		window.install_action(
 			'cache-playlist',
@@ -83,6 +79,10 @@ class MonophonyLocalGroupRow(MonophonyGroupRow):
 		pop_rename.set_parent(btn)
 		btn.popdown()
 		pop_rename.popup()
+
+	def _on_delete(self):
+		self.get_ancestor(Gtk.Window)._on_delete_playlist(self, local=True)
+		self.get_ancestor(Adw.PreferencesGroup).remove(self)
 
 	def _on_rename(self, name: str, pop: Gtk.Popover):
 		pop.popdown()
