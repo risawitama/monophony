@@ -130,6 +130,9 @@ class MonophonyLibraryTab(Gtk.Box):
 				w.update()
 
 	def update(self) -> bool:
+		if not self.get_ancestor(Gtk.Window).get_visible():
+			return True
+
 		if not self.loading_lock.trylock():
 			return True
 		self.loading_lock.unlock()
