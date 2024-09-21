@@ -6,7 +6,7 @@ import monophony.backend.yt
 
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Pango
 
 
 class MonophonyPlayer(Gtk.Box):
@@ -76,17 +76,11 @@ class MonophonyPlayer(Gtk.Box):
 		self.scl_volume.set_value(volume)
 		self.scl_volume.connect('value-changed', self._on_volume_changed)
 
-		self.spn_loading = Gtk.Spinner.new()
+		self.spn_loading = Adw.Spinner()
 		self.spn_loading.set_halign(Gtk.Align.CENTER)
 		self.spn_loading.set_margin_start(9)
 		self.spn_loading.set_margin_end(9)
 		self.spn_loading.set_visible(False)
-		self.spn_loading.bind_property(
-			'visible',
-			self.spn_loading,
-			'spinning',
-			GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE
-		)
 		self.btn_pause = Gtk.Button.new_from_icon_name('media-playback-start-symbolic')
 		self.btn_pause.set_valign(Gtk.Align.CENTER)
 		self.btn_pause.set_tooltip_text(_('Toggle pause'))

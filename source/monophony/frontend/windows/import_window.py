@@ -5,7 +5,7 @@ from monophony.frontend.windows.message_window import MonophonyMessageWindow
 import gi
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Adw, GLib, GObject, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 class MonophonyImportWindow(Adw.Window):
@@ -41,15 +41,9 @@ class MonophonyImportWindow(Adw.Window):
 		box_type.append(self.chk_local)
 		box_type.append(chk_sync)
 
-		self.spn_import = Gtk.Spinner.new()
+		self.spn_import = Adw.Spinner()
 		self.spn_import.set_margin_end(5)
 		self.spn_import.set_visible(False)
-		self.spn_import.bind_property(
-			'visible',
-			self.spn_import,
-			'spinning',
-			GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
-		)
 		btn_cancel = Gtk.Button.new_with_label(_('Cancel'))
 		btn_cancel.connect('clicked', lambda _b: self.destroy())
 		self.btn_import = Gtk.Button.new_with_label(_('Import'))

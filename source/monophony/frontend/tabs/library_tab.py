@@ -6,7 +6,6 @@ from monophony.frontend.rows.external_group_row import MonophonyExternalGroupRow
 from monophony.frontend.rows.local_group_row import MonophonyLocalGroupRow
 from monophony.frontend.rows.locked_group_row import MonophonyLockedGroupRow
 from monophony.frontend.rows.song_row import MonophonySongRow
-from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 
 import gi
 gi.require_version('Adw', '1')
@@ -32,9 +31,13 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_meta.set_valign(Gtk.Align.FILL)
 		self.append(self.box_meta)
 
+		spn_big = Adw.Spinner()
+		spn_big.set_hexpand(True)
+		spn_big.set_vexpand(True)
+
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
-		self.box_loading.append(MonophonyBigSpinner())
+		self.box_loading.append(spn_big)
 		self.box_loading.set_visible(True)
 		self.append(self.box_loading)
 

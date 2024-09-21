@@ -1,7 +1,6 @@
 import monophony.backend.yt
 from monophony.frontend.rows.importable_group_row import MonophonyImportableGroupRow
 from monophony.frontend.rows.locked_group_row import MonophonyLockedGroupRow
-from monophony.frontend.widgets.big_spinner import MonophonyBigSpinner
 
 import gi
 gi.require_version('Adw', '1')
@@ -27,9 +26,13 @@ class MonophonyArtistPage(Gtk.Box):
 		self.pge_results.set_visible(False)
 		self.append(self.pge_results)
 
+		spn_big = Adw.Spinner()
+		spn_big.set_hexpand(True)
+		spn_big.set_vexpand(True)
+
 		self.box_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 		self.box_loading.set_margin_bottom(10)
-		self.box_loading.append(MonophonyBigSpinner())
+		self.box_loading.append(spn_big)
 		self.box_loading.set_visible(True)
 		self.append(self.box_loading)
 
