@@ -93,12 +93,10 @@ class MonophonyLibraryTab(Gtk.Box):
 		self.box_recents.set_header_suffix(btn_clear)
 		self.box_meta.add(self.box_recents)
 
-		con_downloads = Adw.ButtonContent()
-		con_downloads.set_label(_('Show Downloaded Songs'))
-		con_downloads.set_icon_name('folder-symbolic')
-		btn_downloads = Gtk.Button()
-		btn_downloads.set_child(con_downloads)
-		btn_downloads.connect('clicked', self._on_open_downloads)
+		btn_downloads = Adw.ButtonRow()
+		btn_downloads.set_start_icon_name('folder-symbolic')
+		btn_downloads.set_title(_('Show Downloaded Songs'))
+		btn_downloads.connect('activated', self._on_open_downloads)
 
 		box_actions = Adw.PreferencesGroup()
 		box_actions.add(btn_downloads)
