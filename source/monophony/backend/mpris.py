@@ -4,7 +4,7 @@ from monophony.backend.player import PlaybackMode
 from gi.repository import GLib
 from mpris_server.adapters import PlayState, MprisAdapter
 from mpris_server.server import Server
-from mpris_server.events import EventAdapter
+from mpris_server.events import PlayerEventAdapter
 
 
 class Adapter(MprisAdapter):
@@ -131,6 +131,6 @@ class Adapter(MprisAdapter):
 
 def init(player: object):
 	mpris = Server('Monophony', adapter=Adapter(player))
-	player.mpris_adapter = EventAdapter(root=mpris.root, player=mpris.player)
+	player.mpris_adapter = PlayerEventAdapter(root=mpris.root, player=mpris.player)
 	player.mpris_server = mpris
 	player.mpris_server.loop()

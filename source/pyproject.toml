@@ -3,8 +3,8 @@ name = 'monophony'
 dynamic = ['version']
 authors = [{name = 'Zehkira'}]
 license = {file = 'LICENSE'}
-requires-python = '>=3.11'
-dependencies = ['mpris_server==0.4.2', 'ytmusicapi>=1.8.0']
+requires-python = '>=3.12'
+dependencies = ['mpris_server==0.9.0', 'ytmusicapi>=1.8.0']
 
 [build-system]
 requires = ['setuptools']
