@@ -305,7 +305,10 @@ def search(query: str, filter_: str='') -> list:
 			song = get_song(query.split('youtu.be/')[-1].split('?')[0])
 			return [song] if song else []
 
-		data = yt.search(query, filter=filter_) if filter_ else yt.search(query)
+		data = (
+			yt.search(query, filter=filter_, limit=100) if filter_
+			else yt.search(query)
+		)
 	except:
 		return []
 
