@@ -71,6 +71,7 @@ class MonophonyImportWindow(Adw.Window):
 		self.set_title(_('Import Playlist...'))
 		self.set_modal(True)
 		self.set_resizable(False)
+		self.props.height_request = 100
 		self.set_content(toolbar_view)
 		self.connect('close-request', lambda w: not w.box_content.get_sensitive())
 		self.add_shortcut(Gtk.Shortcut.new(
