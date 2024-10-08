@@ -27,7 +27,7 @@ def add_song(song: dict):
 	new_songs = read_songs()
 	if song not in new_songs:
 		new_songs.append(song)
-		if len(new_songs) > 10:
+		if len(new_songs) > 15:
 			new_songs = new_songs[1:]
 	else:
 		new_songs.remove(song)
