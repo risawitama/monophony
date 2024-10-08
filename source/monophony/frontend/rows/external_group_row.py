@@ -14,12 +14,6 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 	def __init__(self, group: dict, player: object):
 		super().__init__(group, player)
 
-		self.song_widgets = []
-		for song in self.group['contents']:
-			row = MonophonySongRow(song, self.player, self.group)
-			self.add_row(row)
-			self.song_widgets.append(row)
-
 		btn_more = Gtk.MenuButton()
 		btn_more.set_tooltip_text(_('More actions'))
 		btn_more.set_icon_name('view-more-symbolic')
@@ -29,6 +23,7 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 		btn_more.set_create_popup_func(self._on_show_actions)
 		self.add_action(btn_more)
 		self.set_subtitle(_('Synchronized'))
+		self.set_enable_expansion(False)
 
 		playlists = monophony.backend.playlists.read_external_playlists()
 		for playlist in playlists:
@@ -37,7 +32,9 @@ class MonophonyExternalGroupRow(MonophonyGroupRow):
 				break
 		for song in self.group['contents']:
 			self.add_row(MonophonySongRow(song, self.player, self.group))
-		self.set_enable_expansion(self.song_widgets != [])
+			self.set_enable_expansion(True)
+
+		self.set_expanded(False)
 
 	def _on_show_actions(self, btn: Gtk.MenuButton):
 		window = self.get_ancestor(Gtk.Window)
