@@ -222,10 +222,10 @@ class Player:
 		GLib.idle_add(self.ui_update_callback, song, True, False, True)
 		GLib.idle_add(self.queue_change_callback)
 		if not resume:
-			print('Playing', song['id'], 'in playback mode', self.mode)
+			print('Playing', song['id'])
 			self.last_progress = 0
 		else:
-			print('Resuming', song['id'], 'in playback mode', self.mode)
+			print('Resuming', song['id'])
 
 		if song['id'] not in self.recent_songs:
 			self.recent_songs.append(song['id'])
