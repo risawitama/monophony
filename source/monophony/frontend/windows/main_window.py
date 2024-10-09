@@ -28,6 +28,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
 		self.set_icon_name(APP_ID)
 		self.player = monophony.backend.player.Player()
 		self.player.queue_end_callback = self._on_queue_end
+		self.player.raise_callback = self.present
 		self.removed_playlists = []
 		GLib.Thread.new(None, monophony.backend.mpris.init, self.player)
 

@@ -41,6 +41,7 @@ class Player:
 		self.ui_update_callback = None
 		self.queue_change_callback = None
 		self.queue_end_callback = None
+		self.raise_callback = None
 		self.playbin = Gst.ElementFactory.make('playbin3', 'playbin3')
 		self.playbin.set_state(Gst.State.READY)
 		self.playbin.get_bus().add_signal_watch()

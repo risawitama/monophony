@@ -116,6 +116,13 @@ class Adapter(MprisAdapter):
 	def can_control(self) -> bool:
 		return True
 
+	def can_raise(self) -> bool:
+		return True
+
+	def set_raise(self, val: bool):
+		if val:
+			self.monophony_player.raise_callback()
+
 	def metadata(self) -> dict:
 		song = self.monophony_player.get_current_song()
 		if song:
