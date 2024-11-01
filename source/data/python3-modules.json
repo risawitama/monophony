@@ -22,8 +22,8 @@
 				},
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/9b/fa/f9ed99b289acddc28b79e41700db67abf48b91895c58e08520a304bbfb49/emoji-2.13.0-py3-none-any.whl",
-					"sha256": "6c8027f02c448731fd5f13e38521e14594e48e9c5d2c3862f95d086d8aa84a7c"
+					"url": "https://files.pythonhosted.org/packages/ef/56/4ddf8b36aa4b52077045b17ffb8958f3360b250df4143d1482d9d5bb54d5/emoji-2.14.0-py3-none-any.whl",
+					"sha256": "fcc936bf374b1aec67dda5303ae99710ba88cc9cdce2d1a71c5f2204e6d78799"
 				},
 				{
 					"type": "file",
@@ -44,11 +44,6 @@
 					"type": "file",
 					"url": "https://files.pythonhosted.org/packages/2b/58/d34e67a79631177e3c08e7d02b5165147f590171f2cae6769502af5f7f7e/pygobject-3.50.0.tar.gz",
 					"sha256": "4500ad3dbf331773d8dedf7212544c999a76fc96b63a91b3dcac1e5925a1d103"
-				},
-				{
-					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl",
-					"sha256": "04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"
 				}
 			]
 		},
@@ -56,7 +51,7 @@
 			"name": "python3-ytmusicapi",
 			"buildsystem": "simple",
 			"build-commands": [
-				"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"ytmusicapi==1.8.1\" --no-build-isolation"
+				"pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"ytmusicapi==1.8.2\" --no-build-isolation"
 			],
 			"sources": [
 				{
@@ -66,8 +61,8 @@
 				},
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz",
-					"sha256": "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+					"url": "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz",
+					"sha256": "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
 				},
 				{
 					"type": "file",
@@ -86,8 +81,8 @@
 				},
 				{
 					"type": "file",
-					"url": "https://files.pythonhosted.org/packages/66/34/8b5c4e1ccfe3f27b56db81b642162641c1aa6050ec5992d480292fc0411b/ytmusicapi-1.8.1-py3-none-any.whl",
-					"sha256": "472f51844541b12818da85217409033ecda93be6d40c1660fd32d064948a8f10"
+					"url": "https://files.pythonhosted.org/packages/7e/eb/23417507ba393545e98ba7c6d01e136cb3b9426d496a5eb216de7dc79adb/ytmusicapi-1.8.2-py3-none-any.whl",
+					"sha256": "579dd60704fc2538eb94e2035fb36e904a713f948506ca3d28d151c61c782a86"
 				}
 			]
 		}
