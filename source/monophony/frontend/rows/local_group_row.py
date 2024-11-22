@@ -95,6 +95,9 @@ class MonophonyLocalGroupRow(MonophonyGroupRow):
 				_('Could not Rename'),
 				_('Playlist already exists')
 			).present()
+			return
+
+		self.get_ancestor(Adw.PreferencesGroup).remove(self)
 
 	def update(self) -> bool:
 		self.set_enable_expansion(self.song_widgets != [])
