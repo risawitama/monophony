@@ -118,5 +118,6 @@ class MonophonyLocalGroupRow(MonophonyGroupRow):
 			row = MonophonyLocalSongRow(song, self.player, self.group)
 			self.add_row(row)
 			self.song_widgets.append(row)
+			self.set_enable_expansion(True)
 
 		return True
