@@ -1,0 +1,35 @@
+name: Auto merge workflow weekly
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "0 0 * * 0"
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+       - uses: styfle/cancel-workflow-action@main
+         name: "Cancel Duplicate Workflow Action Runs"
+         with:
+            all_but_latest: true
+            access_token: ${{ github.token }}
+       - name: Purge Workflow History
+         uses: Mattraks/delete-workflow-runs@main
+         with:
+           token: ${{ github.token }}
+           repository: ${{ github.repository }}
+           retain_days: 0
+           keep_minimum_runs: 0
+       - name: Fetching Repository
+         run: |
+          git fetch https://gitlab.com/zehkira/monophony.git master
+          git log -1
+       - name: GitHub Push
+         uses: ad-m/github-push-action@master
+         with:
+          force: true
+          directory: "."
+          github_token: ${{ github.token }}
